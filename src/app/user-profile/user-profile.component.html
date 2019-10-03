@@ -1,0 +1,58 @@
+<!-- <ion-header>
+  <ion-toolbar color="client-header">
+    <ion-buttons slot="start">
+      <ion-menu-button class="menu-button"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Profile
+    </ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="app-background-img">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refreshing..." pull-max="0" pull-min="0">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-card class="user-profile-card" *ngIf="currentUser">
+    <img src="/assets/shapes.svg" alt="" />
+    <ion-card-header class="ion-no-padding">
+      <ion-avatar class="user-avatar">
+        <ion-img src="{{currentUser.ProfileImagePath}}" alt="User Image" (ionError)="setdefultImage($event)">
+        </ion-img>
+      </ion-avatar>
+      <ion-card-title>
+        <ion-chip color="primary" (click)="selectImage()">
+          <ion-icon name="Camera"></ion-icon>
+          <ion-label>Change Profile Picture</ion-label>
+        </ion-chip>
+        <br />
+        {{currentUser.FName}}, 25
+      </ion-card-title>
+      <ion-card-subtitle>{{currentUser.Country}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item-divider>
+        <ion-icon slot="start" name="pin"></ion-icon>
+        <ion-label>{{currentUser.City}}</ion-label>
+      </ion-item-divider>
+      <ion-item-divider>
+        <ion-icon slot="start" name="mail"></ion-icon>
+        <ion-label>{{currentUser.EmailId}}</ion-label>
+      </ion-item-divider>
+      <ion-item-divider>
+        <ion-icon slot="start" name="phone-portrait"></ion-icon>
+        <ion-label>{{currentUser.PhoneNumber}}</ion-label>
+      </ion-item-divider>
+      <ion-item-divider>
+        <ion-icon slot="start" name="transgender"></ion-icon>
+        <ion-label>{{currentUser.GenderName}}</ion-label>
+      </ion-item-divider>
+      <ion-button class="logout-button" expand="block" color="danger" (click)="userLogout()">
+        <ion-icon name="log-out"></ion-icon>
+        &nbsp; logout
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

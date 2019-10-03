@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="client-header">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-menu-button class="menu-button"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Student List
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="list-content">
+  <!-- <ion-item-group>
+    <ion-item-divider>
+      <ion-label>Match Queue</ion-label>
+    </ion-item-divider>
+    <ion-list>
+      <ion-item *ngFor="let item of items.match">
+        <ion-thumbnail slot="start">
+          <ion-avatar>
+            <ion-img src="./assets/{{item.gender}}.png"></ion-img>
+          </ion-avatar>
+        </ion-thumbnail>
+        <ion-card-header>
+          <ion-card-subtitle>{{item.name}}</ion-card-subtitle>
+          <ion-card-title>{{item.message}}</ion-card-title>
+        </ion-card-header>
+      </ion-item>
+    </ion-list>
+  </ion-item-group> -->
+  <ion-slides [options]="slideOpts">
+    <ion-slide *ngFor="let item of items.preferred">
+      <ion-card>
+        <img src="./assets/{{item.gender}}.png" />
+        <ion-card-header>
+          <ion-card-subtitle>{{item.name}}</ion-card-subtitle>
+          <ion-card-title>{{item.message}}</ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

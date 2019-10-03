@@ -1,0 +1,174 @@
+<ion-header translucent>
+  <ion-toolbar color="client-header">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="userlogin"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Sign Up
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="app-background-img" fullscreen padding scroll-y="false">
+  <ion-slides #registrationslides scrollbar="true">
+
+    <ion-slide class="otp-slide">
+      <ion-card>
+        <img src="/assets/CB_Logo_V2.png" alt="" />
+        <ion-card-content>
+          <form padding-right class="otp-form">
+            <ion-item class="email-textbox">
+              <ion-icon slot="start" name="at" class="auto-top-bottom-marging" color="primary"></ion-icon>
+              <ion-input type="email" [(ngModel)]="newUser.email" name="email" id="email" placeholder="your e-mail id">
+              </ion-input>
+              <ion-button slot="end" expand="block" fill="clean" shape="round" (click)="sendOTP()" [disabled]="otpsend">
+                <ion-icon slot="end" name="arrow-forward"></ion-icon>
+              </ion-button>
+            </ion-item>
+            <h3 class="otp-message" *ngIf="otpsend">Please enter one time verification code send to<br />
+              {{newUser.email}}</h3>
+            <ion-item class="otp-textbox" *ngIf="otpsend">
+              <ion-label position="floating" class="auto-right-left-marging">ENTER OTP</ion-label>
+              <ion-input type="number" (keyup)="onKey($event)" maxlength="4"></ion-input>
+            </ion-item>
+            <h3 class="otp-resend" *ngIf="otpsend">Not received your code?<br />
+              <ion-button fill="clear" (click)="reSendOTP()">Resend Code</ion-button>
+            </h3>
+          </form>
+          <ion-button fill="clear" *ngIf="isValid" (click)="goToNext()">Continue
+            <ion-icon slot="end" name="arrow-forward"></ion-icon>
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+
+    <ion-slide class="refer-slide">
+      <ion-card>
+        <img src="/assets/CB_Logo_V2.png" alt="" />
+        <ion-card-content>
+          <form padding-right class="refer-form">
+            <h3 class="refer-message-label">Enter code who refer you.</h3>
+            <ion-item class="refer-textbox">
+              <ion-input type="text" [(ngModel)]="newUser.referCode" name="referCode" id="referCode"
+                placeholder="Refer Code">
+              </ion-input>
+            </ion-item>
+          </form>
+          <ion-button fill="clear" *ngIf="isValid" (click)="goToNext()">Continue
+            <ion-icon slot="end" name="arrow-forward"></ion-icon>
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+
+    <ion-slide class="personal-slide">
+      <ion-card>
+        <img src="/assets/CB_Logo_V2.png" alt="" />
+        <ion-card-content>
+          <form padding-right class="personal-form">
+            <ion-item class="firstname-textbox">
+              <ion-input type="firstName" [(ngModel)]="newUser.firstName" name="firstName" id="firstName"
+                placeholder="First Name">
+              </ion-input>
+            </ion-item>
+            <ion-item class="lastname-textbox">
+              <ion-input type="lastName" [(ngModel)]="newUser.lastName" name="lastName" id="lastName"
+                placeholder="Last Name">
+              </ion-input>
+            </ion-item>
+            <ion-item class="phone-textbox">
+              <ion-input type="tel" [(ngModel)]="newUser.phone" name="phone" id="phone" placeholder="Phone No.">
+              </ion-input>
+            </ion-item>
+          </form>
+          <ion-button fill="clear" *ngIf="isValid" (click)="goToNext()">Continue
+            <ion-icon slot="end" name="arrow-forward"></ion-icon>
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+
+    <ion-slide class="profession-slide">
+      <ion-card>
+        <img src="/assets/CB_Logo_V2.png" alt="" />
+        <ion-card-content>
+          <form padding-right class="profession-form">
+            <ion-item class="college-textbox">
+              <ion-input type="text" [(ngModel)]="newUser.college" name="college" id="college" placeholder="College">
+              </ion-input>
+            </ion-item>
+            <ion-item class="job-textbox">
+              <ion-input type="text" [(ngModel)]="newUser.job" name="job" id="job" placeholder="Job Title">
+              </ion-input>
+            </ion-item>
+            <ion-item class="city-select">
+              <ion-label>City</ion-label>
+              <ion-select placeholder="Select One" [(ngModel)]="newUser.city" name="city" id="city">
+                <ion-select-option value="1">Dallas</ion-select-option>
+                <ion-select-option value="2">Austin</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </form>
+          <ion-button fill="clear" *ngIf="isValid" (click)="goToNext()">Continue
+            <ion-icon slot="end" name="arrow-forward"></ion-icon>
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+
+    <ion-slide class="user-slide">
+      <ion-card>
+        <img src="/assets/CB_Logo_V2.png" alt="" />
+        <ion-card-header class="ion-no-padding">
+          <ion-avatar class="user-avatar">
+            <ion-img src="{{newUser.userImage}}" alt="UserImage" (ionError)="setdefultImage($event)"></ion-img>
+          </ion-avatar>
+          <ion-card-title>
+            <ion-chip color="primary" (click)="selectImage()">
+              <ion-icon class="camera" name="Camera"></ion-icon>
+            </ion-chip>
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <form padding-right class="user-form">
+            <ion-item class="gender-select">
+              <ion-label>Gender</ion-label>
+              <ion-select placeholder="Select One" [(ngModel)]="newUser.gender" name="gender" id="gender">
+                <ion-select-option value="1">Male</ion-select-option>
+                <ion-select-option value="2">Female</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item class="roommate-gender-select">
+              <ion-label>Roommate Gender</ion-label>
+              <ion-select placeholder="Select One" [(ngModel)]="newUser.roommateGender" name="roommateGender"
+                id="roommateGender">
+                <ion-select-option value="1">Male</ion-select-option>
+                <ion-select-option value="2">Female</ion-select-option>
+                <ion-select-option value="3">Both</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item class="preferred-religion-select">
+              <ion-label>Roommate Gender</ion-label>
+              <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredReligion" name="preferredReligion"
+                id="preferredReligion">
+                <ion-select-option value="1">No Preference</ion-select-option>
+                <ion-select-option value="2">Buddhist</ion-select-option>
+                <ion-select-option value="3">Christian</ion-select-option>
+                <ion-select-option value="4">Catholic</ion-select-option>
+                <ion-select-option value="5">Hindu</ion-select-option>
+                <ion-select-option value="6">Jewish</ion-select-option>
+                <ion-select-option value="7">Muslim</ion-select-option>
+                <ion-select-option value="8">Sikh</ion-select-option>
+                <ion-select-option value="9">Other</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </form>
+          <ion-button fill="clear" *ngIf="isValid" (click)="goToNext()">Done
+            <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+
+  </ion-slides>
+</ion-content>

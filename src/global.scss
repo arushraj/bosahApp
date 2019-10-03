@@ -24,3 +24,41 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+body {
+    font-family: "Lato" !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Montserrat";
+}
+
+.menu-button {
+    background-color: var(--ion-color-client-menu);
+    border-radius: 3px;
+}
+
+.menu-content {
+    background-color: var(--ion-color-client-menu);
+}
+
+.divider {
+    border-top: #4c4c4c solid 1px;
+}
+
+.app-background-img {
+    --background: url(/assets/street-map.png) 0 0/100% 50%;
+}
+
+.auto-top-bottom-marging {
+    margin: auto !important;
+}
+
+.auto-right-left-marging {
+    margin: 0 auto !important;
+}

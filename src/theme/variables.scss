@@ -74,4 +74,39 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  // Clent Theme
+  --ion-color-client-header: #29333d;
+  --ion-color-client-header-rgb: 41, 51, 61;
+  --ion-color-client-header-contrast: #ffffff;
+  --ion-color-client-header-contrast-rgb: 255, 255, 255;
+  --ion-color-client-header-shade: #242d36;
+  --ion-color-client-header-tint: #3e4750;
+
+  // --ion-color-client-menu: #5ba892;
+  // --ion-color-client-menu-rgb: 91,168,146;
+  // --ion-color-client-menu-contrast: #000000;
+  // --ion-color-client-menu-contrast-rgb: 0,0,0;
+  // --ion-color-client-menu-shade: #509480;
+  // --ion-color-client-menu-tint: #6bb19d;
+}
+
+// Clent theme css valiables
+
+.ion-color-client-header {
+  --ion-color-base: var(--ion-color-client-header);
+  --ion-color-base-rgb: var(--ion-color-client-header-rgb);
+  --ion-color-contrast: var(--ion-color-client-header-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-client-header-contrast-rgb);
+  --ion-color-shade: var(--ion-color-client-header-shade);
+  --ion-color-tint: var(--ion-color-client-header-tint);
+}
+
+.ion-color-client-menu {
+  --ion-color-base: var(--ion-color-client-menu);
+  --ion-color-base-rgb: var(--ion-color-client-menu-rgb);
+  --ion-color-contrast: var(--ion-color-client-menu-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-client-menu-contrast-rgb);
+  --ion-color-shade: var(--ion-color-client-menu-shade);
+  --ion-color-tint: var(--ion-color-client-menu-tint);
 }

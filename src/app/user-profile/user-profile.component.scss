@@ -1,0 +1,30 @@
+.user-avatar {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 150px;
+    width: 150px;
+    margin: 0 auto;
+}
+
+.user-profile-card ion-card-header {
+    position: relative;
+    top: -50px
+}
+
+.user-profile-card ion-card-header ion-card-title {
+    text-align: center;
+    color: #fff;
+}
+
+.user-profile-card ion-card-header ion-card-subtitle {
+    text-align: center;
+    color: #fff;
+}
+
+.user-profile-card ion-card-content {
+    position: relative;
+    top: -30px;
+}
+
+.logout-button {
+    margin-top: 10%;
+}

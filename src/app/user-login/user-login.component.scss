@@ -1,0 +1,26 @@
+.login-form .link-group {
+    margin-top: 10px;
+}
+
+.login-form .username-textbox {
+    border-radius: 5px 5px 0 0;
+    margin-bottom: 1px;
+}
+
+.login-form .password-textbox {
+    border-radius: 0 0 5px 5px;
+}
+
+.username-textbox ion-input,
+.password-textbox ion-input {
+    padding-left: 5% !important;
+}
+
+.username-textbox ion-icon,
+.password-textbox ion-icon {
+    font-size: 35px;
+}
+
+.login-form .link-group ion-button:last-child {
+    float: right;
+}

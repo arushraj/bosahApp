@@ -1,0 +1,101 @@
+:root {
+    --ion-safe-area-top: 20px;
+    --ion-safe-area-bottom: 22px;
+}
+
+.swiper-slide {
+    display: block;
+}
+
+ion-slide>h2 {
+    margin-top: 2.8rem;
+}
+
+ion-slide>img {
+    max-height: 50%;
+    max-width: 60%;
+    margin: 36px 0;
+}
+
+.otp-slide,
+.refer-slide,
+.personal-slide,
+.profession-slide,
+.user-slide {
+    margin: auto 0;
+}
+
+.otp-slide ion-item:last-child {
+    margin-top: 20px;
+}
+
+.otp-form,
+.refer-form,
+.personal-form,
+.profession-form {
+    margin-bottom: 15%;
+}
+
+.user-form {
+    margin-bottom: 10%;
+}
+
+.otp-form .otp-message,
+.refer-form .refer-message-label {
+    color: #eca5a5;
+    margin: 5% 0;
+    font-size: 1.2em;
+}
+
+.otp-resend {
+    color: #f5f5f5;
+    margin-top: 5%;
+}
+
+.email-textbox ion-input {
+    padding-left: 5% !important;
+}
+
+.email-textbox ion-icon {
+    font-size: 35px;
+}
+
+.email-textbox ion-button {
+    font-size: 20px;
+    margin: auto;
+    margin-right: -10px;
+}
+
+.otp-textbox ion-input {
+    padding: 0 5% !important;
+    text-align: center;
+    letter-spacing: 40px;
+}
+
+.user-avatar {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 150px;
+    width: 150px;
+    margin: 0 auto;
+}
+
+.camera {
+    margin: 0;
+}
+
+// .personal-form ion-item,
+// .profession-form ion-item {
+//     margin-bottom: 0.3%;
+// }
+
+// #partitioned {
+//     padding-left: 15px;
+//     letter-spacing: 42px;
+//     border: 0;
+//     background-image: linear-gradient(to left, black 70%, rgba(255, 255, 255, 0) 0%);
+//     background-position: bottom;
+//     background-size: 50px 1px;
+//     background-repeat: repeat-x;
+//     background-position-x: 35px;
+//     width: 220px;
+//   }
