@@ -28,6 +28,7 @@ export class NewUser {
     CityId: number;
     PreferredGenderIds: string;
     PreferredReligionIds: string;
+    Age: number;
 }
 
 export class RoommatePreferences {

@@ -11,7 +11,6 @@
 
 <ion-content class="app-background-img" fullscreen padding scroll-y="false">
   <ion-slides #registrationslides scrollbar="true">
-
     <ion-slide class="otp-slide">
       <ion-card>
         <img src="/assets/CB_Logo_V2.png" alt="" />
@@ -22,7 +21,7 @@
               <ion-input type="email" [(ngModel)]="newUser.email" name="email" id="email" placeholder="your e-mail id">
               </ion-input>
               <ion-button slot="end" expand="block" fill="clean" shape="round" (click)="sendOTP()" [disabled]="otpsend">
-                <ion-icon slot="end" name="arrow-forward"></ion-icon>
+                <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
               </ion-button>
             </ion-item>
             <h3 class="otp-message" *ngIf="otpsend">Please enter one time verification code send to<br />
@@ -35,9 +34,14 @@
               <ion-button fill="clear" (click)="reSendOTP()">Resend Code</ion-button>
             </h3>
           </form>
-          <ion-button fill="clear" *ngIf="isValid" (click)="goToNext()">Continue
-            <ion-icon slot="end" name="arrow-forward"></ion-icon>
-          </ion-button>
+          <div class="navigation-button">
+            <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back
+              <ion-icon slot="start" name="arrow-round-back"></ion-icon>
+            </ion-button>
+            <ion-button class="next-button" fill="clear" *ngIf="isValid" (click)="goToNext()">Continue
+              <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
+            </ion-button>
+          </div>
         </ion-card-content>
       </ion-card>
     </ion-slide>
@@ -54,9 +58,14 @@
               </ion-input>
             </ion-item>
           </form>
-          <ion-button fill="clear" *ngIf="isValid" (click)="goToNext()">Continue
-            <ion-icon slot="end" name="arrow-forward"></ion-icon>
-          </ion-button>
+          <div class="navigation-button">
+            <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back
+              <ion-icon slot="start" name="arrow-round-back"></ion-icon>
+            </ion-button>
+            <ion-button class="next-button" fill="clear" *ngIf="isValid" (click)="goToNext()">Continue
+              <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
+            </ion-button>
+          </div>
         </ion-card-content>
       </ion-card>
     </ion-slide>
@@ -76,14 +85,23 @@
                 placeholder="Last Name">
               </ion-input>
             </ion-item>
+            <ion-item class="age-textbox">
+              <ion-input type="tel" [(ngModel)]="newUser.age" name="age" id="age" placeholder="Age">
+              </ion-input>
+            </ion-item>
             <ion-item class="phone-textbox">
               <ion-input type="tel" [(ngModel)]="newUser.phone" name="phone" id="phone" placeholder="Phone No.">
               </ion-input>
             </ion-item>
           </form>
-          <ion-button fill="clear" *ngIf="isValid" (click)="goToNext()">Continue
-            <ion-icon slot="end" name="arrow-forward"></ion-icon>
-          </ion-button>
+          <div class="navigation-button">
+            <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back
+              <ion-icon slot="start" name="arrow-round-back"></ion-icon>
+            </ion-button>
+            <ion-button class="next-button" fill="clear" *ngIf="isValid" (click)="goToNext()">Continue
+              <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
+            </ion-button>
+          </div>
         </ion-card-content>
       </ion-card>
     </ion-slide>
@@ -106,12 +124,20 @@
               <ion-select placeholder="Select One" [(ngModel)]="newUser.city" name="city" id="city">
                 <ion-select-option value="1">Dallas</ion-select-option>
                 <ion-select-option value="2">Austin</ion-select-option>
+                <ion-select-option value="3">Houston</ion-select-option>
+                <ion-select-option value="4">San Antonio</ion-select-option>
+                <ion-select-option value="5">Fort Worth</ion-select-option>
               </ion-select>
             </ion-item>
           </form>
-          <ion-button fill="clear" *ngIf="isValid" (click)="goToNext()">Continue
-            <ion-icon slot="end" name="arrow-forward"></ion-icon>
-          </ion-button>
+          <div class="navigation-button">
+            <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back
+              <ion-icon slot="start" name="arrow-round-back"></ion-icon>
+            </ion-button>
+            <ion-button class="next-button" fill="clear" *ngIf="isValid" (click)="goToNext()">Continue
+              <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
+            </ion-button>
+          </div>
         </ion-card-content>
       </ion-card>
     </ion-slide>
@@ -121,7 +147,7 @@
         <img src="/assets/CB_Logo_V2.png" alt="" />
         <ion-card-header class="ion-no-padding">
           <ion-avatar class="user-avatar">
-            <ion-img src="{{newUser.userImage}}" alt="UserImage" (ionError)="setdefultImage($event)"></ion-img>
+            <ion-img src="{{displayImage}}" alt="UserImage" (ionError)="setdefultImage($event)"></ion-img>
           </ion-avatar>
           <ion-card-title>
             <ion-chip color="primary" (click)="selectImage()">
@@ -138,19 +164,33 @@
                 <ion-select-option value="2">Female</ion-select-option>
               </ion-select>
             </ion-item>
-            <ion-item class="roommate-gender-select">
+            <ion-item class="preferred-gender-select">
               <ion-label>Roommate Gender</ion-label>
-              <ion-select placeholder="Select One" [(ngModel)]="newUser.roommateGender" name="roommateGender"
-                id="roommateGender">
+              <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredGender" name="preferredGender"
+                id="preferredGender">
                 <ion-select-option value="1">Male</ion-select-option>
                 <ion-select-option value="2">Female</ion-select-option>
                 <ion-select-option value="3">Both</ion-select-option>
               </ion-select>
             </ion-item>
+            <ion-item class="religion-select">
+              <ion-label>Religion</ion-label>
+              <ion-select placeholder="Select One" [(ngModel)]="newUser.religion" name="religion" id="religion">
+                <ion-select-option value="1">No Preference</ion-select-option>
+                <ion-select-option value="2">Buddhist</ion-select-option>
+                <ion-select-option value="3">Christian</ion-select-option>
+                <ion-select-option value="4">Catholic</ion-select-option>
+                <ion-select-option value="5">Hindu</ion-select-option>
+                <ion-select-option value="6">Jewish</ion-select-option>
+                <ion-select-option value="7">Muslim</ion-select-option>
+                <ion-select-option value="8">Sikh</ion-select-option>
+                <ion-select-option value="9">Other</ion-select-option>
+              </ion-select>
+            </ion-item>
             <ion-item class="preferred-religion-select">
-              <ion-label>Roommate Gender</ion-label>
+              <ion-label>Roommate Religion</ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredReligion" name="preferredReligion"
-                id="preferredReligion">
+                id="preferredReligion" multiple="true">
                 <ion-select-option value="1">No Preference</ion-select-option>
                 <ion-select-option value="2">Buddhist</ion-select-option>
                 <ion-select-option value="3">Christian</ion-select-option>
@@ -163,12 +203,16 @@
               </ion-select>
             </ion-item>
           </form>
-          <ion-button fill="clear" *ngIf="isValid" (click)="goToNext()">Done
-            <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
-          </ion-button>
+          <div class="navigation-button">
+            <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back
+              <ion-icon slot="start" name="arrow-round-back"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" *ngIf="isValid" (click)="goToNext()">Done
+              <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+            </ion-button>
+          </div>
         </ion-card-content>
       </ion-card>
     </ion-slide>
-
   </ion-slides>
 </ion-content>

@@ -19,19 +19,23 @@ export class UserRegistrationComponent implements OnInit {
   public otpsend = false;
   private otp;
   private isValid = false;
+  public displayImage = './assets/male.png';
   public newUser = {
     email: '',
     otp: '',
     referCode: '',
     firstName: '',
     lastName: '',
+    age: '',
     phone: '',
     college: '',
     job: '',
     city: '',
     gender: '',
     roommateGender: '',
-    userImage: './assets/male.png'
+    religion: '',
+    preferredReligion: '',
+    userImage: ''
   };
 
   @ViewChild('registrationslides', { read: IonSlides, static: true }) registrationslides: IonSlides;
@@ -81,6 +85,14 @@ export class UserRegistrationComponent implements OnInit {
   public goToNext() {
     this.registrationslides.lockSwipes(false).then(() => {
       this.registrationslides.slideNext(1000, true).then(() => {
+        this.registrationslides.lockSwipes(true).then(() => { });
+      });
+    });
+  }
+
+  public goToPrev() {
+    this.registrationslides.lockSwipes(false).then(() => {
+      this.registrationslides.slidePrev(1000, true).then(() => {
         this.registrationslides.lockSwipes(true).then(() => { });
       });
     });
@@ -157,8 +169,8 @@ export class UserRegistrationComponent implements OnInit {
     this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
       const currentImagefilePath = this.webView.convertFileSrc(this.file.dataDirectory + newFileName);
       // this.toast.show(`Image: ${JSON.stringify(success)}`, `long`, 'bottom').subscribe(() => { });
-      this.newUser.userImage = currentImagefilePath;
-      // this.newUser.userImage = this.file.dataDirectory + newFileName;
+      this.displayImage = currentImagefilePath;
+      this.newUser.userImage = this.file.dataDirectory + newFileName;
     }, error => {
       this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
     });

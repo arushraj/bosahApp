@@ -29,22 +29,6 @@ export class AppService {
         private router: Router) {
     }
 
-    public subscribeInternetStatus() {
-        this.network.onChange().subscribe(() => {
-            if (this.network.type !== this.network.Connection.NONE && this.network.type !== this.network.Connection.UNKNOWN) {
-                // this.toast.show(`Woo..! Internet Online.`, `short`, 'bottom').subscribe(() => { });
-            } else {
-                // this.toast.show(`Oops..! Internet Offline.`, `short`, 'bottom').subscribe(() => { });
-            }
-        });
-        // this.network.onConnect().subscribe(() => {
-        //     this.toast.show(`Woo..! Internet Online.`, `short`, 'bottom').subscribe(() => { });
-        // });
-        // this.network.onDisconnect().subscribe(() => {
-        //     this.toast.show(`Oops..! Internet Offline.`, `short`, 'bottom').subscribe(() => { });
-        // });
-    }
-
     private createUser(data?: CurrentUser) {
         return {
             UserId: data ? data.UserId : '',
