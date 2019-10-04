@@ -58,13 +58,19 @@ export class UserRegistrationComponent implements OnInit {
   public sendOTP() {
     if (this.newUser.email) {
       this.otp = Math.floor(1000 + Math.random() * 9000).toString();
-      this.toast.show(`${this.otp}`, `short`, `bottom`).subscribe(() => { });
+      // this.toast.show(`${this.otp}`, `short`, `bottom`).subscribe(() => { });
+      this.appService.sentotp(this.otp, this.newUser.email);
       this.otpsend = true;
     }
   }
 
   public reSendOTP() {
-    this.toast.show(`${this.otp}`, `short`, `bottom`).subscribe(() => { });
+    // this.toast.show(`${this.otp}`, `short`, `bottom`).subscribe(() => { });
+    this.sendOTP();
+  }
+
+  public registeredNewUser() {
+
   }
 
   public onKey(event: any) {

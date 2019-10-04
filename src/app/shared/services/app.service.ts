@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HTTP } from '@ionic-native/http/ngx';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { CurrentUser } from '../model/current-user.model';
+import { CurrentUser, NewUser } from '../model/current-user.model';
 import { AppConstant, UrlKey, StorageKey } from '../constant/app.constant';
 import { AppHttpService } from './rest.service';
 import { LoadingController } from '@ionic/angular';
@@ -140,6 +140,10 @@ export class AppService {
                 }
                 loading.dismiss();
                 return resData;
+            })
+            .catch(err => {
+                this.toast.show(`${err}`, `short`, `bottom`).subscribe(() => { });
+                loading.dismiss();
             });
     }
 
@@ -188,4 +192,53 @@ export class AppService {
     public async getCurrentUserIdfromLocalStorage() {
         return await this.storage.get(StorageKey.UserIdKey);
     }
+
+    public async sentotp(otp: string, emailId: string) {
+        if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
+            this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
+            return;
+        }
+        const loading = await this.loadingController.create({
+            message: 'Please wait...',
+            translucent: true,
+            cssClass: ''
+        });
+        loading.present();
+        const url = this.appConstant.getURL(UrlKey.Send_Otp);
+        const data = { otp, emailId };
+        this.http.post(url, data, {})
+            .then(res => {
+                const resData = JSON.parse(res.data);
+                this.toast.show(`${resData}`, `short`, `bottom`).subscribe(() => { });
+                loading.dismiss();
+            })
+            .catch(err => {
+                this.toast.show(`${JSON.stringify(err)}`, `short`, `bottom`).subscribe(() => { });
+                loading.dismiss();
+            });
+    }
+
+    // public async userRegistration(newUser: NewUser) {
+    //     if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
+    //         this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
+    //         return;
+    //     }
+    //     const loading = await this.loadingController.create({
+    //         message: 'Please wait...',
+    //         translucent: true,
+    //         cssClass: ''
+    //     });
+    //     loading.present();
+    //     const url = this.appConstant.getURL(UrlKey.User_Registration);
+    //     this.http.post(url, newUser, {})
+    //         .then(res => {
+    //             const resData = JSON.parse(res.data);
+    //             this.toast.show(`${resData}`, `short`, `bottom`).subscribe(() => { });
+    //             loading.dismiss();
+    //         })
+    //         .catch(err => {
+    //             this.toast.show(`${JSON.stringify(err)}`, `short`, `bottom`).subscribe(() => { });
+    //             loading.dismiss();
+    //         });
+    // }
 }
