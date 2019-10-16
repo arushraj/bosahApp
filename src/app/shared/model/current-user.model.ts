@@ -4,7 +4,7 @@ export class CurrentUser {
     FName: string;
     LastName: string;
     PhoneNumber: string;
-    School: string;
+    College: string;
     Job: string;
     GenderName: string;
     ProfileImagePath: string;
@@ -29,12 +29,6 @@ export class NewUser {
     PreferredGenderIds: string;
     PreferredReligionIds: string;
     Age: number;
-}
-
-export class RoommatePreferences {
-    GenderIds: string;
-    CityId: number;
     MinAge: number;
     MaxAge: number;
-    ReligionIds: string;
 }

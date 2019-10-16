@@ -5,7 +5,9 @@ export class AppConstant {
     readonly CURRENT_USER_URL = '/api/User/uid';
     readonly PROFILE_IMAGE_UPLOAD = '/api/Upload';
     readonly SEND_OTP = '/api/sendEmail';
-    readonly USER_REGISTRATION = 'api/register';
+    readonly USER_REGISTRATION = '/api/register';
+    readonly USER_LOCATIONS = '/api/getAllLocation';
+    readonly USER_RELIGIONS = '/api/getAllReligion';
 
     /**
      * getURL() funtion to get url
@@ -34,7 +36,9 @@ export enum UrlKey {
     Current_User,
     User_Profile_Image_Upload,
     Send_Otp,
-    User_Registration
+    User_Registration,
+    User_Locations,
+    User_Religions
 }
 
 export enum StorageKey {

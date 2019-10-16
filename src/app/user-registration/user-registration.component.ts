@@ -1,13 +1,13 @@
 import { Component, OnInit, QueryList, ViewChild } from '@angular/core';
 import { AppService } from '../shared/services/app.service';
-import { CurrentUser } from '../shared/model/current-user.model';
+import { CurrentUser, NewUser } from '../shared/model/current-user.model';
 import { ActionSheetController, Platform, LoadingController } from '@ionic/angular';
 import { Toast } from '@ionic-native/toast/ngx';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { File } from '@ionic-native/file/ngx';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, IonRange } from '@ionic/angular';
 
 @Component({
   selector: 'app-user-registration',
@@ -18,7 +18,7 @@ export class UserRegistrationComponent implements OnInit {
 
   public otpsend = false;
   private otp;
-  private isValid = false;
+  private isValid = true;
   public displayImage = './assets/male.png';
   public newUser = {
     email: '',
@@ -26,19 +26,25 @@ export class UserRegistrationComponent implements OnInit {
     referCode: '',
     firstName: '',
     lastName: '',
-    age: '',
+    age: null,
     phone: '',
+    password: '',
     college: '',
     job: '',
-    city: '',
-    gender: '',
-    roommateGender: '',
-    religion: '',
-    preferredReligion: '',
+    city: null,
+    gender: null,
+    preferredGender: [],
+    religion: null,
+    preferredReligion: [],
     userImage: ''
   };
 
+  public locations;
+  public religions;
+
+  @ViewChild('agerange', { read: IonRange, static: true }) agerange: IonRange;
   @ViewChild('registrationslides', { read: IonSlides, static: true }) registrationslides: IonSlides;
+
 
   constructor(
     private appService: AppService,
@@ -53,14 +59,39 @@ export class UserRegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.registrationslides.lockSwipes(true).then(() => { });
+
+    this.appService.getLocation().subscribe(locations => {
+      this.locations = locations;
+    });
+    this.appService.getReligion().subscribe(religions => {
+      this.religions = religions;
+    });
   }
 
-  public sendOTP() {
+  public async sendOTP() {
     if (this.newUser.email) {
+      const loading = await this.loadingController.create({
+        message: 'Please wait...',
+        translucent: true,
+        cssClass: ''
+      });
+      loading.present();
       this.otp = Math.floor(1000 + Math.random() * 9000).toString();
       // this.toast.show(`${this.otp}`, `short`, `bottom`).subscribe(() => { });
-      this.appService.sentotp(this.otp, this.newUser.email);
-      this.otpsend = true;
+
+      this.appService.sentotp(this.otp, this.newUser.email)
+        .then(res => {
+          const resData = JSON.parse(res.data);
+          loading.dismiss();
+          if (resData === 'Success') {
+            this.otpsend = true;
+          }
+          this.toast.show(`${resData}`, `short`, `bottom`).subscribe(() => { });
+        })
+        .catch(err => {
+          loading.dismiss();
+          this.toast.show(`${JSON.stringify(err)}`, `short`, `bottom`).subscribe(() => { });
+        });
     }
   }
 
@@ -70,7 +101,25 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   public registeredNewUser() {
-
+    const user: NewUser = {
+      FirstName: this.newUser.firstName,
+      LastName: this.newUser.lastName,
+      Password: this.newUser.password,
+      EmailId: this.newUser.email,
+      PhoneNumber: this.newUser.phone,
+      College: this.newUser.college,
+      Job: this.newUser.job,
+      ProfileImagePath: this.newUser.userImage,
+      GenderId: this.newUser.gender,
+      ReligionId: this.newUser.religion,
+      CityId: this.newUser.city,
+      PreferredGenderIds: this.newUser.preferredGender.join(','),
+      PreferredReligionIds: this.newUser.preferredReligion.join(','),
+      Age: this.newUser.age,
+      MaxAge: 20,
+      MinAge: 30
+    };
+    this.appService.userRegistration(user);
   }
 
   public onKey(event: any) {
@@ -91,6 +140,7 @@ export class UserRegistrationComponent implements OnInit {
   public goToNext() {
     this.registrationslides.lockSwipes(false).then(() => {
       this.registrationslides.slideNext(1000, true).then(() => {
+        // this.agerange.value = { lower: 20, upper: 40 };
         this.registrationslides.lockSwipes(true).then(() => { });
       });
     });

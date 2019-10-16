@@ -60,5 +60,7 @@ import { AppHttpService } from './shared/services/rest.service';
 export class AppModule {
   constructor(private appService: AppService) {
     // this.appService.getCurrentuserFromDB();
+    this.appService.getUserLocationsFromDB();
+    this.appService.getUserReligionsFromDB();
   }
 }

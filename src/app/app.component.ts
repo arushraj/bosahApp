@@ -33,19 +33,19 @@ export class AppComponent {
   private previousUrl: string;
   private currentUrl: string;
   public appPages = [
-    {
-      title: 'Match List',
-      url: '/matchprofile',
-      icon: 'thumbs-up'
-    }, {
-      title: 'Preferred List',
-      url: '/preferredprofile',
-      icon: 'heart'
-    }, {
-      title: 'User Login',
-      url: 'userlogin',
-      icon: 'person'
-    }
+    // {
+    //   title: 'Match List',
+    //   url: '/matchprofile',
+    //   icon: 'thumbs-up'
+    // }, {
+    //   title: 'Preferred List',
+    //   url: '/preferredprofile',
+    //   icon: 'heart'
+    // }, {
+    //   title: 'User Login',
+    //   url: 'userlogin',
+    //   icon: 'person'
+    // }
   ];
 
   constructor(
@@ -157,7 +157,7 @@ export class AppComponent {
 
       this.main.forEach((outlet: IonRouterOutlet) => {
         if (outlet && outlet.canGoBack()) {
-          outlet.pop();
+          // outlet.pop();
         } else if (this.router.isActive('/tabs/match', true)
           || this.router.isActive('/tabs/preferred', true)
           || this.router.isActive('/tabs/userprofile', true)) {

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HTTP } from '@ionic-native/http/ngx';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { CurrentUser, NewUser } from '../model/current-user.model';
+import { UserLocation } from '../model/location.model';
+import { UserReligion } from '../model/religion.model';
 import { AppConstant, UrlKey, StorageKey } from '../constant/app.constant';
 import { AppHttpService } from './rest.service';
 import { LoadingController } from '@ionic/angular';
@@ -15,8 +17,9 @@ import { Router } from '@angular/router';
 export class AppService {
 
     public currentUser = new BehaviorSubject<CurrentUser>(this.createUser());
-    // private userIdKey = 'userId';
-    // private localCurrentUserKey = 'user';
+    private userLoactions = new BehaviorSubject<UserLocation>(this.createLocation());
+    private userReligions = new BehaviorSubject<UserReligion>(this.createReligion());
+
 
     constructor(
         private http: HTTP, private appConstant: AppConstant,
@@ -36,7 +39,7 @@ export class AppService {
             FName: data ? data.FName : '...',
             LastName: data ? data.LastName : '...',
             PhoneNumber: data ? data.PhoneNumber : '...',
-            School: data ? data.School : '...',
+            College: data ? data.College : '...',
             Job: data ? data.Job : '...',
             ProfileImagePath: data ? data.ProfileImagePath : '...',
             GenderName: data ? data.GenderName : '...',
@@ -47,9 +50,20 @@ export class AppService {
         };
     }
 
-    /**
-     * getCurrentUser() function to get information about Current App User
-     */
+    private createLocation(data?: UserLocation) {
+        return {
+            CityId: data ? data.CityId : 0,
+            City: data ? data.City : ''
+        };
+    }
+
+    private createReligion(data?: UserReligion) {
+        return {
+            ReligionId: data ? data.ReligionId : 0,
+            Religion: data ? data.Religion : ''
+        };
+    }
+
     public getCurrentUser(): Observable<CurrentUser> {
         return this.currentUser.asObservable();
     }
@@ -58,9 +72,23 @@ export class AppService {
         this.currentUser.next(user);
     }
 
-    /**
-     * getCurrentuserFromDB() function to get info from db
-     */
+    public getLocation(): Observable<UserLocation> {
+        return this.userLoactions.asObservable();
+    }
+
+    private setLocation(location: UserLocation) {
+        this.userLoactions.next(location);
+    }
+
+    public getReligion(): Observable<UserReligion> {
+        return this.userReligions.asObservable();
+    }
+
+    private setReligion(religion: UserReligion) {
+        this.userReligions.next(religion);
+    }
+
+
     public async getCurrentuserFromDB() {
         const loading = await this.loadingController.create({
             message: 'Please wait...',
@@ -89,8 +117,10 @@ export class AppService {
                                     .then(res => {
                                         const resUser: CurrentUser = JSON.parse(res.data);
                                         resUser.UserId = value.toString();
-                                        resUser.ProfileImagePath = this.appConstant.APP_BASE_URL
-                                            + resUser.ProfileImagePath + `?random=` + Math.random();
+                                        if (resUser.ProfileImagePath !== '') {
+                                            resUser.ProfileImagePath = this.appConstant.APP_BASE_URL
+                                                + resUser.ProfileImagePath + `?random=` + Math.random();
+                                        }
                                         this.setCurrentUser(this.createUser(resUser));
                                         this.storage.set(StorageKey.LocalCurrentUserKey, resUser);
                                         loading.dismiss();
@@ -106,8 +136,10 @@ export class AppService {
                         });
                 } else {
                     loading.dismiss();
-                    user.ProfileImagePath = user.ProfileImagePath
-                        .substr(0, user.ProfileImagePath.indexOf('=') + 1) + Math.random();
+                    if (user.ProfileImagePath !== '') {
+                        user.ProfileImagePath = user.ProfileImagePath
+                            .substr(0, user.ProfileImagePath.indexOf('=') + 1) + Math.random();
+                    }
                     this.setCurrentUser(this.createUser(user));
                 }
             });
@@ -115,6 +147,30 @@ export class AppService {
             console.log(ex);
             loading.dismiss();
         }
+    }
+
+    public getUserLocationsFromDB() {
+        const url = this.appConstant.getURL(UrlKey.Current_User);
+        this.http.get(url, {}, {})
+            .then(res => {
+                const resLocation: UserLocation = JSON.parse(res.data);
+                this.setLocation(this.createLocation(resLocation));
+            })
+            .catch(error => {
+                this.setLocation(this.createLocation());
+            });
+    }
+
+    public getUserReligionsFromDB() {
+        const url = this.appConstant.getURL(UrlKey.Current_User);
+        this.http.get(url, {}, {})
+            .then(res => {
+                const resLocation: UserLocation = JSON.parse(res.data);
+                this.setLocation(this.createLocation(resLocation));
+            })
+            .catch(error => {
+                this.setLocation(this.createLocation());
+            });
     }
 
     public async userLogin(email?: string, password?: string) {
@@ -160,19 +216,24 @@ export class AppService {
         loading.present();
         const data = {
             UserId: currentUser.UserId,
-            FirstName: currentUser.FName
+            ProfileFileName: currentUser.ProfileImagePath ? currentUser.ProfileImagePath.split('/')[4].split('?')[0] : ''
         };
         this.http.uploadFile(this.appConstant.getURL(UrlKey.User_Profile_Image_Upload),
             data, {}, imagePath, 'ProfilePics')
             .then(res => {
                 loading.dismiss();
-
-                // Update the Random number.
-                currentUser.ProfileImagePath = currentUser.ProfileImagePath
-                    .substr(0, currentUser.ProfileImagePath.indexOf('=') + 1) + Math.random();
-
-                this.setCurrentUser(this.createUser(currentUser));
-                this.toast.show(`${res.data}`, `short`, 'bottom').subscribe(() => { });
+                const resdata = JSON.parse(res.data);
+                if (data.ProfileFileName === '') {
+                    this.storage.remove(StorageKey.LocalCurrentUserKey).then(value => {
+                        this.getCurrentuserFromDB();
+                    });
+                } else {
+                    // Update the Random number.
+                    currentUser.ProfileImagePath = currentUser.ProfileImagePath
+                        .substr(0, currentUser.ProfileImagePath.indexOf('=') + 1) + Math.random();
+                    this.setCurrentUser(this.createUser(currentUser));
+                }
+                this.toast.show(`${resdata.Message}`, `short`, 'bottom').subscribe(() => { });
             }).catch((err) => {
                 loading.dismiss();
                 this.toast.show(`Upload catch Error: ${JSON.stringify(err)}`, `short`, 'bottom').subscribe(() => { });
@@ -198,19 +259,38 @@ export class AppService {
             this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
             return;
         }
+        const url = this.appConstant.getURL(UrlKey.Send_Otp);
+        const data = { otp, emailId };
+        return this.http.post(url, data, {});
+
+    }
+
+    public async userRegistration(newUser: NewUser) {
+        if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
+            this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
+            return;
+        }
         const loading = await this.loadingController.create({
             message: 'Please wait...',
             translucent: true,
             cssClass: ''
         });
         loading.present();
-        const url = this.appConstant.getURL(UrlKey.Send_Otp);
-        const data = { otp, emailId };
-        this.http.post(url, data, {})
+        const url = this.appConstant.getURL(UrlKey.User_Registration);
+        const userImagePath = newUser.ProfileImagePath;
+        this.http.post(url, newUser, {})
             .then(res => {
                 const resData = JSON.parse(res.data);
-                this.toast.show(`${resData}`, `short`, `bottom`).subscribe(() => { });
                 loading.dismiss();
+                if (userImagePath) {
+                    this.toast.show(`${resData.ResponseMessage}`, `short`, `bottom`).subscribe(() => { });
+                    this.toast.show(`User ID: ${resData.UserId}`, `long`, `top`).subscribe(() => { });
+                    this.uploadUserRegistrationImage(resData.UserId, userImagePath);
+                    this.router.navigate(['/userlogin']);
+                } else {
+                    this.toast.show(`${resData.ResponseMessage}`, `short`, `bottom`).subscribe(() => { });
+                    this.router.navigate(['/userlogin']);
+                }
             })
             .catch(err => {
                 this.toast.show(`${JSON.stringify(err)}`, `short`, `bottom`).subscribe(() => { });
@@ -218,27 +298,31 @@ export class AppService {
             });
     }
 
-    // public async userRegistration(newUser: NewUser) {
-    //     if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
-    //         this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
-    //         return;
-    //     }
-    //     const loading = await this.loadingController.create({
-    //         message: 'Please wait...',
-    //         translucent: true,
-    //         cssClass: ''
-    //     });
-    //     loading.present();
-    //     const url = this.appConstant.getURL(UrlKey.User_Registration);
-    //     this.http.post(url, newUser, {})
-    //         .then(res => {
-    //             const resData = JSON.parse(res.data);
-    //             this.toast.show(`${resData}`, `short`, `bottom`).subscribe(() => { });
-    //             loading.dismiss();
-    //         })
-    //         .catch(err => {
-    //             this.toast.show(`${JSON.stringify(err)}`, `short`, `bottom`).subscribe(() => { });
-    //             loading.dismiss();
-    //         });
-    // }
+    public async uploadUserRegistrationImage(userId, ImagePath) {
+        if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
+            this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
+            return;
+        }
+        const loading = await this.loadingController.create({
+            message: 'Please wait...',
+            translucent: true,
+            cssClass: ''
+        });
+        loading.present();
+        const data = {
+            UserId: userId
+        };
+        this.http.uploadFile(this.appConstant.getURL(UrlKey.User_Profile_Image_Upload),
+            data, {}, ImagePath, '')
+            .then(uploadRes => {
+                loading.dismiss();
+                // this.router.navigate(['/userlogin']);
+                const resdata = JSON.parse(uploadRes.data);
+                this.toast.show(`Reg Upload catch Error: ${JSON.stringify(resdata)}`, `short`, 'bottom').subscribe(() => { });
+            }).catch((err) => {
+                loading.dismiss();
+                // this.router.navigate(['/userlogin']);
+                this.toast.show(`Reg Upload catch Error: ${JSON.stringify(err)}`, `short`, 'bottom').subscribe(() => { });
+            });
+    }
 }

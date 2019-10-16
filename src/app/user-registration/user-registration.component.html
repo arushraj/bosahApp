@@ -11,14 +11,16 @@
 
 <ion-content class="app-background-img" fullscreen padding scroll-y="false">
   <ion-slides #registrationslides scrollbar="true">
+
     <ion-slide class="otp-slide">
       <ion-card>
-        <img src="/assets/CB_Logo_V2.png" alt="" />
+        <img class="slide-image" src="/assets/Bosah-Icons/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
           <form padding-right class="otp-form">
             <ion-item class="email-textbox">
               <ion-icon slot="start" name="at" class="auto-top-bottom-marging" color="primary"></ion-icon>
-              <ion-input type="email" [(ngModel)]="newUser.email" name="email" [disabled]="otpsend" id="email" placeholder="your e-mail id">
+              <ion-input type="email" [(ngModel)]="newUser.email" name="email" [disabled]="otpsend" id="email"
+                placeholder="your e-mail id">
               </ion-input>
               <ion-button slot="end" expand="block" fill="clean" shape="round" (click)="sendOTP()" [disabled]="otpsend">
                 <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
@@ -48,7 +50,7 @@
 
     <ion-slide class="refer-slide">
       <ion-card>
-        <img src="/assets/CB_Logo_V2.png" alt="" />
+        <img class="slide-image" src="/assets/Bosah-Icons/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
           <form padding-right class="refer-form">
             <h3 class="refer-message-label">Enter code who refer you.</h3>
@@ -70,9 +72,36 @@
       </ion-card>
     </ion-slide>
 
+    <ion-slide class="password-slide">
+      <ion-card>
+        <img class="slide-image" src="/assets/Bosah-Icons/ICON WITH TITLE.png" alt="" />
+        <ion-card-content>
+          <form padding-right class="password-form">
+            <ion-item class="password-textbox">
+              <ion-input type="password" [(ngModel)]="newUser.password" name="password" id="password"
+                placeholder="Password">
+              </ion-input>
+            </ion-item>
+            <ion-item class="confirmPassword-textbox">
+              <ion-input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
+              </ion-input>
+            </ion-item>
+          </form>
+          <div class="navigation-button">
+            <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back
+              <ion-icon slot="start" name="arrow-round-back"></ion-icon>
+            </ion-button>
+            <ion-button class="next-button" fill="clear" [disabled]="!isValid" (click)="goToNext()">Continue
+              <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+
     <ion-slide class="personal-slide">
       <ion-card>
-        <img src="/assets/CB_Logo_V2.png" alt="" />
+        <img class="slide-image" src="/assets/Bosah-Icons/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
           <form padding-right class="personal-form">
             <ion-item class="firstname-textbox">
@@ -108,7 +137,7 @@
 
     <ion-slide class="profession-slide">
       <ion-card>
-        <img src="/assets/CB_Logo_V2.png" alt="" />
+        <img class="slide-image" src="/assets/Bosah-Icons/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
           <form padding-right class="profession-form">
             <ion-item class="college-textbox">
@@ -122,12 +151,19 @@
             <ion-item class="city-select">
               <ion-label>City</ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.city" name="city" id="city">
-                <ion-select-option value="1">Dallas</ion-select-option>
+                <!-- <ion-select-option *ngFor="let location of locations">{{location.City}}</ion-select-option> -->
+                <!-- <ion-select-option value="1">Dallas</ion-select-option>
                 <ion-select-option value="2">Austin</ion-select-option>
                 <ion-select-option value="3">Houston</ion-select-option>
                 <ion-select-option value="4">San Antonio</ion-select-option>
-                <ion-select-option value="5">Fort Worth</ion-select-option>
+                <ion-select-option value="5">Fort Worth</ion-select-option> -->
               </ion-select>
+            </ion-item>
+            <ion-item class="age-range">
+              <ion-range min="0" max="50" dual-knobs pin value="0" color="primary" #agerange>
+                <ion-label slot="start">Min Age</ion-label>
+                <ion-label slot="end">Max Age</ion-label>
+              </ion-range>
             </ion-item>
           </form>
           <div class="navigation-button">
@@ -144,7 +180,8 @@
 
     <ion-slide class="user-slide">
       <ion-card>
-        <img src="/assets/CB_Logo_V2.png" alt="" />
+        <img class="slide-image" src="/assets/Bosah-Icons/ICON WITH TITLE.png" alt="" />
+        <!-- <img class="slide-image" src="/assets/Bosah-Icons/ICON WITH TITLE.png" alt="" />
         <ion-card-header class="ion-no-padding">
           <ion-avatar class="user-avatar">
             <ion-img src="{{displayImage}}" alt="UserImage" (ionError)="setdefultImage($event)"></ion-img>
@@ -154,7 +191,7 @@
               <ion-icon class="camera" name="Camera"></ion-icon>
             </ion-chip>
           </ion-card-title>
-        </ion-card-header>
+        </ion-card-header> -->
         <ion-card-content>
           <form padding-right class="user-form">
             <ion-item class="gender-select">
@@ -167,10 +204,9 @@
             <ion-item class="preferred-gender-select">
               <ion-label>Roommate Gender</ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredGender" name="preferredGender"
-                id="preferredGender">
+                id="preferredGender" multiple="true">
                 <ion-select-option value="1">Male</ion-select-option>
                 <ion-select-option value="2">Female</ion-select-option>
-                <ion-select-option value="3">Both</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-item class="religion-select">
@@ -191,7 +227,9 @@
               <ion-label>Roommate Religion</ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredReligion" name="preferredReligion"
                 id="preferredReligion" multiple="true">
-                <ion-select-option value="1">No Preference</ion-select-option>
+                <!-- <ion-select-option *ngFor="let religion of religions" [value]="{{Religion.ReligionId}}">
+                  {{religion.Religion}}</ion-select-option> -->
+                <!-- <ion-select-option value="1">No Preference</ion-select-option>
                 <ion-select-option value="2">Buddhist</ion-select-option>
                 <ion-select-option value="3">Christian</ion-select-option>
                 <ion-select-option value="4">Catholic</ion-select-option>
@@ -199,7 +237,7 @@
                 <ion-select-option value="6">Jewish</ion-select-option>
                 <ion-select-option value="7">Muslim</ion-select-option>
                 <ion-select-option value="8">Sikh</ion-select-option>
-                <ion-select-option value="9">Other</ion-select-option>
+                <ion-select-option value="9">Other</ion-select-option> -->
               </ion-select>
             </ion-item>
           </form>
@@ -207,12 +245,13 @@
             <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back
               <ion-icon slot="start" name="arrow-round-back"></ion-icon>
             </ion-button>
-            <ion-button fill="clear" [disabled]="!isValid" (click)="goToNext()">Done
+            <ion-button fill="clear" [disabled]="!isValid" (click)="registeredNewUser()">Done
               <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
             </ion-button>
           </div>
         </ion-card-content>
       </ion-card>
     </ion-slide>
+
   </ion-slides>
 </ion-content>
