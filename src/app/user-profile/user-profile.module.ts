@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { UserProfileComponent } from './user-profile.component';
+import { CustomPipesModule } from '../shared/pipe/custom-pipe.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { UserProfileComponent } from './user-profile.component';
         path: '',
         component: UserProfileComponent
       }
-    ])
+    ]),
+    CustomPipesModule.forRoot()
   ],
   declarations: [UserProfileComponent]
 })

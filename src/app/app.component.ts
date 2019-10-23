@@ -30,8 +30,7 @@ export class AppComponent {
   private timePeriodToExit = 2000;
   @ViewChildren(IonRouterOutlet) main: QueryList<IonRouterOutlet>;
   public currentUser: CurrentUser;
-  private previousUrl: string;
-  private currentUrl: string;
+  public ProfileImagePath: string;
   public appPages = [
     // {
     //   title: 'Match List',
@@ -67,22 +66,30 @@ export class AppComponent {
   initializeApp() {
     this.appService.getCurrentUser().subscribe((user: CurrentUser) => {
       this.currentUser = user;
-    });
-    this.router.events
-      .subscribe(e => {
-        if (event instanceof NavigationEnd) {
-          this.previousUrl = this.currentUrl;
-          this.currentUrl = event.url;
+      if (this.currentUser.ProfileImagePath === '...' || this.currentUser.ProfileImagePath === '') {
+        if (this.currentUser.GenderName === 'Female') {
+          this.ProfileImagePath = './assets/avatar-icon-png-10.jpg';
+        } else if (this.currentUser.GenderName === 'Male') {
+          this.ProfileImagePath = './assets/avatar-icon-png-8.jpg';
+        } else {
+          this.ProfileImagePath = './assets/no-image.png';
         }
-      });
+      } else {
+        this.ProfileImagePath = this.currentUser.ProfileImagePath;
+      }
+    });
 
-    this.backButtonEvent();
     // Initialize BackButton Eevent.
     this.platform.ready().then(() => {
 
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      // this.isValidUser();
+      this.backButtonEvent();
+
+      // // call data from DB
+      this.appService.getCurrentuserFromDB();
+      this.appService.getUserLocationsFromDB();
+      this.appService.getUserReligionsFromDB();
     });
   }
 
@@ -160,7 +167,7 @@ export class AppComponent {
           // outlet.pop();
         } else if (this.router.isActive('/tabs/match', true)
           || this.router.isActive('/tabs/preferred', true)
-          || this.router.isActive('/tabs/userprofile', true)) {
+          || this.router.isActive('/tabs/events', true)) {
           if (new Date().getTime() - this.lastTimeBackPress < this.timePeriodToExit) {
             // this.platform.exitApp(); // Exit from app
             // tslint:disable-next-line:no-string-literal
@@ -182,31 +189,14 @@ export class AppComponent {
     });
   }
 
-  private async isValidUser() {
-    const loading = await this.loadingController.create({
-      message: 'Please wait...',
-      translucent: true,
-      cssClass: ''
-    });
-    loading.present();
-    this.appService.getCurrentUserIdfromLocalStorage()
-      .then((value) => {
-        if (value === null || value === undefined) {
-          // this.toast.show(`Session expired`, `2000`, 'bottom').subscribe(() => { });
-          // this.navCtrl.navigateForward('/userlogin', { animated: true, animationDirection: 'forward' });
-          this.router.navigate(['/userlogin']);
-        }
-        loading.dismiss();
-      }).catch(() => {
-        loading.dismiss();
-      });
-  }
-
   public setdefultImage(event) {
-    if (this.currentUser.GenderName === 'Male' || this.currentUser.GenderName === '1') {
-      event.target.src = './assets/male.png';
-    } else {
-      event.target.src = './assets/female.png';
-    }
+    // if (this.currentUser.GenderName === 'Female') {
+    //   event.target.src = './assets/avatar-icon-png-10.jpg';
+    // } else if (this.currentUser.GenderName === 'Male') {
+    //   event.target.src = './assets/avatar-icon-png-8.jpg';
+    // } else {
+    //   event.target.src = './assets/no-image.png';
+    // }
+    event.target.src = './assets/no-image.png';
   }
 }

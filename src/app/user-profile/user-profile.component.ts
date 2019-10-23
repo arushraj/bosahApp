@@ -16,6 +16,8 @@ import { File } from '@ionic-native/file/ngx';
 export class UserProfileComponent implements OnInit {
 
   public currentUser: CurrentUser;
+  public ProfileImagePath: string;
+
   constructor(
     private appService: AppService,
     private toast: Toast,
@@ -29,11 +31,22 @@ export class UserProfileComponent implements OnInit {
     this.appService.getCurrentUser()
       .subscribe(user => {
         this.currentUser = user;
+        if (this.currentUser.ProfileImagePath === '...' || this.currentUser.ProfileImagePath === '') {
+          if (this.currentUser.GenderName === 'Female') {
+            this.ProfileImagePath = './assets/avatar-icon-png-10.jpg';
+          } else if (this.currentUser.GenderName === 'Male') {
+            this.ProfileImagePath = './assets/avatar-icon-png-8.jpg';
+          } else {
+            this.ProfileImagePath = './assets/no-image.png';
+          }
+        } else {
+          this.ProfileImagePath = this.currentUser.ProfileImagePath;
+        }
       });
   }
 
   ngOnInit() {
-    this.appService.getCurrentuserFromDB();
+    // this.appService.getCurrentuserFromDB();
   }
 
   public userLogout() {
@@ -46,11 +59,14 @@ export class UserProfileComponent implements OnInit {
   }
 
   public setdefultImage(event) {
-    if (this.currentUser.GenderName === 'Male' || this.currentUser.GenderName === '1') {
-      event.target.src = './assets/male.png';
-    } else {
-      event.target.src = './assets/female.png';
-    }
+    // if (this.currentUser.GenderName === 'Female') {
+    //   event.target.src = './assets/avatar-icon-png-10.jpg';
+    // } else if (this.currentUser.GenderName === 'Male') {
+    //   event.target.src = './assets/avatar-icon-png-8.jpg';
+    // } else {
+    //   event.target.src = './assets/no-image.png';
+    // }
+    event.target.src = './assets/no-image.png';
   }
 
   public async  selectImage() {
@@ -116,7 +132,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   private copyFileToLocalDir(namePath, currentName, fileExtension) {
-    const newFileName = this.currentUser.FName + `_${new Date().getTime()}` + fileExtension;
+    const newFileName = this.currentUser.FName.replace(' ', '_') + `_${new Date().getTime()}` + fileExtension;
     this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
       const currentImagefilePath = this.webView.convertFileSrc(this.file.dataDirectory + newFileName);
       // this.toast.show(`Image: ${JSON.stringify(success)}`, `long`, 'bottom').subscribe(() => { });

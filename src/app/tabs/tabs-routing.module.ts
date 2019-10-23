@@ -26,16 +26,16 @@ const routes: Routes = [
           }
         ]
       }, {
-        path: 'userprofile',
+        path: 'events',
         children: [
           {
             path: '',
-            loadChildren: () => import('../user-profile/user-profile.module').then(m => m.UserProfileModule)
+            loadChildren: () => import('./events/events.module').then(m => m.EventsModule)
           }
         ]
       }, {
         path: '**',
-        redirectTo: 'match'
+        redirectTo: 'preferred'
       }
     ]
   }

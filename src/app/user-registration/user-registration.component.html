@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content class="app-background-img" fullscreen padding scroll-y="false">
-  <ion-slides #registrationslides scrollbar="true">
+  <ion-slides #registrationslides>
 
     <ion-slide class="otp-slide">
       <ion-card>
@@ -83,7 +83,8 @@
               </ion-input>
             </ion-item>
             <ion-item class="confirmPassword-textbox">
-              <ion-input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
+              <ion-input type="password" name="confirmPassword" [(ngModel)]="newUser.confirmPassword"
+                id="confirmPassword" placeholder="Confirm Password">
               </ion-input>
             </ion-item>
           </form>
@@ -138,6 +139,16 @@
     <ion-slide class="profession-slide">
       <ion-card>
         <img class="slide-image" src="/assets/Bosah-Icons/ICON WITH TITLE.png" alt="" />
+        <ion-card-header class="ion-no-padding">
+          <ion-avatar class="user-avatar">
+            <ion-img src="{{displayImage}}" alt="UserImage" (ionError)="setdefultImage($event)"></ion-img>
+          </ion-avatar>
+          <ion-card-title>
+            <ion-chip color="primary" (click)="selectImage()">
+              <ion-icon class="camera" name="Camera"></ion-icon>
+            </ion-chip>
+          </ion-card-title>
+        </ion-card-header>
         <ion-card-content>
           <form padding-right class="profession-form">
             <ion-item class="college-textbox">
@@ -151,19 +162,23 @@
             <ion-item class="city-select">
               <ion-label>City</ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.city" name="city" id="city">
-                <!-- <ion-select-option *ngFor="let location of locations">{{location.City}}</ion-select-option> -->
-                <!-- <ion-select-option value="1">Dallas</ion-select-option>
-                <ion-select-option value="2">Austin</ion-select-option>
-                <ion-select-option value="3">Houston</ion-select-option>
-                <ion-select-option value="4">San Antonio</ion-select-option>
-                <ion-select-option value="5">Fort Worth</ion-select-option> -->
+                <ion-select-option *ngFor="let location of locations" [value]="location.CityId">{{location.City}}
+                </ion-select-option>
               </ion-select>
             </ion-item>
-            <ion-item class="age-range">
-              <ion-range min="0" max="50" dual-knobs pin value="0" color="primary" #agerange>
-                <ion-label slot="start">Min Age</ion-label>
-                <ion-label slot="end">Max Age</ion-label>
-              </ion-range>
+            <ion-item class="gender-select">
+              <ion-label>Gender</ion-label>
+              <ion-select placeholder="Select One" [(ngModel)]="newUser.gender" name="gender" id="gender">
+                <ion-select-option value="1">Male</ion-select-option>
+                <ion-select-option value="2">Female</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item class="religion-select">
+              <ion-label>Religion</ion-label>
+              <ion-select placeholder="Select One" [(ngModel)]="newUser.religion" name="religion" id="religion">
+                <ion-select-option *ngFor="let religion of religions" [value]="religion.ReligionId">
+                  {{religion.Religion}}</ion-select-option>
+              </ion-select>
             </ion-item>
           </form>
           <div class="navigation-button">
@@ -181,26 +196,8 @@
     <ion-slide class="user-slide">
       <ion-card>
         <img class="slide-image" src="/assets/Bosah-Icons/ICON WITH TITLE.png" alt="" />
-        <!-- <img class="slide-image" src="/assets/Bosah-Icons/ICON WITH TITLE.png" alt="" />
-        <ion-card-header class="ion-no-padding">
-          <ion-avatar class="user-avatar">
-            <ion-img src="{{displayImage}}" alt="UserImage" (ionError)="setdefultImage($event)"></ion-img>
-          </ion-avatar>
-          <ion-card-title>
-            <ion-chip color="primary" (click)="selectImage()">
-              <ion-icon class="camera" name="Camera"></ion-icon>
-            </ion-chip>
-          </ion-card-title>
-        </ion-card-header> -->
         <ion-card-content>
           <form padding-right class="user-form">
-            <ion-item class="gender-select">
-              <ion-label>Gender</ion-label>
-              <ion-select placeholder="Select One" [(ngModel)]="newUser.gender" name="gender" id="gender">
-                <ion-select-option value="1">Male</ion-select-option>
-                <ion-select-option value="2">Female</ion-select-option>
-              </ion-select>
-            </ion-item>
             <ion-item class="preferred-gender-select">
               <ion-label>Roommate Gender</ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredGender" name="preferredGender"
@@ -209,36 +206,20 @@
                 <ion-select-option value="2">Female</ion-select-option>
               </ion-select>
             </ion-item>
-            <ion-item class="religion-select">
-              <ion-label>Religion</ion-label>
-              <ion-select placeholder="Select One" [(ngModel)]="newUser.religion" name="religion" id="religion">
-                <ion-select-option value="1">No Preference</ion-select-option>
-                <ion-select-option value="2">Buddhist</ion-select-option>
-                <ion-select-option value="3">Christian</ion-select-option>
-                <ion-select-option value="4">Catholic</ion-select-option>
-                <ion-select-option value="5">Hindu</ion-select-option>
-                <ion-select-option value="6">Jewish</ion-select-option>
-                <ion-select-option value="7">Muslim</ion-select-option>
-                <ion-select-option value="8">Sikh</ion-select-option>
-                <ion-select-option value="9">Other</ion-select-option>
-              </ion-select>
-            </ion-item>
             <ion-item class="preferred-religion-select">
               <ion-label>Roommate Religion</ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredReligion" name="preferredReligion"
                 id="preferredReligion" multiple="true">
-                <!-- <ion-select-option *ngFor="let religion of religions" [value]="{{Religion.ReligionId}}">
-                  {{religion.Religion}}</ion-select-option> -->
-                <!-- <ion-select-option value="1">No Preference</ion-select-option>
-                <ion-select-option value="2">Buddhist</ion-select-option>
-                <ion-select-option value="3">Christian</ion-select-option>
-                <ion-select-option value="4">Catholic</ion-select-option>
-                <ion-select-option value="5">Hindu</ion-select-option>
-                <ion-select-option value="6">Jewish</ion-select-option>
-                <ion-select-option value="7">Muslim</ion-select-option>
-                <ion-select-option value="8">Sikh</ion-select-option>
-                <ion-select-option value="9">Other</ion-select-option> -->
+                <ion-select-option *ngFor="let religion of religions" [value]="religion.ReligionId">
+                  {{religion.Religion}}</ion-select-option>
               </ion-select>
+            </ion-item>
+            <ion-item class="age-range">
+              <ion-range min="21" max="60" dualKnobs="true" pin="true" pin value="60" color="primary"
+                (ionChange)="rangeChange($event)" #agerange>
+                <ion-label slot="start">Min Age ({{this.newUser.minAge}})</ion-label>
+                <ion-label slot="end">Max Age ({{this.newUser.maxAge}})</ion-label>
+              </ion-range>
             </ion-item>
           </form>
           <div class="navigation-button">

@@ -1,0 +1,19 @@
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      Upcoming Events
+    </ion-list-header>
+    <ion-item *ngFor="let item of events" button detail>
+      <ion-thumbnail slot="start">
+        <!-- <img [src]="friend.ProfileImagePath | imageBinder:friend.Gender"> -->
+        <ion-img [src]="item.EventImageFileName | eventImageBinder" alt="" (ionError)="setdefultImage($event)">
+        </ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{item.EventName}}</h2>
+        <h3>{{item.EventDate | date}}</h3>
+        <p>{{item.EventDate | date:'shortTime'}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

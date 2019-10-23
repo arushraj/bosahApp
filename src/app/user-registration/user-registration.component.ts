@@ -1,6 +1,6 @@
-import { Component, OnInit, QueryList, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../shared/services/app.service';
-import { CurrentUser, NewUser } from '../shared/model/current-user.model';
+import { NewUser } from '../shared/model/current-user.model';
 import { ActionSheetController, Platform, LoadingController } from '@ionic/angular';
 import { Toast } from '@ionic-native/toast/ngx';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
@@ -19,7 +19,7 @@ export class UserRegistrationComponent implements OnInit {
   public otpsend = false;
   private otp;
   private isValid = true;
-  public displayImage = './assets/male.png';
+  public displayImage = '/assets/no-image.png';
   public newUser = {
     email: '',
     otp: '',
@@ -29,6 +29,7 @@ export class UserRegistrationComponent implements OnInit {
     age: null,
     phone: '',
     password: '',
+    confirmPassword: '',
     college: '',
     job: '',
     city: null,
@@ -36,7 +37,9 @@ export class UserRegistrationComponent implements OnInit {
     preferredGender: [],
     religion: null,
     preferredReligion: [],
-    userImage: ''
+    userImage: '',
+    minAge: 21,
+    maxAge: 60
   };
 
   public locations;
@@ -66,6 +69,11 @@ export class UserRegistrationComponent implements OnInit {
     this.appService.getReligion().subscribe(religions => {
       this.religions = religions;
     });
+  }
+
+  public rangeChange(event) {
+    this.newUser.minAge = event.detail.value.lower;
+    this.newUser.maxAge = event.detail.value.upper;
   }
 
   public async sendOTP() {
@@ -101,6 +109,13 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   public registeredNewUser() {
+    if (this.newUser.preferredGender.length === 0) {
+      this.toast.showShortBottom('Please select preferred genders for your roommate.').subscribe(() => { });
+      return;
+    } else if (this.newUser.preferredReligion.length === 0) {
+      this.toast.showShortBottom('Please select preferred religions for your roommate.').subscribe(() => { });
+      return;
+    }
     const user: NewUser = {
       FirstName: this.newUser.firstName,
       LastName: this.newUser.lastName,
@@ -116,8 +131,8 @@ export class UserRegistrationComponent implements OnInit {
       PreferredGenderIds: this.newUser.preferredGender.join(','),
       PreferredReligionIds: this.newUser.preferredReligion.join(','),
       Age: this.newUser.age,
-      MaxAge: 20,
-      MinAge: 30
+      MinAge: this.newUser.minAge,
+      MaxAge: this.newUser.maxAge
     };
     this.appService.userRegistration(user);
   }
@@ -138,11 +153,53 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   public goToNext() {
-    this.registrationslides.lockSwipes(false).then(() => {
-      this.registrationslides.slideNext(1000, true).then(() => {
-        // this.agerange.value = { lower: 20, upper: 40 };
-        this.registrationslides.lockSwipes(true).then(() => { });
+    this.registrationslides.getActiveIndex().then(index => {
+      if (index === 2) {
+        if (!this.newUser.password) {
+          this.toast.showShortBottom('Please enter your password.').subscribe(() => { });
+          return;
+        } else if (this.newUser.password !== this.newUser.confirmPassword) {
+          this.toast.showShortBottom('Password mismatching with confirm password.').subscribe(() => { });
+          return;
+        }
+      } else if (index === 3) {
+        if (!this.newUser.firstName) {
+          this.toast.showShortBottom('Please enter your first name.').subscribe(() => { });
+          return;
+        } else if (!this.newUser.lastName) {
+          this.toast.showShortBottom('Please enter your last name.').subscribe(() => { });
+          return;
+        } else if (!this.newUser.age) {
+          this.toast.showShortBottom('Please enter your age.').subscribe(() => { });
+          return;
+        } else if (!this.newUser.phone) {
+          this.toast.showShortBottom('Please enter your contact number.').subscribe(() => { });
+          return;
+        }
+      } else if (index === 4) {
+        if (!this.newUser.college) {
+          this.toast.showShortBottom('Please enter your college name.').subscribe(() => { });
+          return;
+        } else if (!this.newUser.job) {
+          this.toast.showShortBottom('Please enter your job title.').subscribe(() => { });
+          return;
+        } else if (!this.newUser.city) {
+          this.toast.showShortBottom('Please select your city.').subscribe(() => { });
+          return;
+        } else if (!this.newUser.gender) {
+          this.toast.showShortBottom('Please select your gender.').subscribe(() => { });
+          return;
+        } else if (!this.newUser.religion) {
+          this.toast.showShortBottom('Please select your religion.').subscribe(() => { });
+          return;
+        }
+      }
+      this.registrationslides.lockSwipes(false).then(() => {
+        this.registrationslides.slideNext(1000, true).then(() => {
+          this.registrationslides.lockSwipes(true).then(() => { });
+        });
       });
+
     });
   }
 
@@ -155,7 +212,7 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   public setdefultImage(event: any) {
-    event.target.src = './assets/male.png';
+    event.target.src = '/assets/no-image.png';
   }
 
   public async  selectImage() {
@@ -221,7 +278,7 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   private copyFileToLocalDir(namePath, currentName, fileExtension) {
-    const newFileName = this.newUser.firstName + `_${new Date().getTime()}` + fileExtension;
+    const newFileName = this.newUser.firstName.replace(' ', '_') + `_${new Date().getTime()}` + fileExtension;
     this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
       const currentImagefilePath = this.webView.convertFileSrc(this.file.dataDirectory + newFileName);
       // this.toast.show(`Image: ${JSON.stringify(success)}`, `long`, 'bottom').subscribe(() => { });

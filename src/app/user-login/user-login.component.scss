@@ -1,5 +1,6 @@
 .login-form .link-group {
-    margin-top: 10px;
+    margin-bottom: 20px;
+    border-bottom: 0.1px solid;
 }
 
 .login-form .username-textbox {
@@ -21,9 +22,9 @@
     font-size: 35px;
 }
 
-.login-form .link-group ion-button:last-child {
-    float: right;
-}
+// .login-form .link-group ion-button:last-child {
+//     float: right;
+// }
 
 .slide-image {
     width: 40%;

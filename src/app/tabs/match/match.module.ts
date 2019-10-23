@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { MatchComponent } from './match.component';
+import { CustomPipesModule } from '../../shared/pipe/custom-pipe.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { MatchComponent } from './match.component';
         path: '',
         component: MatchComponent
       }
-    ])
+    ]),
+    CustomPipesModule.forRoot()
   ]
 })
 export class MatchModule { }

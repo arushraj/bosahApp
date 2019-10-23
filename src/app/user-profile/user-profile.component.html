@@ -1,25 +1,22 @@
-<!-- <ion-header>
+<ion-header translucent>
   <ion-toolbar color="client-header">
     <ion-buttons slot="start">
-      <ion-menu-button class="menu-button"></ion-menu-button>
+      <ion-back-button defaultHref="/tabs"></ion-back-button>
     </ion-buttons>
-    <ion-title>
-      Profile
-    </ion-title>
   </ion-toolbar>
-</ion-header> -->
+</ion-header>
 
-<ion-content class="app-background-img">
+<ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
       refreshingText="Refreshing..." pull-max="0" pull-min="0">
     </ion-refresher-content>
   </ion-refresher>
   <ion-card class="user-profile-card" *ngIf="currentUser">
-    <img src="/assets/shapes.svg" alt="" />
+    <img src="/assets/Bosah-Icons/COVER SOCIAL MEDIA.png" alt="" />
     <ion-card-header class="ion-no-padding">
       <ion-avatar class="user-avatar">
-        <ion-img src="{{currentUser.ProfileImagePath}}" alt="" (ionError)="setdefultImage($event)">
+        <ion-img [src]="ProfileImagePath" alt="" (ionError)="setdefultImage($event)">
         </ion-img>
       </ion-avatar>
       <ion-card-title>
@@ -28,26 +25,38 @@
           <ion-label>Change Profile Picture</ion-label>
         </ion-chip>
         <br />
-        {{currentUser.FName}}, 25
+        <span>{{currentUser.FName | blankValue}}, {{currentUser.Age | blankValue}}</span>
       </ion-card-title>
-      <ion-card-subtitle>{{currentUser.Country}}</ion-card-subtitle>
+      <ion-card-subtitle>{{currentUser.Country | blankValue}}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       <ion-item-divider>
         <ion-icon slot="start" name="pin"></ion-icon>
-        <ion-label>{{currentUser.City}}</ion-label>
+        <ion-label>{{currentUser.City | blankValue}}</ion-label>
       </ion-item-divider>
       <ion-item-divider>
         <ion-icon slot="start" name="mail"></ion-icon>
-        <ion-label>{{currentUser.EmailId}}</ion-label>
+        <ion-label>{{currentUser.EmailId | blankValue}}</ion-label>
       </ion-item-divider>
       <ion-item-divider>
         <ion-icon slot="start" name="phone-portrait"></ion-icon>
-        <ion-label>{{currentUser.PhoneNumber}}</ion-label>
+        <ion-label>{{currentUser.PhoneNumber | blankValue}}</ion-label>
       </ion-item-divider>
       <ion-item-divider>
-        <ion-icon slot="start" name="transgender"></ion-icon>
-        <ion-label>{{currentUser.GenderName}}</ion-label>
+        <ion-icon slot="start" [name]="currentUser.GenderName"></ion-icon>
+        <ion-label>{{currentUser.GenderName | blankValue}}</ion-label>
+      </ion-item-divider>
+      <ion-item-divider>
+        <ion-icon slot="start" name="school"></ion-icon>
+        <ion-label>{{currentUser.College | blankValue}}</ion-label>
+      </ion-item-divider>
+      <ion-item-divider>
+        <ion-icon slot="start" name="briefcase"></ion-icon>
+        <ion-label>{{currentUser.Job | blankValue}}</ion-label>
+      </ion-item-divider>
+      <ion-item-divider>
+        <ion-icon slot="start" name="snow"></ion-icon>
+        <ion-label>{{currentUser.Religion | blankValue}}</ion-label>
       </ion-item-divider>
       <ion-button class="logout-button" expand="block" color="danger" (click)="userLogout()">
         <ion-icon name="log-out"></ion-icon>

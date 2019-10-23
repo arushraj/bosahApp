@@ -37,14 +37,18 @@
           Login
         </ion-button>
         <div class="link-group">
-          <!-- <ion-label><a>Forget password?</a></ion-label>
-          <ion-label ><a>New here? Sign Up</a></ion-label> -->
           <ion-button fill="clear">Forget password?</ion-button>
-          <ion-button fill="clear" routerLink="/userregistration" routerDirection="forward">New here? Sign Up
-          </ion-button>
+          <!-- <ion-button fill="clear" routerLink="/userregistration" routerDirection="forward">Sign Up</ion-button> -->
         </div>
       </form>
       <ion-item-group class="social-button">
+        <ion-button expand="block" color="tertiary" routerLink="/userregistration" routerDirection="forward">
+          <ion-icon name="mail"></ion-icon>
+          &nbsp; Sign up with e-mail
+        </ion-button>
+        <br />
+        <p text-center>———————— OR ————————</p>
+        <br />
         <ion-button expand="block" (click)="fbLogin()">
           <ion-icon name="logo-facebook"></ion-icon>
           &nbsp; Sign in with Facebook

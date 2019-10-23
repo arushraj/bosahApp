@@ -1,3 +1,56 @@
-<ion-content class="app-background-img">
-  
+<ion-content>
+    <ion-slides [options]="slideOpts" #preferredUserSlides>
+        <ion-slide *ngFor="let user of preferredUser">
+            <ion-card>
+                <!-- <img class="user-img" [src]="user.ProfileImagePath | imageBinder:user.Gender" alt="" /> -->
+                <ion-img [src]="user.ProfileImagePath | imageBinder:user.Gender" alt="" class="user-img"
+                    (ionError)="setdefultImage($event)"> </ion-img>
+                <ion-card-header *ngIf="user.UserId">
+                    <ion-card-title>{{user.FName | blankValue}}, {{user.Age | blankValue}}
+                        <!-- , {{user.City | blankValue}} -->
+                    </ion-card-title>
+                    <ion-card-subtitle>
+                        <!-- <span>
+                            <ion-icon slot="start" name="mail"></ion-icon>
+                            {{user.EmailId | blankValue}}
+                        </span> 
+                        <br />-->
+                        <span>
+                            <ion-icon slot="start" name="briefcase"></ion-icon>
+                            {{user.Job | blankValue}}
+                        </span>
+                        <br />
+                        <span>
+                            <ion-icon slot="start" name="school"></ion-icon>
+                            {{user.College | blankValue}}
+                        </span>
+                        <!-- <br />
+                        <span>
+                            <ion-icon slot="start" [name]="user.Gender"></ion-icon>
+                            {{user.Gender | blankValue}}
+                        </span> -->
+                        <!-- <br />
+                        <span>
+                            <ion-icon slot="start" name="snow"></ion-icon>
+                            {{user.Religion | blankValue}}
+                        </span> -->
+                    </ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content *ngIf="user.UserId">
+                    <ion-fab horizontal="start" vertical="center">
+                        <ion-fab-button color="light" size="small" [disabled]="user.SendRequest"
+                            (click)="notIntrested()">
+                            <ion-icon name="close" color="danger"></ion-icon>
+                        </ion-fab-button>
+                    </ion-fab>
+                    <ion-fab horizontal="end" vertical="center">
+                        <ion-fab-button color="light" size="small" (click)="sendFriendRequest(user)">
+                            <ion-icon name="heart-empty" color="primary" *ngIf="!user.SendRequest"></ion-icon>
+                            <ion-icon name="heart" color="primary" *ngIf="user.SendRequest"></ion-icon>
+                        </ion-fab-button>
+                    </ion-fab>
+                </ion-card-content>
+            </ion-card>
+        </ion-slide>
+    </ion-slides>
 </ion-content>

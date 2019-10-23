@@ -1,0 +1,8 @@
+export class Event {
+    EventId: number;
+    EventName: string;
+    EventDesc: string;
+    EventImageFileName: string;
+    EventDate: string;
+    City: string;
+}

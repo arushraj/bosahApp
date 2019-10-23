@@ -2,7 +2,7 @@ export class CurrentUser {
     UserId: string;
     EmailId: string;
     FName: string;
-    LastName: string;
+    LName: string;
     PhoneNumber: string;
     College: string;
     Job: string;
