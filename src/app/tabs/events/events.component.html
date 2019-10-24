@@ -5,7 +5,6 @@
     </ion-list-header>
     <ion-item *ngFor="let item of events" button detail>
       <ion-thumbnail slot="start">
-        <!-- <img [src]="friend.ProfileImagePath | imageBinder:friend.Gender"> -->
         <ion-img [src]="item.EventImageFileName | eventImageBinder" alt="" (ionError)="setdefultImage($event)">
         </ion-img>
       </ion-thumbnail>
@@ -16,4 +15,22 @@
       </ion-label>
     </ion-item>
   </ion-list>
+
+
+  <!-- <ion-card *ngFor="let item of events">
+    <ion-img [src]="item.EventImageFileName | eventImageBinder" alt="" (ionError)="setdefultImage($event)"></ion-img>
+    <ion-card-header>
+      <ion-card-title>{{item.EventName}}</ion-card-title>
+      <ion-card-subtitle>
+        <span>{{item.EventDate | date}}</span>
+        <br />
+        <span>{{item.EventDate | date:'shortTime'}}</span>
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button fill="clear" no-padding slot="end">
+        More...
+      </ion-button>
+    </ion-card-content>
+  </ion-card> -->
 </ion-content>
