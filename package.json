@@ -34,7 +34,7 @@
     "@ionic-native/toast": "^5.14.0",
     "@ionic/angular": "^4.7.1",
     "@ionic/storage": "^2.2.0",
-    "cordova-android": "8.0.0",
+    "cordova-android": "^8.1.0",
     "cordova-plugin-advanced-http": "^2.1.1",
     "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-facebook4": "^6.0.0",
@@ -112,8 +112,6 @@
       "cordova-plugin-filepath": {},
       "cordova-plugin-file": {}
     },
-    "platforms": [
-      "android"
-    ]
+    "platforms": []
   }
 }
