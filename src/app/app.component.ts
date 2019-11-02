@@ -32,11 +32,23 @@ export class AppComponent {
   public currentUser: CurrentUser;
   public ProfileImagePath: string;
   public appPages = [
+    {
+      title: 'Events',
+      url: '/events',
+      icon: 'calendar',
+      routerDirection: 'forward'
+    }, {
+      title: 'Modify Preferences',
+      url: '/',
+      icon: 'construct',
+      routerDirection: 'forward'
+    }, {
+      title: 'Search Request for flat',
+      url: '/flatsearchform',
+      icon: 'search',
+      routerDirection: 'forward'
+    }
     // {
-    //   title: 'Match List',
-    //   url: '/matchprofile',
-    //   icon: 'thumbs-up'
-    // }, {
     //   title: 'Preferred List',
     //   url: '/preferredprofile',
     //   icon: 'heart'
@@ -68,9 +80,9 @@ export class AppComponent {
       this.currentUser = user;
       if (this.currentUser.ProfileImagePath === '...' || this.currentUser.ProfileImagePath === '') {
         if (this.currentUser.GenderName === 'Female') {
-          this.ProfileImagePath = './assets/avatar-icon-png-10.jpg';
+          this.ProfileImagePath = './assets/female.png';
         } else if (this.currentUser.GenderName === 'Male') {
-          this.ProfileImagePath = './assets/avatar-icon-png-8.jpg';
+          this.ProfileImagePath = './assets/male.png';
         } else {
           this.ProfileImagePath = './assets/no-image.png';
         }
@@ -90,6 +102,9 @@ export class AppComponent {
       this.appService.getCurrentuserFromDB();
       this.appService.getUserLocationsFromDB();
       this.appService.getUserReligionsFromDB();
+      this.appService.getBathroomsFromDB();
+      this.appService.getBedroomsFromDB();
+      this.appService.getRentBudgetFromDB();
     });
   }
 
@@ -190,13 +205,10 @@ export class AppComponent {
   }
 
   public setdefultImage(event) {
-    // if (this.currentUser.GenderName === 'Female') {
-    //   event.target.src = './assets/avatar-icon-png-10.jpg';
-    // } else if (this.currentUser.GenderName === 'Male') {
-    //   event.target.src = './assets/avatar-icon-png-8.jpg';
-    // } else {
-    //   event.target.src = './assets/no-image.png';
-    // }
     event.target.src = './assets/no-image.png';
+  }
+
+  public userLogout() {
+    this.appService.userLogout();
   }
 }

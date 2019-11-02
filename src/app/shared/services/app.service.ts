@@ -19,6 +19,9 @@ import { UserFriends, FriendshipStatus } from '../model/user-friend.model';
 import { UserLocation } from '../model/location.model';
 import { UserReligion } from '../model/religion.model';
 import { Event } from '../model/event.model';
+import { Bathroom } from '../model/bathroom.model';
+import { Bedroom } from '../model/bedroom.model';
+import { RentBudget } from '../model/rent-budget.model';
 
 @Injectable()
 export class AppService {
@@ -26,15 +29,24 @@ export class AppService {
     public currentUser = new BehaviorSubject<CurrentUser>(this.createUser());
     private userLoactions = new BehaviorSubject<UserLocation[]>(this.createLocation());
     private userReligions = new BehaviorSubject<UserReligion[]>(this.createReligion());
+    private bathrooms = new BehaviorSubject<Bathroom[]>([]);
+    private bedrooms = new BehaviorSubject<Bedroom[]>([]);
+    private rentBudget = new BehaviorSubject<RentBudget[]>([]);
 
     private upcomingEvent = new BehaviorSubject<Event[]>([]);
     private upcomingEventList: { events: Event[] } = { events: [] };
+
+    private registeredEvent = new BehaviorSubject<Event[]>([]);
+    private registeredEventList: { events: Event[] } = { events: [] };
 
     private userPreferred = new BehaviorSubject<PreferredUser[]>(this.createuserPreferred());
     private userPreferredList: { users: PreferredUser[] } = { users: [] };
 
     private userFriends = new BehaviorSubject<UserFriends[]>(this.createFriendList());
     private userFriendsList: { friends: UserFriends[] } = { friends: [] };
+
+    private requestedFriends = new BehaviorSubject<UserFriends[]>([]);
+    private requestedFriendsList: { friends: UserFriends[] } = { friends: [] };
 
 
     constructor(
@@ -58,6 +70,12 @@ export class AppService {
                 }
             }));
     }
+    // for city Id
+    // getTransaction(id: number): Observable<Transaction>{
+    //     return this.getTransactions().pipe(
+    //         map(txs => txs.find(txn => txn.id === id))
+    //     );
+    // }
 
     private createUser(data?: CurrentUser) {
         return {
@@ -73,7 +91,12 @@ export class AppService {
             City: (data && data.City) ? data.City : '',
             Country: (data && data.Country) ? data.Country : '',
             Age: (data && data.Age) ? data.Age : null,
+            DOB: (data && data.DOB) ? data.DOB : '',
             Religion: (data && data.Religion) ? data.Religion : null,
+            AboutMe: (data && data.AboutMe) ? data.AboutMe : '',
+            AgreementImagePath: (data && data.AgreementImagePath) ? data.AgreementImagePath : '',
+            UsedReferralCode: (data && data.UsedReferralCode) ? data.UsedReferralCode : '',
+            RoommatePreferences: (data && data.RoommatePreferences) ? data.RoommatePreferences : null
         };
     }
 
@@ -137,6 +160,30 @@ export class AppService {
         this.userReligions.next(religion);
     }
 
+    public getBathrooms(): Observable<Bathroom[]> {
+        return this.bathrooms.asObservable();
+    }
+
+    private setBathrooms(bathrooms: Bathroom[]) {
+        this.bathrooms.next(bathrooms);
+    }
+
+    public getBedrooms(): Observable<Bedroom[]> {
+        return this.bedrooms.asObservable();
+    }
+
+    private setBedrooms(bedrooms: Bedroom[]) {
+        this.bedrooms.next(bedrooms);
+    }
+
+    public getRentBudget(): Observable<RentBudget[]> {
+        return this.rentBudget.asObservable();
+    }
+
+    private setRentBudget(budget: RentBudget[]) {
+        this.rentBudget.next(budget);
+    }
+
     public getUserPreferred(): Observable<PreferredUser[]> {
         return this.userPreferred.asObservable();
     }
@@ -153,12 +200,28 @@ export class AppService {
         this.userFriends.next(friends);
     }
 
+    public getRequestedFriendList(): Observable<UserFriends[]> {
+        return this.requestedFriends.asObservable();
+    }
+
+    private setRequestedFriendList(friends: UserFriends[]) {
+        this.requestedFriends.next(friends);
+    }
+
     public getUpcomingEvent(): Observable<Event[]> {
         return this.upcomingEvent.asObservable();
     }
 
     private setUpcomingEvent(events: Event[]) {
         this.upcomingEvent.next(events);
+    }
+
+    public getRegisteredEvent(): Observable<Event[]> {
+        return this.registeredEvent.asObservable();
+    }
+
+    private setRegisteredEvent(events: Event[]) {
+        this.registeredEvent.next(events);
     }
 
     // functions for HTTP Calling
@@ -187,7 +250,7 @@ export class AppService {
                                 } else {
                                     const url = this.appConstant.getURL(UrlKey.Current_User).replace('uid', value);
                                     this.http.get(url, {}, {})
-                                        .then(res => {
+                                        .then((res: any) => {
                                             loading.dismiss();
                                             const resUser: CurrentUser = JSON.parse(res.data);
                                             resUser.UserId = value.toString();
@@ -202,7 +265,8 @@ export class AppService {
                                             loading.dismiss();
                                             this.setCurrentUser(this.createUser());
                                             this.router.navigate(['/userlogin']);
-                                            this.toast.show(`Invalid User`, `short`, 'bottom').subscribe(() => { });
+                                            const msg = error.error || 'Invalid User';
+                                            this.toast.show(`${msg}`, `short`, 'bottom').subscribe(() => { });
                                         })
                                         .finally(() => {
                                             loading.dismiss();
@@ -232,7 +296,7 @@ export class AppService {
                 this.setLocation(resLocation);
             })
             .catch(error => {
-                this.setLocation(this.createLocation());
+                // this.setLocation(this.createLocation());
             })
             .finally(() => { });
     }
@@ -245,7 +309,46 @@ export class AppService {
                 this.setReligion(resReligions);
             })
             .catch(error => {
-                this.setReligion(this.createReligion());
+                // this.setReligion(this.createReligion());
+            })
+            .finally(() => { });
+    }
+
+    public getBathroomsFromDB() {
+        const url = this.appConstant.getURL(UrlKey.Bathrooms);
+        this.http.get(url, {}, {})
+            .then(res => {
+                const bathrooms: Bathroom[] = JSON.parse(res.data);
+                this.setBathrooms(bathrooms);
+            })
+            .catch(error => {
+                // this.setBathrooms([]);
+            })
+            .finally(() => { });
+    }
+
+    public getBedroomsFromDB() {
+        const url = this.appConstant.getURL(UrlKey.Bedrooms);
+        this.http.get(url, {}, {})
+            .then(res => {
+                const bedrooms: Bedroom[] = JSON.parse(res.data);
+                this.setBedrooms(bedrooms);
+            })
+            .catch(error => {
+                // this.setBathrooms([]);
+            })
+            .finally(() => { });
+    }
+
+    public getRentBudgetFromDB() {
+        const url = this.appConstant.getURL(UrlKey.Rent_Budget);
+        this.http.get(url, {}, {})
+            .then(res => {
+                const rentBudget: RentBudget[] = JSON.parse(res.data);
+                this.setRentBudget(rentBudget);
+            })
+            .catch(error => {
+                // this.setBathrooms([]);
             })
             .finally(() => { });
     }
@@ -325,7 +428,42 @@ export class AppService {
             });
     }
 
-    public async getUpcomingEventListFromDB(CtityId: number) {
+    public async getRequestedFriendsFromDB() {
+        const loading = await this.loadingController.create({
+            message: 'Please wait...',
+            translucent: true,
+            cssClass: ''
+        });
+        this.setRequestedFriendList([]);
+        loading.present();
+        this.getCurrentUserIdfromLocalStorage()
+            .then((userId) => {
+                if (userId) {
+                    const url = this.appConstant.getURL(UrlKey.Requested_Friends).replace('uid', userId);
+                    this.http.get(url, {}, {})
+                        .then(res => {
+                            const resdata = JSON.parse(res.data);
+                            const friendList: UserFriends[] = resdata.FriendandPendingList;
+                            this.requestedFriendsList.friends = friendList;
+                            this.setRequestedFriendList(Object.assign({}, this.requestedFriendsList).friends);
+                            loading.dismiss();
+                        })
+                        .catch(error => {
+                            this.requestedFriendsList.friends = [];
+                            this.setRequestedFriendList([]);
+                            loading.dismiss();
+                        })
+                        .finally(() => {
+                            loading.dismiss();
+                        });
+                }
+            })
+            .catch((err) => {
+                loading.dismiss();
+            });
+    }
+
+    public async getUpcomingEventListFromDB(CtityId: number, UserId: string) {
         if (!CtityId) {
             return;
         }
@@ -336,7 +474,7 @@ export class AppService {
         });
         this.setUpcomingEvent([]);
         loading.present();
-        const url = this.appConstant.getURL(UrlKey.Upcoming_Event).replace('cityid', CtityId.toString());
+        const url = this.appConstant.getURL(UrlKey.Upcoming_Event).replace('cityid', CtityId.toString()).replace('uid', UserId);
         this.http.get(url, {}, {})
             .then(res => {
                 const resdata = JSON.parse(res.data);
@@ -348,6 +486,36 @@ export class AppService {
             .catch(error => {
                 this.upcomingEventList.events = [];
                 this.setUpcomingEvent([]);
+                loading.dismiss();
+            })
+            .finally(() => {
+                loading.dismiss();
+            });
+    }
+
+    public async getRegisteredEventListFromDB(UserId: string) {
+        if (!UserId) {
+            return;
+        }
+        const loading = await this.loadingController.create({
+            message: 'Please wait...',
+            translucent: true,
+            cssClass: ''
+        });
+        this.setRegisteredEvent([]);
+        loading.present();
+        const url = this.appConstant.getURL(UrlKey.Registered_Event).replace('uid', UserId);
+        this.http.get(url, {}, {})
+            .then(res => {
+                const resdata = JSON.parse(res.data);
+                const events: Event[] = resdata;
+                this.registeredEventList.events = events;
+                this.setRegisteredEvent(Object.assign({}, this.registeredEventList).events);
+                loading.dismiss();
+            })
+            .catch(error => {
+                this.registeredEventList.events = [];
+                this.setRegisteredEvent([]);
                 loading.dismiss();
             })
             .finally(() => {
@@ -623,5 +791,84 @@ export class AppService {
                 }
             })
             .catch((err) => { loading.dismiss(); });
+    }
+
+    public async eventSubscribe(userId: number, event: Event) {
+        if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
+            this.toast.showShortBottom(`Please connect to internet.`).subscribe(() => { });
+            return;
+        }
+        const loading = await this.loadingController.create({
+            message: 'Please wait...',
+            translucent: true,
+            cssClass: ''
+        });
+        loading.present();
+        const url = this.appConstant.getURL(UrlKey.Event_Subscribe);
+        const data = {
+            UserID: userId.toString(),
+            EventID: event.EventId.toString(),
+            RegisterStatus: !event.isSubscribe
+        };
+        this.http.post(url, data, {})
+            .then((res) => {
+                loading.dismiss();
+                const resData = JSON.parse(res.data);
+                if (resData.Status) {
+                    if (!event.isSubscribe) {
+                        this.upcomingEventList.events.splice(this.upcomingEventList.events.indexOf(event), 1);
+                        this.registeredEventList.events.push(event);
+
+                        this.setUpcomingEvent(Object.assign({}, this.upcomingEventList).events);
+                        this.setRegisteredEvent(Object.assign({}, this.registeredEventList).events);
+                    } else {
+                        this.registeredEventList.events.splice(this.registeredEventList.events.indexOf(event), 1);
+                        this.upcomingEventList.events.push(event);
+
+                        this.setRegisteredEvent(Object.assign({}, this.registeredEventList).events);
+                        this.setUpcomingEvent(Object.assign({}, this.upcomingEventList).events);
+                    }
+                }
+                this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
+            })
+            .catch((err) => {
+                loading.dismiss();
+                this.toast
+                    .showShortBottom(`${err.message || JSON.parse(err.error).ResponseMessage}`)
+                    .subscribe(() => { });
+            })
+            .finally(() => {
+                loading.dismiss();
+            });
+    }
+
+    public async submitFlatSearchForm(form: any) {
+        if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
+            this.toast.showShortBottom(`Please connect to internet.`).subscribe(() => { });
+            return;
+        }
+        const loading = await this.loadingController.create({
+            message: 'Please wait...',
+            translucent: true,
+            cssClass: ''
+        });
+        loading.present();
+        const url = this.appConstant.getURL(UrlKey.Flat_Search_Form);
+        const data = form;
+        return this.http.post(url, data, {})
+            .then((res) => {
+                loading.dismiss();
+                const resData = JSON.parse(res.data);
+                this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
+            })
+            .catch((err) => {
+                loading.dismiss();
+                this.toast
+                    .showShortBottom(`${err.message || JSON.parse(err.error).ResponseMessage}`)
+                    .subscribe(() => { });
+            })
+            .finally(() => {
+                loading.dismiss();
+            });
     }
 }

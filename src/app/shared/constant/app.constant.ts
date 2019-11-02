@@ -10,9 +10,16 @@ export class AppConstant {
     readonly USER_RELIGIONS = '/api/getAllReligion';
     readonly USER_PREFERRED = '/api/getPreferredUser/uid';
     readonly USER_FRIENDS = '/api/friendandpendinglist/uid';
+    readonly REQUESTED_FRIEDNS = '/api/sentfriendrequestlist/uid';
     readonly SEND_FRIEND_REQUEST = '/api/sendFriendRequest';
     readonly ACTION_ON_FRIEND_REQUEST = '/api/actionOnfriendrequest';
-    readonly UPCOMING_EVENT = '/api/getAllUpcomingEvent?cityID=cityid';
+    readonly UPCOMING_EVENT = '/api/getAllUpcomingEvent?cityID=cityid&userId=uid';
+    readonly REGISTERED_EVENT = '/api/getAllRegisteredEvent?userId=uid';
+    readonly EVENT_SUBSCRIBE = '/api/registerDeregisterFromEvent';
+    readonly BATHROOMS = '/api/getallbathroom';
+    readonly BEDROOMS = '/api/getallbedroom';
+    readonly RENTBUDGET = '/api/getallrentbudget';
+    readonly FLAT_SEARCH_FORM = '/api/searchform';
 
     /**
      * getURL() funtion to get url
@@ -38,12 +45,26 @@ export class AppConstant {
                 return this.APP_BASE_URL + this.USER_PREFERRED;
             case UrlKey.User_Friends:
                 return this.APP_BASE_URL + this.USER_FRIENDS;
+            case UrlKey.Requested_Friends:
+                return this.APP_BASE_URL + this.REQUESTED_FRIEDNS;
             case UrlKey.Send_Friend_Request:
                 return this.APP_BASE_URL + this.SEND_FRIEND_REQUEST;
             case UrlKey.Action_On_Friend_Request:
                 return this.APP_BASE_URL + this.ACTION_ON_FRIEND_REQUEST;
             case UrlKey.Upcoming_Event:
                 return this.APP_BASE_URL + this.UPCOMING_EVENT;
+            case UrlKey.Registered_Event:
+                return this.APP_BASE_URL + this.REGISTERED_EVENT;
+            case UrlKey.Event_Subscribe:
+                return this.APP_BASE_URL + this.EVENT_SUBSCRIBE;
+            case UrlKey.Bathrooms:
+                return this.APP_BASE_URL + this.BATHROOMS;
+            case UrlKey.Bedrooms:
+                return this.APP_BASE_URL + this.BEDROOMS;
+            case UrlKey.Rent_Budget:
+                return this.APP_BASE_URL + this.RENTBUDGET;
+            case UrlKey.Flat_Search_Form:
+                return this.APP_BASE_URL + this.FLAT_SEARCH_FORM;
             default:
                 break;
         }
@@ -60,9 +81,16 @@ export enum UrlKey {
     User_Religions,
     User_Preferred,
     User_Friends,
+    Requested_Friends,
     Send_Friend_Request,
     Action_On_Friend_Request,
-    Upcoming_Event
+    Upcoming_Event,
+    Registered_Event,
+    Event_Subscribe,
+    Bathrooms,
+    Bedrooms,
+    Rent_Budget,
+    Flat_Search_Form
 }
 
 export enum StorageKey {

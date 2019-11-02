@@ -8,8 +8,12 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsModule),
     canActivate: [AuthGuard]
   }, {
-    path: 'userprofile',
-    loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileModule),
+    path: 'events',
+    loadChildren: () => import('./tabs/events/events.module').then(m => m.EventsModule),
+    canActivate: [AuthGuard]
+  }, {
+    path: 'flatsearchform',
+    loadChildren: () => import('./flat-search-form/flat-search-form.module').then(m => m.FlatSearchFormPageModule),
     canActivate: [AuthGuard]
   }, {
     path: 'userlogin',
@@ -21,7 +25,8 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'tabs',
     pathMatch: 'full'
-  }
+  },
+  { path: 'flat-search-form', loadChildren: './flat-search-form/flat-search-form.module#FlatSearchFormPageModule' }
 ];
 
 @NgModule({

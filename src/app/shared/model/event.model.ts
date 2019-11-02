@@ -5,4 +5,5 @@ export class Event {
     EventImageFileName: string;
     EventDate: string;
     City: string;
+    isSubscribe: boolean;
 }

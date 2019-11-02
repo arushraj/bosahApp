@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonSlides } from '@ionic/angular';
 
 import { UserFriends, FriendshipStatus } from '../../shared/model/user-friend.model';
 import { AppService } from '../../shared/services/app.service';
@@ -10,20 +11,54 @@ import { AppService } from '../../shared/services/app.service';
 })
 export class MatchComponent implements OnInit {
 
-  public friends: UserFriends[];
-  public pendingFriends: UserFriends[];
+  public pageTabs: Array<{ id: number, tabName: string, friends: UserFriends[] }>;
+  public selectedTab: number;
+  public slideOpts = {
+    initialSlide: 0,
+    speed: 300,
+    cancelable: true,
+    coverflowEffect: {
+      rotate: 50,
+      stretch: 0,
+      depth: 100,
+      modifier: 1,
+      slideShadows: true,
+    }
+  };
+  @ViewChild('SwipedTabsSlider', { read: IonSlides, static: true }) SwipedTabsSlider: IonSlides;
 
   constructor(private appService: AppService) {
+    this.pageTabs = [
+      { id: 0, tabName: 'Friends', friends: [] },
+      { id: 1, tabName: 'Pending', friends: [] },
+      { id: 2, tabName: 'Sent', friends: [] }
+    ];
+    this.selectedTab = 0;
+
     this.appService.getFriendList().subscribe((friends) => {
-      this.friends = this.friendFilter(friends, FriendshipStatus.Accepted);
-      this.pendingFriends = this.friendFilter(friends, FriendshipStatus.Pending);
+      this.pageTabs[0].friends = this.friendFilter(friends, FriendshipStatus.Accepted);
+      this.pageTabs[1].friends = this.friendFilter(friends, FriendshipStatus.Pending);
+    });
+    this.appService.getRequestedFriendList().subscribe((friends) => {
+      this.pageTabs[2].friends = this.friendFilter(friends, FriendshipStatus.Pending);
     });
   }
 
   ngOnInit() { }
 
+  currentSegment(index) {
+    this.SwipedTabsSlider.slideTo(index, 500);
+  }
+
+  currentSlide() {
+    this.SwipedTabsSlider.getActiveIndex().then(index => {
+      this.selectedTab = index;
+    });
+  }
+
   ionViewWillEnter() {
     this.appService.getUserFriendsFromDB();
+    this.appService.getRequestedFriendsFromDB();
   }
 
   private friendFilter(friends: UserFriends[], friendType: number) {
@@ -39,6 +74,7 @@ export class MatchComponent implements OnInit {
   public acceptFriendShip(friend: UserFriends) {
     this.actionOnFriendRequest(friend, FriendshipStatus.Accepted);
   }
+
   public rejectFriendShip(friend: UserFriends) {
     this.actionOnFriendRequest(friend, FriendshipStatus.Unfriended);
   }

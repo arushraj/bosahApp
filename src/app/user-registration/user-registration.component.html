@@ -14,7 +14,7 @@
 
     <ion-slide class="otp-slide">
       <ion-card>
-        <img class="slide-image" src="/assets/Bosah-Icons/ICON WITH TITLE.png" alt="" />
+        <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
           <form padding-right class="otp-form">
             <ion-item class="email-textbox">
@@ -50,7 +50,7 @@
 
     <ion-slide class="refer-slide">
       <ion-card>
-        <img class="slide-image" src="/assets/Bosah-Icons/ICON WITH TITLE.png" alt="" />
+        <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
           <form padding-right class="refer-form">
             <h3 class="refer-message-label">Enter code who refer you.</h3>
@@ -74,7 +74,7 @@
 
     <ion-slide class="password-slide">
       <ion-card>
-        <img class="slide-image" src="/assets/Bosah-Icons/ICON WITH TITLE.png" alt="" />
+        <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
           <form padding-right class="password-form">
             <ion-item class="password-textbox">
@@ -102,7 +102,7 @@
 
     <ion-slide class="personal-slide">
       <ion-card>
-        <img class="slide-image" src="/assets/Bosah-Icons/ICON WITH TITLE.png" alt="" />
+        <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
           <form padding-right class="personal-form">
             <ion-item class="firstname-textbox">
@@ -115,13 +115,17 @@
                 placeholder="Last Name">
               </ion-input>
             </ion-item>
-            <ion-item class="age-textbox">
+            <!-- <ion-item class="age-textbox">
               <ion-input type="tel" [(ngModel)]="newUser.age" name="age" id="age" placeholder="Age">
               </ion-input>
-            </ion-item>
+            </ion-item> -->
             <ion-item class="phone-textbox">
               <ion-input type="tel" [(ngModel)]="newUser.phone" name="phone" id="phone" placeholder="Phone No.">
               </ion-input>
+            </ion-item>
+            <ion-item class="dob-textbox">
+              <ion-label>Date Of Birth</ion-label>
+              <ion-datetime [(ngModel)]="newUser.dob" name="dob" id="dob" placeholder="MM-DD-YYYY" displayFormat="MM-DD-YYYY"></ion-datetime>
             </ion-item>
           </form>
           <div class="navigation-button">
@@ -138,7 +142,7 @@
 
     <ion-slide class="profession-slide">
       <ion-card>
-        <img class="slide-image" src="/assets/Bosah-Icons/ICON WITH TITLE.png" alt="" />
+        <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
         <ion-card-header class="ion-no-padding">
           <ion-avatar class="user-avatar">
             <ion-img src="{{displayImage}}" alt="UserImage" (ionError)="setdefultImage($event)"></ion-img>
@@ -195,7 +199,7 @@
 
     <ion-slide class="user-slide">
       <ion-card>
-        <img class="slide-image" src="/assets/Bosah-Icons/ICON WITH TITLE.png" alt="" />
+        <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
           <form padding-right class="user-form">
             <ion-item class="preferred-gender-select">

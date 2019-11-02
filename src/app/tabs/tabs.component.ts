@@ -20,15 +20,16 @@ export class TabsComponent implements OnInit {
     icon: 'heart',
     route: 'match'
   }, {
-    name: 'Events',
-    icon: 'calendar',
-    route: 'events'
+    name: 'Profile',
+    icon: 'person',
+    route: 'userprofile'
   }];
   // {
-  //   name: 'Profile',
-  //   icon: 'person',
-  //   route: 'userprofile'
+  //   name: 'Events',
+  //   icon: 'calendar',
+  //   route: 'events'
   // }
+
 
   @ViewChild('apptabs', { read: IonTabs, static: true }) apptabs: IonTabs;
   constructor(private appService: AppService, private toast: Toast) { }

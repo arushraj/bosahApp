@@ -6,14 +6,16 @@ import { IonicModule } from '@ionic/angular';
 import { CustomPipesModule } from '../../shared/pipe/custom-pipe.module';
 
 import { EventsComponent } from './events.component';
+import { EventDetailsComponent } from './event-details/event-details.component';
 
 
 
 @NgModule({
-  declarations: [EventsComponent],
+  declarations: [EventsComponent, EventDetailsComponent],
   imports: [
     CommonModule,
     IonicModule,
+    FormsModule,
     RouterModule.forChild([
       {
         path: '',
@@ -21,6 +23,7 @@ import { EventsComponent } from './events.component';
       }
     ]),
     CustomPipesModule.forRoot()
-  ]
+  ],
+  entryComponents: [EventDetailsComponent]
 })
 export class EventsModule { }

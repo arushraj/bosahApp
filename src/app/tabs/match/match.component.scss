@@ -6,3 +6,21 @@ ion-list-header {
 .fab-button-group {
     display: flex;
 }
+
+ion-slides {
+    min-height: 100%;
+}
+
+ion-slides ion-slide {
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+ion-slides ion-slide ion-list {
+    width: 100%;
+}
+
+ion-slides ion-slide .ion-empty-label {
+    margin: auto;
+    padding-top: 50%;
+}

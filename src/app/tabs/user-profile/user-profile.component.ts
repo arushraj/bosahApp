@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService } from '../shared/services/app.service';
-import { CurrentUser } from '../shared/model/current-user.model';
+import { AppService } from '../../shared/services/app.service';
+import { CurrentUser } from '../../shared/model/current-user.model';
 import { ActionSheetController, Platform, LoadingController } from '@ionic/angular';
 import { Toast } from '@ionic-native/toast/ngx';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
@@ -33,9 +33,9 @@ export class UserProfileComponent implements OnInit {
         this.currentUser = user;
         if (this.currentUser.ProfileImagePath === '...' || this.currentUser.ProfileImagePath === '') {
           if (this.currentUser.GenderName === 'Female') {
-            this.ProfileImagePath = './assets/avatar-icon-png-10.jpg';
+            this.ProfileImagePath = './assets/female.png';
           } else if (this.currentUser.GenderName === 'Male') {
-            this.ProfileImagePath = './assets/avatar-icon-png-8.jpg';
+            this.ProfileImagePath = './assets/male.png';
           } else {
             this.ProfileImagePath = './assets/no-image.png';
           }
@@ -60,9 +60,9 @@ export class UserProfileComponent implements OnInit {
 
   public setdefultImage(event) {
     // if (this.currentUser.GenderName === 'Female') {
-    //   event.target.src = './assets/avatar-icon-png-10.jpg';
+    //   event.target.src = './assets/female.png';
     // } else if (this.currentUser.GenderName === 'Male') {
-    //   event.target.src = './assets/avatar-icon-png-8.jpg';
+    //   event.target.src = './assets/male.png';
     // } else {
     //   event.target.src = './assets/no-image.png';
     // }

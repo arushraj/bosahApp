@@ -26,11 +26,11 @@ const routes: Routes = [
           }
         ]
       }, {
-        path: 'events',
+        path: 'userprofile',
         children: [
           {
             path: '',
-            loadChildren: () => import('./events/events.module').then(m => m.EventsModule)
+            loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileModule)
           }
         ]
       }, {

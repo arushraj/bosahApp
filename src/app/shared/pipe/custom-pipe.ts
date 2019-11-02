@@ -33,9 +33,9 @@ export class ImageBinderPipe implements PipeTransform {
     transform(value: any, gender: string): any {
         if (value === '' || value === undefined || value === null) {
             if (gender === 'Female') {
-                return '/assets/avatar-icon-png-10.jpg';
+                return '/assets/female.png';
             } else if (gender === 'Male') {
-                return '/assets/avatar-icon-png-8.jpg';
+                return '/assets/male.png';
             } else {
                 return '/assets/no-image.png';
             }

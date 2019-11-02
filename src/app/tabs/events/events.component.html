@@ -1,36 +1,38 @@
+<ion-header translucent>
+  <ion-toolbar color="client-header">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Events</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
-  <ion-list>
-    <ion-list-header>
-      Upcoming Events
-    </ion-list-header>
-    <ion-item *ngFor="let item of events" button detail>
-      <ion-thumbnail slot="start">
-        <ion-img [src]="item.EventImageFileName | eventImageBinder" alt="" (ionError)="setdefultImage($event)">
-        </ion-img>
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{item.EventName}}</h2>
-        <h3>{{item.EventDate | date}}</h3>
-        <p>{{item.EventDate | date:'shortTime'}}</p>
+  <ion-segment [(ngModel)]="selectedTab">
+    <ion-segment-button *ngFor="let item of pageTabs" [value]="item.id" (ionSelect)="currentSegment(item.id)">
+      {{item.tabName}}
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-slides [options]="slideOpts" #SwipedTabsEventsSlider (ionSlideDidChange)="currentSlide()">
+    <ion-slide *ngFor="let item of pageTabs">
+      <ion-list *ngIf="item.events.length>0">
+        <ion-item *ngFor="let event of item.events" button detail (click)="openDetails(event)">
+          <ion-thumbnail slot="start">
+            <ion-img [src]="event.EventImageFileName | eventImageBinder" alt="" (ionError)="setdefultImage($event)">
+            </ion-img>
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{event.EventName}}</h2>
+            <h3>{{event.EventDate | date}}</h3>
+            <p>{{event.EventDate | date:'shortTime'}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      <ion-label class="ion-empty-label" *ngIf="!item.events.length" color="dark">
+        <ion-icon name="clipboard" slot="start"></ion-icon>
+        List Empty!
       </ion-label>
-    </ion-item>
-  </ion-list>
-
-
-  <!-- <ion-card *ngFor="let item of events">
-    <ion-img [src]="item.EventImageFileName | eventImageBinder" alt="" (ionError)="setdefultImage($event)"></ion-img>
-    <ion-card-header>
-      <ion-card-title>{{item.EventName}}</ion-card-title>
-      <ion-card-subtitle>
-        <span>{{item.EventDate | date}}</span>
-        <br />
-        <span>{{item.EventDate | date:'shortTime'}}</span>
-      </ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-button fill="clear" no-padding slot="end">
-        More...
-      </ion-button>
-    </ion-card-content>
-  </ion-card> -->
+    </ion-slide>
+  </ion-slides>
 </ion-content>

@@ -27,6 +27,7 @@ export class UserRegistrationComponent implements OnInit {
     firstName: '',
     lastName: '',
     age: null,
+    dob: '',
     phone: '',
     password: '',
     confirmPassword: '',
@@ -39,7 +40,9 @@ export class UserRegistrationComponent implements OnInit {
     preferredReligion: [],
     userImage: '',
     minAge: 21,
-    maxAge: 60
+    maxAge: 60,
+    aboutMe: '',
+    preferredPetIds: []
   };
 
   public locations;
@@ -131,8 +134,12 @@ export class UserRegistrationComponent implements OnInit {
       PreferredGenderIds: this.newUser.preferredGender.join(','),
       PreferredReligionIds: this.newUser.preferredReligion.join(','),
       Age: this.newUser.age,
+      DOB: this.newUser.dob,
       MinAge: this.newUser.minAge,
-      MaxAge: this.newUser.maxAge
+      MaxAge: this.newUser.maxAge,
+      UsedReferralCode: this.newUser.referCode,
+      AboutMe: this.newUser.aboutMe,
+      PreferredPetIds: this.newUser.preferredPetIds.join(',')
     };
     this.appService.userRegistration(user);
   }
@@ -169,11 +176,11 @@ export class UserRegistrationComponent implements OnInit {
         } else if (!this.newUser.lastName) {
           this.toast.showShortBottom('Please enter your last name.').subscribe(() => { });
           return;
-        } else if (!this.newUser.age) {
-          this.toast.showShortBottom('Please enter your age.').subscribe(() => { });
-          return;
         } else if (!this.newUser.phone) {
           this.toast.showShortBottom('Please enter your contact number.').subscribe(() => { });
+          return;
+        } else if (!this.newUser.dob) {
+          this.toast.showShortBottom('Please enter your date of birth.').subscribe(() => { });
           return;
         }
       } else if (index === 4) {

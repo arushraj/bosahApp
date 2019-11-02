@@ -1,4 +1,4 @@
-export class CurrentUser {
+export interface CurrentUser {
     UserId: string;
     EmailId: string;
     FName: string;
@@ -11,10 +11,24 @@ export class CurrentUser {
     City: string;
     Country: string;
     Age: number;
+    DOB: string;
     Religion: string;
+    AboutMe: string;
+    AgreementImagePath: string;
+    UsedReferralCode: string;
+    RoommatePreferences: RoommatePreferences;
 }
 
-export class NewUser {
+export interface RoommatePreferences {
+    GenderIds: Array<number>;
+    CityId: number;
+    MinAge: number;
+    MaxAge: number;
+    ReligionIds: Array<number>;
+    PetIds: Array<number>;
+}
+
+export interface NewUser {
     FirstName: string;
     LastName: string;
     Password: string;
@@ -29,6 +43,10 @@ export class NewUser {
     PreferredGenderIds: string;
     PreferredReligionIds: string;
     Age: number;
+    DOB: string;
     MinAge: number;
     MaxAge: number;
+    UsedReferralCode: string;
+    AboutMe: string;
+    PreferredPetIds: string;
 }

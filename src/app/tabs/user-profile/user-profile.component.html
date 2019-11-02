@@ -1,10 +1,10 @@
-<ion-header translucent>
+<!-- <ion-header translucent>
   <ion-toolbar color="client-header">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
@@ -13,7 +13,7 @@
     </ion-refresher-content>
   </ion-refresher>
   <ion-card class="user-profile-card" *ngIf="currentUser">
-    <img src="/assets/Bosah-Icons/COVER SOCIAL MEDIA.png" alt="" />
+    <img src="/assets/COVER SOCIAL MEDIA.png" alt="" />
     <ion-card-header class="ion-no-padding">
       <ion-avatar class="user-avatar">
         <ion-img [src]="ProfileImagePath" alt="" (ionError)="setdefultImage($event)">

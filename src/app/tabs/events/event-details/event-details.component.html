@@ -1,0 +1,23 @@
+<ion-content fullscreen>
+    <ion-card>
+        <!-- <ion-img [src]="event.EventImageFileName.replace('thumbnail_','') | eventImageBinder" alt=""
+            (ionError)="setdefultImage($event)">
+        </ion-img> -->
+        <img [src]="event.EventImageFileName.replace('thumbnail_','') | eventImageBinder" alt="" />
+        <ion-card-header>
+            <ion-card-title>{{event.EventName}}</ion-card-title>
+            <ion-card-subtitle>
+                {{event.EventDate | date}}<br />
+                {{event.EventDate | date:'shortTime'}}<br />
+                {{event.City | blankValue}}
+            </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+            {{event.EventDesc | blankValue}}
+        </ion-card-content>
+        <ion-button *ngIf="!event.isSubscribe" expand="full" color="primary" (click)="subscribeEvent()">Register
+        </ion-button>
+        <ion-button *ngIf="event.isSubscribe" expand="full" color="danger" (click)="subscribeEvent()">Deregister
+        </ion-button>
+    </ion-card>
+</ion-content>
