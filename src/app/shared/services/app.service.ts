@@ -245,8 +245,7 @@ export class AppService {
                                 if (value === null || value === undefined) {
                                     loading.dismiss();
                                     this.toast.show(`Session expired`, `short`, 'bottom').subscribe(() => { });
-                                    // this.navCtrl.navigateForward('/userlogin', { animated: true, animationDirection: 'forward' });
-                                    this.router.navigate(['/userlogin']);
+                                    this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                                 } else {
                                     const url = this.appConstant.getURL(UrlKey.Current_User).replace('uid', value);
                                     this.http.get(url, {}, {})
@@ -264,7 +263,7 @@ export class AppService {
                                         .catch(error => {
                                             loading.dismiss();
                                             this.setCurrentUser(this.createUser());
-                                            this.router.navigate(['/userlogin']);
+                                            this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                                             const msg = error.error || 'Invalid User';
                                             this.toast.show(`${msg}`, `short`, 'bottom').subscribe(() => { });
                                         })
@@ -604,8 +603,7 @@ export class AppService {
                 this.storage.remove(StorageKey.LocalCurrentUserKey);
                 this.setCurrentUser(this.createUser());
                 this.setUserPreferred(this.createuserPreferred());
-                // this.navCtrl.navigateForward('/userlogin', { animated: true, animationDirection: 'forward' });
-                this.router.navigate(['/userlogin']);
+                this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
             })
             .catch(() => { })
             .finally(() => {
@@ -647,10 +645,10 @@ export class AppService {
                 if (userImagePath) {
                     this.toast.show(`${resData.ResponseMessage}`, `short`, `bottom`).subscribe(() => { });
                     await this.uploadUserRegistrationImage(resData.UserId, userImagePath);
-                    this.router.navigate(['/userlogin']);
+                    this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                 } else {
                     this.toast.show(`${resData.ResponseMessage}`, `short`, `bottom`).subscribe(() => { });
-                    this.router.navigate(['/userlogin']);
+                    this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                 }
             })
             .catch(err => {

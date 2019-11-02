@@ -30,8 +30,8 @@ export class UserLoginComponent implements OnInit {
 
   ionViewWillEnter() {
     this.appService.getCurrentUserIdfromLocalStorage().then(value => {
-      if (value !== null || value !== undefined) {
-        this.navCtrl.navigateForward('/tabs', { animated: true, animationDirection: 'forward' });
+      if (value !== null) {
+        this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
       }
     });
   }
@@ -83,7 +83,7 @@ export class UserLoginComponent implements OnInit {
             `bottom`
           ).subscribe(toast => { });
           if (data.UserId > 0) {
-            this.navCtrl.navigateForward('/tabs', { animated: true, animationDirection: 'forward' });
+            this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
             // this.router.navigate(['/tabs']);
           }
         });

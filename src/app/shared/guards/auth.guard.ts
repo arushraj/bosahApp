@@ -18,9 +18,7 @@ export class AuthGuard implements CanActivate {
     this.appService.getCurrentUserIdfromLocalStorage()
       .then((value) => {
         if (value === null || value === undefined) {
-          // this.toast.show(`Session expired`, `2000`, 'bottom').subscribe(() => { });
-          // this.navCtrl.navigateForward('/userlogin', { animated: true, animationDirection: 'forward' });
-          this.router.navigate(['/userlogin']);
+          this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
         }
       }).catch(() => {
         return false;
