@@ -147,42 +147,11 @@ export class AppComponent {
         }
       } catch (error) { console.log(error); return; }
 
-      // try {
-      //   const element = await this.loadingController.getTop();
-      //   if (element) {
-      //     return;
-      //   }
-      // } catch (error) { }
-
-      // if (this.router.isActive('/tabs/match', true)
-      //   || this.router.isActive('/tabs/preferred', true)
-      //   || this.router.isActive('/tabs/userprofile', true)) {
-      //   if (new Date().getTime() - this.lastTimeBackPress < this.timePeriodToExit) {
-      //     // this.platform.exitApp(); // Exit from app
-      //     // tslint:disable-next-line:no-string-literal
-      //     navigator['app'].exitApp(); // work for ionic 4
-
-      //   } else {
-      //     this.toast.show(
-      //       `Press back again to exit App.`,
-      //       '2000',
-      //       'bottom')
-      //       .subscribe(toast => {
-      //         // console.log(JSON.stringify(toast));
-      //       });
-      //     this.lastTimeBackPress = new Date().getTime();
-      //   }
-      // } else {
-      //   // this.navCtrl.back({ animated: true, animationDirection: 'back' });
-      //   this.router.navigate([this.previousUrl]);
-      // }
-
       this.main.forEach((outlet: IonRouterOutlet) => {
         if (outlet && outlet.canGoBack()) {
           // outlet.pop();
-        } else if (this.router.isActive('/tabs/match', true)
-          || this.router.isActive('/tabs/preferred', true)
-          || this.router.isActive('/tabs/events', true)) {
+        } else if (this.router.isActive('/tabs/preferred', true)
+          || this.router.isActive('/userlogin', true)) {
           if (new Date().getTime() - this.lastTimeBackPress < this.timePeriodToExit) {
             // this.platform.exitApp(); // Exit from app
             // tslint:disable-next-line:no-string-literal

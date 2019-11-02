@@ -23,7 +23,7 @@ const routes: Routes = [
     loadChildren: './user-registration/user-registration.module#UserRegistrationModule'
   }, {
     path: '**',
-    redirectTo: 'tabs',
+    redirectTo: 'userlogin',
     pathMatch: 'full'
   }
 ];
