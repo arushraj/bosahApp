@@ -5,28 +5,27 @@ import { AuthGuard } from './shared/guards/auth.guard';
 const routes: Routes = [
   {
     path: 'tabs',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsModule),
+    loadChildren: './tabs/tabs.module#TabsModule',
     canActivate: [AuthGuard]
   }, {
     path: 'events',
-    loadChildren: () => import('./tabs/events/events.module').then(m => m.EventsModule),
+    loadChildren: './tabs/events/events.module#EventsModule',
     canActivate: [AuthGuard]
   }, {
     path: 'flatsearchform',
-    loadChildren: () => import('./flat-search-form/flat-search-form.module').then(m => m.FlatSearchFormPageModule),
+    loadChildren: './flat-search-form/flat-search-form.module#FlatSearchFormPageModule',
     canActivate: [AuthGuard]
   }, {
     path: 'userlogin',
-    loadChildren: () => import('./user-login/user-login.module').then(m => m.UserLoginModule)
+    loadChildren: './user-login/user-login.module#UserLoginModule'
   }, {
     path: 'userregistration',
-    loadChildren: () => import('./user-registration/user-registration.module').then(m => m.UserRegistrationModule)
+    loadChildren: './user-registration/user-registration.module#UserRegistrationModule'
   }, {
     path: '**',
     redirectTo: 'tabs',
     pathMatch: 'full'
-  },
-  { path: 'flat-search-form', loadChildren: './flat-search-form/flat-search-form.module#FlatSearchFormPageModule' }
+  }
 ];
 
 @NgModule({
