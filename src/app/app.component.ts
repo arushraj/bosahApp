@@ -99,7 +99,7 @@ export class AppComponent {
       this.backButtonEvent();
 
       // // call data from DB
-      this.appService.getCurrentuserFromDB();
+      // this.appService.getCurrentuserFromDB();
       this.appService.getUserLocationsFromDB();
       this.appService.getUserReligionsFromDB();
       this.appService.getBathroomsFromDB();

@@ -28,6 +28,14 @@ export class UserLoginComponent implements OnInit {
 
   ngOnInit() { }
 
+  ionViewWillEnter() {
+    this.appService.getCurrentUserIdfromLocalStorage().then(value => {
+      if (value !== null || value !== undefined) {
+        this.navCtrl.navigateForward('/tabs', { animated: true, animationDirection: 'forward' });
+      }
+    });
+  }
+
   public googleLogin() {
     this.toast.show(
       `Coming Soon..`,
@@ -75,8 +83,8 @@ export class UserLoginComponent implements OnInit {
             `bottom`
           ).subscribe(toast => { });
           if (data.UserId > 0) {
-            // this.navCtrl.navigateForward('/tabs', { animated: true, animationDirection: 'forward' });
-            this.router.navigate(['/tabs']);
+            this.navCtrl.navigateForward('/tabs', { animated: true, animationDirection: 'forward' });
+            // this.router.navigate(['/tabs']);
           }
         });
     }

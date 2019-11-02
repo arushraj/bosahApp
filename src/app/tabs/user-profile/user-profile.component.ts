@@ -45,8 +45,10 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  ngOnInit() {
-    // this.appService.getCurrentuserFromDB();
+  ngOnInit() { }
+
+  ionViewWillEnter() {
+    this.appService.getCurrentuserFromDB();
   }
 
   public userLogout() {
@@ -59,13 +61,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   public setdefultImage(event) {
-    // if (this.currentUser.GenderName === 'Female') {
-    //   event.target.src = './assets/female.png';
-    // } else if (this.currentUser.GenderName === 'Male') {
-    //   event.target.src = './assets/male.png';
-    // } else {
-    //   event.target.src = './assets/no-image.png';
-    // }
     event.target.src = './assets/no-image.png';
   }
 
