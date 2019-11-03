@@ -1,4 +1,4 @@
-export class UserFriends {
+export interface UserFriends {
     UserId: string;
     FName: string;
     ProfileImagePath: string;

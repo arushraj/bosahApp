@@ -1,19 +1,5 @@
 <ion-tabs (ionTabsDidChange)="tabsDidChange()" #apptabs>
   <ion-tab-bar slot="bottom" color="client-header">
-    <!-- <ion-tab-button tab="match">
-      <ion-icon name="heart" class="tab-icon"></ion-icon>
-      <ion-label>Match</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="preferred">
-      <ion-icon name="star" class="tab-icon"></ion-icon>
-      <ion-label>Preferred</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="userprofile">
-      <ion-icon name="person" class="tab-icon"></ion-icon>
-      <ion-label>Profile</ion-label>
-    </ion-tab-button> -->
     <ion-tab-button [tab]="tab.route" *ngFor="let tab of tabs">
       <ion-icon [name]="tab.icon" class="tab-icon"></ion-icon>
       <ion-label>{{tab.name}}</ion-label>

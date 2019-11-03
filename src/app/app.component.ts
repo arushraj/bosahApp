@@ -39,8 +39,13 @@ export class AppComponent {
       routerDirection: 'forward'
     }, {
       title: 'Modify Preferences',
-      url: '/',
+      url: '/modifypreferences',
       icon: 'construct',
+      routerDirection: 'forward'
+    }, {
+      title: 'Profile Update',
+      url: '/',
+      icon: 'create',
       routerDirection: 'forward'
     }, {
       title: 'Search Request for flat',
@@ -99,12 +104,13 @@ export class AppComponent {
       this.backButtonEvent();
 
       // // call data from DB
-      // this.appService.getCurrentuserFromDB();
+      this.appService.getCurrentuserFromDB();
       this.appService.getUserLocationsFromDB();
       this.appService.getUserReligionsFromDB();
       this.appService.getBathroomsFromDB();
       this.appService.getBedroomsFromDB();
       this.appService.getRentBudgetFromDB();
+      this.appService.getPetsFromDB();
     });
   }
 

@@ -1,4 +1,4 @@
-export class Event {
+export interface Event {
     EventId: number;
     EventName: string;
     EventDesc: string;

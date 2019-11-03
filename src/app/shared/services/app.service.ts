@@ -22,6 +22,7 @@ import { Event } from '../model/event.model';
 import { Bathroom } from '../model/bathroom.model';
 import { Bedroom } from '../model/bedroom.model';
 import { RentBudget } from '../model/rent-budget.model';
+import { Pet } from '../model/pet.model';
 
 @Injectable()
 export class AppService {
@@ -32,6 +33,7 @@ export class AppService {
     private bathrooms = new BehaviorSubject<Bathroom[]>([]);
     private bedrooms = new BehaviorSubject<Bedroom[]>([]);
     private rentBudget = new BehaviorSubject<RentBudget[]>([]);
+    private pets = new BehaviorSubject<Pet[]>([]);
 
     private upcomingEvent = new BehaviorSubject<Event[]>([]);
     private upcomingEventList: { events: Event[] } = { events: [] };
@@ -96,7 +98,21 @@ export class AppService {
             AboutMe: (data && data.AboutMe) ? data.AboutMe : '',
             AgreementImagePath: (data && data.AgreementImagePath) ? data.AgreementImagePath : '',
             UsedReferralCode: (data && data.UsedReferralCode) ? data.UsedReferralCode : '',
-            RoommatePreferences: (data && data.RoommatePreferences) ? data.RoommatePreferences : null
+            RoommatePreferences: {
+                GenderIds: (data && data.RoommatePreferences && data.RoommatePreferences.GenderIds) ?
+                    data.RoommatePreferences.GenderIds.toString().split(',').map(Number) : [],
+                CityId: (data && data.RoommatePreferences && data.RoommatePreferences.CityId) ?
+                    data.RoommatePreferences.CityId : null,
+                MinAge: (data && data.RoommatePreferences && data.RoommatePreferences.MinAge) ?
+                    data.RoommatePreferences.MinAge : null,
+                MaxAge: (data && data.RoommatePreferences && data.RoommatePreferences.MaxAge) ?
+                    data.RoommatePreferences.MaxAge : null,
+                ReligionIds: (data && data.RoommatePreferences && data.RoommatePreferences.ReligionIds) ?
+                    data.RoommatePreferences.ReligionIds.toString().split(',').map(Number) : [],
+                PetIds: (data && data.RoommatePreferences && data.RoommatePreferences.PetIds) ?
+                    data.RoommatePreferences.PetIds.toString().split(',').map(Number) : [],
+            }
+            // (data && data.RoommatePreferences) ? data.RoommatePreferences : null
         };
     }
 
@@ -184,6 +200,14 @@ export class AppService {
         this.rentBudget.next(budget);
     }
 
+    public getPets(): Observable<Pet[]> {
+        return this.pets.asObservable();
+    }
+
+    private setPets(pets: Pet[]) {
+        this.pets.next(pets);
+    }
+
     public getUserPreferred(): Observable<PreferredUser[]> {
         return this.userPreferred.asObservable();
     }
@@ -226,7 +250,7 @@ export class AppService {
 
     // functions for HTTP Calling
 
-    public async getCurrentuserFromDB() {
+    public async getCurrentuserFromDB(updateOnline?: boolean) {
         const loading = await this.loadingController.create({
             message: 'Please wait...',
             translucent: true,
@@ -235,7 +259,7 @@ export class AppService {
         loading.present();
         this.storage.get(StorageKey.LocalCurrentUserKey)
             .then((user) => {
-                if (user === null || user === undefined) {
+                if ((user === null || user === undefined) || updateOnline) {
                     if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
                         loading.dismiss();
                         this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
@@ -348,6 +372,19 @@ export class AppService {
             })
             .catch(error => {
                 // this.setBathrooms([]);
+            })
+            .finally(() => { });
+    }
+
+    public getPetsFromDB() {
+        const url = this.appConstant.getURL(UrlKey.Pets);
+        this.http.get(url, {}, {})
+            .then(res => {
+                const pets: Pet[] = JSON.parse(res.data);
+                this.setPets(pets);
+            })
+            .catch(error => {
+                // this.setPets([]);
             })
             .finally(() => { });
     }
@@ -858,6 +895,47 @@ export class AppService {
                 loading.dismiss();
                 const resData = JSON.parse(res.data);
                 this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
+            })
+            .catch((err) => {
+                loading.dismiss();
+                this.toast
+                    .showShortBottom(`${err.message || JSON.parse(err.error).ResponseMessage}`)
+                    .subscribe(() => { });
+            })
+            .finally(() => {
+                loading.dismiss();
+            });
+    }
+
+    public async checkValidReferralCode(referralCode: string) {
+        if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
+            this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
+            return;
+        }
+        const url = this.appConstant.getURL(UrlKey.Check_Valid_Referral_Code);
+        return this.http.get(url, { referralCode }, {});
+
+    }
+
+    public async updateUser(form: any) {
+        if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
+            this.toast.showShortBottom(`Please connect to internet.`).subscribe(() => { });
+            return;
+        }
+        const loading = await this.loadingController.create({
+            message: 'Please wait...',
+            translucent: true,
+            cssClass: ''
+        });
+        loading.present();
+        const url = this.appConstant.getURL(UrlKey.User_Update);
+        const data = form;
+        return this.http.post(url, data, {})
+            .then((res) => {
+                loading.dismiss();
+                const resData = JSON.parse(res.data);
+                this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
+                this.getCurrentuserFromDB(true);
             })
             .catch((err) => {
                 loading.dismiss();

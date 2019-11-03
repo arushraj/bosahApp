@@ -1,4 +1,4 @@
-export class UserLocation {
+export interface UserLocation {
     CityId: number;
     City: string;
 }

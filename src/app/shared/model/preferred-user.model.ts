@@ -1,4 +1,4 @@
-export class PreferredUser {
+export interface PreferredUser {
     UserId: string;
     EmailId: string;
     FName: string;

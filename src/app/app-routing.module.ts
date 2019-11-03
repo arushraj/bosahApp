@@ -22,6 +22,9 @@ const routes: Routes = [
     path: 'userregistration',
     loadChildren: './user-registration/user-registration.module#UserRegistrationModule'
   }, {
+    path: 'modifypreferences',
+    loadChildren: './modify-preferences/modify-preferences.module#ModifyPreferencesPageModule'
+  }, {
     path: '**',
     redirectTo: 'userlogin',
     pathMatch: 'full'

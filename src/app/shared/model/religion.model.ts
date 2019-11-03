@@ -1,4 +1,4 @@
-export class UserReligion {
+export interface UserReligion {
     ReligionId: number;
     Religion: string;
 }

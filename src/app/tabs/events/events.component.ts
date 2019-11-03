@@ -81,6 +81,9 @@ export class EventsComponent implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.currentSegment(this.pageTabs[0].id);
+    this.selectedTab = this.pageTabs[0].id;
+
     this.appService.getUpcomingEventListFromDB(this.cityId, this.currentUser.UserId);
     this.appService.getRegisteredEventListFromDB(this.currentUser.UserId);
   }
