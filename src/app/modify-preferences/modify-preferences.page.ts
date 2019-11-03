@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // Service
 import { AppService } from '../shared/services/app.service';
@@ -15,20 +16,19 @@ import { CurrentUser } from '../shared/model/current-user.model';
 })
 export class ModifyPreferencesPage implements OnInit {
 
-  public userForm = {
-    preferredGender: [],
-    preferredReligion: [],
-    preferredPets: [],
-    minAge: 0,
-    maxAge: 0
-  };
+  public userForm: FormGroup;
   public rangeValue = { lower: 20, upper: 60 };
   public religions: UserReligion[];
   public pets: Pet[];
   public genders: Array<{ genderId: number, gender: string }> = [];
   public currentUser: CurrentUser;
 
-  constructor(private appService: AppService) {
+  constructor(private appService: AppService, private fb: FormBuilder) {
+    this.userForm = this.fb.group({
+      preferredGender: ['', Validators.compose([Validators.required])],
+      preferredReligion: ['', Validators.compose([Validators.required])],
+      preferredPets: ['', Validators.compose([Validators.required])]
+    });
     this.genders = [{
       genderId: 1,
       gender: 'Male'
@@ -41,11 +41,11 @@ export class ModifyPreferencesPage implements OnInit {
     this.appService.getCurrentUser().subscribe((user) => {
       this.currentUser = user;
       if (user.UserId) {
-        this.userForm.preferredReligion = this.currentUser.RoommatePreferences.ReligionIds;
-        this.userForm.preferredGender = this.currentUser.RoommatePreferences.GenderIds;
-        this.userForm.preferredPets = this.currentUser.RoommatePreferences.PetIds;
-        this.userForm.minAge = this.currentUser.RoommatePreferences.MinAge;
-        this.userForm.maxAge = this.currentUser.RoommatePreferences.MaxAge;
+        this.userForm.patchValue({
+          preferredGender: this.currentUser.RoommatePreferences.GenderIds,
+          preferredReligion: this.currentUser.RoommatePreferences.ReligionIds,
+          preferredPets: this.currentUser.RoommatePreferences.PetIds,
+        });
         this.rangeValue = { lower: this.currentUser.RoommatePreferences.MinAge, upper: this.currentUser.RoommatePreferences.MaxAge };
       }
     });
@@ -55,18 +55,18 @@ export class ModifyPreferencesPage implements OnInit {
   }
 
   public rangeChange(event) {
-    this.userForm.minAge = event.detail.value.lower;
-    this.userForm.maxAge = event.detail.value.upper;
+    this.rangeValue.lower = event.detail.value.lower;
+    this.rangeValue.upper = event.detail.value.upper;
   }
 
   public submitForm() {
     const data = {
       UserId: this.currentUser.UserId,
-      PreferredGenderIds: this.userForm.preferredGender.join(','),
-      PreferredReligionIds: this.userForm.preferredReligion.join(','),
-      PreferredPetIds: this.userForm.preferredPets.join(','),
-      minAge: this.userForm.minAge,
-      maxAge: this.userForm.maxAge
+      PreferredGenderIds: this.userForm.value.preferredGender.join(','),
+      PreferredReligionIds: this.userForm.value.preferredReligion.join(','),
+      PreferredPetIds: this.userForm.value.preferredPets.join(','),
+      minAge: this.rangeValue.lower,
+      maxAge: this.rangeValue.upper
     };
     this.appService.updateUser(data);
   }

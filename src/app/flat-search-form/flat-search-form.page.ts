@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+// services
 import { AppService } from '../shared/services/app.service';
 
 // Models
@@ -20,18 +23,17 @@ export class FlatSearchFormPage implements OnInit {
   public bedrooms: Bedroom[];
   public bathrooms: Bathroom[];
   public userId: string;
+  public userForm: FormGroup;
 
-  public userForm = {
-    UserId: '',
-    RentBudgetId: null,
-    CityId: null,
-    BedroomTypeId: null,
-    BathroomTypeId: null,
-    DesiredMoveInDate: null,
-    Comments: null
-  };
-
-  constructor(private appService: AppService, private toast: Toast) {
+  constructor(private appService: AppService, private toast: Toast, private fb: FormBuilder) {
+    this.userForm = this.fb.group({
+      RentBudgetId: ['', Validators.compose([Validators.required])],
+      CityId: ['', Validators.compose([Validators.required])],
+      BedroomTypeId: ['', Validators.compose([Validators.required])],
+      BathroomTypeId: ['', Validators.compose([Validators.required])],
+      DesiredMoveInDate: ['', Validators.compose([Validators.required])],
+      Comments: ['']
+    });
     this.appService.getLocation().subscribe((locations) => {
       this.locations = locations;
     });
@@ -53,37 +55,14 @@ export class FlatSearchFormPage implements OnInit {
   }
 
   public submitForm() {
-    if (!this.userForm.CityId) {
-      this.toast.showShortBottom('Please select a city.').subscribe(() => { });
-      return;
-    } else if (!this.userForm.RentBudgetId) {
-      this.toast.showShortBottom('Please select your rent budget.').subscribe(() => { });
-      return;
-    } else if (!this.userForm.BedroomTypeId) {
-      this.toast.showShortBottom('Please select bed room type.').subscribe(() => { });
-      return;
-    } else if (!this.userForm.BathroomTypeId) {
-      this.toast.showShortBottom('Please select bath room type.').subscribe(() => { });
-      return;
-    } else if (!this.userForm.DesiredMoveInDate) {
-      this.toast.showShortBottom('Please select desired move in date.').subscribe(() => { });
-      return;
-    }
-    this.userForm.UserId = this.userId;
-    this.appService.submitFlatSearchForm(this.userForm).then(() => {
+    const data = this.userForm.value;
+    data.UserId = this.userId;
+    this.appService.submitFlatSearchForm(data).then(() => {
       this.cleanForm();
     });
   }
 
   private cleanForm() {
-    this.userForm = {
-      UserId: '',
-      RentBudgetId: null,
-      CityId: null,
-      BedroomTypeId: null,
-      BathroomTypeId: null,
-      DesiredMoveInDate: null,
-      Comments: null
-    };
+    this.userForm.reset();
   }
 }

@@ -44,7 +44,7 @@ export class AppComponent {
       routerDirection: 'forward'
     }, {
       title: 'Profile Update',
-      url: '/',
+      url: '/profileupdate',
       icon: 'create',
       routerDirection: 'forward'
     }, {
