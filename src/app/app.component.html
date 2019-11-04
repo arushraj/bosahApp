@@ -1,6 +1,6 @@
 <ion-app>
   <ion-split-pane>
-    <ion-menu type="overlay" menuId="masterMenu" side="end">
+    <ion-menu type="overlay" menuId="masterMenu" side="end" [disabled]='!currentUser.UserId'>
       <ion-header>
         <ion-toolbar>
           <ion-menu-toggle auto-hide="false">

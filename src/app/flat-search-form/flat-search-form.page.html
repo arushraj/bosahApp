@@ -9,12 +9,12 @@
 
 <ion-content fullscreen>
   <ion-img src="/assets/ICON WITH TITLE.png" alt=""></ion-img>
-  <form>
+  <form [formGroup]="userForm" (ngSubmit)="submitForm()">
     <ion-list lines="full" class="ion-no-margin ion-no-padding">
       <ion-item>
         <ion-label position="stacked">Select City <ion-text color="danger">*</ion-text>
         </ion-label>
-        <ion-select placeholder="Select One" name="city" id="city" [(ngModel)]="userForm.CityId">
+        <ion-select placeholder="Select One" required formControlName="CityId">
           <ion-select-option required *ngFor="let item of locations" [value]="item.CityId">{{item.City}}
           </ion-select-option>
         </ion-select>
@@ -23,7 +23,7 @@
       <ion-item>
         <ion-label position="stacked">Select Your Rent Budget <ion-text color="danger">*</ion-text>
         </ion-label>
-        <ion-select placeholder="Select One" name="rentbudget" id="rentbudget" [(ngModel)]="userForm.RentBudgetId">
+        <ion-select placeholder="Select One" required formControlName="RentBudgetId">
           <ion-select-option *ngFor="let item of rentBudget" [value]="item.RentBudgetID">{{item.RentBudgetType}}
           </ion-select-option>
         </ion-select>
@@ -32,7 +32,7 @@
       <ion-item>
         <ion-label position="stacked">Select Bedroom Type <ion-text color="danger">*</ion-text>
         </ion-label>
-        <ion-select placeholder="Select One" name="bedroom" id="bedroom" [(ngModel)]="userForm.BedroomTypeId">
+        <ion-select placeholder="Select One" required formControlName="BedroomTypeId">
           <ion-select-option *ngFor="let item of bedrooms" [value]="item.BedroomID">{{item.BedroomType}}
           </ion-select-option>
         </ion-select>
@@ -41,28 +41,26 @@
       <ion-item>
         <ion-label position="stacked">Select Bathroom Type <ion-text color="danger">*</ion-text>
         </ion-label>
-        <ion-select placeholder="Select One" name="bathroom" id="bathroom" [(ngModel)]="userForm.BathroomTypeId">
+        <ion-select placeholder="Select One" required formControlName="BathroomTypeId">
           <ion-select-option *ngFor="let item of bathrooms" [value]="item.BathroomID">{{item.BathRoomType}}
           </ion-select-option>
         </ion-select>
       </ion-item>
 
       <ion-item>
-        <ion-label position="floating">Desired Move-In Date <ion-text color="danger">*</ion-text>
+        <ion-label position="stacked">Desired Move-In Date <ion-text color="danger">*</ion-text>
         </ion-label>
-        <ion-datetime name="moveindate" id="moveindate" placeholder="MM-DD-YYYY" displayFormat="MM-DD-YYYY"
-          [(ngModel)]="userForm.DesiredMoveInDate">
-        </ion-datetime>
+        <ion-input required formControlName="DesiredMoveInDate" placeholder="dd-mm-yyyy" type="Date"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Comments</ion-label>
-        <ion-textarea [(ngModel)]="userForm.Comments" name="comments" id="comments"></ion-textarea>
+        <ion-textarea formControlName="Comments"></ion-textarea>
       </ion-item>
     </ion-list>
 
     <div class="ion-padding">
-      <ion-button expand="block" type="submit" class="ion-no-margin" (click)="submitForm()">
+      <ion-button expand="block" type="submit" class="ion-no-margin" [disabled]="userForm.invalid">
         <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon> Submit
       </ion-button>
     </div>

@@ -5,12 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FlatSearchFormPage } from './flat-search-form.page';
+import { ModifyPreferencesPage } from './modify-preferences.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: FlatSearchFormPage
+    component: ModifyPreferencesPage
   }
 ];
 
@@ -22,6 +22,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [FlatSearchFormPage]
+  declarations: [ModifyPreferencesPage]
 })
-export class FlatSearchFormPageModule { }
+export class ModifyPreferencesPageModule { }

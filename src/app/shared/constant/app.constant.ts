@@ -20,6 +20,9 @@ export class AppConstant {
     readonly BEDROOMS = '/api/getallbedroom';
     readonly RENTBUDGET = '/api/getallrentbudget';
     readonly FLAT_SEARCH_FORM = '/api/searchform';
+    readonly PETS = '/api/getallpets';
+    readonly CHECK_VALID_REFERRAL_CODE = '/api/checkvalidityofreferralcode';
+    readonly USER_UPDATE = '/api/updateUser';
 
     /**
      * getURL() funtion to get url
@@ -65,6 +68,12 @@ export class AppConstant {
                 return this.APP_BASE_URL + this.RENTBUDGET;
             case UrlKey.Flat_Search_Form:
                 return this.APP_BASE_URL + this.FLAT_SEARCH_FORM;
+            case UrlKey.Pets:
+                return this.APP_BASE_URL + this.PETS;
+            case UrlKey.Check_Valid_Referral_Code:
+                return this.APP_BASE_URL + this.CHECK_VALID_REFERRAL_CODE;
+            case UrlKey.User_Update:
+                return this.APP_BASE_URL + this.USER_UPDATE;
             default:
                 break;
         }
@@ -90,7 +99,10 @@ export enum UrlKey {
     Bathrooms,
     Bedrooms,
     Rent_Budget,
-    Flat_Search_Form
+    Pets,
+    Flat_Search_Form,
+    Check_Valid_Referral_Code,
+    User_Update
 }
 
 export enum StorageKey {

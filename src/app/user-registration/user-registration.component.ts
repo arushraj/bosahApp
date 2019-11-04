@@ -9,6 +9,10 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { IonSlides, IonRange } from '@ionic/angular';
 
+import { UserLocation } from '../shared/model/location.model';
+import { UserReligion } from '../shared/model/religion.model';
+import { Pet } from '../shared/model/pet.model';
+
 @Component({
   selector: 'app-user-registration',
   templateUrl: './user-registration.component.html',
@@ -42,11 +46,12 @@ export class UserRegistrationComponent implements OnInit {
     minAge: 21,
     maxAge: 60,
     aboutMe: '',
-    preferredPetIds: []
+    preferredPets: []
   };
 
-  public locations;
-  public religions;
+  public locations: UserLocation[];
+  public religions: UserReligion[];
+  public pets: Pet[];
 
   @ViewChild('agerange', { read: IonRange, static: true }) agerange: IonRange;
   @ViewChild('registrationslides', { read: IonSlides, static: true }) registrationslides: IonSlides;
@@ -66,11 +71,14 @@ export class UserRegistrationComponent implements OnInit {
   ngOnInit() {
     this.registrationslides.lockSwipes(true).then(() => { });
 
-    this.appService.getLocation().subscribe(locations => {
+    this.appService.getLocation().subscribe((locations: UserLocation[]) => {
       this.locations = locations;
     });
-    this.appService.getReligion().subscribe(religions => {
+    this.appService.getReligion().subscribe((religions: UserReligion[]) => {
       this.religions = religions;
+    });
+    this.appService.getPets().subscribe((pets: Pet[]) => {
+      this.pets = pets;
     });
   }
 
@@ -139,7 +147,7 @@ export class UserRegistrationComponent implements OnInit {
       MaxAge: this.newUser.maxAge,
       UsedReferralCode: this.newUser.referCode,
       AboutMe: this.newUser.aboutMe,
-      PreferredPetIds: this.newUser.preferredPetIds.join(',')
+      PreferredPetIds: this.newUser.preferredPets.join(',')
     };
     this.appService.userRegistration(user);
   }
@@ -156,6 +164,53 @@ export class UserRegistrationComponent implements OnInit {
         event.target.blur();
         this.goToNext();
       }
+    }
+  }
+
+  public async checkReferralCode() {
+    if (this.newUser.referCode) {
+      const loading = await this.loadingController.create({
+        message: 'Please wait...',
+        translucent: true,
+        cssClass: ''
+      });
+      loading.present();
+      this.appService.checkValidReferralCode(this.newUser.referCode)
+        .then((res) => {
+          const resData = JSON.parse(res.data);
+          if (!resData.Status) {
+            this.toast.showShortBottom(resData.ResponseMessage).subscribe(() => { });
+            this.newUser.referCode = '';
+            return;
+          } else {
+            this.registrationslides.lockSwipes(false).then(() => {
+              this.registrationslides.slideNext(1000, true).then(() => {
+                this.registrationslides.lockSwipes(true).then(() => { });
+              });
+            });
+          }
+        })
+        .catch((error) => {
+          const resData = JSON.parse(error.error);
+          if (!resData.Status) {
+            this.toast.showShortBottom(`${error.message || JSON.parse(resData.error).ResponseMessage}`).subscribe(() => { });
+            this.newUser.referCode = '';
+            return;
+          } else {
+            this.registrationslides.lockSwipes(false).then(() => {
+              this.registrationslides.slideNext(1000, true).then(() => {
+                this.registrationslides.lockSwipes(true).then(() => { });
+              });
+            });
+          }
+        })
+        .finally(() => { loading.dismiss(); });
+    } else {
+      this.registrationslides.lockSwipes(false).then(() => {
+        this.registrationslides.slideNext(1000, true).then(() => {
+          this.registrationslides.lockSwipes(true).then(() => { });
+        });
+      });
     }
   }
 
@@ -206,7 +261,6 @@ export class UserRegistrationComponent implements OnInit {
           this.registrationslides.lockSwipes(true).then(() => { });
         });
       });
-
     });
   }
 

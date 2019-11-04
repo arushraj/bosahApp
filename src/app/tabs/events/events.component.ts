@@ -31,23 +31,20 @@ export class EventsComponent implements OnInit {
     ];
     this.selectedTab = 0;
 
-    this.appService.getCurrentUser().subscribe((user) => {
-      this.currentUser = user;
-      if (this.locations) {
-        this.locations.forEach((item) => {
-          if (item.City === this.currentUser.City) {
-            this.cityId = item.CityId;
-          }
-        });
-      }
-    });
     this.appService.getLocation().subscribe((location) => {
       this.locations = location;
-      this.locations.forEach((item) => {
-        if (item.City === this.currentUser.City) {
-          this.cityId = item.CityId;
+    });
+
+    this.appService.getCurrentUser().subscribe((user) => {
+      this.currentUser = user;
+      if (this.currentUser.UserId && this.locations.length > 0) {
+        const obj = this.locations.find((item) => {
+          return item.City === this.currentUser.City;
+        });
+        if (obj !== undefined) {
+          this.cityId = obj.CityId;
         }
-      });
+      }
     });
 
     this.appService.getUpcomingEvent().subscribe(events => {
@@ -58,6 +55,7 @@ export class EventsComponent implements OnInit {
         });
       }
     });
+
     this.appService.getRegisteredEvent().subscribe(events => {
       this.pageTabs[1].events = events;
       if (events.length > 0) {
@@ -81,6 +79,9 @@ export class EventsComponent implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.currentSegment(this.pageTabs[0].id);
+    this.selectedTab = this.pageTabs[0].id;
+
     this.appService.getUpcomingEventListFromDB(this.cityId, this.currentUser.UserId);
     this.appService.getRegisteredEventListFromDB(this.currentUser.UserId);
   }

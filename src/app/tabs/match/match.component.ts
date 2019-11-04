@@ -57,6 +57,9 @@ export class MatchComponent implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.currentSegment(this.pageTabs[0].id);
+    this.selectedTab = this.pageTabs[0].id;
+
     this.appService.getUserFriendsFromDB();
     this.appService.getRequestedFriendsFromDB();
   }

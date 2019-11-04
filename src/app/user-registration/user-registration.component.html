@@ -64,7 +64,7 @@
             <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back
               <ion-icon slot="start" name="arrow-round-back"></ion-icon>
             </ion-button>
-            <ion-button class="next-button" fill="clear" [disabled]="!isValid" (click)="goToNext()">Continue
+            <ion-button class="next-button" fill="clear" [disabled]="!isValid" (click)="checkReferralCode()">Continue
               <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
             </ion-button>
           </div>
@@ -79,12 +79,12 @@
           <form padding-right class="password-form">
             <ion-item class="password-textbox">
               <ion-input type="password" [(ngModel)]="newUser.password" name="password" id="password"
-                placeholder="Password">
+                placeholder="Password*">
               </ion-input>
             </ion-item>
             <ion-item class="confirmPassword-textbox">
               <ion-input type="password" name="confirmPassword" [(ngModel)]="newUser.confirmPassword"
-                id="confirmPassword" placeholder="Confirm Password">
+                id="confirmPassword" placeholder="Confirm Password*">
               </ion-input>
             </ion-item>
           </form>
@@ -107,12 +107,12 @@
           <form padding-right class="personal-form">
             <ion-item class="firstname-textbox">
               <ion-input type="firstName" [(ngModel)]="newUser.firstName" name="firstName" id="firstName"
-                placeholder="First Name">
+                placeholder="First Name*">
               </ion-input>
             </ion-item>
             <ion-item class="lastname-textbox">
               <ion-input type="lastName" [(ngModel)]="newUser.lastName" name="lastName" id="lastName"
-                placeholder="Last Name">
+                placeholder="Last Name*">
               </ion-input>
             </ion-item>
             <!-- <ion-item class="age-textbox">
@@ -120,12 +120,13 @@
               </ion-input>
             </ion-item> -->
             <ion-item class="phone-textbox">
-              <ion-input type="tel" [(ngModel)]="newUser.phone" name="phone" id="phone" placeholder="Phone No.">
+              <ion-input type="tel" [(ngModel)]="newUser.phone" name="phone" id="phone" placeholder="Phone No.*">
               </ion-input>
             </ion-item>
             <ion-item class="dob-textbox">
-              <ion-label>Date Of Birth</ion-label>
-              <ion-datetime [(ngModel)]="newUser.dob" name="dob" id="dob" placeholder="MM-DD-YYYY" displayFormat="MM-DD-YYYY"></ion-datetime>
+              <ion-label>Date Of Birth <ion-text color="danger">*</ion-text></ion-label>
+              <ion-datetime [(ngModel)]="newUser.dob" name="dob" id="dob" placeholder="MM-DD-YYYY"
+                displayFormat="MM-DD-YYYY"></ion-datetime>
             </ion-item>
           </form>
           <div class="navigation-button">
@@ -156,29 +157,29 @@
         <ion-card-content>
           <form padding-right class="profession-form">
             <ion-item class="college-textbox">
-              <ion-input type="text" [(ngModel)]="newUser.college" name="college" id="college" placeholder="College">
+              <ion-input type="text" [(ngModel)]="newUser.college" name="college" id="college" placeholder="College*">
               </ion-input>
             </ion-item>
             <ion-item class="job-textbox">
-              <ion-input type="text" [(ngModel)]="newUser.job" name="job" id="job" placeholder="Job Title">
+              <ion-input type="text" [(ngModel)]="newUser.job" name="job" id="job" placeholder="Job Title*">
               </ion-input>
             </ion-item>
             <ion-item class="city-select">
-              <ion-label>City</ion-label>
+              <ion-label>City <ion-text color="danger">*</ion-text></ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.city" name="city" id="city">
                 <ion-select-option *ngFor="let location of locations" [value]="location.CityId">{{location.City}}
                 </ion-select-option>
               </ion-select>
             </ion-item>
             <ion-item class="gender-select">
-              <ion-label>Gender</ion-label>
+              <ion-label>Gender <ion-text color="danger">*</ion-text></ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.gender" name="gender" id="gender">
                 <ion-select-option value="1">Male</ion-select-option>
                 <ion-select-option value="2">Female</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-item class="religion-select">
-              <ion-label>Religion</ion-label>
+              <ion-label>Religion <ion-text color="danger">*</ion-text></ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.religion" name="religion" id="religion">
                 <ion-select-option *ngFor="let religion of religions" [value]="religion.ReligionId">
                   {{religion.Religion}}</ion-select-option>
@@ -203,7 +204,7 @@
         <ion-card-content>
           <form padding-right class="user-form">
             <ion-item class="preferred-gender-select">
-              <ion-label>Roommate Gender</ion-label>
+              <ion-label>Roommate Gender <ion-text color="danger">*</ion-text></ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredGender" name="preferredGender"
                 id="preferredGender" multiple="true">
                 <ion-select-option value="1">Male</ion-select-option>
@@ -211,18 +212,26 @@
               </ion-select>
             </ion-item>
             <ion-item class="preferred-religion-select">
-              <ion-label>Roommate Religion</ion-label>
+              <ion-label>Roommate Religion <ion-text color="danger">*</ion-text></ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredReligion" name="preferredReligion"
                 id="preferredReligion" multiple="true">
                 <ion-select-option *ngFor="let religion of religions" [value]="religion.ReligionId">
                   {{religion.Religion}}</ion-select-option>
               </ion-select>
             </ion-item>
+            <ion-item class="preferred-pets-select">
+              <ion-label>Preferred Pets <ion-text color="danger">*</ion-text></ion-label>
+              <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredPets" name="preferredPets"
+                id="preferredPets" multiple="true">
+                <ion-select-option *ngFor="let pet of pets" [value]="pet.PetId">
+                  {{pet.PetName}}</ion-select-option>
+              </ion-select>
+            </ion-item>
             <ion-item class="age-range">
               <ion-range min="21" max="60" dualKnobs="true" pin="true" pin value="60" color="primary"
                 (ionChange)="rangeChange($event)" #agerange>
-                <ion-label slot="start">Min Age ({{this.newUser.minAge}})</ion-label>
-                <ion-label slot="end">Max Age ({{this.newUser.maxAge}})</ion-label>
+                <ion-label slot="start">Min Age ({{newUser.minAge}})</ion-label>
+                <ion-label slot="end">Max Age ({{newUser.maxAge}})</ion-label>
               </ion-range>
             </ion-item>
           </form>
