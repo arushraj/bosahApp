@@ -47,8 +47,10 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() { }
 
-  ionViewWillEnter() {
-    this.appService.getCurrentuserFromDB();
+  ionViewDidEnter() {
+    if (!this.currentUser.UserId) {
+      this.appService.getCurrentuserFromDB();
+    }
   }
 
   public userLogout() {

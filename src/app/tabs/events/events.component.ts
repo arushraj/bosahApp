@@ -78,7 +78,7 @@ export class EventsComponent implements OnInit {
     });
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     this.currentSegment(this.pageTabs[0].id);
     this.selectedTab = this.pageTabs[0].id;
 

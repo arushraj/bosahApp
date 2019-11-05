@@ -62,3 +62,10 @@ h6 {
 .auto-right-left-marging {
     margin: 0 auto !important;
 }
+
+.sticky-box-shadow {
+    // background-color: #e3e5e6;    
+    -webkit-box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
+    -moz-box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
+    box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
+}

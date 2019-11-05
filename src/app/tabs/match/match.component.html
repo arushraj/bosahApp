@@ -1,13 +1,11 @@
-<ion-header translucent>
-    <ion-segment [(ngModel)]="selectedTab">
-        <ion-segment-button *ngFor="let item of pageTabs" [value]="item.id" (ionSelect)="currentSegment(item.id)">
-            {{item.tabName}}
-        </ion-segment-button>
-    </ion-segment>
-</ion-header>
-
 <ion-content fullscreen>
-
+    <ion-item-divider sticky no-padding class="sticky-box-shadow">
+        <ion-segment [(ngModel)]="selectedTab">
+            <ion-segment-button *ngFor="let item of pageTabs" [value]="item.id" (ionSelect)="currentSegment(item.id)">
+                {{item.tabName}}
+            </ion-segment-button>
+        </ion-segment>
+    </ion-item-divider>
     <ion-slides [options]="slideOpts" #SwipedTabsSlider (ionSlideDidChange)="currentSlide()">
         <ion-slide *ngFor="let item of pageTabs">
             <ion-list *ngIf="item.friends.length>0">
