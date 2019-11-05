@@ -30,7 +30,7 @@ export class ProfileUpdatePage implements OnInit {
       College: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
       Job: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
       AboutMe: ['', Validators.compose([Validators.maxLength(100)])],
-      DOB: ['', Validators.compose([Validators.required])],
+      dateofBirth: ['', Validators.compose([Validators.required])],
       GenderId: ['', Validators.compose([Validators.required])],
       ReligionId: ['', Validators.compose([Validators.required])],
       CityId: ['', Validators.compose([Validators.required])],
@@ -80,24 +80,30 @@ export class ProfileUpdatePage implements OnInit {
           College: this.currentUser.College,
           Job: this.currentUser.Job,
           AboutMe: this.currentUser.AboutMe,
-          DOB: this.currentUser.DOB,
+          dateofBirth: this.currentUser.DOB.split('T')[0],
           GenderId: this.genders.find(item => {
             return item.gender === this.currentUser.GenderName;
           }).genderId
         });
         if (this.religions.length > 0) {
-          this.userForm.patchValue({
-            ReligionId: this.religions.find(item => {
-              return item.Religion === this.currentUser.Religion;
-            }).ReligionId
+          const oldReligion = this.religions.find(item => {
+            return item.Religion === this.currentUser.Religion;
           });
+          if (oldReligion !== undefined) {
+            this.userForm.patchValue({
+              ReligionId: oldReligion.ReligionId
+            });
+          }
         }
         if (this.locations.length > 0) {
-          this.userForm.patchValue({
-            CityId: this.locations.find(item => {
-              return item.City === this.currentUser.City;
-            }).CityId
+          const oldLocation = this.locations.find(item => {
+            return item.City === this.currentUser.City;
           });
+          if (oldLocation !== undefined) {
+            this.userForm.patchValue({
+              CityId: oldLocation.CityId
+            });
+          }
         }
       }
     });
@@ -105,7 +111,11 @@ export class ProfileUpdatePage implements OnInit {
 
   public onSubmit() {
     console.log(this.userForm);
-    this.appService.updateUser(this.userForm.value);
+    const data = Object.assign({}, this.userForm).value;
+    data.UserId = this.currentUser.UserId;
+    this.appService.updateUser(data).then(() => {
+      this.userForm.reset();
+    });
   }
 
 }

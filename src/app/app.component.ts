@@ -48,7 +48,7 @@ export class AppComponent {
       icon: 'create',
       routerDirection: 'forward'
     }, {
-      title: 'Search Request for flat',
+      title: 'Search Request For Flat',
       url: '/flatsearchform',
       icon: 'search',
       routerDirection: 'forward'
@@ -104,7 +104,7 @@ export class AppComponent {
       this.backButtonEvent();
 
       // // call data from DB
-      this.appService.getCurrentuserFromDB();
+      // this.appService.getCurrentuserFromDB();
       this.appService.getUserLocationsFromDB();
       this.appService.getUserReligionsFromDB();
       this.appService.getBathroomsFromDB();

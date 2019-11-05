@@ -4,6 +4,15 @@ import { AuthGuard } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   {
+    path: 'landing',
+    loadChildren: './landing/landing.module#LandingPageModule'
+  }, {
+    path: 'userlogin',
+    loadChildren: './user-login/user-login.module#UserLoginModule'
+  }, {
+    path: 'userregistration',
+    loadChildren: './user-registration/user-registration.module#UserRegistrationModule'
+  }, {
     path: 'tabs',
     loadChildren: './tabs/tabs.module#TabsModule',
     canActivate: [AuthGuard]
@@ -16,20 +25,16 @@ const routes: Routes = [
     loadChildren: './flat-search-form/flat-search-form.module#FlatSearchFormPageModule',
     canActivate: [AuthGuard]
   }, {
-    path: 'userlogin',
-    loadChildren: './user-login/user-login.module#UserLoginModule'
-  }, {
-    path: 'userregistration',
-    loadChildren: './user-registration/user-registration.module#UserRegistrationModule'
-  }, {
     path: 'modifypreferences',
-    loadChildren: './modify-preferences/modify-preferences.module#ModifyPreferencesPageModule'
+    loadChildren: './modify-preferences/modify-preferences.module#ModifyPreferencesPageModule',
+    canActivate: [AuthGuard]
   }, {
     path: 'profileupdate',
-    loadChildren: './profile-update/profile-update.module#ProfileUpdatePageModule'
+    loadChildren: './profile-update/profile-update.module#ProfileUpdatePageModule',
+    canActivate: [AuthGuard]
   }, {
     path: '**',
-    redirectTo: 'userlogin',
+    redirectTo: 'landing',
     pathMatch: 'full'
   }
 ];

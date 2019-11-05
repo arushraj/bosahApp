@@ -55,7 +55,7 @@ export class FlatSearchFormPage implements OnInit {
   }
 
   public submitForm() {
-    const data = this.userForm.value;
+    const data = Object.assign({}, this.userForm).value;
     data.UserId = this.userId;
     this.appService.submitFlatSearchForm(data).then(() => {
       this.cleanForm();

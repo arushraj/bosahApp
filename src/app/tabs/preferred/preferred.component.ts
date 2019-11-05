@@ -34,7 +34,7 @@ export class PreferredComponent implements OnInit {
     // this.appService.getUserPreferredFromDB();
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     this.appService.getUserPreferredFromDB();
   }
 
