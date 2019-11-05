@@ -8,17 +8,18 @@
 </ion-header>
 
 <ion-content fullscreen>
-    <ion-item-divider sticky no-padding class="sticky-box-shadow">
-        <ion-segment [(ngModel)]="selectedTab">
-            <ion-segment-button *ngFor="let item of pageTabs" [value]="item.id" (ionSelect)="currentSegment(item.id)">
-                {{item.tabName}}
-            </ion-segment-button>
-        </ion-segment>
-    </ion-item-divider>
+  <ion-item-divider sticky no-padding class="sticky-box-shadow">
+    <ion-segment [(ngModel)]="selectedTab">
+      <ion-segment-button *ngFor="let item of pageTabs" [value]="item.id" (ionSelect)="currentSegment(item.id)">
+        {{item.tabName}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-item-divider>
   <ion-slides [options]="slideOpts" #SwipedTabsEventsSlider (ionSlideDidChange)="currentSlide()">
     <ion-slide *ngFor="let item of pageTabs">
       <ion-list *ngIf="item.events.length>0">
-        <ion-item *ngFor="let event of item.events" button detail (click)="openDetails(event)">
+        <ion-item *ngFor="let event of item.events; let i = index;" button detail (click)="openDetails(event)"
+          class="animated fadeInLeft">
           <ion-thumbnail slot="start">
             <ion-img [src]="event.EventImageFileName | eventImageBinder" alt="" (ionError)="setdefultImage($event)">
             </ion-img>
