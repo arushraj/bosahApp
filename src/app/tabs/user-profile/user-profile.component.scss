@@ -24,6 +24,9 @@
     top: -50px;
 }
 
-.logout-button {
-    margin-top: 10%;
+.setting-button {
+    display: flex;
+    flex-direction: column;
+    padding: 5% 0 0 0;
+    border-bottom: 0;
 }

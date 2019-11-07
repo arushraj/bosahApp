@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, IonContent } from '@ionic/angular';
 
 import { UserFriends, FriendshipStatus } from '../../shared/model/user-friend.model';
 import { AppService } from '../../shared/services/app.service';
@@ -26,6 +26,7 @@ export class MatchComponent implements OnInit {
     }
   };
   @ViewChild('SwipedTabsSlider', { read: IonSlides, static: true }) SwipedTabsSlider: IonSlides;
+  @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
 
   constructor(private appService: AppService) {
     this.pageTabs = [
@@ -46,7 +47,7 @@ export class MatchComponent implements OnInit {
 
   ngOnInit() { }
 
-  currentSegment(index) {
+  currentSegment(index: number) {
     this.SwipedTabsSlider.slideTo(index, 500);
   }
 
@@ -57,6 +58,7 @@ export class MatchComponent implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.ionContent.scrollToTop(500);
     this.currentSegment(this.pageTabs[0].id);
     this.selectedTab = this.pageTabs[0].id;
 

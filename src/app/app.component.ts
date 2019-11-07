@@ -37,17 +37,19 @@ export class AppComponent {
       url: '/events',
       icon: 'calendar',
       routerDirection: 'forward'
-    }, {
-      title: 'Modify Preferences',
-      url: '/modifypreferences',
-      icon: 'construct',
-      routerDirection: 'forward'
-    }, {
-      title: 'Profile Update',
-      url: '/profileupdate',
-      icon: 'create',
-      routerDirection: 'forward'
-    }, {
+    },
+    // {
+    //   title: 'Modify Preferences',
+    //   url: '/modifypreferences',
+    //   icon: 'construct',
+    //   routerDirection: 'forward'
+    // }, {
+    //   title: 'Profile Update',
+    //   url: '/profileupdate',
+    //   icon: 'create',
+    //   routerDirection: 'forward'
+    // },
+    {
       title: 'Search Request For Flat',
       url: '/flatsearchform',
       icon: 'search',
