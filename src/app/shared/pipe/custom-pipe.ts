@@ -40,7 +40,7 @@ export class ImageBinderPipe implements PipeTransform {
                 return '/assets/no-image.png';
             }
         } else {
-            return this.appConstant.APP_BASE_URL + value + `?random=${Math.random()}`;
+            return this.appConstant.APP_BLOB_URL + value + `?random=${Math.random()}`;
         }
     }
 }
@@ -52,7 +52,7 @@ export class EventImageBinderPipe implements PipeTransform {
         if (value === '' || value === undefined || value === null) {
             return '/assets/no-image.png';
         } else {
-            return this.appConstant.APP_BASE_URL + value + `?random=${Math.random()}`;
+            return this.appConstant.APP_BLOB_URL + value + `?random=${Math.random()}`;
         }
     }
 }

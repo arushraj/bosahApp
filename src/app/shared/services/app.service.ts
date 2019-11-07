@@ -278,7 +278,7 @@ export class AppService {
                                             const resUser: CurrentUser = JSON.parse(res.data);
                                             resUser.UserId = value.toString();
                                             if (resUser.ProfileImagePath !== '') {
-                                                resUser.ProfileImagePath = this.appConstant.APP_BASE_URL
+                                                resUser.ProfileImagePath = this.appConstant.APP_BLOB_URL
                                                     + resUser.ProfileImagePath + `?random=` + Math.random();
                                             }
                                             this.setCurrentUser(this.createUser(resUser));
