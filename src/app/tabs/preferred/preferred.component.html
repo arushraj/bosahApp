@@ -1,7 +1,7 @@
-<ion-content>
+<ion-content fullscreen class="animated fadeInUp faster">
     <ion-slides [options]="slideOpts" #preferredUserSlides>
-        <ion-slide *ngFor="let user of preferredUser">
-            <ion-card>
+        <ion-slide *ngFor="let user of preferredUser" class="animated zoomIn">
+            <ion-card *ngIf="user.UserId">
                 <!-- <img class="user-img" [src]="user.ProfileImagePath | imageBinder:user.Gender" alt="" /> -->
                 <ion-img [src]="user.ProfileImagePath | imageBinder:user.Gender" alt="" class="user-img"
                     (ionError)="setdefultImage($event)"> </ion-img>
