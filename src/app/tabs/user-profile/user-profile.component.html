@@ -6,7 +6,7 @@
   </ion-toolbar>
 </ion-header> -->
 
-<ion-content fullscreen class="animated fadeInUp faster">
+<ion-content fullscreen class="animated fadeInUp faster" #ionContent>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
       refreshingText="Refreshing..." pull-max="0" pull-min="0">
@@ -57,6 +57,18 @@
       <ion-item-divider>
         <ion-icon slot="start" name="snow"></ion-icon>
         <ion-label>{{currentUser.Religion | blankValue}}</ion-label>
+      </ion-item-divider>
+      <ion-item-divider class="setting-button">
+        <ion-chip outline color="primary" slot="start" routerLink="/profileupdate" routerDirection="forward">
+          <ion-icon name="create"></ion-icon>
+          <ion-label>Profile Update</ion-label>
+        </ion-chip>
+
+        <ion-chip outline color="secondary" slot="start" routerLink="/modifypreferences" routerDirection="forward">
+          <ion-icon name="construct"></ion-icon>
+          <ion-label>Modify Preferences</ion-label>
+        </ion-chip>
+        <ion-label></ion-label>
       </ion-item-divider>
       <ion-button class="logout-button" expand="block" color="danger" (click)="userLogout()">
         <ion-icon name="log-out"></ion-icon>

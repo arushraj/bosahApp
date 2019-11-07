@@ -1,4 +1,4 @@
-<ion-content fullscreen class="animated fadeInUp faster">
+<ion-content fullscreen class="animated fadeInUp faster" #ionContent>
     <ion-item-divider sticky no-padding class="sticky-box-shadow">
         <ion-segment [(ngModel)]="selectedTab">
             <ion-segment-button *ngFor="let item of pageTabs" [value]="item.id" (ionSelect)="currentSegment(item.id)">

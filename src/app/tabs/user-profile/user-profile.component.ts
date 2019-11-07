@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../../shared/services/app.service';
 import { CurrentUser } from '../../shared/model/current-user.model';
-import { ActionSheetController, Platform, LoadingController } from '@ionic/angular';
+import { ActionSheetController, Platform, IonContent } from '@ionic/angular';
 import { Toast } from '@ionic-native/toast/ngx';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
@@ -17,6 +17,7 @@ export class UserProfileComponent implements OnInit {
 
   public currentUser: CurrentUser;
   public ProfileImagePath: string;
+  @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
 
   constructor(
     private appService: AppService,
@@ -26,8 +27,7 @@ export class UserProfileComponent implements OnInit {
     private platform: Platform,
     private filePath: FilePath,
     private file: File,
-    private webView: WebView,
-    private loadingController: LoadingController) {
+    private webView: WebView) {
     this.appService.getCurrentUser()
       .subscribe(user => {
         this.currentUser = user;
@@ -48,6 +48,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() { }
 
   ionViewDidEnter() {
+    this.ionContent.scrollToTop(500);
     if (!this.currentUser.UserId) {
       this.appService.getCurrentuserFromDB();
     }
