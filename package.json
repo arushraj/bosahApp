@@ -7,7 +7,7 @@
     "ng": "ng",
     "start": "ionic serve --devapp",
     "build": "ionic cordova build --debug android",
-    "test": "ionic cordova run android -l --device",  
+    "test": "ionic cordova run android -l --device",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -34,8 +34,8 @@
     "@ionic-native/toast": "^5.14.0",
     "@ionic/angular": "^4.10.0-dev.201909061231.2ea728e",
     "@ionic/storage": "^2.2.0",
-    "cordova-android": "^8.1.0",
     "animate.css": "^3.7.2",
+    "cordova-android": "^8.1.0",
     "cordova-plugin-advanced-http": "^2.1.1",
     "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-facebook4": "^6.0.0",
