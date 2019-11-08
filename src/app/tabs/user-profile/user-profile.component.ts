@@ -7,6 +7,7 @@ import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/n
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { AppConstant } from 'src/app/shared/constant/app.constant';
 
 @Component({
   selector: 'app-user-profile',
@@ -16,6 +17,7 @@ import { File } from '@ionic-native/file/ngx';
 export class UserProfileComponent implements OnInit {
 
   public currentUser: CurrentUser;
+  public ProfileImagePath: string;
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
 
   constructor(
@@ -26,10 +28,22 @@ export class UserProfileComponent implements OnInit {
     private platform: Platform,
     private filePath: FilePath,
     private file: File,
-    private webView: WebView) {
+    private webView: WebView,
+    private appConstant: AppConstant) {
     this.appService.getCurrentUser()
       .subscribe(user => {
         this.currentUser = user;
+        if (this.currentUser.ProfileImagePath === '...' || this.currentUser.ProfileImagePath === '') {
+          if (this.currentUser.GenderName === 'Female') {
+            this.ProfileImagePath = './assets/female.png';
+          } else if (this.currentUser.GenderName === 'Male') {
+            this.ProfileImagePath = './assets/male.png';
+          } else {
+            this.ProfileImagePath = './assets/no-image.png';
+          }
+        } else {
+          this.ProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.currentUser.ProfileImagePath + `?random=${Math.random()}`;
+        }
       });
   }
 

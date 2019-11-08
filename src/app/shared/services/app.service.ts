@@ -602,23 +602,27 @@ export class AppService {
         loading.present();
         const data = {
             UserId: currentUser.UserId,
-            ProfileFileName: currentUser.ProfileImagePath ? currentUser.ProfileImagePath.split('/')[4].split('?')[0] : ''
+            ProfileFileName: currentUser.ProfileImagePath ? currentUser.ProfileImagePath.split('/')[2] : ''
         };
         this.http.uploadFile(this.appConstant.getURL(UrlKey.User_Profile_Image_Upload),
             data, {}, imagePath, 'ProfilePics')
             .then(res => {
                 loading.dismiss();
                 const resdata = JSON.parse(res.data);
-                if (data.ProfileFileName === '') {
-                    this.storage.remove(StorageKey.LocalCurrentUserKey).then(value => {
-                        this.getCurrentuserFromDB();
-                    });
-                } else {
-                    // Update the Random number.
-                    currentUser.ProfileImagePath = currentUser.ProfileImagePath
-                        .substr(0, currentUser.ProfileImagePath.indexOf('=') + 1) + Math.random();
-                    this.setCurrentUser(this.createUser(currentUser));
-                }
+                // if (data.ProfileFileName === '') {
+                //     this.storage.remove(StorageKey.LocalCurrentUserKey).then(value => {
+                //         this.getCurrentuserFromDB();
+                //     });
+                // } else {
+                //     // Update the Random number.
+                //     // currentUser.ProfileImagePath = '/' + currentUser.ProfileImagePath.split('/')[1] + data.ProfileFileName;
+                //     currentUser.ProfileImagePath = currentUser.ProfileImagePath
+                //         .replace(currentUser.ProfileImagePath.split('/')[2], data.ProfileFileName);
+                //     this.setCurrentUser(this.createUser(currentUser));
+                // }
+                this.storage.remove(StorageKey.LocalCurrentUserKey).then(value => {
+                    this.getCurrentuserFromDB();
+                });
                 this.toast.show(`${resdata.Message}`, `short`, 'bottom').subscribe(() => { });
             }).catch((err) => {
                 loading.dismiss();

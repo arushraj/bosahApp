@@ -8,7 +8,7 @@
     </ion-item-divider>
     <ion-slides [options]="slideOpts" #SwipedTabsSlider (ionSlideDidChange)="currentSlide()">
         <ion-slide *ngFor="let item of pageTabs">
-            <ion-list *ngIf="item.friends.length>0">
+            <ion-list *ngIf="item.friends.length>0" class="animated slideInLeft">
                 <ion-item *ngFor="let friend of item.friends" button detail>
                     <ion-thumbnail slot="start">
                         <ion-img [src]="friend.ProfileImagePath | imageBinder:friend.Gender" alt=""
