@@ -574,7 +574,6 @@ export class AppService {
                 if (resData.UserId > 0) {
                     this.storage.set(StorageKey.UserIdKey, resData.UserId).then(() => {
                         this.getCurrentuserFromDB();
-                        this.getUserPreferredFromDB();
                     });
                 }
                 loading.dismiss();
@@ -685,11 +684,15 @@ export class AppService {
                 if (userImagePath) {
                     this.toast.show(`${resData.ResponseMessage}`, `short`, `bottom`).subscribe(() => { });
                     await this.uploadUserRegistrationImage(resData.UserId, userImagePath);
-                    this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
+                    // this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                 } else {
                     this.toast.show(`${resData.ResponseMessage}`, `short`, `bottom`).subscribe(() => { });
-                    this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
+                    // this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                 }
+                this.storage.set(StorageKey.UserIdKey, resData.UserId).then(() => {
+                    this.getCurrentuserFromDB();
+                    this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
+                });
             })
             .catch(err => {
                 this.toast.show(`${JSON.stringify(err)}`, `short`, `bottom`).subscribe(() => { });

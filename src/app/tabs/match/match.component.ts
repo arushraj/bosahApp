@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, IonContent } from '@ionic/angular';
+import { IonSlides, IonContent, ModalController } from '@ionic/angular';
 
 import { UserFriends, FriendshipStatus } from '../../shared/model/user-friend.model';
 import { AppService } from '../../shared/services/app.service';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 @Component({
   selector: 'app-match',
@@ -28,7 +29,7 @@ export class MatchComponent implements OnInit {
   @ViewChild('SwipedTabsSlider', { read: IonSlides, static: true }) SwipedTabsSlider: IonSlides;
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
 
-  constructor(private appService: AppService) {
+  constructor(private appService: AppService, private modalController: ModalController) {
     this.pageTabs = [
       { id: 0, tabName: 'Friends', friends: [] },
       { id: 1, tabName: 'Pending', friends: [] },
@@ -86,6 +87,17 @@ export class MatchComponent implements OnInit {
 
   public actionOnFriendRequest(friend: UserFriends, friendshipStatus: number) {
     this.appService.actionOnFriendRequest(friend, friendshipStatus);
+  }
+
+  public async openDetails(user: UserFriends) {
+    if (user.ProfileImagePath === undefined || user.ProfileImagePath === null) {
+      user.ProfileImagePath = '';
+    }
+    const modal = await this.modalController.create({
+      component: UserDetailsComponent,
+      componentProps: { user }
+    });
+    return await modal.present();
   }
 
 }

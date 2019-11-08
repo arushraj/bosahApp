@@ -193,7 +193,7 @@ export class UserRegistrationComponent implements OnInit {
         .catch((error) => {
           const resData = JSON.parse(error.error);
           if (!resData.Status) {
-            this.toast.showShortBottom(`${error.message || JSON.parse(resData.error).ResponseMessage}`).subscribe(() => { });
+            this.toast.showShortBottom(`${error.message || resData.ResponseMessage}`).subscribe(() => { });
             this.newUser.referCode = '';
             return;
           } else {

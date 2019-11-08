@@ -1,0 +1,17 @@
+<ion-content fullscreen>
+    <ion-card>
+        <img [src]="user.ProfileImagePath.replace('thumbnail_','') | imageBinder:user.Gender" alt="" />
+        <ion-card-header>
+            <ion-card-title>{{user.FName}}</ion-card-title>
+            <ion-card-subtitle>
+                {{user.City}}<br />
+                {{user.Age}}
+            </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+        </ion-card-content>
+        <ion-button *ngIf="!user.Status" expand="full" color="danger">
+            Cancel Request
+        </ion-button>
+    </ion-card>
+</ion-content>

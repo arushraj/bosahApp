@@ -6,10 +6,11 @@ import { RouterModule } from '@angular/router';
 
 import { MatchComponent } from './match.component';
 import { CustomPipesModule } from '../../shared/pipe/custom-pipe.module';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 
 @NgModule({
-  declarations: [MatchComponent],
+  declarations: [MatchComponent, UserDetailsComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -21,6 +22,7 @@ import { CustomPipesModule } from '../../shared/pipe/custom-pipe.module';
       }
     ]),
     CustomPipesModule.forRoot()
-  ]
+  ],
+  entryComponents: [UserDetailsComponent]
 })
 export class MatchModule { }
