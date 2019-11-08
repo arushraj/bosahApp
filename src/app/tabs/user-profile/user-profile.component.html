@@ -16,8 +16,7 @@
     <img src="/assets/COVER SOCIAL MEDIA.png" alt="" />
     <ion-card-header class="ion-no-padding">
       <ion-avatar class="user-avatar">
-        <ion-img [src]="currentUser.ProfileImagePath | imageBinder:currentUser.Gender" alt=""
-          (ionError)="setdefultImage($event)">
+        <ion-img [src]="ProfileImagePath" alt="" (ionError)="setdefultImage($event)">
         </ion-img>
       </ion-avatar>
       <ion-card-title>
