@@ -6,7 +6,7 @@
           <ion-menu-toggle auto-hide="false">
             <ion-item routerLink="/tabs/userprofile">
               <ion-avatar class="user-avatar">
-                <ion-img [src]="ProfileImagePath" alt="" (ionError)="setdefultImage($event)">
+                <ion-img [src]="currentUser.ProfileImagePath | imageBinder:currentUser.Gender" alt="" (ionError)="setdefultImage($event)">
                 </ion-img>
               </ion-avatar>
               <ion-title>{{currentUser.FName}}</ion-title>

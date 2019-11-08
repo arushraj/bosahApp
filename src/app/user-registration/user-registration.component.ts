@@ -22,7 +22,7 @@ export class UserRegistrationComponent implements OnInit {
 
   public otpsend = false;
   private otp;
-  private isValid = false;
+  private isValid = true;
   public displayImage = '/assets/no-image.png';
   public newUser = {
     email: '',

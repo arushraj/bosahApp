@@ -6,7 +6,7 @@
   </ion-toolbar>
 </ion-header> -->
 
-<ion-content fullscreen class="animated fadeInUp faster" #ionContent>
+<ion-content fullscreen class="animated fadeInUp fast" #ionContent>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
       refreshingText="Refreshing..." pull-max="0" pull-min="0">
@@ -16,7 +16,8 @@
     <img src="/assets/COVER SOCIAL MEDIA.png" alt="" />
     <ion-card-header class="ion-no-padding">
       <ion-avatar class="user-avatar">
-        <ion-img [src]="ProfileImagePath" alt="" (ionError)="setdefultImage($event)">
+        <ion-img [src]="currentUser.ProfileImagePath | imageBinder:currentUser.Gender" alt=""
+          (ionError)="setdefultImage($event)">
         </ion-img>
       </ion-avatar>
       <ion-card-title>

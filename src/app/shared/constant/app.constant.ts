@@ -1,6 +1,11 @@
 export class AppConstant {
 
     readonly APP_BASE_URL = 'https://bosahappservices.azurewebsites.net';
+<<<<<<< HEAD
+    readonly APP_IMG_BASE_URL = 'https://bosahappstorage.blob.core.windows.net';
+=======
+    readonly APP_BLOB_URL = 'https://bosahappstorage.blob.core.windows.net';
+>>>>>>> 241312a48e21dfd58d96fa7b919eb633068be7c0
     readonly USER_LOGIN = '/api/login';
     readonly CURRENT_USER_URL = '/api/User/uid';
     readonly PROFILE_IMAGE_UPLOAD = '/api/Upload';

@@ -25,6 +25,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppService } from './shared/services/app.service';
 import { AppConstant } from './shared/constant/app.constant';
 import { AppHttpService } from './shared/services/rest.service';
+import { CustomPipesModule } from './shared/pipe/custom-pipe.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,7 +36,8 @@ import { AppHttpService } from './shared/services/rest.service';
     HttpClientModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    CustomPipesModule.forRoot()
   ],
   providers: [
     HTTP,

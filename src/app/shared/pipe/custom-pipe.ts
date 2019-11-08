@@ -40,7 +40,11 @@ export class ImageBinderPipe implements PipeTransform {
                 return '/assets/no-image.png';
             }
         } else {
-            return this.appConstant.APP_BASE_URL + value + `?random=${Math.random()}`;
+<<<<<<< HEAD
+            return this.appConstant.APP_IMG_BASE_URL + value + `?random=${Math.random()}`;
+=======
+            return this.appConstant.APP_BLOB_URL + value + `?random=${Math.random()}`;
+>>>>>>> 241312a48e21dfd58d96fa7b919eb633068be7c0
         }
     }
 }
@@ -52,7 +56,11 @@ export class EventImageBinderPipe implements PipeTransform {
         if (value === '' || value === undefined || value === null) {
             return '/assets/no-image.png';
         } else {
-            return this.appConstant.APP_BASE_URL + value + `?random=${Math.random()}`;
+<<<<<<< HEAD
+            return this.appConstant.APP_IMG_BASE_URL + value + `?random=${Math.random()}`;
+=======
+            return this.appConstant.APP_BLOB_URL + value + `?random=${Math.random()}`;
+>>>>>>> 241312a48e21dfd58d96fa7b919eb633068be7c0
         }
     }
 }

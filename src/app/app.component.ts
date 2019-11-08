@@ -30,7 +30,6 @@ export class AppComponent {
   private timePeriodToExit = 2000;
   @ViewChildren(IonRouterOutlet) main: QueryList<IonRouterOutlet>;
   public currentUser: CurrentUser;
-  public ProfileImagePath: string;
   public appPages = [
     {
       title: 'Events',
@@ -85,17 +84,6 @@ export class AppComponent {
   initializeApp() {
     this.appService.getCurrentUser().subscribe((user: CurrentUser) => {
       this.currentUser = user;
-      if (this.currentUser.ProfileImagePath === '...' || this.currentUser.ProfileImagePath === '') {
-        if (this.currentUser.GenderName === 'Female') {
-          this.ProfileImagePath = './assets/female.png';
-        } else if (this.currentUser.GenderName === 'Male') {
-          this.ProfileImagePath = './assets/male.png';
-        } else {
-          this.ProfileImagePath = './assets/no-image.png';
-        }
-      } else {
-        this.ProfileImagePath = this.currentUser.ProfileImagePath;
-      }
     });
 
     // Initialize BackButton Eevent.

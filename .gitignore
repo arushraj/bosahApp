@@ -32,3 +32,9 @@ npm-debug.log*
 /resources/ios
 /resources/windows
 /www
+config.xml
+package.json
+package-lock.json
+config.xml
+config.xml
+config.xml

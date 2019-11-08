@@ -277,10 +277,17 @@ export class AppService {
                                             loading.dismiss();
                                             const resUser: CurrentUser = JSON.parse(res.data);
                                             resUser.UserId = value.toString();
+<<<<<<< HEAD
+                                            // if (resUser.ProfileImagePath !== '') {
+                                            //     resUser.ProfileImagePath = this.appConstant.APP_BASE_URL
+                                            //         + resUser.ProfileImagePath + `?random=` + Math.random();
+                                            // }
+=======
                                             if (resUser.ProfileImagePath !== '') {
-                                                resUser.ProfileImagePath = this.appConstant.APP_BASE_URL
+                                                resUser.ProfileImagePath = this.appConstant.APP_BLOB_URL
                                                     + resUser.ProfileImagePath + `?random=` + Math.random();
                                             }
+>>>>>>> 241312a48e21dfd58d96fa7b919eb633068be7c0
                                             this.setCurrentUser(this.createUser(resUser));
                                             this.storage.set(StorageKey.LocalCurrentUserKey, resUser);
                                         })
@@ -299,10 +306,10 @@ export class AppService {
                     }
                 } else {
                     loading.dismiss();
-                    if (user.ProfileImagePath !== '') {
-                        user.ProfileImagePath = user.ProfileImagePath
-                            .substr(0, user.ProfileImagePath.indexOf('=') + 1) + Math.random();
-                    }
+                    // if (user.ProfileImagePath !== '') {
+                    //     user.ProfileImagePath = user.ProfileImagePath
+                    //         .substr(0, user.ProfileImagePath.indexOf('=') + 1) + Math.random();
+                    // }
                     this.setCurrentUser(this.createUser(user));
                 }
             })
@@ -637,13 +644,16 @@ export class AppService {
         this.toast.show(`Logout Success`, `short`, 'bottom').subscribe(() => { });
         this.storage.remove(StorageKey.UserIdKey)
             .then(() => {
-                this.storage.remove(StorageKey.LocalCurrentUserKey);
-                this.setCurrentUser(this.createUser());
-                this.setUserPreferred(this.createuserPreferred());
-                this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
+                this.storage.remove(StorageKey.LocalCurrentUserKey)
+                    .then(() => {
+                        this.setCurrentUser(this.createUser());
+                        this.setUserPreferred(this.createuserPreferred());
+                    })
+                    .catch(() => { });
             })
             .catch(() => { })
             .finally(() => {
+                this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
             });
     }
 
