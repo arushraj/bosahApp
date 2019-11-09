@@ -42,6 +42,7 @@ export class UserProfileComponent implements OnInit {
             this.ProfileImagePath = './assets/no-image.png';
           }
         } else {
+         
           this.ProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.currentUser.ProfileImagePath + `?random=${Math.random()}`;
         }
       });

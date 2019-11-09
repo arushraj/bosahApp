@@ -85,6 +85,7 @@ export class MatchComponent implements OnInit {
     this.actionOnFriendRequest(friend, FriendshipStatus.Unfriended);
   }
 
+ 
   public actionOnFriendRequest(friend: UserFriends, friendshipStatus: number) {
     this.appService.actionOnFriendRequest(friend, friendshipStatus);
   }

@@ -15,8 +15,8 @@
                             (ionError)="setdefultImage($event)"> </ion-img>
                     </ion-thumbnail>
                     <ion-label>
-                        <h2>{{friend.FName}}</h2>
-                        <h3>{{friend.Age}}</h3>
+                        <h2>{{friend.FName}},{{friend.Age}}</h2>
+                        <!-- <h3>{{friend.Age}}</h3> -->
                         <p>{{friend.City}}</p>
                     </ion-label>
                     <ion-fab vertical="center" horizontal="end" class="fab-button-group" *ngIf="item.id === 1">

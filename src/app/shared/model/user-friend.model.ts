@@ -11,6 +11,8 @@ export interface UserFriends {
 export enum FriendshipStatus {
     Pending,
     Accepted,
-    Blocked,
-    Unfriended
+    Unfriended,
+    Rejected,
+    Blocked,   
+    Cancelled
 }

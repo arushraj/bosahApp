@@ -10,8 +10,9 @@
         </ion-card-header>
         <ion-card-content>
         </ion-card-content>
-        <ion-button *ngIf="!user.Status" expand="full" color="danger">
+        <ion-button *ngIf="!user.Status" expand="full" color="danger" (click)="cancelFriendShipRequest()">
             Cancel Request
         </ion-button>
+       
     </ion-card>
 </ion-content>
