@@ -103,7 +103,7 @@ export class MatchComponent implements OnInit {
   public async openDetails(user: UserFriends) {
     if (user.ProfileImagePath === undefined || user.ProfileImagePath === null) {
       user.ProfileImagePath = '';
-    }9
+    }
     const modal = await this.modalController.create({
       component: UserDetailsComponent,
       componentProps: { user }

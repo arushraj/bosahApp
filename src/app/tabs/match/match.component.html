@@ -10,10 +10,14 @@
         <ion-slide *ngFor="let item of pageTabs">
             <ion-list *ngIf="item.friends.length>0" class="animated slideInLeft">
                 <ion-item *ngFor="let friend of item.friends" button detail>
-                    <ion-thumbnail slot="start" (click)="openDetails(friend)">
+                    <ion-thumbnail slot="start"  *ngIf="item.id === 0">
                         <ion-img [src]="friend.ProfileImagePath | imageBinder:friend.Gender" alt=""
                             (ionError)="setdefultImage($event)"> </ion-img>
                     </ion-thumbnail>
+                    <ion-thumbnail slot="start" (click)="openDetails(friend)" *ngIf="item.id > 0">
+                            <ion-img [src]="friend.ProfileImagePath | imageBinder:friend.Gender" alt=""
+                                (ionError)="setdefultImage($event)"> </ion-img>
+                        </ion-thumbnail>
                     <ion-label>
                         <h2>{{friend.FName}},{{friend.Age}}</h2>
                         <!-- <h3>{{friend.Age}}</h3> -->
@@ -29,15 +33,15 @@
                     </ion-fab>
                 </ion-item>
             </ion-list>
-            <ion-label class="ion-empty-label" *ngIf="friendsEmpty && item.id === 0" color="dark" [hidden]="!friendsEmpty" [ngClass]="{'hidden': !friendsEmpty}" >
+            <ion-label class="ion-empty-label" *ngIf="item.id === 0" color="dark"  [ngClass]="{'hidden': !friendsEmpty}" >
                 <ion-icon name="clipboard" slot="start"></ion-icon>
                 No Friends
             </ion-label>
-            <ion-label class="ion-empty-label" *ngIf="pendingfriendsEmpty && item.id === 1" color="dark" [ngClass]="{'hidden': !pendingfriendsEmpty}">
+            <ion-label class="ion-empty-label" *ngIf="item.id === 1" color="dark" [ngClass]="{'hidden': !pendingfriendsEmpty}">
                     <ion-icon name="clipboard" slot="start"></ion-icon>
                     No pending  Request
                 </ion-label>
-                <ion-label class="ion-empty-label" *ngIf="sentFriendsEmpty && item.id === 2" color="dark" [ngClass]="{'hidden': !sentFriendsEmpty}">
+                <ion-label class="ion-empty-label" *ngIf="item.id === 2" color="dark" [ngClass]="{'hidden': !sentFriendsEmpty}">
                         <ion-icon name="clipboard" slot="start"></ion-icon>
                         No pending Sent Request
                     </ion-label>
