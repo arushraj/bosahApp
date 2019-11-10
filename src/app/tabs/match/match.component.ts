@@ -45,7 +45,7 @@ export class MatchComponent implements OnInit {
 
     this.appService.getFriendList().subscribe((friends) => {
       this.pageTabs[0].friends = this.friendFilter(friends, FriendshipStatus.Accepted);
-      this.friendsEmpty=this.pageTabs[0].friends.length==0?true:false;
+      this.friendsEmpty=this.pageTabs[0].friends.length ==0?true:false;
       this.pageTabs[1].friends = this.friendFilter(friends, FriendshipStatus.Pending);
       this.pendingfriendsEmpty=this.pageTabs[1].friends.length==0?true:false; 
     });
