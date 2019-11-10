@@ -14,6 +14,9 @@ export class MatchComponent implements OnInit {
 
   public pageTabs: Array<{ id: number, tabName: string, friends: UserFriends[] }>;
   public selectedTab: number;
+  public friendsEmpty:boolean=false;
+  public pendingfriendsEmpty:boolean=false;
+  public sentFriendsEmpty:boolean=false;
   public slideOpts = {
     initialSlide: 0,
     speed: 300,
@@ -35,14 +38,20 @@ export class MatchComponent implements OnInit {
       { id: 1, tabName: 'Pending', friends: [] },
       { id: 2, tabName: 'Sent', friends: [] }
     ];
+    
+
     this.selectedTab = 0;
+    this.friendsEmpty=false;
 
     this.appService.getFriendList().subscribe((friends) => {
       this.pageTabs[0].friends = this.friendFilter(friends, FriendshipStatus.Accepted);
+      this.friendsEmpty=this.pageTabs[0].friends.length==0?true:false;
       this.pageTabs[1].friends = this.friendFilter(friends, FriendshipStatus.Pending);
+      this.pendingfriendsEmpty=this.pageTabs[1].friends.length==0?true:false; 
     });
     this.appService.getRequestedFriendList().subscribe((friends) => {
       this.pageTabs[2].friends = this.friendFilter(friends, FriendshipStatus.Pending);
+      this.sentFriendsEmpty=this.pageTabs[2].friends.length==0?true:false;
     });
   }
 
@@ -50,6 +59,7 @@ export class MatchComponent implements OnInit {
 
   currentSegment(index: number) {
     this.SwipedTabsSlider.slideTo(index, 500);
+    this.friendsEmpty=false;
   }
 
   currentSlide() {
@@ -93,7 +103,7 @@ export class MatchComponent implements OnInit {
   public async openDetails(user: UserFriends) {
     if (user.ProfileImagePath === undefined || user.ProfileImagePath === null) {
       user.ProfileImagePath = '';
-    }
+    }9
     const modal = await this.modalController.create({
       component: UserDetailsComponent,
       componentProps: { user }
@@ -102,4 +112,3 @@ export class MatchComponent implements OnInit {
   }
 
 }
-
