@@ -20,7 +20,7 @@
             <ion-item class="email-textbox">
               <ion-icon slot="start" name="at" class="auto-top-bottom-marging" color="primary"></ion-icon>
               <ion-input type="email" [(ngModel)]="newUser.email" name="email" [disabled]="otpsend" id="email"
-                placeholder="your e-mail id">
+                placeholder="E-mail ID">
               </ion-input>
               <ion-button slot="end" expand="block" fill="clean" shape="round" (click)="sendOTP()" [disabled]="otpsend">
                 <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
@@ -53,10 +53,10 @@
         <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
           <form padding-right class="refer-form">
-            <h3 class="refer-message-label">Enter code who refer you.</h3>
+            <h3 class="refer-message-label">Someone referred you? Enter their referral code and you’ll each receive gift cards upon lease signing</h3>
             <ion-item class="refer-textbox">
               <ion-input type="text" [(ngModel)]="newUser.referCode" name="referCode" id="referCode"
-                placeholder="Refer Code">
+                placeholder="Referral Code">
               </ion-input>
             </ion-item>
           </form>
@@ -202,7 +202,8 @@
       <ion-card>
         <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
-          <form padding-right class="user-form">
+          <h3 class="preference-message-label"> Roommate Preferences </h3>
+          <form padding-right class="user-form">          
             <ion-item class="preferred-gender-select">
               <ion-label>Roommate Gender <ion-text color="danger">*</ion-text></ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredGender" name="preferredGender"
