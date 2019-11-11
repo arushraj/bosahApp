@@ -43,7 +43,10 @@ export class PreferredComponent implements OnInit {
   }
 
   public notIntrested() {
-    this.preferredUserSlides.slideNext(1000, true).then(() => { });
+    this.preferredUserSlides.slideNext(1000, true).then(() => { 
+
+      
+    });
   }
 
   public async sendFriendRequest(newFriend: PreferredUser) {
