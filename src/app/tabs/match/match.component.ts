@@ -14,9 +14,6 @@ export class MatchComponent implements OnInit {
 
   public pageTabs: Array<{ id: number, tabName: string, friends: UserFriends[] }>;
   public selectedTab: number;
-  public friendsEmpty:boolean=false;
-  public pendingfriendsEmpty:boolean=false;
-  public sentFriendsEmpty:boolean=false;
   public slideOpts = {
     initialSlide: 0,
     speed: 300,
@@ -35,31 +32,25 @@ export class MatchComponent implements OnInit {
   constructor(private appService: AppService, private modalController: ModalController) {
     this.pageTabs = [
       { id: 0, tabName: 'Friends', friends: [] },
-      { id: 1, tabName: 'Pending', friends: [] },
-      { id: 2, tabName: 'Sent', friends: [] }
+      { id: 1, tabName: 'Pending', friends: [] }
+      // ,{ id: 2, tabName: 'Sent', friends: [] }
     ];
-    
-
     this.selectedTab = 0;
-    this.friendsEmpty=false;
 
     this.appService.getFriendList().subscribe((friends) => {
       this.pageTabs[0].friends = this.friendFilter(friends, FriendshipStatus.Accepted);
-      this.friendsEmpty=this.pageTabs[0].friends.length ==0?true:false;
       this.pageTabs[1].friends = this.friendFilter(friends, FriendshipStatus.Pending);
-      this.pendingfriendsEmpty=this.pageTabs[1].friends.length==0?true:false; 
     });
-    this.appService.getRequestedFriendList().subscribe((friends) => {
-      this.pageTabs[2].friends = this.friendFilter(friends, FriendshipStatus.Pending);
-      this.sentFriendsEmpty=this.pageTabs[2].friends.length==0?true:false;
-    });
+    // No Needed as of Now.
+    // this.appService.getRequestedFriendList().subscribe((friends) => {
+    //   this.pageTabs[2].friends = this.friendFilter(friends, FriendshipStatus.Pending);
+    // });
   }
 
   ngOnInit() { }
 
   currentSegment(index: number) {
     this.SwipedTabsSlider.slideTo(index, 500);
-    this.friendsEmpty=false;
   }
 
   currentSlide() {
@@ -74,7 +65,8 @@ export class MatchComponent implements OnInit {
     this.selectedTab = this.pageTabs[0].id;
 
     this.appService.getUserFriendsFromDB();
-    this.appService.getRequestedFriendsFromDB();
+    // No needed as of now.
+    // this.appService.getRequestedFriendsFromDB();
   }
 
   private friendFilter(friends: UserFriends[], friendType: number) {
@@ -95,20 +87,22 @@ export class MatchComponent implements OnInit {
     this.actionOnFriendRequest(friend, FriendshipStatus.Unfriended);
   }
 
- 
+
   public actionOnFriendRequest(friend: UserFriends, friendshipStatus: number) {
     this.appService.actionOnFriendRequest(friend, friendshipStatus);
   }
 
-  public async openDetails(user: UserFriends) {
-    if (user.ProfileImagePath === undefined || user.ProfileImagePath === null) {
-      user.ProfileImagePath = '';
+  public async openDetails(user: UserFriends, tabId: number) {
+    if (tabId !== this.pageTabs[0].id) {
+      if (user.ProfileImagePath === undefined || user.ProfileImagePath === null) {
+        user.ProfileImagePath = '';
+      }
+      const modal = await this.modalController.create({
+        component: UserDetailsComponent,
+        componentProps: { user }
+      });
+      return await modal.present();
     }
-    const modal = await this.modalController.create({
-      component: UserDetailsComponent,
-      componentProps: { user }
-    });
-    return await modal.present();
   }
 
 }

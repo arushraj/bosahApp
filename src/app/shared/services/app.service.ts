@@ -798,22 +798,19 @@ export class AppService {
             .then(async (userId) => {
                 if (userId) {
                     const url = this.appConstant.getURL(UrlKey.Action_On_Friend_Request);
-                    var friendUserId: string;
-                    var currentuserId:string;
-                    //If someone cancel the request,Interchanging the user for convention
-                    if(friendshipStatus===FriendshipStatus.Cancelled)
-                    {
-                        friendUserId=userId.toString();
-                        currentuserId=friendUser.UserId.toString()
+                    let friendUserId: string;
+                    let currentuserId: string;
+                    // If someone cancel the request,Interchanging the user for convention
+                    if (friendshipStatus === FriendshipStatus.Cancelled) {
+                        friendUserId = userId.toString();
+                        currentuserId = friendUser.UserId.toString();
+                    } else {
+                        friendUserId = friendUser.UserId.toString();
+                        currentuserId = userId.toString();
+                    }
 
-                    }
-                    else{
-                        friendUserId=friendUser.UserId.toString();
-                        currentuserId=userId.toString();
-                    }
-                    
                     const data = {
-                        FromFriendRequestID:friendUserId.toString(),
+                        FromFriendRequestID: friendUserId.toString(),
                         ToFriendRequestID: currentuserId.toString(),
                         Status: friendshipStatus.toString()
                     };
