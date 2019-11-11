@@ -31,8 +31,8 @@ export class MatchComponent implements OnInit {
 
   constructor(private appService: AppService, private modalController: ModalController) {
     this.pageTabs = [
-      { id: 0, tabName: 'Friends', friends: [] },
-      { id: 1, tabName: 'Pending', friends: [] }
+      { id: 0, tabName: 'Matches', friends: [] },
+      { id: 1, tabName: 'Pending Matches', friends: [] }
       // ,{ id: 2, tabName: 'Sent', friends: [] }
     ];
     this.selectedTab = 0;

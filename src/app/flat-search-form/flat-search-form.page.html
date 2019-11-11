@@ -21,7 +21,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Select Your Rent Budget <ion-text color="danger">*</ion-text>
+        <ion-label position="stacked">Rent Budget Per Person<ion-text color="danger">*</ion-text>
         </ion-label>
         <ion-select placeholder="Select One" required formControlName="RentBudgetId">
           <ion-select-option *ngFor="let item of rentBudget" [value]="item.RentBudgetID">{{item.RentBudgetType}}
@@ -30,7 +30,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Select Bedroom Type <ion-text color="danger">*</ion-text>
+        <ion-label position="stacked">Number of Bedrooms<ion-text color="danger">*</ion-text>
         </ion-label>
         <ion-select placeholder="Select One" required formControlName="BedroomTypeId">
           <ion-select-option *ngFor="let item of bedrooms" [value]="item.BedroomID">{{item.BedroomType}}
@@ -39,7 +39,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Select Bathroom Type <ion-text color="danger">*</ion-text>
+        <ion-label position="stacked">Number of Bathrooms<ion-text color="danger">*</ion-text>
         </ion-label>
         <ion-select placeholder="Select One" required formControlName="BathroomTypeId">
           <ion-select-option *ngFor="let item of bathrooms" [value]="item.BathroomID">{{item.BathRoomType}}
@@ -54,7 +54,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Comments</ion-label>
+        <ion-label position="stacked">Neighborhoods and Desired Amenities</ion-label>
         <ion-textarea formControlName="Comments"></ion-textarea>
       </ion-item>
     </ion-list>

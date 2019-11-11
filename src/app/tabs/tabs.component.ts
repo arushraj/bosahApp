@@ -12,7 +12,7 @@ import { Toast } from '@ionic-native/toast/ngx';
 export class TabsComponent implements OnInit {
 
   public tabs = [{
-    name: 'Preferred',
+    name: 'Suggested',
     icon: 'star',
     route: 'preferred'
   }, {

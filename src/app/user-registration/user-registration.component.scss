@@ -43,10 +43,11 @@ ion-slide>img {
 }
 
 .otp-form .otp-message,
-.refer-form .refer-message-label,.preference-message-label {
+.refer-form .refer-message-label,.preference-message-label,.about-you-label {
     color: #eca5a5;
     margin: 5% 0;
     font-size: 1.2em;
+    font-weight: bold;
 }
 
 .otp-resend {

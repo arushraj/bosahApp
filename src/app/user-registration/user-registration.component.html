@@ -103,8 +103,11 @@
     <ion-slide class="personal-slide">
       <ion-card>
         <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
+      
         <ion-card-content>
           <form padding-right class="personal-form">
+              <h3 class="about-you-label">About You</h3>
+
             <ion-item class="firstname-textbox">
               <ion-input type="firstName" [(ngModel)]="newUser.firstName" name="firstName" id="firstName"
                 placeholder="First Name*" autoCapitalize = 'words'>
@@ -156,6 +159,8 @@
         </ion-card-header>
         <ion-card-content>
           <form padding-right class="profession-form">
+              <h3 class="about-you-label">Tell potential roommates about yourself</h3>
+             
             <ion-item class="college-textbox">
               <ion-input type="text" [(ngModel)]="newUser.college" name="college" id="college" placeholder="College*" autoCapitalize = 'words'>
               </ion-input>
@@ -203,6 +208,9 @@
         <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
           <h3 class="preference-message-label"> Roommate Preferences </h3>
+          <p>
+              What are you looking for in a roommate? Select options below
+              </p>
           <form padding-right class="user-form">          
             <ion-item class="preferred-gender-select">
               <ion-label>Roommate Gender <ion-text color="danger">*</ion-text></ion-label>
