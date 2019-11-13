@@ -661,7 +661,6 @@ export class AppService {
         const url = this.appConstant.getURL(UrlKey.Send_Otp);
         const data = { otp, emailId };
         return this.http.post(url, data, {});
-
     }
 
     public async userRegistration(newUser: NewUser) {
@@ -953,6 +952,46 @@ export class AppService {
                 const resData = JSON.parse(res.data);
                 this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
                 this.getCurrentuserFromDB(true);
+            })
+            .catch((err) => {
+                loading.dismiss();
+                this.toast
+                    .showShortBottom(`${err.message || JSON.parse(err.error).ResponseMessage}`)
+                    .subscribe(() => { });
+            })
+            .finally(() => {
+                loading.dismiss();
+            });
+    }
+
+    public async sendOTPForUpdatePassword(otp: string, emailId: string) {
+        if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
+            this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
+            return;
+        }
+        const url = this.appConstant.getURL(UrlKey.Update_User_Password_OTP);
+        const data = { otp, emailId };
+        return this.http.post(url, data, {});
+    }
+
+    public async updateUserPassword(form: any) {
+        if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
+            this.toast.showShortBottom(`Please connect to internet.`).subscribe(() => { });
+            return;
+        }
+        const loading = await this.loadingController.create({
+            message: 'Please wait...',
+            translucent: true,
+            cssClass: ''
+        });
+        loading.present();
+        const url = this.appConstant.getURL(UrlKey.Update_User_Password);
+        const data = form;
+        return this.http.post(url, data, {})
+            .then((res) => {
+                loading.dismiss();
+                const resData = JSON.parse(res.data);
+                this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
             })
             .catch((err) => {
                 loading.dismiss();

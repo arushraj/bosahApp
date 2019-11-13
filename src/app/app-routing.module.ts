@@ -33,10 +33,14 @@ const routes: Routes = [
     loadChildren: './profile-update/profile-update.module#ProfileUpdatePageModule',
     canActivate: [AuthGuard]
   }, {
+    path: 'forgetpassword',
+    loadChildren: './forget-password/forget-password.module#ForgetPasswordPageModule'
+  }, {
     path: '**',
     redirectTo: 'landing',
     pathMatch: 'full'
   }
+
 ];
 
 @NgModule({
