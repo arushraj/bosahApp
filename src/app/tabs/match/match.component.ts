@@ -63,10 +63,6 @@ export class MatchComponent implements OnInit {
     this.ionContent.scrollToTop(500);
     this.currentSegment(this.pageTabs[0].id);
     this.selectedTab = this.pageTabs[0].id;
-
-    this.appService.getUserFriendsFromDB();
-    // No needed as of now.
-    // this.appService.getRequestedFriendsFromDB();
   }
 
   private friendFilter(friends: UserFriends[], friendType: number) {
@@ -103,6 +99,13 @@ export class MatchComponent implements OnInit {
       });
       return await modal.present();
     }
+  }
+  public doRefresh(event) {
+    this.appService.getUserFriendsFromDB().then(() => {
+      event.target.complete();
+    });
+    // No needed as of now.
+    // this.appService.getRequestedFriendsFromDB();
   }
 
 }

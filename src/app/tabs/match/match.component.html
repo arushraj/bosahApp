@@ -1,4 +1,7 @@
 <ion-content fullscreen class="animated fadeInUp fast" #ionContent>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="refresh-circle" refreshingSpinner="crescent"></ion-refresher-content>
+    </ion-refresher>
     <ion-item-divider class="sticky-box-shadow ion-no-padding">
         <ion-segment [(ngModel)]="selectedTab">
             <ion-segment-button *ngFor="let item of pageTabs" [value]="item.id" (ionSelect)="currentSegment(item.id)">
@@ -8,7 +11,7 @@
     </ion-item-divider>
     <ion-slides [options]="slideOpts" #SwipedTabsSlider (ionSlideDidChange)="currentSlide()">
         <ion-slide *ngFor="let item of pageTabs">
-            <ion-list *ngIf="item.friends.length>0" class="animated slideInLeft">
+            <ion-list *ngIf="item.friends.length>0" class="animated slideInLeft fastest">
                 <ion-item *ngFor="let friend of item.friends" button detail>
                     <ion-thumbnail slot="start" (click)="openDetails(friend, item.id)">
                         <ion-img [src]="friend.ProfileImagePath | imageBinder:friend.Gender" alt=""

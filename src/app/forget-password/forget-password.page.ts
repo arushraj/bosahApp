@@ -60,7 +60,7 @@ export class ForgetPasswordPage implements OnInit {
       loading.present();
       this.otp = Math.floor(1000 + Math.random() * 9000).toString();
 
-      this.appService.sentotp(this.otp, this.userForm.value.email)
+      this.appService.sentotp(this.otp, this.userForm.value.email, true)
         .then(res => {
           const resData = JSON.parse(res.data);
           loading.dismiss();
@@ -97,6 +97,11 @@ export class ForgetPasswordPage implements OnInit {
 
   public onSubmit() {
     console.log(this.userForm);
+    const data = {
+      EmailId: this.userForm.value.email,
+      Password: this.userForm.value.password
+    };
+    this.appService.updateUserPassword(data);
   }
 
 }

@@ -42,7 +42,6 @@ export class UserProfileComponent implements OnInit {
             this.ProfileImagePath = './assets/no-image.png';
           }
         } else {
-         
           this.ProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.currentUser.ProfileImagePath + `?random=${Math.random()}`;
         }
       });
@@ -62,8 +61,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   public doRefresh(event) {
-    this.appService.getCurrentuserFromDB();
-    event.target.complete();
+    this.appService.getCurrentuserFromDB(true).then(() => {
+      event.target.complete();
+    });
   }
 
   public setdefultImage(event) {
