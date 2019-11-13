@@ -63,6 +63,10 @@ export class MatchComponent implements OnInit {
     this.ionContent.scrollToTop(500);
     this.currentSegment(this.pageTabs[0].id);
     this.selectedTab = this.pageTabs[0].id;
+
+    if (this.pageTabs[0].friends.length === 0) {
+      this.appService.getUserFriendsFromDB();
+    }
   }
 
   private friendFilter(friends: UserFriends[], friendType: number) {
