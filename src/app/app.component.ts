@@ -51,7 +51,7 @@ export class AppComponent {
     //   routerDirection: 'forward'
     // },
     {
-      title: 'Search Request For Flat',
+      title: 'Apartment Search',
       url: '/flatsearchform',
       icon: 'search',
       routerDirection: 'forward'
