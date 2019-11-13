@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="app-background-img" fullscreen padding scroll-y="false">
+<ion-content class="app-background-img" fullscreen padding>
   <ion-slides #registrationslides>
 
     <ion-slide class="otp-slide">
@@ -110,12 +110,12 @@
 
             <ion-item class="firstname-textbox">
               <ion-input type="firstName" [(ngModel)]="newUser.firstName" name="firstName" id="firstName"
-                placeholder="First Name*" autoCapitalize = 'words'>
+                placeholder="First Name*" autoCapitalize='words'>
               </ion-input>
             </ion-item>
             <ion-item class="lastname-textbox">
               <ion-input type="lastName" [(ngModel)]="newUser.lastName" name="lastName" id="lastName"
-                placeholder="Last Name*" autoCapitalize = 'words'>
+                placeholder="Last Name*" autoCapitalize='words'>
               </ion-input>
             </ion-item>
             <!-- <ion-item class="age-textbox">
@@ -127,7 +127,8 @@
               </ion-input>
             </ion-item>
             <ion-item class="dob-textbox">
-              <ion-label>Date Of Birth <ion-text color="danger">*</ion-text></ion-label>
+              <ion-label>Date Of Birth <ion-text color="danger">*</ion-text>
+              </ion-label>
               <ion-datetime [(ngModel)]="newUser.dob" name="dob" id="dob" placeholder="MM-DD-YYYY"
                 displayFormat="MM-DD-YYYY"></ion-datetime>
             </ion-item>
@@ -162,29 +163,34 @@
               <h3 class="about-you-label">Tell potential roommates about yourself</h3>
              
             <ion-item class="college-textbox">
-              <ion-input type="text" [(ngModel)]="newUser.college" name="college" id="college" placeholder="College*" autoCapitalize = 'words'>
+              <ion-input type="text" [(ngModel)]="newUser.college" name="college" id="college" placeholder="College*"
+                autoCapitalize='words'>
               </ion-input>
             </ion-item>
             <ion-item class="job-textbox">
-              <ion-input type="text" [(ngModel)]="newUser.job" name="job" id="job" placeholder="Job Title*" autoCapitalize = 'words'>
+              <ion-input type="text" [(ngModel)]="newUser.job" name="job" id="job" placeholder="Job Title*"
+                autoCapitalize='words'>
               </ion-input>
             </ion-item>
             <ion-item class="city-select">
-              <ion-label>City <ion-text color="danger">*</ion-text></ion-label>
+              <ion-label>City <ion-text color="danger">*</ion-text>
+              </ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.city" name="city" id="city">
                 <ion-select-option *ngFor="let location of locations" [value]="location.CityId">{{location.City}}
                 </ion-select-option>
               </ion-select>
             </ion-item>
             <ion-item class="gender-select">
-              <ion-label>Gender <ion-text color="danger">*</ion-text></ion-label>
+              <ion-label>Gender <ion-text color="danger">*</ion-text>
+              </ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.gender" name="gender" id="gender">
                 <ion-select-option value="1">Male</ion-select-option>
                 <ion-select-option value="2">Female</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-item class="religion-select">
-              <ion-label>Religion <ion-text color="danger">*</ion-text></ion-label>
+              <ion-label>Religion <ion-text color="danger">*</ion-text>
+              </ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.religion" name="religion" id="religion">
                 <ion-select-option *ngFor="let religion of religions" [value]="religion.ReligionId">
                   {{religion.Religion}}</ion-select-option>
@@ -213,7 +219,8 @@
               </p>
           <form padding-right class="user-form">          
             <ion-item class="preferred-gender-select">
-              <ion-label>Roommate Gender <ion-text color="danger">*</ion-text></ion-label>
+              <ion-label>Roommate Gender <ion-text color="danger">*</ion-text>
+              </ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredGender" name="preferredGender"
                 id="preferredGender" multiple="true">
                 <ion-select-option value="1">Male</ion-select-option>
@@ -221,7 +228,8 @@
               </ion-select>
             </ion-item>
             <ion-item class="preferred-religion-select">
-              <ion-label>Roommate Religion <ion-text color="danger">*</ion-text></ion-label>
+              <ion-label>Roommate Religion <ion-text color="danger">*</ion-text>
+              </ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredReligion" name="preferredReligion"
                 id="preferredReligion" multiple="true">
                 <ion-select-option *ngFor="let religion of religions" [value]="religion.ReligionId">
@@ -229,7 +237,8 @@
               </ion-select>
             </ion-item>
             <ion-item class="preferred-pets-select">
-              <ion-label>Preferred Pets <ion-text color="danger">*</ion-text></ion-label>
+              <ion-label>Preferred Pets <ion-text color="danger">*</ion-text>
+              </ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredPets" name="preferredPets"
                 id="preferredPets" multiple="true">
                 <ion-select-option *ngFor="let pet of pets" [value]="pet.PetId">
