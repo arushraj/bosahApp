@@ -20,6 +20,18 @@ export class EventsComponent implements OnInit {
   private cityId: number;
   public pageTabs: Array<{ id: number, tabName: string, events: Event[] }>;
   public selectedTab: number;
+  public slideOpts = {
+    initialSlide: 0,
+    speed: 300,
+    cancelable: true,
+    coverflowEffect: {
+      rotate: 50,
+      stretch: 0,
+      depth: 100,
+      modifier: 1,
+      slideShadows: true,
+    }
+  };
   @ViewChild('SwipedTabsEventsSlider', { read: IonSlides, static: true }) SwipedTabsEventsSlider: IonSlides;
 
   constructor(

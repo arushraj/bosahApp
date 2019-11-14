@@ -39,7 +39,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-range min="20" max="60" dualKnobs="true" pin="true" pin [value]="rangeValue" color="primary"
+        <ion-range min="21" max="60" dualKnobs="true" pin="true" pin [value]="rangeValue" color="primary"
           (ionChange)="rangeChange($event)" #agerange>
           <ion-label slot="start">Min Age ({{rangeValue.lower}})</ion-label>
           <ion-label slot="end">Max Age ({{rangeValue.upper}})</ion-label>
@@ -48,7 +48,7 @@
     </ion-list>
 
     <div class="ion-padding">
-      <ion-button expand="block" type="submit" class="ion-no-margin" [disabled]="userForm.invalid">
+      <ion-button expand="block" type="submit" class="ion-no-margin" [disabled]="userForm.invalid || !userForm.dirty ||isActionCompleted">
         <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon> Submit
       </ion-button>
     </div>
