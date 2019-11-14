@@ -64,9 +64,9 @@ export class MatchComponent implements OnInit {
     this.currentSegment(this.pageTabs[0].id);
     this.selectedTab = this.pageTabs[0].id;
 
-    this.appService.getUserFriendsFromDB();
-    // No needed as of now.
-    // this.appService.getRequestedFriendsFromDB();
+    if (this.pageTabs[0].friends.length === 0) {
+      this.appService.getUserFriendsFromDB();
+    }
   }
 
   private friendFilter(friends: UserFriends[], friendType: number) {
@@ -103,6 +103,13 @@ export class MatchComponent implements OnInit {
       });
       return await modal.present();
     }
+  }
+  public doRefresh(event) {
+    this.appService.getUserFriendsFromDB().then(() => {
+      event.target.complete();
+    });
+    // No needed as of now.
+    // this.appService.getRequestedFriendsFromDB();
   }
 
 }

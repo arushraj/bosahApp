@@ -653,13 +653,13 @@ export class AppService {
         return await this.storage.get(StorageKey.UserIdKey);
     }
 
-    public async sentotp(otp: string, emailId: string) {
+    public async sentotp(otp: string, emailId: string, isForgotPassword?: boolean) {
         if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
             this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
             return;
         }
         const url = this.appConstant.getURL(UrlKey.Send_Otp);
-        const data = { otp, emailId };
+        const data = { otp, emailId, isForgotPassword };
         return this.http.post(url, data, {});
     }
 
@@ -964,16 +964,6 @@ export class AppService {
             });
     }
 
-    public async sendOTPForUpdatePassword(otp: string, emailId: string) {
-        if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
-            this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
-            return;
-        }
-        const url = this.appConstant.getURL(UrlKey.Update_User_Password_OTP);
-        const data = { otp, emailId };
-        return this.http.post(url, data, {});
-    }
-
     public async updateUserPassword(form: any) {
         if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
             this.toast.showShortBottom(`Please connect to internet.`).subscribe(() => { });
@@ -992,6 +982,7 @@ export class AppService {
                 loading.dismiss();
                 const resData = JSON.parse(res.data);
                 this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
+                this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
             })
             .catch((err) => {
                 loading.dismiss();

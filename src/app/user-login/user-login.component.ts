@@ -5,6 +5,7 @@ import { Toast } from '@ionic-native/toast/ngx';
 import { AppService } from '../shared/services/app.service';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-login',
@@ -13,17 +14,20 @@ import { Router } from '@angular/router';
 })
 export class UserLoginComponent implements OnInit {
 
-  public user = {
-    email: '',
-    password: ''
-  };
+  public loginForm: FormGroup;
+
   constructor(
     private googleplus: GooglePlus,
     private fb: Facebook,
     private toast: Toast,
     private appService: AppService,
     private navCtrl: NavController,
-    private router: Router) {
+    private router: Router,
+    private formBuilder: FormBuilder) {
+    this.loginForm = this.formBuilder.group({
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      password: ['', Validators.compose([Validators.required])]
+    });
   }
 
   ngOnInit() { }
@@ -74,20 +78,18 @@ export class UserLoginComponent implements OnInit {
   }
 
   public userLogin() {
-    if (this.user.email && this.user.password) {
-      this.appService.userLogin(this.user.email, this.user.password)
-        .then((data) => {
-          this.toast.show(
-            `${data.ResponseMessage}`,
-            `2000`,
-            `bottom`
-          ).subscribe(toast => { });
-          if (data.UserId > 0) {
-            this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
-            // this.router.navigate(['/tabs']);
-          }
-        });
-    }
+    this.appService.userLogin(this.loginForm.value.email, this.loginForm.value.password)
+      .then((data) => {
+        this.toast.show(
+          `${data.ResponseMessage}`,
+          `2000`,
+          `bottom`
+        ).subscribe(toast => { });
+        if (data.UserId > 0) {
+          this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
+          // this.router.navigate(['/tabs']);
+        }
+      });
   }
 
 }

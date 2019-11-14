@@ -24,8 +24,7 @@ export class AppConstant {
     readonly PETS = '/api/getallpets';
     readonly CHECK_VALID_REFERRAL_CODE = '/api/checkvalidityofreferralcode';
     readonly USER_UPDATE = '/api/updateUser';
-    readonly UPDATE_USER_PASSWORD_OTP = '/api/';
-    readonly UPDATE_USER_PASSWORD = '/api/';
+    readonly UPDATE_USER_PASSWORD = '/api/user/forgotpasswordUpdate';
 
     /**
      * getURL() funtion to get url
@@ -77,8 +76,6 @@ export class AppConstant {
                 return this.APP_BASE_URL + this.CHECK_VALID_REFERRAL_CODE;
             case UrlKey.User_Update:
                 return this.APP_BASE_URL + this.USER_UPDATE;
-            case UrlKey.Update_User_Password_OTP:
-                return this.APP_BASE_URL + this.UPDATE_USER_PASSWORD_OTP;
             case UrlKey.Update_User_Password:
                 return this.APP_BASE_URL + this.UPDATE_USER_PASSWORD;
             default:
@@ -110,7 +107,6 @@ export enum UrlKey {
     Flat_Search_Form,
     Check_Valid_Referral_Code,
     User_Update,
-    Update_User_Password_OTP,
     Update_User_Password
 }
 
