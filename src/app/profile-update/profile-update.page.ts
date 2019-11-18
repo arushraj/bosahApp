@@ -20,6 +20,7 @@ export class ProfileUpdatePage implements OnInit {
   public religions: UserReligion[];
   public locations: UserLocation[];
   public currentUser: CurrentUser;
+  public isActionCompleted: boolean=false;
 
   constructor(private fb: FormBuilder, private appService: AppService) {
     this.userForm = fb.group({
@@ -115,6 +116,7 @@ export class ProfileUpdatePage implements OnInit {
     data.UserId = this.currentUser.UserId;
     this.appService.updateUser(data).then(() => {
       this.userForm.reset();
+      this.isActionCompleted=true;
     });
   }
 
