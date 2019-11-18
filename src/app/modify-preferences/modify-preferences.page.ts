@@ -22,7 +22,6 @@ export class ModifyPreferencesPage implements OnInit {
   public pets: Pet[];
   public genders: Array<{ genderId: number, gender: string }> = [];
   public currentUser: CurrentUser;
-  public isActionCompleted:boolean=false;
 
   constructor(private appService: AppService, private fb: FormBuilder) {
     this.userForm = this.fb.group({
@@ -70,7 +69,6 @@ export class ModifyPreferencesPage implements OnInit {
       maxAge: this.rangeValue.upper
     };
     this.appService.updateUser(data);
-    this.isActionCompleted=true;
   }
 
 }
