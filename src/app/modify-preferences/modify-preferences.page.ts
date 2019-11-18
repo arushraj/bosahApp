@@ -68,7 +68,9 @@ export class ModifyPreferencesPage implements OnInit {
       minAge: this.rangeValue.lower,
       maxAge: this.rangeValue.upper
     };
-    this.appService.updateUser(data);
+    this.appService.updateUser(data).then(() => {
+      this.userForm.reset();
+    });
   }
 
 }
