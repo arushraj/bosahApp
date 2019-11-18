@@ -79,7 +79,7 @@
         <ion-textarea formControlName="AboutMe" type="text"></ion-textarea>
       </ion-item>
       <div class="ion-padding">
-        <ion-button expand="block" type="submit" [disabled]="userForm.invalid" class="ion-no-margin">
+        <ion-button expand="block" type="submit" [disabled]="userForm.invalid || userForm.pristine" class="ion-no-margin">
           <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon> Submit
         </ion-button>
       </div>

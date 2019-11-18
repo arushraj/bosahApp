@@ -601,7 +601,7 @@ export class AppService {
         loading.present();
         const data = {
             UserId: currentUser.UserId,
-            ProfileFileName: currentUser.ProfileImagePath ? currentUser.ProfileImagePath.split('/')[2] : ''
+            ProfileFileName: currentUser.ProfileImagePath ? currentUser.ProfileImagePath.split('/')[2].replace('thumbnail_', '') : ''
         };
         this.http.uploadFile(this.appConstant.getURL(UrlKey.User_Profile_Image_Upload),
             data, {}, imagePath, 'ProfilePics')

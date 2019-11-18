@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AppService } from '../shared/services/app.service';
 import { NewUser } from '../shared/model/current-user.model';
 import { ActionSheetController, Platform, LoadingController } from '@ionic/angular';
@@ -18,7 +18,7 @@ import { Pet } from '../shared/model/pet.model';
   templateUrl: './user-registration.component.html',
   styleUrls: ['./user-registration.component.scss'],
 })
-export class UserRegistrationComponent implements OnInit {
+export class UserRegistrationComponent implements OnInit, AfterViewInit {
 
   public otpsend = false;
   private otp;
@@ -52,6 +52,12 @@ export class UserRegistrationComponent implements OnInit {
   public locations: UserLocation[];
   public religions: UserReligion[];
   public pets: Pet[];
+  public signaturePadOptions = {
+    minWidth: 2,
+    canvasWidth: 500,
+    canvasHeight: 300
+  };
+  public signatureImage: string;
 
   @ViewChild('agerange', { read: IonRange, static: true }) agerange: IonRange;
   @ViewChild('registrationslides', { read: IonSlides, static: true }) registrationslides: IonSlides;
@@ -80,6 +86,9 @@ export class UserRegistrationComponent implements OnInit {
     this.appService.getPets().subscribe((pets: Pet[]) => {
       this.pets = pets;
     });
+  }
+
+  ngAfterViewInit() {
   }
 
   public rangeChange(event) {
