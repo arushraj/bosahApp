@@ -101,9 +101,7 @@ export class AppComponent {
 
     // Initialize BackButton Eevent.
     this.platform.ready().then(() => {
-
       // this.statusBar.styleDefault();
-      this.splashScreen.hide();
       this.backButtonEvent();
 
       // // call data from DB
@@ -114,6 +112,8 @@ export class AppComponent {
       this.appService.getBedroomsFromDB();
       this.appService.getRentBudgetFromDB();
       this.appService.getPetsFromDB();
+
+      this.splashScreen.hide();
     });
   }
 
