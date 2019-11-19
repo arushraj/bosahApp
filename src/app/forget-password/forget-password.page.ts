@@ -16,11 +16,12 @@ export class ForgetPasswordPage implements OnInit {
   public otpsend: boolean;
 
   private otp: string;
+  public passwordRegex:RegExp= new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
 
   constructor(private fb: FormBuilder, private loadingController: LoadingController, private appService: AppService, private toast: Toast) {
     this.userForm = this.fb.group({
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      password: ['', Validators.compose([Validators.required])],
+      password: ['', Validators.pattern(this.passwordRegex)],
       confirmPassword: ['', Validators.compose([Validators.required])]
     }, {
       validators: this.mustMatchPassword('password', 'confirmPassword')
