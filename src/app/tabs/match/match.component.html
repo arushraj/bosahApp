@@ -2,7 +2,7 @@
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content pullingIcon="refresh-circle" refreshingSpinner="crescent"></ion-refresher-content>
     </ion-refresher>
-    <ion-item-divider no-padding sticky>
+    <ion-item-divider class="ion-no-padding"  sticky>
         <ion-segment [(ngModel)]="selectedTab">
             <ion-segment-button *ngFor="let item of pageTabs" [value]="item.id" (ionSelect)="currentSegment(item.id)">
                 {{item.tabName}}

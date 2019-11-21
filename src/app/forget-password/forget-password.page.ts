@@ -25,7 +25,9 @@ export class ForgetPasswordPage implements OnInit {
       confirmPassword: ['', Validators.compose([Validators.required])]
     }, {
       validators: this.mustMatchPassword('password', 'confirmPassword')
-    });
+    }
+   
+    );
   }
 
   private mustMatchPassword(controlName: string, matchingControlName: string) {

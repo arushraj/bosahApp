@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content fullscreen>
-  <ion-item-divider sticky no-padding>
+  <ion-item-divider sticky class="ion-no-padding">
     <ion-segment [(ngModel)]="selectedTab">
       <ion-segment-button *ngFor="let item of pageTabs" [value]="item.id" (ionSelect)="currentSegment(item.id)">
         {{item.tabName}}
