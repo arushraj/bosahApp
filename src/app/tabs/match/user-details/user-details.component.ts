@@ -13,6 +13,7 @@ import { UserFriends,FriendshipStatus } from 'src/app/shared/model/user-friend.m
 export class UserDetailsComponent {
 
     @Input() user: UserFriends;
+    isActionTaken:boolean=false;
 
     constructor(private appService: AppService) { }
 
@@ -20,8 +21,15 @@ export class UserDetailsComponent {
         event.target.src = '/assets/no-image.png';
     }
 
-    public cancelFriendShipRequest() {
-        this.actionOnFriendRequest(this.user, FriendshipStatus.Cancelled);
+    public acceptFriendShip() {
+        this.actionOnFriendRequest(this.user, FriendshipStatus.Accepted);
+        this.isActionTaken=true;
+        
+      }
+
+      public rejectFriendShip() {
+        this.actionOnFriendRequest(this.user, FriendshipStatus.Rejected);
+        this.isActionTaken=true;
         
       }
     
