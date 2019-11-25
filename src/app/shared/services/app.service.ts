@@ -264,16 +264,16 @@ export class AppService {
                     if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
                         loading.dismiss().then(() => {
                             this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
-                       });
-                       
+                        });
+
                     } else {
                         this.getCurrentUserIdfromLocalStorage()
                             .then(value => {
                                 if (value === null || value === undefined) {
                                     loading.dismiss().then(() => {
                                         this.toast.show(`Session expired`, `short`, 'bottom').subscribe(() => { });
-                                   });
-                                  
+                                    });
+
                                     this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                                 } else {
                                     const url = this.appConstant.getURL(UrlKey.Current_User).replace('uid', value);
@@ -611,11 +611,11 @@ export class AppService {
         this.http.uploadFile(this.appConstant.getURL(UrlKey.User_Profile_Image_Upload),
             data, {}, imagePath, 'ProfilePics')
             .then(res => {
-                
+
                 const resdata = JSON.parse(res.data);
                 loading.dismiss().then(() => {
                     this.toast.show(`${resdata.Message}`, `short`, 'bottom').subscribe(() => { });
-               });
+                });
                 // if (data.ProfileFileName === '') {
                 //     this.storage.remove(StorageKey.LocalCurrentUserKey).then(value => {
                 //         this.getCurrentuserFromDB();
@@ -630,15 +630,12 @@ export class AppService {
                 this.storage.remove(StorageKey.LocalCurrentUserKey).then(value => {
                     this.getCurrentuserFromDB();
                 });
-                //loading.dismiss();
-              
-               
-               
+                // loading.dismiss();
             }).catch((err) => {
                 loading.dismiss().then(() => {
-                   this.toast.show(`Upload catch Error: ${JSON.stringify(err)}`, `short`, 'bottom').subscribe(() => { });
-               });
-                
+                    this.toast.show(`Upload catch Error: ${JSON.stringify(err)}`, `short`, 'bottom').subscribe(() => { });
+                });
+
             })
             .finally(() => {
                 loading.dismiss();
@@ -814,7 +811,7 @@ export class AppService {
 
     public async actionOnFriendRequest(friendUser: UserFriends, friendshipStatus: number) {
         if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
-            
+
             this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
             return;
         }
@@ -825,7 +822,7 @@ export class AppService {
         });
 
 
-       
+
         await this.getCurrentUserIdfromLocalStorage()
             .then(async (userId) => {
                 if (userId) {
@@ -849,10 +846,10 @@ export class AppService {
                     loading.present();
                     this.http.post(url, data, {})
                         .then((res) => {
-                           // loading.dismiss();
+                            // loading.dismiss();
                             loading.dismiss().then(() => {
                                 this.toast.show(`${resData.ResponseMessage}`, `short`, 'bottom').subscribe(() => { });
-                           });
+                            });
                             const resData = JSON.parse(res.data);
                             if (resData.Status) {
                                 this.userFriendsList.friends.forEach((value, key) => {
@@ -1019,18 +1016,18 @@ export class AppService {
 
                 loading.dismiss().then(() => {
                     this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
-               });               
+                });
                 const resData = JSON.parse(res.data);
-               
+
                 this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
             })
             .catch((err) => {
-              loading.dismiss().then(() => {
-                this.toast
-                .showShortBottom(`${err.message || JSON.parse(err.error).ResponseMessage}`)
-                .subscribe(() => { });
-                           });
-              
+                loading.dismiss().then(() => {
+                    this.toast
+                        .showShortBottom(`${err.message || JSON.parse(err.error).ResponseMessage}`)
+                        .subscribe(() => { });
+                });
+
             })
             .finally(() => {
                 loading.dismiss();
@@ -1045,11 +1042,11 @@ export class AppService {
     //       dismissOnPageChange: true,
     //       cssClass: cssClass
     //     });
-    
+
     //     toast.onDidDismiss(() => {
     //       // Do something
     //     });
-    
+
     //     return toast.present();
     //   }
 }
