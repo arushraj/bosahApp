@@ -11,7 +11,7 @@
   <ion-img src="/assets/ICON WITH TITLE.png" alt=""></ion-img>
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <ion-list lines="full" class="ion-no-margin ion-no-padding">
-      <ion-item>
+      <!-- <ion-item>
         <ion-label position="floating">First Name <ion-text color="danger">*</ion-text>
         </ion-label>
         <ion-input required formControlName="FirstName" type="text" class="readonly-input" readonly></ion-input>
@@ -31,9 +31,9 @@
         <ion-label position="floating">Phone Number <ion-text color="danger">*</ion-text>
         </ion-label>
         <ion-input required formControlName="PhoneNumber" type="tel" class="readonly-input" readonly></ion-input>
-      </ion-item>
+      </ion-item> -->
       <ion-item>
-        <ion-label position="floating">College <ion-text color="danger">*</ion-text>
+        <ion-label position="floating">Education <ion-text color="danger">*</ion-text>
         </ion-label>
         <ion-input required formControlName="College" type="text" autoCapitalize='words'></ion-input>
       </ion-item>
@@ -42,11 +42,11 @@
         </ion-label>
         <ion-input required formControlName="Job" type="text" autoCapitalize='words'></ion-input>
       </ion-item>
-      <ion-item>
+      <!-- <ion-item>
         <ion-label position="floating">Date Of Birth <ion-text color="danger">*</ion-text>
         </ion-label>
         <ion-input required formControlName="dateofBirth" type="Date"></ion-input>
-      </ion-item>
+      </ion-item> -->
 
       <ion-item>
         <ion-label position="floating">Gender <ion-text color="danger">*</ion-text>
@@ -57,14 +57,7 @@
         </ion-select>
       </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">Religion <ion-text color="danger">*</ion-text>
-        </ion-label>
-        <ion-select placeholder="Select One" required formControlName="ReligionId">
-          <ion-select-option *ngFor="let item of religions" [value]="item.ReligionId">{{item.Religion}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
+     
 
       <ion-item>
         <ion-label position="stacked">City <ion-text color="danger">*</ion-text>
@@ -78,6 +71,14 @@
       <ion-item>
         <ion-label position="floating">About Me</ion-label>
         <ion-textarea formControlName="AboutMe" type="text"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Religion <ion-text color="danger">*</ion-text>
+        </ion-label>
+        <ion-select placeholder="Select One" required formControlName="ReligionId">
+          <ion-select-option *ngFor="let item of religions" [value]="item.ReligionId">{{item.Religion}}
+          </ion-select-option>
+        </ion-select>
       </ion-item>
       <div class="ion-padding">
         <ion-button expand="block" type="submit" [disabled]="userForm.invalid || userForm.pristine"

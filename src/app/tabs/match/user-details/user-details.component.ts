@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { AppService } from '../../../shared/services/app.service';
 
 import { UserFriends,FriendshipStatus } from 'src/app/shared/model/user-friend.model';
+import { Location } from "@angular/common";
+import { ModalController } from '@ionic/angular';
 
 
 @Component({
@@ -13,21 +15,35 @@ import { UserFriends,FriendshipStatus } from 'src/app/shared/model/user-friend.m
 export class UserDetailsComponent {
 
     @Input() user: UserFriends;
+    isActionTaken:boolean=false;
 
-    constructor(private appService: AppService) { }
+    constructor(private appService: AppService,private modalController: ModalController) { }
 
     public setdefultImage(event) {
         event.target.src = '/assets/no-image.png';
     }
 
-    public cancelFriendShipRequest() {
-        this.actionOnFriendRequest(this.user, FriendshipStatus.Cancelled);
+    public acceptFriendShip() {
+        this.actionOnFriendRequest(this.user, FriendshipStatus.Accepted);
+        this.isActionTaken=true;
+        // this.location.back();
+      
+        
+      }
+
+      public rejectFriendShip() {
+        this.actionOnFriendRequest(this.user, FriendshipStatus.Rejected);
+        this.isActionTaken=true;
+      
+        // this.location.back();
         
       }
     
     
       public actionOnFriendRequest(user: UserFriends, friendshipStatus: number) {
-        this.appService.actionOnFriendRequest(user, friendshipStatus);
-        user.Status=FriendshipStatus.Cancelled;
+        this.appService.actionOnFriendRequest(user, friendshipStatus).then(()=> {        
+          this.modalController.dismiss();                    
+           });
+             
       }
 }

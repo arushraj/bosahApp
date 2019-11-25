@@ -52,6 +52,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   public locations: UserLocation[];
   public religions: UserReligion[];
   public pets: Pet[];
+  public passwordRegex:RegExp;
   public signaturePadOptions = {
     minWidth: 2,
     canvasWidth: 500,
@@ -226,10 +227,17 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   public goToNext() {
     this.registrationslides.getActiveIndex().then(index => {
       if (index === 2) {
+        /*vinay*/
+        this.passwordRegex= new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
         if (!this.newUser.password) {
           this.toast.showShortBottom('Please enter your password.').subscribe(() => { });
           return;
-        } else if (this.newUser.password !== this.newUser.confirmPassword) {
+        } 
+        else if (!this.passwordRegex.test(this.newUser.password)) { 
+          this.toast.showShortBottom('Password Must contain one capital,small,number and special character').subscribe(() => { });
+          return;
+        }
+        else if (this.newUser.password !== this.newUser.confirmPassword) {
           this.toast.showShortBottom('Password mismatching with confirm password.').subscribe(() => { });
           return;
         }

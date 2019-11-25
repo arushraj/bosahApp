@@ -39,17 +39,17 @@ export class AppComponent {
       icon: 'calendar',
       routerDirection: 'forward'
     },
-    // {
-    //   title: 'Modify Preferences',
-    //   url: '/modifypreferences',
-    //   icon: 'construct',
-    //   routerDirection: 'forward'
-    // }, {
-    //   title: 'Profile Update',
-    //   url: '/profileupdate',
-    //   icon: 'create',
-    //   routerDirection: 'forward'
-    // },
+    {
+      title: 'Modify Preferences',
+      url: '/modifypreferences',
+      icon: 'construct',
+      routerDirection: 'forward'
+    }, {
+      title: 'Profile Update',
+      url: '/profileupdate',
+      icon: 'create',
+      routerDirection: 'forward'
+    },
     {
       title: 'Apartment Search',
       url: '/flatsearchform',

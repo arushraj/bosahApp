@@ -4,15 +4,39 @@
         <ion-card-header>
             <ion-card-title>{{user.FName}}</ion-card-title>
             <ion-card-subtitle>
-                {{user.City}}<br />
-                {{user.Age}}
+                {{user.City}}
+                <!-- <br />
+                {{user.Age}} -->
             </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
         </ion-card-content>
-        <ion-button *ngIf="!user.Status" expand="full" color="danger" (click)="cancelFriendShipRequest()">
+        <!-- <ion-button *ngIf="!user.Status" expand="full" color="danger" (click)="cancelFriendShipRequest()">
             Cancel Request
-        </ion-button>
+        </ion-button> -->
+        <ion-card-content *ngIf="!isActionTaken" horizontal="center">
+            <ion-fab horizontal="center" vertical="center">
+                <ion-fab-button color="light" size="small"
+                    (click)="rejectFriendShip()">
+                    <ion-icon name="close" color="danger"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
+            <ion-fab vertical="center">
+                <ion-fab-button color="light" size="small" (click)="acceptFriendShip(user)">
+                    <ion-icon name="heart-empty" color="primary"></ion-icon>
+                    <!-- <ion-icon name="heart" color="primary"></ion-icon> -->
+                </ion-fab-button>
+            </ion-fab>
+        </ion-card-content>
+
+        <!-- <ion-fab vertical="center" horizontal="center" class="fab-button-group">
+            <ion-fab-button color="light" size="small" (click)="acceptFriendShip(friend)">
+                <ion-icon name="heart-empty" color="primary"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button color="light" size="small" (click)="rejectFriendShip()">
+                <ion-icon name="close" color="danger"></ion-icon>
+            </ion-fab-button>
+        </ion-fab> -->
        
     </ion-card>
 </ion-content>
