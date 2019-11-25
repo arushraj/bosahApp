@@ -12,4 +12,5 @@ export interface PreferredUser {
     Age: number;
     Religion: string;
     SendRequest: boolean;
+    AboutMe: string;
 }

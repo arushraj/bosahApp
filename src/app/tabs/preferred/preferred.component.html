@@ -6,7 +6,8 @@
                 <ion-img [src]="user.ProfileImagePath | imageBinder:user.Gender" alt="" class="user-img"
                     (ionError)="setdefultImage($event)"> </ion-img>
                 <ion-card-header *ngIf="user.UserId">
-                    <ion-card-title>{{user.FName | blankValue}}, {{user.Age | blankValue}}
+                    <ion-card-title>
+                        {{user.FName | blankValue}}, {{user.Age | blankValue}}
                         <!-- , {{user.City | blankValue}} -->
                     </ion-card-title>
                     <ion-card-subtitle>
@@ -24,8 +25,11 @@
                             <ion-icon slot="start" name="school"></ion-icon>
                             {{user.College | blankValue}}
                         </span>
-                        <!-- <br />
-                        <span>
+                        <br />
+                        <p class="about-me-label">
+                            {{user.AboutMe}}
+                        </p>
+                        <!--  <span>
                             <ion-icon slot="start" [name]="user.Gender"></ion-icon>
                             {{user.Gender | blankValue}}
                         </span> -->

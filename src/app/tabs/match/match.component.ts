@@ -36,7 +36,6 @@ export class MatchComponent implements OnInit {
       // ,{ id: 2, tabName: 'Sent', friends: [] }
     ];
     this.selectedTab = 0;
-
     this.appService.getFriendList().subscribe((friends) => {
       this.pageTabs[0].friends = this.friendFilter(friends, FriendshipStatus.Accepted);
       this.pageTabs[1].friends = this.friendFilter(friends, FriendshipStatus.Pending);

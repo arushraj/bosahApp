@@ -130,7 +130,8 @@ export class AppService {
             Country: (data && data.Country) ? data.Country : '',
             Age: (data && data.Age) ? data.Age : null,
             Religion: (data && data.Religion) ? data.Religion : null,
-            SendRequest: (data && data.SendRequest) ? data.SendRequest : false
+            SendRequest: (data && data.SendRequest) ? data.SendRequest : false,
+            AboutMe: (data && data.AboutMe) ? data.AboutMe : ''
         }];
     }
 
@@ -640,6 +641,10 @@ export class AppService {
                     .then(() => {
                         this.setCurrentUser(this.createUser());
                         this.setUserPreferred(this.createuserPreferred());
+
+                        // Empty List of Users Friends.
+                        this.userFriendsList.friends = [];
+                        this.setFriendList(Object.assign({}, this.userFriendsList).friends);
                     })
                     .catch(() => { });
             })
@@ -764,6 +769,19 @@ export class AppService {
                                     }
                                 });
                                 this.setUserPreferred(Object.assign({}, this.userPreferredList).users);
+
+                                const pendingFriend = {
+                                    UserId: friendUser.UserId,
+                                    FName: friendUser.FName,
+                                    ProfileImagePath: friendUser.ProfileImagePath,
+                                    City: friendUser.City,
+                                    Age: friendUser.Age,
+                                    Status: 0,
+                                    Gender: friendUser.GenderName,
+                                    AboutMe: friendUser.AboutMe
+                                };
+                                this.userFriendsList.friends.push(pendingFriend);
+                                this.setFriendList(Object.assign({}, this.userFriendsList).friends);
                             }
                             this.toast.show(`${resData.ResponseMessage}`, `short`, 'bottom').subscribe(() => { });
                         })

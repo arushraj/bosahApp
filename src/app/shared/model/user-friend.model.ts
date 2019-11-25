@@ -6,6 +6,7 @@ export interface UserFriends {
     Age: number;
     Gender: string;
     Status: number;
+    AboutMe: string;
 }
 
 export enum FriendshipStatus {
@@ -13,6 +14,6 @@ export enum FriendshipStatus {
     Accepted,
     Unfriended,
     Rejected,
-    Blocked,   
+    Blocked,
     Cancelled
 }
