@@ -12,6 +12,7 @@ import { IonSlides, IonRange } from '@ionic/angular';
 import { UserLocation } from '../shared/model/location.model';
 import { UserReligion } from '../shared/model/religion.model';
 import { Pet } from '../shared/model/pet.model';
+import { FormBuilder, Form, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-registration',
@@ -52,14 +53,18 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   public locations: UserLocation[];
   public religions: UserReligion[];
   public pets: Pet[];
-  public passwordRegex:RegExp;
+ // public passwordRegex:RegExp;
   public signaturePadOptions = {
     minWidth: 2,
     canvasWidth: 500,
     canvasHeight: 300
   };
   public signatureImage: string;
-
+  private emailRegex:RegExp=new RegExp('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
+  private passwordRegex: RegExp = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
+  private isValidEmail:boolean=true;
+  public otpForm: FormGroup;
+  public passwordForm: FormGroup;
   @ViewChild('agerange', { read: IonRange, static: true }) agerange: IonRange;
   @ViewChild('registrationslides', { read: IonSlides, static: true }) registrationslides: IonSlides;
 
@@ -73,7 +78,19 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     private filePath: FilePath,
     private file: File,
     private webView: WebView,
-    private loadingController: LoadingController) { }
+    private loadingController: LoadingController,private fb: FormBuilder) {
+
+      this.otpForm = this.fb.group({
+        email: ['', Validators.compose([Validators.required, Validators.email])]       
+      });
+
+      this.passwordForm = this.fb.group({
+        password: ['', [Validators.required, Validators.pattern(this.passwordRegex)]],
+        confirmPassword: ['', Validators.compose([Validators.required])]
+      }, {
+           validators: this.mustMatchPassword('password', 'confirmPassword')
+      });
+     }
 
   ngOnInit() {
     this.registrationslides.lockSwipes(true).then(() => { });
@@ -87,6 +104,26 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     this.appService.getPets().subscribe((pets: Pet[]) => {
       this.pets = pets;
     });
+  }
+
+
+  private mustMatchPassword(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+
+      if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+        // return if another validator has already found an error on the matchingControl
+        return;
+      }
+
+      // set error on matchingControl if validation fails
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ mustMatch: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    };
   }
 
   ngAfterViewInit() {
@@ -177,7 +214,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public async checkReferralCode() {
+ public async checkReferralCode() {
     if (this.newUser.referCode) {
       const loading = await this.loadingController.create({
         message: 'Please wait...',
@@ -228,7 +265,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     this.registrationslides.getActiveIndex().then(index => {
       if (index === 2) {
         /*vinay*/
-        this.passwordRegex= new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
+       // this.passwordRegex= new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
         if (!this.newUser.password) {
           this.toast.showShortBottom('Please enter your password.').subscribe(() => { });
           return;
@@ -257,7 +294,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
         }
       } else if (index === 4) {
         if (!this.newUser.college) {
-          this.toast.showShortBottom('Please enter your college name.').subscribe(() => { });
+          this.toast.showShortBottom('Please enter your Education Details').subscribe(() => { });
           return;
         } else if (!this.newUser.job) {
           this.toast.showShortBottom('Please enter your job title.').subscribe(() => { });
@@ -266,10 +303,10 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
           this.toast.showShortBottom('Please select your city.').subscribe(() => { });
           return;
         } else if (!this.newUser.gender) {
-          this.toast.showShortBottom('Please select your gender.').subscribe(() => { });
+          this.toast.showShortBottom('Please select your Gender.').subscribe(() => { });
           return;
         } else if (!this.newUser.religion) {
-          this.toast.showShortBottom('Please select your religion.').subscribe(() => { });
+          this.toast.showShortBottom('Please select your Religion.').subscribe(() => { });
           return;
         }
       }

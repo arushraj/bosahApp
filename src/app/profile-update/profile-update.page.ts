@@ -20,18 +20,19 @@ export class ProfileUpdatePage implements OnInit {
   public religions: UserReligion[];
   public locations: UserLocation[];
   public currentUser: CurrentUser;
-  public isActionCompleted = false;
+  public isActionCompleted:boolean = false;
+ 
 
   constructor(private fb: FormBuilder, private appService: AppService) {
     this.userForm = fb.group({
-      FirstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      LastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      EmailId: ['', Validators.compose([Validators.email])],
-      PhoneNumber: ['', Validators.compose([Validators.maxLength(10), Validators.required])],
+      // FirstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      // LastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      // EmailId: ['', Validators.compose([Validators.email])],
+      // PhoneNumber: ['', Validators.compose([Validators.maxLength(10), Validators.required])],
       College: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
       Job: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
       AboutMe: ['', Validators.compose([Validators.maxLength(100)])],
-      dateofBirth: ['', Validators.compose([Validators.required])],
+      // dateofBirth: ['', Validators.compose([Validators.required])],
       GenderId: ['', Validators.compose([Validators.required])],
       ReligionId: ['', Validators.compose([Validators.required])],
       CityId: ['', Validators.compose([Validators.required])],
@@ -111,7 +112,7 @@ export class ProfileUpdatePage implements OnInit {
   }
 
   public onSubmit() {
-    console.log(this.userForm);
+    //console.log(this.userForm);
     const data = Object.assign({}, this.userForm).value;
     data.UserId = this.currentUser.UserId;
     this.appService.updateUser(data).then(() => {

@@ -15,11 +15,17 @@
       <ion-card>
         <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
-          <form padding-right class="otp-form">
+            <form [formGroup]="otpForm" class="otp-form">
+          <!-- <form  [formGroup]="" class="otp-form"> -->
+              <ion-label color="danger" class="error-message"
+              *ngIf="otpForm.controls.email.errors && otpForm.dirty">
+                Invalid Email ID
+            </ion-label>
             <ion-item class="email-textbox">
+               
               <ion-icon slot="start" name="at" class="auto-top-bottom-marging" color="primary"></ion-icon>
-              <ion-input type="email" [(ngModel)]="newUser.email" name="email" [disabled]="otpsend" id="email"
-                placeholder="E-mail ID">
+              <ion-input type="email" formControlName="email" [(ngModel)]="newUser.email" name="email" [disabled]="otpsend" id="email">
+                
               </ion-input>
               <ion-button slot="end" expand="block" fill="clean" shape="round" (click)="sendOTP()" [disabled]="otpsend">
                 <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
@@ -39,7 +45,7 @@
             <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back
               <ion-icon slot="start" name="arrow-round-back"></ion-icon>
             </ion-button>
-            <ion-button class="next-button" fill="clear" [disabled]="!isValid" (click)="sendOTP()">Continue
+            <ion-button class="next-button" fill="clear" [disabled]="otpForm.controls.email.errors" (click)="sendOTP()">Continue
               <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
             </ion-button>
           </div>
@@ -52,7 +58,7 @@
         <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
           <form padding-right class="refer-form">
-            <h3 class="appText">Someone referred you? Enter their referral code and you’ll each receive gift cards upon
+            <h3 class="appText">did someone refer you?Enter their referral code and you’ll each receive gift cards upon
               lease signing</h3>
             <ion-item class="refer-textbox">
               <ion-input type="text" [(ngModel)]="newUser.referCode" name="referCode" id="referCode"
@@ -61,9 +67,9 @@
             </ion-item>
           </form>
           <div class="navigation-button">
-            <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back
+            <!-- <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back
               <ion-icon slot="start" name="arrow-round-back"></ion-icon>
-            </ion-button>
+            </ion-button> -->
             <ion-button class="next-button" fill="clear" [disabled]="!isValid" (click)="checkReferralCode()">Continue
               <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
             </ion-button>
@@ -76,14 +82,20 @@
       <ion-card>
         <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
-          <form padding-right class="password-form">
+          <form padding-right class="password-form" [formGroup]="passwordForm">
+
+              <ion-label color="danger" class="error-message"
+              *ngIf="passwordForm.controls.password.errors && passwordForm.controls.password.errors.pattern">              
+              Password must contain 8 characters with One Capital & Small Letter, one Number, one Special Character.
+            </ion-label>
+
             <ion-item class="password-textbox">
-              <ion-input type="password" [(ngModel)]="newUser.password" name="password" id="password"
+              <ion-input type="password" formControlName="password"  [(ngModel)]="newUser.password" name="password" id="password"
                 placeholder="Password*">
               </ion-input>
             </ion-item>
             <ion-item class="confirmPassword-textbox">
-              <ion-input type="password" name="confirmPassword" [(ngModel)]="newUser.confirmPassword"
+              <ion-input type="password" formControlName="confirmPassword" name="confirmPassword" [(ngModel)]="newUser.confirmPassword"
                 id="confirmPassword" placeholder="Confirm Password*">
               </ion-input>
             </ion-item>
@@ -92,7 +104,7 @@
             <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back
               <ion-icon slot="start" name="arrow-round-back"></ion-icon>
             </ion-button>
-            <ion-button class="next-button" fill="clear" [disabled]="!isValid" (click)="goToNext()">Continue
+            <ion-button class="next-button" fill="clear" [disabled]="passwordForm.invalid" (click)="goToNext()">Continue
               <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
             </ion-button>
           </div>
@@ -106,18 +118,18 @@
 
         <ion-card-content>
           <form padding-right class="personal-form">
-            <h3 class="appTitle">About You</h3>
+            <!-- <h3 class="appTitle">About You</h3> -->
 
             <p class="appText">Tell potential roommates about yourself</p>
 
             <ion-item class="firstname-textbox">
               <ion-input type="firstName" [(ngModel)]="newUser.firstName" name="firstName" id="firstName"
-                placeholder="First Name*" autoCapitalize='words'>
+                placeholder="FirstName*" autoCapitalize='words'>
               </ion-input>
             </ion-item>
             <ion-item class="lastname-textbox">
               <ion-input type="lastName" [(ngModel)]="newUser.lastName" name="lastName" id="lastName"
-                placeholder="Last Name*" autoCapitalize='words'>
+                placeholder="LastName*" autoCapitalize='words'>
               </ion-input>
             </ion-item>
             <!-- <ion-item class="age-textbox">
@@ -125,7 +137,7 @@
               </ion-input>
             </ion-item> -->
             <ion-item class="phone-textbox">
-              <ion-input type="tel" [(ngModel)]="newUser.phone" name="phone" id="phone" placeholder="Phone No.*">
+              <ion-input type="tel" [(ngModel)]="newUser.phone" name="phone" id="phone" placeholder="Phone No*">
               </ion-input>
             </ion-item>
             <ion-item class="dob-textbox">
@@ -255,7 +267,7 @@
               </ion-range>
             </ion-item>
           </form>
-          <div class="navigation-button">
+          <div class="navigation-button"> 
             <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back
               <ion-icon slot="start" name="arrow-round-back"></ion-icon>
             </ion-button>

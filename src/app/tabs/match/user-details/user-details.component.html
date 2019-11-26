@@ -29,5 +29,28 @@
                 </ion-fab>
             </div>
         </ion-card-content>
+<<<<<<< HEAD
+=======
+        <!-- <ion-button *ngIf="!user.Status" expand="full" color="danger" (click)="cancelFriendShipRequest()">
+            Cancel Request
+        </ion-button> -->
+        <ion-card-content *ngIf="!isActionTaken" horizontal="center">
+                <ion-fab vertical="center">
+                        <ion-fab-button color="light" size="small" (click)="acceptFriendShip(user)">
+                            <ion-icon name="heart-empty" color="primary"></ion-icon>
+                            <!-- <ion-icon name="heart" color="primary"></ion-icon> -->
+                        </ion-fab-button>
+                    </ion-fab>
+            <ion-fab horizontal="center" vertical="center">
+                <ion-fab-button color="light" size="small"
+                    (click)="rejectFriendShip()">
+                    <ion-icon name="close" color="danger"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
+          
+        </ion-card-content>
+
+       
+>>>>>>> Review Comments Incorporated
     </ion-card>
 </ion-content>
