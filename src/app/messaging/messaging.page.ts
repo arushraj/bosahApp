@@ -21,8 +21,8 @@ export class MessagingPage implements OnInit, OnDestroy {
           ...JSON.parse(params.info)
         };
         this.queryInfo.firebaseCollection = (this.queryInfo.to > this.queryInfo.from) ?
-          (this.queryInfo.from.toString() + this.queryInfo.to.toString())
-          : (this.queryInfo.to.toString() + this.queryInfo.from.toString());
+          (this.queryInfo.from.toString() + '—' + this.queryInfo.to.toString())
+          : (this.queryInfo.to.toString() + '—' + this.queryInfo.from.toString());
 
         this.messageService.subscribeCollection(this.queryInfo.firebaseCollection);
         this.messages = this.messageService.getMessages();
