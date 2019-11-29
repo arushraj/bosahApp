@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, IonContent, ModalController } from '@ionic/angular';
+import { IonSlides, IonContent, ModalController, NavController } from '@ionic/angular';
 
 import { UserFriends, FriendshipStatus } from '../../shared/model/user-friend.model';
 import { AppService } from '../../shared/services/app.service';
@@ -29,7 +29,7 @@ export class MatchComponent implements OnInit {
   @ViewChild('SwipedTabsSlider', { read: IonSlides, static: true }) SwipedTabsSlider: IonSlides;
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
 
-  constructor(private appService: AppService, private modalController: ModalController) {
+  constructor(private appService: AppService, private modalController: ModalController, private navCtrl: NavController) {
     this.pageTabs = [
       { id: 0, tabName: 'Matches', friends: [] },
       { id: 1, tabName: 'Pending Matches', friends: [] }
@@ -101,6 +101,21 @@ export class MatchComponent implements OnInit {
         componentProps: { user }
       });
       return await modal.present();
+    } else {
+      let from, fromUserName;
+      await this.appService.getUsersValueByKey('UserId').subscribe((value) => {
+        from = value;
+      });
+      await this.appService.getUsersValueByKey('FName').subscribe((value) => {
+        fromUserName = value;
+      });
+      const info = {
+        to: user.UserId,
+        toUserName: user.FName,
+        from,
+        fromUserName
+      };
+      this.navCtrl.navigateForward(`/messaging?info=${JSON.stringify(info)}`, { animated: true, animationDirection: 'forward' });
     }
   }
   public doRefresh(event) {

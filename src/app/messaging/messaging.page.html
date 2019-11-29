@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ (queryInfo && queryInfo.toUserName)? queryInfo.toUserName : 'Messaging' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main">
+    <div class="chat-box">
+      <div class="message-area">
+        <div class="message" *ngFor="let message of messages | async" [ngClass]="getClasses(message.userId)">
+          <p>{{message.message}}
+            <span>{{message.datetime | date:'h:mm aaa'}}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <div class="typing">
+    <div class="input-area">
+      <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
+        <ion-input required formControlName="message" type="text" placeholder="Type a message"></ion-input>
+        <ion-button [disabled]="messageForm.invalid" color="primary" type="submit" size="default" fill="clean">
+          <ion-icon slot="icon-only" name="send"></ion-icon>
+        </ion-button>
+      </form>
+    </div>
+  </div>
+</ion-footer>

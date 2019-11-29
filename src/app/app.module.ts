@@ -3,6 +3,7 @@ import { FormsModule, FormBuilder } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { RouteReuseStrategy } from '@angular/router';
+import { environment } from '../environments/environment';
 
 // Ionic Native
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';

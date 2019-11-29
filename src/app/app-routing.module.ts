@@ -36,10 +36,14 @@ const routes: Routes = [
     path: 'forgetpassword',
     loadChildren: './forget-password/forget-password.module#ForgetPasswordPageModule'
   }, {
+    path: 'messaging',
+    loadChildren: './messaging/messaging.module#MessagingPageModule'
+  }, {
     path: '**',
     redirectTo: 'landing',
     pathMatch: 'full'
   }
+
 
 ];
 

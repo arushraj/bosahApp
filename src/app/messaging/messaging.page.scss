@@ -1,0 +1,65 @@
+.main {
+
+    .chat-box {
+
+        .message-area {
+            padding: 0px 10px;
+
+            .message {
+                p {
+                    margin: 0px;
+                    max-width: 95%;
+                    min-width: 55%;
+                    box-shadow: 0 2px 0px 0 rgba(0, 0, 0, 0.1);
+                    padding: 10px 5px 10px 5px;
+                    margin: 5px 0;
+                    background: #ebf2f5;
+                }
+
+                span {
+                    float: right;
+                    font-size: 10px;
+                    position: relative;
+                    top: 10px;
+                }
+            }
+
+            .message.incoming {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+
+                p {
+                    border-radius: 0 11px 11px 11px;
+                }
+            }
+
+            .message.outgoing {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                align-items: flex-end;
+
+                p {
+                    border-radius: 11px 11px 0 11px;
+                }
+            }
+        }
+    }
+}
+
+.typing {
+    .input-area {
+
+        form {
+            display: flex;
+
+            ion-input {
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+    }
+}
