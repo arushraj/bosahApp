@@ -112,6 +112,7 @@ export class MatchComponent implements OnInit {
       const info = {
         to: user.UserId,
         toUserName: user.FName,
+        toProfileImagePath: user.ProfileImagePath,
         from,
         fromUserName
       };

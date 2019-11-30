@@ -300,10 +300,6 @@ export class AppService {
                     }
                 } else {
                     loading.dismiss();
-                    // if (user.ProfileImagePath !== '') {
-                    //     user.ProfileImagePath = user.ProfileImagePath
-                    //         .substr(0, user.ProfileImagePath.indexOf('=') + 1) + Math.random();
-                    // }
                     this.setCurrentUser(this.createUser(user));
                 }
             })

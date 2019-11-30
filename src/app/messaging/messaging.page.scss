@@ -1,5 +1,23 @@
-.main {
+ion-title {
+    padding-left: 10px;
 
+    .user-name {
+        position: relative;
+        top: 5px;
+        font-weight: 400;
+    }
+
+    .user-status {
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    .online {
+        color: #39ef39;
+    }
+}
+
+.main {
     .chat-box {
 
         .message-area {
@@ -13,7 +31,6 @@
                     box-shadow: 0 2px 0px 0 rgba(0, 0, 0, 0.1);
                     padding: 10px 5px 10px 10px;
                     margin: 5px 0;
-                    background: #ebf2f5;
                 }
 
                 span {
@@ -32,6 +49,7 @@
 
                 p {
                     border-radius: 0 11px 11px 11px;
+                    background: #f2f7f9;
                 }
             }
 
@@ -43,6 +61,7 @@
 
                 p {
                     border-radius: 11px 11px 0 11px;
+                    background: #dcf4ff;
                 }
             }
         }

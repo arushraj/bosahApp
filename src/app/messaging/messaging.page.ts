@@ -1,8 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MessageService } from './service/messaging.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserMessage } from './model/message';
+import { IonContent } from '@ionic/angular';
+import { AppConstant } from '../shared/constant/app.constant';
+import { OnlineUser } from './model/user';
 
 @Component({
   selector: 'app-messaging',
@@ -11,21 +14,41 @@ import { UserMessage } from './model/message';
 })
 export class MessagingPage implements OnInit, OnDestroy {
 
-  public messages;
+  public messages: UserMessage[] = [];
   public queryInfo;
+  // {to: string, toUserName: string, toProfileImagePath: string, from: string, fromUserName: string}
   public messageForm: FormGroup;
-  constructor(private messageService: MessageService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
+  public friendUserStatus: OnlineUser;
+  @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
+
+  constructor(
+    private messageService: MessageService,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private appConstant: AppConstant) {
     this.route.queryParams.subscribe(params => {
       if (params && params.info) {
-        this.queryInfo = {
-          ...JSON.parse(params.info)
-        };
-        this.queryInfo.firebaseCollection = (this.queryInfo.to > this.queryInfo.from) ?
-          (this.queryInfo.from.toString() + '—' + this.queryInfo.to.toString())
-          : (this.queryInfo.to.toString() + '—' + this.queryInfo.from.toString());
-
-        this.messageService.subscribeCollection(this.queryInfo.firebaseCollection);
-        this.messages = this.messageService.getMessages();
+        this.setQueryinfo(params.info);
+        // set user online
+        this.messageService.setUserOnline(this.queryInfo.from);
+        // get friend user status
+        this.friendUserStatus = { isOnline: false, isTyping: false };
+        this.messageService.getFriendUserStatus(this.queryInfo.to).subscribe((data: OnlineUser) => {
+          if (data) {
+            this.friendUserStatus = data;
+          }
+        });
+        this.messageService.subscribeMessageCollection(this.queryInfo.firebaseCollection);
+        this.messageService.getMessages().subscribe((data) => {
+          if (this.messages.length === 0) {
+            this.messages = data;
+          } else {
+            if (this.messages.length < data.length) {
+              this.messages.push(data[this.messages.length]);
+            }
+          }
+          this.ionContent.scrollToBottom(50);
+        });
       }
     });
     this.messageForm = this.fb.group({
@@ -36,13 +59,26 @@ export class MessagingPage implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  ngOnDestroy() { }
-
-  ionViewDidEnter() {
-
+  ngOnDestroy() {
+    this.messageService.setUserOffline();
   }
 
-  onSubmit() {
+  ionViewDidEnter() {
+    // this.ionContent.scrollToBottom(50);
+  }
+
+  private setQueryinfo(queryInfo) {
+    this.queryInfo = {
+      ...JSON.parse(queryInfo)
+    };
+    this.queryInfo.firebaseCollection = (this.queryInfo.to > this.queryInfo.from) ?
+      (this.queryInfo.from.toString() + '—' + this.queryInfo.to.toString())
+      : (this.queryInfo.to.toString() + '—' + this.queryInfo.from.toString());
+
+    this.queryInfo.toProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.queryInfo.toProfileImagePath + `?random=${Math.random()}`;
+  }
+
+  public onSubmit() {
     const message: UserMessage = {
       userId: this.queryInfo.from,
       message: this.messageForm.value.message,
@@ -53,12 +89,28 @@ export class MessagingPage implements OnInit, OnDestroy {
     }).catch((error) => {
       console.log(error);
     });
+    this.ionContent.scrollToBottom(50);
   }
-  getClasses(messageOwner?: string) {
+  public getClasses(messageOwner?: string) {
     return {
-      incoming: messageOwner !== this.queryInfo.from.toString(),
-      outgoing: messageOwner === this.queryInfo.from.toString(),
+      'incoming fadeInLeft': messageOwner !== this.queryInfo.from.toString(),
+      'outgoing fadeInRight': messageOwner === this.queryInfo.from.toString(),
     };
+  }
+
+  public setdefultImage(event) {
+    event.target.src = '/assets/no-image.png';
+  }
+
+  public onKey(event: any) {
+    if (event.target.value.length > 0) {
+      this.messageService.userTypingMessage(true);
+    } else {
+      this.messageService.userTypingMessage(false);
+    }
+  }
+  public stopTyping() {
+    this.messageService.userTypingMessage(false);
   }
 
 }

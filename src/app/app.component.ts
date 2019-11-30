@@ -183,7 +183,7 @@ export class AppComponent {
   }
 
   public setdefultImage(event) {
-    event.target.src = './assets/no-image.png';
+    event.target.src = '/assets/no-image.png';
   }
 
   public userLogout() {
