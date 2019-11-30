@@ -113,7 +113,21 @@ export class AppComponent {
       this.appService.getRentBudgetFromDB();
       this.appService.getPetsFromDB();
 
-      this.splashScreen.hide();
+      this.appService.getCurrentUserIdfromLocalStorage()
+        .then(value => {
+          if (value !== null) {
+            this.appService.getCurrentuserFromDB();
+            this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
+            this.splashScreen.hide();
+          } else {
+            this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
+            this.splashScreen.hide();
+          }
+        })
+        .catch((err) => {
+          this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
+          this.splashScreen.hide();
+        });
     });
   }
 
