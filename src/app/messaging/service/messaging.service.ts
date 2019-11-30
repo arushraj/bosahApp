@@ -31,15 +31,16 @@ export class MessageService {
         return this.itemsCollection.add(message);
     }
 
-    public setUserOffline() {
+    public setUserOffline(userId: string) {
         const user: OnlineUser = {
             isOnline: false,
             isTyping: false,
             lastOnlineDateTime: new Date().toISOString()
         };
-        if (this.currentOnlineUser) {
-            this.currentOnlineUser.set(user);
+        if (!this.currentOnlineUser) {
+            this.currentOnlineUser = this.subscribeUserDocument(userId.toString());
         }
+        this.currentOnlineUser.set(user);
     }
 
     public setUserOnline(userId: string) {

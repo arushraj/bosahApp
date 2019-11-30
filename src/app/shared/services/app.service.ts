@@ -646,26 +646,27 @@ export class AppService {
 
     public userLogout() {
         this.toast.show(`Logout Success`, `short`, 'bottom').subscribe(() => { });
-        this.storage.remove(StorageKey.UserIdKey)
-            .then(() => {
-                this.storage.remove(StorageKey.LocalCurrentUserKey)
-                    .then(() => {
-                        this.setCurrentUser(this.createUser());
-                        this.setUserPreferred(this.createuserPreferred());
+        this.storage.get(StorageKey.UserIdKey).then((value) => {
+            // Set User Ofline for message
+            this.messageService.setUserOffline(value.toString());
+            this.storage.remove(StorageKey.UserIdKey)
+                .then(() => {
+                    this.storage.remove(StorageKey.LocalCurrentUserKey)
+                        .then(() => {
+                            this.setCurrentUser(this.createUser());
+                            this.setUserPreferred(this.createuserPreferred());
 
-                        // Empty List of Users Friends.
-                        this.userFriendsList.friends = [];
-                        this.setFriendList(Object.assign({}, this.userFriendsList).friends);
-
-                        // Set User Ofline for message
-                        this.messageService.setUserOffline();
-                    })
-                    .catch(() => { });
-            })
-            .catch(() => { })
-            .finally(() => {
-                this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
-            });
+                            // Empty List of Users Friends.
+                            this.userFriendsList.friends = [];
+                            this.setFriendList(Object.assign({}, this.userFriendsList).friends);
+                        })
+                        .catch(() => { });
+                })
+                .catch(() => { })
+                .finally(() => {
+                    this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
+                });
+        });
     }
 
     public async getCurrentUserIdfromLocalStorage() {
@@ -783,19 +784,6 @@ export class AppService {
                                     }
                                 });
                                 this.setUserPreferred(Object.assign({}, this.userPreferredList).users);
-
-                                const pendingFriend = {
-                                    UserId: friendUser.UserId,
-                                    FName: friendUser.FName,
-                                    ProfileImagePath: friendUser.ProfileImagePath,
-                                    City: friendUser.City,
-                                    Age: friendUser.Age,
-                                    Status: 0,
-                                    Gender: friendUser.GenderName,
-                                    AboutMe: friendUser.AboutMe
-                                };
-                                this.userFriendsList.friends.push(pendingFriend);
-                                this.setFriendList(Object.assign({}, this.userFriendsList).friends);
                             }
                             this.toast.show(`${resData.ResponseMessage}`, `short`, 'bottom').subscribe(() => { });
                         })
