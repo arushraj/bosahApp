@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MessageService } from './service/messaging.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserMessage } from './model/message';
-import { IonContent } from '@ionic/angular';
+import { IonContent, IonInput } from '@ionic/angular';
 import { AppConstant } from '../shared/constant/app.constant';
 import { OnlineUser } from './model/user';
 
@@ -20,6 +20,7 @@ export class MessagingPage implements OnInit, OnDestroy {
   public messageForm: FormGroup;
   public friendUserStatus: OnlineUser;
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
+  @ViewChild('messageInput', { read: IonInput, static: false }) messageInput: IonInput;
 
   constructor(
     private messageService: MessageService,
@@ -60,11 +61,9 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.messageService.setUserOffline();
   }
 
   ionViewDidEnter() {
-    // this.ionContent.scrollToBottom(50);
   }
 
   private setQueryinfo(queryInfo) {
@@ -85,6 +84,7 @@ export class MessagingPage implements OnInit, OnDestroy {
       datetime: new Date().toISOString()
     };
     this.messageForm.reset();
+    this.messageInput.setFocus();
     this.messageService.pushNewMsg(message).then(() => {
     }).catch((error) => {
       console.log(error);
@@ -111,6 +111,12 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
   public stopTyping() {
     this.messageService.userTypingMessage(false);
+  }
+
+  public checkFocus() {
+    setTimeout(() => {
+      this.ionContent.scrollToBottom(50);
+    }, 500);
   }
 
 }

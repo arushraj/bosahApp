@@ -27,6 +27,8 @@ import { AppService } from './shared/services/app.service';
 import { AppConstant } from './shared/constant/app.constant';
 import { AppHttpService } from './shared/services/rest.service';
 import { CustomPipesModule } from './shared/pipe/custom-pipe.module';
+import { MessagingPageModule } from './messaging/messaging.module';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,7 +40,8 @@ import { CustomPipesModule } from './shared/pipe/custom-pipe.module';
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     AppRoutingModule,
-    CustomPipesModule.forRoot()
+    CustomPipesModule.forRoot(),
+    MessagingPageModule
   ],
   providers: [
     HTTP,

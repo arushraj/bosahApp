@@ -24,6 +24,9 @@ import { Bedroom } from '../model/bedroom.model';
 import { RentBudget } from '../model/rent-budget.model';
 import { Pet } from '../model/pet.model';
 
+// Message Service
+import { MessageService } from '../../messaging/service/messaging.service';
+
 @Injectable()
 export class AppService {
 
@@ -59,7 +62,8 @@ export class AppService {
         private toast: Toast,
         private navCtrl: NavController,
         private network: Network,
-        private router: Router) {
+        private router: Router,
+        private messageService: MessageService) {
     }
 
     public getUsersValueByKey(key: string) {
@@ -576,6 +580,8 @@ export class AppService {
                     this.storage.set(StorageKey.UserIdKey, resData.UserId).then(() => {
                         this.getCurrentuserFromDB();
                     });
+                    // set user online for messaging
+                    this.messageService.setUserOnline(resData.UserId);
                 }
                 loading.dismiss();
                 return resData;
@@ -650,6 +656,9 @@ export class AppService {
                         // Empty List of Users Friends.
                         this.userFriendsList.friends = [];
                         this.setFriendList(Object.assign({}, this.userFriendsList).friends);
+
+                        // Set User Ofline for message
+                        this.messageService.setUserOffline();
                     })
                     .catch(() => { });
             })
