@@ -122,8 +122,11 @@ export class UserProfileComponent implements OnInit {
           });
       } else {
         currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+        console.log(currentName);
         correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+        console.log(correctPath);
         fileExtension = imagePath.substring(imagePath.lastIndexOf('.'), imagePath.lastIndexOf('?'));
+        console.log(fileExtension);
         this.copyFileToLocalDir(correctPath, currentName, fileExtension);
       }
     }, (err) => {
