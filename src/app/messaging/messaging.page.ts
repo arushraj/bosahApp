@@ -83,6 +83,7 @@ export class MessagingPage implements OnInit, OnDestroy {
       message: this.messageForm.value.message,
       datetime: new Date().toISOString()
     };
+    message.message = this.messageService.aesEncrypt(message.message, message.userId);
     this.messageForm.reset();
     this.messageInput.setFocus();
     this.messageService.pushNewMsg(message).then(() => {

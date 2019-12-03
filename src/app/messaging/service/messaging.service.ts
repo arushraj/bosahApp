@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import * as CryptoJS from 'crypto-js';
 
 import { UserMessage } from '../model/message';
 import { OnlineUser } from '../model/user';
@@ -14,6 +15,8 @@ export class MessageService {
     constructor(private db: AngularFirestore) { }
 
     public subscribeMessageCollection(documentKey: string) {
+        // encrypt to MD5
+        documentKey = this.md5Encrypt(documentKey);
         this.itemsCollection = this.db.collection('allMessages')
             .doc(documentKey)
             .collection<UserMessage>('messages', ref => ref.orderBy('datetime', 'asc'));
@@ -62,5 +65,24 @@ export class MessageService {
     public getFriendUserStatus(userId: string) {
         this.friendOnlineUser = this.subscribeUserDocument(userId.toString());
         return this.friendOnlineUser.valueChanges();
+    }
+
+    public md5Encrypt(value: string) {
+        return CryptoJS.MD5(value).toString();
+    }
+    public aesEncrypt(value: string, key: string) {
+        return CryptoJS.AES.encrypt(value, key).toString();
+    }
+    public aesDecrypt(value: string, key: string) {
+        try {
+            const decryptValue = CryptoJS.AES.decrypt(value, key);
+            if (decryptValue.sigBytes >= 0) {
+                return decryptValue.toString(CryptoJS.enc.Utf8);
+            } else {
+                return value;
+            }
+        } catch (error) {
+            return '';
+        }
     }
 }

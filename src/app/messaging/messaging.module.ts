@@ -12,6 +12,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { MessagingPage } from './messaging.page';
 import { MessageService } from './service/messaging.service';
+import { DecryptTextBinderPipe } from './pipe/message-pipe';
 
 const routes: Routes = [
   {
@@ -30,7 +31,7 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule
   ],
-  declarations: [MessagingPage],
+  declarations: [MessagingPage, DecryptTextBinderPipe],
   providers: [MessageService]
 })
 export class MessagingPageModule { }

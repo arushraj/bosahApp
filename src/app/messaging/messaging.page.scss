@@ -70,11 +70,19 @@ ion-title {
 
 .typing {
     .input-area {
+        padding: 0 2%;
 
         form {
             display: flex;
+            position: relative;
+            bottom: 5px;
 
             ion-input {
+                border-radius: 25px;
+                border: solid 1px #f1f1f1;
+                background-color: #fbfbfb;
+                padding-left: 5px !important;
+
                 &:focus {
                     outline: none;
                 }

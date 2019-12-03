@@ -24,13 +24,12 @@
     </ion-item>
   </ion-toolbar>
 </ion-header>
-
-<ion-content #ionContent>
+<ion-content #ionContent fullscreen>
   <div class="main">
     <div class="chat-box">
       <div class="message-area">
         <div class="message animated fast" *ngFor="let message of messages" [ngClass]="getClasses(message.userId)">
-          <p>{{message.message}}
+          <p>{{message.message | decryptTextBinder:message.userId}}
             <span>{{message.datetime | date:'h:mm aaa'}}</span>
           </p>
         </div>
@@ -38,16 +37,18 @@
     </div>
   </div>
 </ion-content>
-<ion-footer>
-  <div class="typing">
-    <div class="input-area">
-      <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
-        <ion-input (ionFocus)="checkFocus()" (keyup)="onKey($event)" (focusout)="stopTyping()" required
-          formControlName="message" type="text" placeholder="Type a message" #messageInput></ion-input>
-        <ion-button [disabled]="messageForm.invalid" color="primary" type="submit" size="default" fill="clean">
-          <ion-icon slot="icon-only" name="send"></ion-icon>
-        </ion-button>
-      </form>
+<ion-footer no-border translucent="true">
+  <ion-toolbar>
+    <div class="typing">
+      <div class="input-area">
+        <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
+          <ion-input (ionFocus)="checkFocus()" (keyup)="onKey($event)" (focusout)="stopTyping()" required
+            formControlName="message" type="text" placeholder="Type a message" #messageInput></ion-input>
+          <ion-button [disabled]="messageForm.invalid" type="submit" size="default" fill="clean">
+            <ion-icon slot="icon-only" name="send" color="primary"></ion-icon>
+          </ion-button>
+        </form>
+      </div>
     </div>
-  </div>
+  </ion-toolbar>
 </ion-footer>
