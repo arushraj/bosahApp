@@ -37,6 +37,8 @@ export class UserDetailsComponent {
     this.appService.actionOnFriendRequest(user, friendshipStatus).then(() => {
       this.modalController.dismiss();
     });
-
+  }
+  public dismissModal() {
+    this.modalController.dismiss();
   }
 }

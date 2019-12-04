@@ -1,9 +1,15 @@
+<ion-header translucent>
+    <ion-toolbar>
+        <ion-title></ion-title>
+        <ion-button slot="end" fill="clean" (click)="dismissModal()">Close</ion-button>
+    </ion-toolbar>
+</ion-header>
 <ion-content fullscreen>
     <ion-card>
-        <!-- <ion-img [src]="event.EventImageFileName.replace('thumbnail_','') | eventImageBinder" alt=""
-            (ionError)="setdefultImage($event)">
-        </ion-img> -->
-        <img [src]="event.EventImageFileName.replace('thumbnail_','') | eventImageBinder" alt="" />
+        <ion-img [src]="event.EventImageFileName.replace('thumbnail_','') | eventImageBinder" alt=""
+            (ionError)="setdefultImage($event)" class="user-img">
+        </ion-img>
+        <!-- <img [src]="event.EventImageFileName.replace('thumbnail_','') | eventImageBinder" alt="" class="user-img" /> -->
         <ion-card-header>
             <ion-card-title>{{event.EventName}}</ion-card-title>
             <ion-card-subtitle>

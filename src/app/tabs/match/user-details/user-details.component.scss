@@ -1,6 +1,10 @@
-ion-fab {
-    display: flex;
-}
 ion-card-content {
-    margin-bottom: 8%;
+    padding: 0;
+    width: 40%;
+    height: 100px;
+    margin: 0 auto;
+}
+
+ion-card .user-img {
+    height: 400px;
 }

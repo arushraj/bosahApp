@@ -2,20 +2,13 @@
     <ion-slides [options]="slideOpts" #preferredUserSlides>
         <ion-slide *ngFor="let user of preferredUser" class="animated zoomIn">
             <ion-card *ngIf="user.UserId">
-                <!-- <img class="user-img" [src]="user.ProfileImagePath | imageBinder:user.Gender" alt="" /> -->
                 <ion-img [src]="user.ProfileImagePath | imageBinder:user.Gender" alt="" class="user-img"
                     (ionError)="setdefultImage($event)"> </ion-img>
                 <ion-card-header *ngIf="user.UserId">
                     <ion-card-title>
                         {{user.FName | blankValue}}, {{user.Age | blankValue}}
-                        <!-- , {{user.City | blankValue}} -->
                     </ion-card-title>
                     <ion-card-subtitle>
-                        <!-- <span>
-                            <ion-icon slot="start" name="mail"></ion-icon>
-                            {{user.EmailId | blankValue}}
-                        </span> 
-                        <br />-->
                         <span>
                             <ion-icon slot="start" name="briefcase"></ion-icon>
                             {{user.Job | blankValue}}
@@ -29,15 +22,6 @@
                         <p class="about-me-label">
                             {{user.AboutMe}}
                         </p>
-                        <!--  <span>
-                            <ion-icon slot="start" [name]="user.Gender"></ion-icon>
-                            {{user.Gender | blankValue}}
-                        </span> -->
-                        <!-- <br />
-                        <span>
-                            <ion-icon slot="start" name="snow"></ion-icon>
-                            {{user.Religion | blankValue}}
-                        </span> -->
                     </ion-card-subtitle>
                 </ion-card-header>
                 <ion-card-content *ngIf="user.UserId">

@@ -32,6 +32,16 @@
     border-bottom: 0;
 }
 
+ion-card-content {
+    ion-item-divider>ion-icon {
+        color: #61afff;
+    }
+
+    ion-item-divider>ion-label {
+        color: #262626;
+    }
+}
+
 ion-icon {
     font-size: xx-large;
 }

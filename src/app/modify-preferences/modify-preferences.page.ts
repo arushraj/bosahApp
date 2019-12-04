@@ -27,7 +27,8 @@ export class ModifyPreferencesPage implements OnInit {
     this.userForm = this.fb.group({
       preferredGender: ['', Validators.compose([Validators.required])],
       preferredReligion: ['', Validators.compose([Validators.required])],
-      preferredPets: ['', Validators.compose([Validators.required])]
+      preferredPets: [''],
+      ageRange: ['']
     });
     this.genders = [{
       genderId: 1,
