@@ -78,6 +78,8 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   public onSubmit() {
+    if(this.messageForm.value.message.length>0)
+    {
     const message: UserMessage = {
       userId: this.queryInfo.from,
       message: this.messageForm.value.message,
@@ -91,6 +93,7 @@ export class MessagingPage implements OnInit, OnDestroy {
       console.log(error);
     });
     this.ionContent.scrollToBottom(50);
+  }
   }
   public getClasses(messageOwner?: string) {
     return {
