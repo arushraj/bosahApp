@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../../shared/services/app.service';
 import { CurrentUser } from '../../shared/model/current-user.model';
-import { ActionSheetController, Platform, IonContent } from '@ionic/angular';
+import { ActionSheetController, Platform, IonContent} from '@ionic/angular';
 import { Toast } from '@ionic-native/toast/ngx';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { AppConstant } from 'src/app/shared/constant/app.constant';
+
 
 @Component({
   selector: 'app-user-profile',
@@ -121,11 +122,14 @@ export class UserProfileComponent implements OnInit {
             this.toast.show(`Fileerror: ${err}`, `long`, 'bottom').subscribe(() => { });
           });
       } else {
-        currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+        
+        let fileImagePath=imagePath;
+        fileImagePath=this.webView.convertFileSrc(fileImagePath);
+        currentName = fileImagePath.substr(fileImagePath.lastIndexOf('/') + 1);
         console.log(currentName);
-        correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+        correctPath = fileImagePath.substr(0, fileImagePath.lastIndexOf('/') + 1);
         console.log(correctPath);
-        fileExtension = imagePath.substring(imagePath.lastIndexOf('.'), imagePath.lastIndexOf('?'));
+        fileExtension = fileImagePath.substring(fileImagePath.lastIndexOf('.'), fileImagePath.lastIndexOf('?'));
         console.log(fileExtension);
         this.copyFileToLocalDir(correctPath, currentName, fileExtension);
       }
