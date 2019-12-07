@@ -19,6 +19,7 @@ export class UserProfileComponent implements OnInit {
 
   public currentUser: CurrentUser;
   public ProfileImagePath: string;
+  public lastImage:string;
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
 
   constructor(
@@ -98,7 +99,7 @@ export class UserProfileComponent implements OnInit {
   takePicture(sourceType: PictureSourceType) {
     const options: CameraOptions = {
       quality: 25,
-      sourceType,
+      sourceType:sourceType,
       saveToPhotoAlbum: false,
       correctOrientation: true
       // destinationType: this.camera.DestinationType.FILE_URI,
@@ -123,21 +124,42 @@ export class UserProfileComponent implements OnInit {
           });
       } else {
         
-        let fileImagePath=imagePath;
-        fileImagePath=this.webView.convertFileSrc(fileImagePath);
-        currentName = fileImagePath.substr(fileImagePath.lastIndexOf('/') + 1);
-        console.log(currentName);
-        correctPath = fileImagePath.substr(0, fileImagePath.lastIndexOf('/') + 1);
-        console.log(correctPath);
-        fileExtension = fileImagePath.substring(fileImagePath.lastIndexOf('.'), fileImagePath.lastIndexOf('?'));
-        console.log(fileExtension);
-        this.copyFileToLocalDir(correctPath, currentName, fileExtension);
+        // let fileImagePath=imagePath;
+        // fileImagePath=this.webView.convertFileSrc(fileImagePath);
+        // currentName = fileImagePath.substr(fileImagePath.lastIndexOf('/') + 1);
+        // console.log(currentName);
+        // correctPath = fileImagePath.substr(0, fileImagePath.lastIndexOf('/') + 1);
+        // console.log(correctPath);
+        // fileExtension = fileImagePath.substring(fileImagePath.lastIndexOf('.'), fileImagePath.lastIndexOf('?'));
+        // console.log(fileExtension);
+        // this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+        var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+        var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+        this.copyFileToLocalDirIOS(correctPath, currentName, this.createFileName());
       }
     }, (err) => {
       // Handle error
       this.toast.show(`error: ${err}`, `long`, 'bottom').subscribe(() => { });
     });
   }
+
+  // Copy the image to a local folder
+private copyFileToLocalDirIOS(namePath, currentName, newFileName) {
+  this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
+    this.startUpload(this.file.dataDirectory + newFileName);
+    this.lastImage = newFileName;
+  }, error => {
+    this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
+  });
+}
+
+// Create a new name for the image
+private createFileName() {
+  var d = new Date(),
+  n = d.getTime(),
+  newFileName =  n + ".jpg";
+  return newFileName;
+}
 
   private copyFileToLocalDir(namePath, currentName, fileExtension) {
     const newFileName = this.currentUser.FName.replace(' ', '_') + `_${new Date().getTime()}` + fileExtension;
@@ -150,6 +172,7 @@ export class UserProfileComponent implements OnInit {
       this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
     });
   }
+  
 
   private startUpload(imagePath) {
     this.appService.uploadProfileImage(imagePath, this.currentUser);
