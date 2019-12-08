@@ -21,6 +21,7 @@ import { FormBuilder, Form, FormGroup, Validators } from '@angular/forms';
 })
 export class UserRegistrationComponent implements OnInit, AfterViewInit {
 
+  public lastImage:string;
   public otpsend = false;
   private otp;
   private isValid = false;
@@ -381,16 +382,39 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
             this.toast.show(`Fileerror: ${err}`, `long`, 'bottom').subscribe(() => { });
           });
       } else {
-        currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-        correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-        fileExtension = imagePath.substring(imagePath.lastIndexOf('.'), imagePath.lastIndexOf('?'));
-        this.copyFileToLocalDir(correctPath, currentName, fileExtension);
+        // currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+        // correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+        // fileExtension = imagePath.substring(imagePath.lastIndexOf('.'), imagePath.lastIndexOf('?'));
+        // this.copyFileToLocalDir(correctPath, currentName, fileExtension);
+        var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+        var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+        this.copyFileToLocalDirIOS(correctPath, currentName, this.createFileName());
       }
     }, (err) => {
       // Handle error
       this.toast.show(`error: ${err}`, `long`, 'bottom').subscribe(() => { });
     });
   }
+
+    // Copy the image to a local folder
+private copyFileToLocalDirIOS(namePath, currentName, newFileName) {
+  this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
+   // this.startUpload(this.file.dataDirectory + newFileName);
+    this.lastImage = newFileName;
+  }, error => {
+    this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
+  });
+}
+
+// Create a new name for the image
+private createFileName() {
+  var d = new Date(),
+  n = d.getTime(),
+  newFileName =  n + ".jpg";
+  return newFileName;
+}
+
+
 
   private copyFileToLocalDir(namePath, currentName, fileExtension) {
     const newFileName = this.newUser.firstName.replace(' ', '_') + `_${new Date().getTime()}` + fileExtension;
