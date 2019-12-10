@@ -398,7 +398,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
 
     // Copy the image to a local folder
 private copyFileToLocalDirIOS(namePath, currentName, newFileName) {
-  this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
+  this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
    // this.startUpload(this.file.dataDirectory + newFileName);
     this.lastImage = newFileName;
   }, error => {
