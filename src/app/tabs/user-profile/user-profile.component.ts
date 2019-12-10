@@ -146,7 +146,7 @@ export class UserProfileComponent implements OnInit {
   // Copy the image to a local folder
 private copyFileToLocalDirIOS(namePath, currentName, newFileName) {
   this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
-    this.startUpload(this.file.dataDirectory + newFileName);
+    this.startUpload(this.file.dataDirectory + newFileName); 
     this.lastImage = newFileName;
   }, error => {
     this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
