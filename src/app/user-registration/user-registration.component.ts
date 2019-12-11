@@ -290,8 +290,21 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
           this.toast.showShortBottom('Please enter your contact number.').subscribe(() => { });
           return;
         } else if (!this.newUser.dob) {
+
           this.toast.showShortBottom('Please enter your date of birth.').subscribe(() => { });
           return;
+        }
+        else if(this.newUser.dob)
+        {
+          const bdate = new Date(this.newUser.dob);
+          const timeDiff = Math.abs(Date.now() - bdate.getTime() );
+          const age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+          if(age < 21)
+          {
+            this.toast.showShortBottom('Minimum Age to use this platform is 21').subscribe(() => { });
+            return;
+          }
+
         }
       } else if (index === 4) {
         if (!this.newUser.college) {

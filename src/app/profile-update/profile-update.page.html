@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content fullscreen>
-  <ion-img src="/assets/ICON WITH TITLE.png" alt=""></ion-img>
+  <ion-img src="/assets/Title_Logo.jpg" alt="" class="headerImage"></ion-img>
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <ion-list lines="full" class="ion-no-margin ion-no-padding">
       <!-- <ion-item>
@@ -70,7 +70,7 @@
 
       <ion-item>
         <ion-label position="floating">About Me</ion-label>
-        <ion-textarea formControlName="AboutMe" type="text"></ion-textarea>
+        <ion-textarea formControlName="AboutMe" type="text" autoCapitalize='words'></ion-textarea>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Religion <ion-text color="danger">*</ion-text>
