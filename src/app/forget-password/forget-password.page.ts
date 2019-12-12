@@ -13,19 +13,25 @@ export class ForgetPasswordPage implements OnInit {
 
   @ViewChild('forgetPasswordslides', { read: IonSlides, static: true }) forgetPasswordslides: IonSlides;
   public userForm: FormGroup;
+  public userEmailForm:FormGroup;
   public otpsend: boolean;
 
   private otp: string;
   private passwordRegex: RegExp = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
   constructor(private fb: FormBuilder, private loadingController: LoadingController, private appService: AppService, private toast: Toast) {
     this.userForm = this.fb.group({
-      email: ['', Validators.compose([Validators.required, Validators.email])],
+      // email: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', [Validators.required, Validators.pattern(this.passwordRegex)]],
       confirmPassword: ['', Validators.compose([Validators.required])]
     }, {
       validators: this.mustMatchPassword('password', 'confirmPassword')
     });
+    this.userEmailForm=this.fb.group({
+      email: ['', Validators.compose([Validators.required, Validators.email])]
+
+    });
   }
+  
 
   private mustMatchPassword(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
@@ -45,13 +51,14 @@ export class ForgetPasswordPage implements OnInit {
       }
     };
   }
+  
 
   ngOnInit() {
     this.forgetPasswordslides.lockSwipes(true).then(() => { });
   }
 
   public async sendOTP() {
-    if (this.userForm.value.email) {
+    if (this.userEmailForm.value.email) {
       const loading = await this.loadingController.create({
         message: 'Please wait...',
         translucent: true,
@@ -60,7 +67,7 @@ export class ForgetPasswordPage implements OnInit {
       loading.present();
       this.otp = Math.floor(1000 + Math.random() * 9000).toString();
 
-      this.appService.sentotp(this.otp, this.userForm.value.email, true)
+      this.appService.sentotp(this.otp, this.userEmailForm.value.email, true)
         .then(res => {
           const resData = JSON.parse(res.data);
           loading.dismiss();
@@ -98,7 +105,7 @@ export class ForgetPasswordPage implements OnInit {
   public onSubmit() {
     console.log(this.userForm);
     const data = {
-      EmailId: this.userForm.value.email,
+      EmailId: this.userEmailForm.value.email,
       Password: this.userForm.value.password
     };
     this.appService.updateUserPassword(data);

@@ -396,11 +396,9 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
           }, (err) => {
             this.toast.show(`Fileerror: ${err}`, `long`, 'bottom').subscribe(() => { });
           });
-      } else {
-        // currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-        // correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-        // fileExtension = imagePath.substring(imagePath.lastIndexOf('.'), imagePath.lastIndexOf('?'));
-        // this.copyFileToLocalDir(correctPath, currentName, fileExtension);
+      } 
+      else 
+      {      
         var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
         var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
         this.copyFileToLocalDirIOS(correctPath, currentName, this.createFileName());

@@ -29,11 +29,12 @@
                         <p>{{friend.City}}</p>
                     </ion-label>
                     <ion-fab vertical="center" horizontal="end" class="fab-button-group" *ngIf="item.id === 1">
-                        <ion-fab-button color="light" size="small" (click)="acceptFriendShip(friend)">
-                            <ion-icon name="heart-empty" color="primary"></ion-icon>
-                        </ion-fab-button>
+                        
                         <ion-fab-button color="light" size="small" (click)="rejectFriendShip(friend)">
                             <ion-icon name="close" color="danger"></ion-icon>
+                        </ion-fab-button>
+                        <ion-fab-button color="light" size="small" (click)="acceptFriendShip(friend)">
+                            <ion-icon name="heart-empty" color="primary"></ion-icon>
                         </ion-fab-button>
                     </ion-fab>
                 </ion-item>

@@ -17,14 +17,15 @@
         </ion-card-header>
         <ion-card-content *ngIf="!isActionTaken">
             <div class="fab-buttons">
+                
                 <ion-fab horizontal="start" vertical="center">
-                    <ion-fab-button color="light" size="small" (click)="acceptFriendShip(user)">
-                        <ion-icon name="heart-empty" color="primary"></ion-icon>
+                    <ion-fab-button color="light" size="small" (click)="rejectFriendShip()">
+                        <ion-icon name="close" color="danger"></ion-icon>
                     </ion-fab-button>
                 </ion-fab>
                 <ion-fab horizontal="end" vertical="center">
-                    <ion-fab-button color="light" size="small" (click)="rejectFriendShip()">
-                        <ion-icon name="close" color="danger"></ion-icon>
+                    <ion-fab-button color="light" size="small" (click)="acceptFriendShip(user)">
+                        <ion-icon name="heart-empty" color="primary"></ion-icon>
                     </ion-fab-button>
                 </ion-fab>
             </div>
