@@ -1,7 +1,7 @@
 <ion-header translucent>
   <ion-toolbar color="client-header">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="userlogin"></ion-back-button>
+      <ion-back-button defaultHref="userlogin" disabled="isBackbuttonDisabled"></ion-back-button>
     </ion-buttons>
     <ion-title>
       Sign Up
@@ -58,7 +58,7 @@
         <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
           <form padding-right class="refer-form">
-            <h3 class="appText">did someone refer you?Enter their referral code and you’ll each receive gift cards upon
+            <h3 class="appText">Did someone refer you?Enter their referral code and you’ll each receive gift cards upon
               lease signing</h3>
             <ion-item class="refer-textbox">
               <ion-input type="text" [(ngModel)]="newUser.referCode" name="referCode" id="referCode"
@@ -137,7 +137,7 @@
               </ion-input>
             </ion-item> -->
             <ion-item class="phone-textbox">
-              <ion-input type="tel" [(ngModel)]="newUser.phone" name="phone" id="phone" placeholder="Phone No*" max="10">
+              <ion-input type="tel" [(ngModel)]="newUser.phone" name="phone" id="phone" placeholder="Phone No*"  maxlength="10">
               </ion-input>
             </ion-item>
             <ion-item class="dob-textbox">

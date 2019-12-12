@@ -25,6 +25,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   public otpsend = false;
   private otp;
   private isValid = false;
+  private isBackbuttonDisabled=false;
   public displayImage = '/assets/no-image.png';
   public newUser = {
     email: '',
@@ -210,6 +211,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
         this.newUser.otp = this.otp;
         this.isValid = true;
         event.target.blur();
+        this.isBackbuttonDisabled=true;
         this.goToNext();
       }
     }
