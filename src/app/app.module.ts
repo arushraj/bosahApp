@@ -3,7 +3,6 @@ import { FormsModule, FormBuilder } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { RouteReuseStrategy } from '@angular/router';
-import { environment } from '../environments/environment';
 
 // Ionic Native
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -19,6 +18,7 @@ import { Camera } from '@ionic-native/Camera/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
 
 // In App
 import { AppComponent } from './app.component';
@@ -28,6 +28,7 @@ import { AppConstant } from './shared/constant/app.constant';
 import { AppHttpService } from './shared/services/rest.service';
 import { CustomPipesModule } from './shared/pipe/custom-pipe.module';
 import { MessagingPageModule } from './messaging/messaging.module';
+import { PushNotificationService } from './shared/services/push-notification.service';
 
 
 @NgModule({
@@ -59,7 +60,9 @@ import { MessagingPageModule } from './messaging/messaging.module';
     Camera,
     FilePath,
     WebView,
-    File
+    File,
+    Push,
+    PushNotificationService
   ],
   bootstrap: [AppComponent]
 })

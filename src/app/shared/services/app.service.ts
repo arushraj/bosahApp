@@ -63,7 +63,8 @@ export class AppService {
         private navCtrl: NavController,
         private network: Network,
         private router: Router,
-        private messageService: MessageService) {
+        private messageService: MessageService
+        ) {
     }
 
     public getUsersValueByKey(key: string) {

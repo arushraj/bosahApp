@@ -12,11 +12,11 @@ import {
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Toast } from '@ionic-native/toast/ngx';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { AppService } from './shared/services/app.service';
 import { CurrentUser } from './shared/model/current-user.model';
-import { LoadingController } from '@ionic/angular';
 import { AppConstant } from './shared/constant/app.constant';
+import { PushNotificationService } from './shared/services/push-notification.service';
 
 
 @Component({
@@ -79,7 +79,8 @@ export class AppComponent {
     private toast: Toast,
     private navCtrl: NavController,
     private appService: AppService,
-    private appConstant: AppConstant) {
+    private appConstant: AppConstant,
+    private pushNotificationService: PushNotificationService) {
     this.initializeApp();
   }
 
@@ -103,7 +104,6 @@ export class AppComponent {
     this.platform.ready().then(() => {
       // this.statusBar.styleDefault();
       this.backButtonEvent();
-
       // // call data from DB
       // this.appService.getCurrentuserFromDB();
       this.appService.getUserLocationsFromDB();
