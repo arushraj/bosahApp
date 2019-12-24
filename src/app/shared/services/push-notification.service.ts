@@ -1,22 +1,34 @@
 import { Injectable } from '@angular/core';
 import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
 import { Platform, AlertController } from '@ionic/angular';
+import { PushDevice } from '../model/push-notification.model';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PushNotificationService {
 
+  private pushDevice = new BehaviorSubject<PushDevice>(null);
+
   constructor(
     private push: Push,
-    public platform: Platform,
+    private platform: Platform,
     private alertCtrl: AlertController) {
     this.platform.ready().then(() => {
       this.initPushNotification();
     });
   }
 
-  initPushNotification() {
+  public getPushDevice(): Observable<PushDevice> {
+    return this.pushDevice.asObservable();
+  }
+
+  private setPushDevice(data) {
+    this.pushDevice.next(data);
+  }
+
+  private initPushNotification() {
     // to check if we have permission
     this.push.hasPermission()
       .then((res: any) => {
@@ -74,7 +86,10 @@ export class PushNotificationService {
       } else { }
     });
 
-    pushObject.on('registration').subscribe((registration: any) => console.log('Device registered', registration));
+    pushObject.on('registration').subscribe((registration: any) => {
+      console.log('Device registered', registration);
+      this.setPushDevice(registration);
+    });
 
     pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
 

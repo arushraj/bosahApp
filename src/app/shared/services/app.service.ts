@@ -26,6 +26,8 @@ import { Pet } from '../model/pet.model';
 
 // Message Service
 import { MessageService } from '../../messaging/service/messaging.service';
+import { PushNotificationService } from './push-notification.service';
+import { PushDevice } from '../model/push-notification.model';
 
 @Injectable()
 export class AppService {
@@ -63,8 +65,8 @@ export class AppService {
         private navCtrl: NavController,
         private network: Network,
         private router: Router,
-        private messageService: MessageService
-        ) {
+        private messageService: MessageService,
+        private pushNotificationService: PushNotificationService) {
     }
 
     public getUsersValueByKey(key: string) {
@@ -572,8 +574,12 @@ export class AppService {
             cssClass: ''
         });
         loading.present();
+        let pushDevice: PushDevice;
+        this.pushNotificationService.getPushDevice().subscribe((value) => {
+            pushDevice = value;
+        });
         const url = this.appConstant.getURL(UrlKey.User_Login);
-        const data = { EmailID: email, Password: password };
+        const data = { EmailID: email, Password: password, deviceid: pushDevice.registrationId };
         return await this.http.post(url, data, {})
             .then(res => {
                 const resData = JSON.parse(res.data);
