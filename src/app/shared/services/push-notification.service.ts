@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
-import { Platform, AlertController } from '@ionic/angular';
+import { Platform, AlertController, NavController } from '@ionic/angular';
 import { PushDevice } from '../model/push-notification.model';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -14,7 +14,8 @@ export class PushNotificationService {
   constructor(
     private push: Push,
     private platform: Platform,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    private navCtrl: NavController) {
     this.platform.ready().then(() => {
       this.initPushNotification();
     });
@@ -83,7 +84,8 @@ export class PushNotificationService {
     pushObject.on('notification').subscribe((notification: any) => {
       console.log('Received a notification', notification);
       if (notification.additionalData.foreground) {
-      } else { }
+      } else {
+      }
     });
 
     pushObject.on('registration').subscribe((registration: any) => {
@@ -92,6 +94,5 @@ export class PushNotificationService {
     });
 
     pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
-
   }
 }

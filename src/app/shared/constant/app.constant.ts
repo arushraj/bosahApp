@@ -1,7 +1,7 @@
 export class AppConstant {
 
     readonly APP_BASE_URL = 'https://bosahapivinay.azurewebsites.net/';
-    readonly APP_IMG_BASE_URL = 'https://vinaybosahstorage.blob.core.windows.net';
+    readonly APP_IMG_BASE_URL = 'https://bosahapivinaystorage.blob.core.windows.net';
     readonly USER_LOGIN = '/api/login';
     readonly CURRENT_USER_URL = '/api/User/uid';
     readonly PROFILE_IMAGE_UPLOAD = '/api/Upload';

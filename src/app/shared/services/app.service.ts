@@ -55,6 +55,7 @@ export class AppService {
     private requestedFriends = new BehaviorSubject<UserFriends[]>([]);
     private requestedFriendsList: { friends: UserFriends[] } = { friends: [] };
 
+    private pushDevice: PushDevice;
 
     constructor(
         private http: HTTP, private appConstant: AppConstant,
@@ -67,6 +68,9 @@ export class AppService {
         private router: Router,
         private messageService: MessageService,
         private pushNotificationService: PushNotificationService) {
+        this.pushNotificationService.getPushDevice().subscribe((value) => {
+            this.pushDevice = value;
+        });
     }
 
     public getUsersValueByKey(key: string) {
@@ -574,12 +578,8 @@ export class AppService {
             cssClass: ''
         });
         loading.present();
-        let pushDevice: PushDevice;
-        this.pushNotificationService.getPushDevice().subscribe((value) => {
-            pushDevice = value;
-        });
         const url = this.appConstant.getURL(UrlKey.User_Login);
-        const data = { EmailID: email, Password: password, deviceid: pushDevice.registrationId };
+        const data = { EmailID: email, Password: password, deviceid: this.pushDevice.registrationId };
         return await this.http.post(url, data, {})
             .then(res => {
                 const resData = JSON.parse(res.data);

@@ -17,7 +17,7 @@
     <ion-slides [options]="slideOpts" #SwipedTabsSlider (ionSlideDidChange)="currentSlide()">
         <ion-slide *ngFor="let item of pageTabs">
             <ion-list *ngIf="item.friends.length>0" class="animated slideInRight fastest">
-                <ion-item *ngFor="let friend of item.friends" button detail>
+                <ion-item *ngFor="let friend of item.friends">
                     <ion-thumbnail slot="start" (click)="openDetails(friend, item.id)">
                         <ion-img [src]="friend.ProfileImagePath | imageBinder:friend.Gender" alt=""
                             (ionError)="setdefultImage($event)"> </ion-img>
@@ -28,8 +28,9 @@
                         <!-- <h3>{{friend.Age}}</h3> -->
                         <p>{{friend.City}}</p>
                     </ion-label>
+                    <ion-icon button slot="end" name="more" (click)="openMoreOption(friend)"></ion-icon>
                     <ion-fab vertical="center" horizontal="end" class="fab-button-group" *ngIf="item.id === 1">
-                        
+
                         <ion-fab-button color="light" size="small" (click)="rejectFriendShip(friend)">
                             <ion-icon name="close" color="danger"></ion-icon>
                         </ion-fab-button>

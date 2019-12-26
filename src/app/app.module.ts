@@ -8,8 +8,8 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { Facebook } from '@ionic-native/facebook/ngx';
+// import { GooglePlus } from '@ionic-native/google-plus/ngx';
+// import { Facebook } from '@ionic-native/facebook/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast/ngx';
@@ -49,8 +49,8 @@ import { PushNotificationService } from './shared/services/push-notification.ser
     AppHttpService,
     StatusBar,
     SplashScreen,
-    GooglePlus,
-    Facebook,
+    // GooglePlus,
+    // Facebook,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AppService,
     AppConstant,
