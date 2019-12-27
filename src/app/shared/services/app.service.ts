@@ -26,6 +26,8 @@ import { Pet } from '../model/pet.model';
 
 // Message Service
 import { MessageService } from '../../messaging/service/messaging.service';
+import { PushNotificationService } from './push-notification.service';
+import { PushDevice } from '../model/push-notification.model';
 
 @Injectable()
 export class AppService {
@@ -53,6 +55,7 @@ export class AppService {
     private requestedFriends = new BehaviorSubject<UserFriends[]>([]);
     private requestedFriendsList: { friends: UserFriends[] } = { friends: [] };
 
+    private pushDevice: PushDevice;
 
     constructor(
         private http: HTTP, private appConstant: AppConstant,
@@ -63,8 +66,11 @@ export class AppService {
         private navCtrl: NavController,
         private network: Network,
         private router: Router,
-        private messageService: MessageService
-        ) {
+        private messageService: MessageService,
+        private pushNotificationService: PushNotificationService) {
+        this.pushNotificationService.getPushDevice().subscribe((value) => {
+            this.pushDevice = value;
+        });
     }
 
     public getUsersValueByKey(key: string) {
@@ -573,7 +579,7 @@ export class AppService {
         });
         loading.present();
         const url = this.appConstant.getURL(UrlKey.User_Login);
-        const data = { EmailID: email, Password: password };
+        const data = { EmailID: email, Password: password, deviceid: this.pushDevice.registrationId };
         return await this.http.post(url, data, {})
             .then(res => {
                 const resData = JSON.parse(res.data);

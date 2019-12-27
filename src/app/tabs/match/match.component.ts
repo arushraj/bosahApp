@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
 import { IonSlides, IonContent, ModalController, NavController } from '@ionic/angular';
 
 import { UserFriends, FriendshipStatus } from '../../shared/model/user-friend.model';
 import { AppService } from '../../shared/services/app.service';
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { UserMoreMenuPage } from './user-more-menu/user-more-menu.page';
 
 @Component({
   selector: 'app-match',
@@ -29,7 +31,11 @@ export class MatchComponent implements OnInit {
   @ViewChild('SwipedTabsSlider', { read: IonSlides, static: true }) SwipedTabsSlider: IonSlides;
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
 
-  constructor(private appService: AppService, private modalController: ModalController, private navCtrl: NavController) {
+  constructor(
+    private appService: AppService,
+    private modalController: ModalController,
+    private navCtrl: NavController,
+    private popoverCtrl: PopoverController) {
     this.pageTabs = [
       { id: 0, tabName: 'Matches', friends: [] },
       { id: 1, tabName: 'Pending Matches', friends: [] }
@@ -118,6 +124,20 @@ export class MatchComponent implements OnInit {
       };
       this.navCtrl.navigateForward(`/messaging?info=${JSON.stringify(info)}`, { animated: true, animationDirection: 'forward' });
     }
+  }
+
+  /**
+   * openMoreOption
+   */
+  public async openMoreOption(data: any) {
+    const popover = await this.popoverCtrl.create({
+      animated: true,
+      backdropDismiss: true,
+      componentProps: { friend: data },
+      component: UserMoreMenuPage,
+      translucent: true
+    });
+    return popover.present();
   }
   public doRefresh(event) {
     this.appService.getUserFriendsFromDB().then(() => {

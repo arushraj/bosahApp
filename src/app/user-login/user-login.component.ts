@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+// import { GooglePlus } from '@ionic-native/google-plus/ngx';
+// import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { Toast } from '@ionic-native/toast/ngx';
 import { AppService } from '../shared/services/app.service';
 import { NavController } from '@ionic/angular';
@@ -17,8 +17,8 @@ export class UserLoginComponent implements OnInit {
   public loginForm: FormGroup;
 
   constructor(
-    private googleplus: GooglePlus,
-    private fb: Facebook,
+    // private googleplus: GooglePlus,
+    // private fb: Facebook,
     private toast: Toast,
     private appService: AppService,
     private navCtrl: NavController,
