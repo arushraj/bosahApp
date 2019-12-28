@@ -6,6 +6,7 @@
 </ion-header>
 <ion-content fullscreen>
     <ion-card>
+        <!-- <img [src]="user.ProfileImagePath.replace('thumbnail_','') | imageBinder:user.Gender" alt="" class="user-img" /> -->
         <ion-img [src]="user.ProfileImagePath.replace('thumbnail_','') | imageBinder:user.Gender" alt=""
             class="user-img" (ionError)="setdefultImage($event)">
         </ion-img>

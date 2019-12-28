@@ -104,7 +104,7 @@ export class MatchComponent implements OnInit {
       }
       const modal = await this.modalController.create({
         component: UserDetailsComponent,
-        componentProps: { user }
+        componentProps: { user, enableActionButton: true }
       });
       return await modal.present();
     } else {
@@ -120,7 +120,8 @@ export class MatchComponent implements OnInit {
         toUserName: user.FName,
         toProfileImagePath: user.ProfileImagePath,
         from,
-        fromUserName
+        fromUserName,
+        friend: user
       };
       this.navCtrl.navigateForward(`/messaging?info=${JSON.stringify(info)}`, { animated: true, animationDirection: 'forward' });
     }
@@ -129,12 +130,13 @@ export class MatchComponent implements OnInit {
   /**
    * openMoreOption
    */
-  public async openMoreOption(data: any) {
+  public async openMoreOption(event: any, friend: UserFriends) {
     const popover = await this.popoverCtrl.create({
       animated: true,
       backdropDismiss: true,
-      componentProps: { friend: data },
+      componentProps: { friend },
       component: UserMoreMenuPage,
+      event,
       translucent: true
     });
     return popover.present();

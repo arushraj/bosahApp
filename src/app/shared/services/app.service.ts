@@ -821,8 +821,6 @@ export class AppService {
             cssClass: ''
         });
 
-
-
         await this.getCurrentUserIdfromLocalStorage()
             .then(async (userId) => {
                 if (userId) {

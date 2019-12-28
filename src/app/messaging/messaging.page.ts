@@ -3,9 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { MessageService } from './service/messaging.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserMessage } from './model/message';
-import { IonContent, IonInput } from '@ionic/angular';
+import { IonContent, IonInput, PopoverController } from '@ionic/angular';
 import { AppConstant } from '../shared/constant/app.constant';
 import { OnlineUser } from './model/user';
+import { MoreMenuPage } from './more-menu/more-menu.page';
 
 @Component({
   selector: 'app-messaging',
@@ -26,7 +27,8 @@ export class MessagingPage implements OnInit, OnDestroy {
     private messageService: MessageService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private appConstant: AppConstant) {
+    private appConstant: AppConstant,
+    private popoverCtrl: PopoverController) {
     this.route.queryParams.subscribe(params => {
       if (params && params.info) {
         this.setQueryinfo(params.info);
@@ -78,22 +80,21 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   public onSubmit() {
-    if(this.messageForm.value.message.length>0)
-    {
-    const message: UserMessage = {
-      userId: this.queryInfo.from,
-      message: this.messageForm.value.message,
-      datetime: new Date().toISOString()
-    };
-    message.message = this.messageService.aesEncrypt(message.message, message.userId);
-    this.messageForm.reset();
-    this.messageInput.setFocus();
-    this.messageService.pushNewMsg(message).then(() => {
-    }).catch((error) => {
-      console.log(error);
-    });
-    this.ionContent.scrollToBottom(50);
-  }
+    if (this.messageForm.value.message.length > 0) {
+      const message: UserMessage = {
+        userId: this.queryInfo.from,
+        message: this.messageForm.value.message,
+        datetime: new Date().toISOString()
+      };
+      message.message = this.messageService.aesEncrypt(message.message, message.userId);
+      this.messageForm.reset();
+      this.messageInput.setFocus();
+      this.messageService.pushNewMsg(message).then(() => {
+      }).catch((error) => {
+        console.log(error);
+      });
+      this.ionContent.scrollToBottom(50);
+    }
   }
   public getClasses(messageOwner?: string) {
     return {
@@ -123,6 +124,17 @@ export class MessagingPage implements OnInit, OnDestroy {
     }, 500);
   }
 
+  public async openMoreOption(event: any) {
+    const popover = await this.popoverCtrl.create({
+      animated: true,
+      backdropDismiss: true,
+      componentProps: {friend: this.queryInfo.friend},
+      component: MoreMenuPage,
+      event,
+      translucent: true
+    });
+    return popover.present();
+  }
 }
 
 

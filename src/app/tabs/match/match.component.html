@@ -28,7 +28,7 @@
                         <!-- <h3>{{friend.Age}}</h3> -->
                         <p>{{friend.City}}</p>
                     </ion-label>
-                    <ion-icon button slot="end" name="more" (click)="openMoreOption(friend)"></ion-icon>
+                    <ion-icon button slot="end" name="more" (click)="openMoreOption($event, friend)"></ion-icon>
                     <ion-fab vertical="center" horizontal="end" class="fab-button-group" *ngIf="item.id === 1">
 
                         <ion-fab-button color="light" size="small" (click)="rejectFriendShip(friend)">
