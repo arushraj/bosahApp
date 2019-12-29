@@ -39,10 +39,14 @@ const routes: Routes = [
     path: 'messaging',
     loadChildren: './messaging/messaging.module#MessagingPageModule'
   }, {
+    path: 'referrals',
+    loadChildren: './referrals/referrals.module#ReferralsPageModule'
+  }, {
     path: '**',
     redirectTo: 'landing',
     pathMatch: 'full'
   }
+
 
 
 ];

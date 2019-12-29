@@ -108,7 +108,7 @@ export class AppService {
             Religion: (data && data.Religion) ? data.Religion : null,
             AboutMe: (data && data.AboutMe) ? data.AboutMe : '',
             AgreementImagePath: (data && data.AgreementImagePath) ? data.AgreementImagePath : '',
-            UsedReferralCode: (data && data.UsedReferralCode) ? data.UsedReferralCode : '',
+            ReferralCode: (data && data.ReferralCode) ? data.ReferralCode : '',
             RoommatePreferences: {
                 GenderIds: (data && data.RoommatePreferences && data.RoommatePreferences.GenderIds) ?
                     data.RoommatePreferences.GenderIds.toString().split(',').map(Number) : [],

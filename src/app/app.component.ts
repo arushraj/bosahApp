@@ -58,8 +58,8 @@ export class AppComponent {
     icon: 'settings',
     routerDirection: 'forward'
   }, {
-    title: 'Refferrals',
-    url: '',
+    title: 'Referrals',
+    url: '/referrals',
     icon: 'people',
     routerDirection: 'forward'
   }
