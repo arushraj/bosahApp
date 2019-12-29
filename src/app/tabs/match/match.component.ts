@@ -6,6 +6,7 @@ import { UserFriends, FriendshipStatus } from '../../shared/model/user-friend.mo
 import { AppService } from '../../shared/services/app.service';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { UserMoreMenuPage } from './user-more-menu/user-more-menu.page';
+import { FirebasedbService } from 'src/app/shared/services/firebasedb.service';
 
 @Component({
   selector: 'app-match',
@@ -35,7 +36,8 @@ export class MatchComponent implements OnInit {
     private appService: AppService,
     private modalController: ModalController,
     private navCtrl: NavController,
-    private popoverCtrl: PopoverController) {
+    private popoverCtrl: PopoverController,
+    private firebasedb: FirebasedbService) {
     this.pageTabs = [
       { id: 0, tabName: 'Matches', friends: [] },
       { id: 1, tabName: 'Pending Matches', friends: [] }
@@ -45,6 +47,32 @@ export class MatchComponent implements OnInit {
     this.appService.getFriendList().subscribe((friends) => {
       this.pageTabs[0].friends = this.friendFilter(friends, FriendshipStatus.Accepted);
       this.pageTabs[1].friends = this.friendFilter(friends, FriendshipStatus.Pending);
+
+      // bind the last message
+      this.pageTabs[0].friends.forEach((friend) => {
+        this.firebasedb.subscribeLastMessageItem(friend.UserId, '39').subscribe((value) => {
+          if (value[0]) {
+            value[0].message = this.firebasedb.aesDecrypt(value[0].message, value[0].userId);
+          }
+          friend.LastMessage = value[0] ? value[0] : [];
+
+          // sorting Array
+          const newArray = this.pageTabs[0].friends
+            .sort((a, b) => {
+              if (a.LastMessage && b.LastMessage) {
+                if (new Date(a.LastMessage.datetime) > new Date(b.LastMessage.datetime)) {
+                  return -1;
+                } else if (new Date(a.LastMessage.datetime) < new Date(b.LastMessage.datetime)) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+              } else {
+                return 0;
+              }
+            });
+        });
+      });
     });
     // No Needed as of Now.
     // this.appService.getRequestedFriendList().subscribe((friends) => {

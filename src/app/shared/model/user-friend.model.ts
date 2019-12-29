@@ -7,6 +7,7 @@ export interface UserFriends {
     Gender: string;
     Status: number;
     AboutMe: string;
+    LastMessage: any;
 }
 
 export enum FriendshipStatus {

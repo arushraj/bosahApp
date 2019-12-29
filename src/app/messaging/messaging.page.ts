@@ -128,7 +128,7 @@ export class MessagingPage implements OnInit, OnDestroy {
     const popover = await this.popoverCtrl.create({
       animated: true,
       backdropDismiss: true,
-      componentProps: {friend: this.queryInfo.friend},
+      componentProps: { friend: this.queryInfo.friend },
       component: MoreMenuPage,
       event,
       translucent: true
