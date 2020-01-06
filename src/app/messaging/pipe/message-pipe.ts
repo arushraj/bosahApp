@@ -21,3 +21,23 @@ export class DecryptTextBinderPipe implements PipeTransform {
         }
     }
 }
+
+@Pipe({ name: 'dateTextBinder' })
+export class DateTextBinderPipe implements PipeTransform {
+    constructor() { }
+    transform(value: string): string {
+        if (value === '' || value === undefined || value === null) {
+            return '';
+        } else {
+            try {
+                if (new Date(value).toDateString() < new Date().toDateString()) {
+                    return `${new Date(value).toDateString()}`;
+                } else {
+                    return `${new Date(value).toTimeString()}`;
+                }
+            } catch (error) {
+                return '';
+            }
+        }
+    }
+}

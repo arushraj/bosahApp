@@ -1,15 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PopoverController, NavController, ModalController, AlertController } from '@ionic/angular';
-import { AppService } from '../../../shared/services/app.service';
-import { UserFriends, FriendshipStatus } from '../../../shared/model/user-friend.model';
+import { AppService } from '../../shared/services/app.service';
+import { UserFriends, FriendshipStatus } from '../../shared/model/user-friend.model';
 import { UserDetailsComponent } from '../user-details/user-details.component';
 
 @Component({
-  selector: 'app-user-more-menu',
-  templateUrl: './user-more-menu.page.html',
-  styleUrls: ['./user-more-menu.page.scss'],
+  selector: 'app-more-menu',
+  templateUrl: './more-menu.page.html',
+  styleUrls: ['./more-menu.page.scss'],
 })
-export class UserMoreMenuPage implements OnInit {
+export class MoreMenuPage implements OnInit {
 
   constructor(
     private popoverCtrl: PopoverController,
@@ -27,26 +27,6 @@ export class UserMoreMenuPage implements OnInit {
     this.popoverCtrl.dismiss();
   }
 
-  public openMessageBox() {
-    let from: any, fromUserName: any;
-    this.appService.getUsersValueByKey('UserId').subscribe((value) => {
-      from = value;
-    });
-    this.appService.getUsersValueByKey('FName').subscribe((value) => {
-      fromUserName = value;
-    });
-    const info = {
-      to: this.friend.UserId,
-      toUserName: this.friend.FName,
-      toProfileImagePath: this.friend.ProfileImagePath,
-      from,
-      fromUserName,
-      friend: this.friend
-    };
-    this.dismissPopover();
-    this.navCtrl.navigateForward(`/messaging?info=${JSON.stringify(info)}`, { animated: true, animationDirection: 'forward' });
-  }
-
   public async profileView() {
     if (this.friend.ProfileImagePath === undefined || this.friend.ProfileImagePath === null) {
       this.friend.ProfileImagePath = '';
@@ -55,7 +35,7 @@ export class UserMoreMenuPage implements OnInit {
       component: UserDetailsComponent,
       componentProps: { user: this.friend, enableActionButton: false }
     });
-    this.dismissPopover();
+    this.popoverCtrl.dismiss();
     return await modal.present();
   }
 

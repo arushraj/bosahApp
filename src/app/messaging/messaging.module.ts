@@ -12,7 +12,10 @@ import { IonicModule } from '@ionic/angular';
 
 import { MessagingPage } from './messaging.page';
 import { MessageService } from './service/messaging.service';
-import { DecryptTextBinderPipe } from './pipe/message-pipe';
+import { DecryptTextBinderPipe, DateTextBinderPipe } from './pipe/message-pipe';
+import { MoreMenuPage } from './more-menu/more-menu.page';
+import { UserDetailsComponent } from './user-details/user-details.component';
+import { CustomPipesModule } from '../shared/pipe/custom-pipe.module';
 
 const routes: Routes = [
   {
@@ -29,9 +32,11 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    CustomPipesModule.forRoot()
   ],
-  declarations: [MessagingPage, DecryptTextBinderPipe],
-  providers: [MessageService]
+  declarations: [MessagingPage, DecryptTextBinderPipe, MoreMenuPage, UserDetailsComponent, DateTextBinderPipe],
+  providers: [MessageService],
+  entryComponents: [MoreMenuPage, UserDetailsComponent]
 })
 export class MessagingPageModule { }

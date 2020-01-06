@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons no-margin slot="start">
+    <ion-buttons class="ion-no-margin" slot="start">
       <ion-back-button defaultHref="/login"></ion-back-button>
     </ion-buttons>
-    <ion-item lines="none" no-padding>
-      <ion-avatar slot="start" no-margin>
+    <ion-item lines="none" class="ion-no-padding">
+      <ion-avatar slot="start" class="ion-no-margin">
         <ion-img [src]="queryInfo.toProfileImagePath" alt="" (ionError)="setdefultImage($event)"></ion-img>
       </ion-avatar>
-      <ion-title no-padding>
+      <ion-title class="ion-no-padding">
         <span class="user-name">
           {{ (queryInfo && queryInfo.toUserName)? queryInfo.toUserName : 'Friend' }}
           <ion-icon name="radio-button-on" [ngClass]="{'online': friendUserStatus.isOnline}"></ion-icon>
@@ -21,6 +21,7 @@
           typing...
         </span>
       </ion-title>
+      <ion-icon button slot="end" name="more" (click)="openMoreOption($event)"></ion-icon>
     </ion-item>
   </ion-toolbar>
 </ion-header>
@@ -31,6 +32,7 @@
         <div class="message animated fast" *ngFor="let message of messages" [ngClass]="getClasses(message.userId)">
           <p>{{message.message | decryptTextBinder:message.userId}}
             <span>{{message.datetime | date:'h:mm aaa'}}</span>
+            <!-- <span>{{message.datetime | dateTextBinder}}</span> -->
           </p>
         </div>
       </div>

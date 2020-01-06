@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AppService } from '../../../shared/services/app.service';
+import { AppService } from '../../shared/services/app.service';
 
 import { UserFriends, FriendshipStatus } from 'src/app/shared/model/user-friend.model';
 import { ModalController } from '@ionic/angular';

@@ -15,7 +15,7 @@ export interface CurrentUser {
     Religion: string;
     AboutMe: string;
     AgreementImagePath: string;
-    UsedReferralCode: string;
+    ReferralCode: string;
     RoommatePreferences: RoommatePreferences;
 }
 

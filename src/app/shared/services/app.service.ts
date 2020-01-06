@@ -10,6 +10,8 @@ import { NavController } from '@ionic/angular';
 import { Network } from '@ionic-native/network/ngx';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { PushNotificationService } from './push-notification.service';
+import { PushDevice } from '../model/push-notification.model';
 
 
 // Models
@@ -25,9 +27,7 @@ import { RentBudget } from '../model/rent-budget.model';
 import { Pet } from '../model/pet.model';
 
 // Message Service
-import { MessageService } from '../../messaging/service/messaging.service';
-import { PushNotificationService } from './push-notification.service';
-import { PushDevice } from '../model/push-notification.model';
+import { FirebasedbService } from './firebasedb.service';
 
 @Injectable()
 export class AppService {
@@ -66,7 +66,7 @@ export class AppService {
         private navCtrl: NavController,
         private network: Network,
         private router: Router,
-        private messageService: MessageService,
+        private firebasedb: FirebasedbService,
         private pushNotificationService: PushNotificationService) {
         this.pushNotificationService.getPushDevice().subscribe((value) => {
             this.pushDevice = value;
@@ -108,7 +108,7 @@ export class AppService {
             Religion: (data && data.Religion) ? data.Religion : null,
             AboutMe: (data && data.AboutMe) ? data.AboutMe : '',
             AgreementImagePath: (data && data.AgreementImagePath) ? data.AgreementImagePath : '',
-            UsedReferralCode: (data && data.UsedReferralCode) ? data.UsedReferralCode : '',
+            ReferralCode: (data && data.ReferralCode) ? data.ReferralCode : '',
             RoommatePreferences: {
                 GenderIds: (data && data.RoommatePreferences && data.RoommatePreferences.GenderIds) ?
                     data.RoommatePreferences.GenderIds.toString().split(',').map(Number) : [],
@@ -588,7 +588,7 @@ export class AppService {
                         this.getCurrentuserFromDB();
                     });
                     // set user online for messaging
-                    this.messageService.setUserOnline(resData.UserId);
+                    this.firebasedb.setUserOnline(resData.UserId);
                 }
                 loading.dismiss();
                 return resData;
@@ -655,7 +655,7 @@ export class AppService {
         this.toast.show(`Logout Success`, `short`, 'bottom').subscribe(() => { });
         this.storage.get(StorageKey.UserIdKey).then((value) => {
             // Set User Ofline for message
-            this.messageService.setUserOffline(value.toString());
+            this.firebasedb.setUserOffline(value.toString());
             this.storage.remove(StorageKey.UserIdKey)
                 .then(() => {
                     this.storage.remove(StorageKey.LocalCurrentUserKey)
@@ -820,8 +820,6 @@ export class AppService {
             translucent: true,
             cssClass: ''
         });
-
-
 
         await this.getCurrentUserIdfromLocalStorage()
             .then(async (userId) => {

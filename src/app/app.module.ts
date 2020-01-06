@@ -27,8 +27,13 @@ import { AppService } from './shared/services/app.service';
 import { AppConstant } from './shared/constant/app.constant';
 import { AppHttpService } from './shared/services/rest.service';
 import { CustomPipesModule } from './shared/pipe/custom-pipe.module';
-import { MessagingPageModule } from './messaging/messaging.module';
+// import { MessagingPageModule } from './messaging/messaging.module';
 import { PushNotificationService } from './shared/services/push-notification.service';
+import { FirebasedbService } from './shared/services/firebasedb.service';
+import { environment } from '../environments/environment';
+// Firebase
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 
 @NgModule({
@@ -42,9 +47,12 @@ import { PushNotificationService } from './shared/services/push-notification.ser
     IonicStorageModule.forRoot(),
     AppRoutingModule,
     CustomPipesModule.forRoot(),
-    MessagingPageModule
+    // MessagingPageModule
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
   ],
   providers: [
+    AppService,
     HTTP,
     AppHttpService,
     StatusBar,
@@ -52,7 +60,6 @@ import { PushNotificationService } from './shared/services/push-notification.ser
     // GooglePlus,
     // Facebook,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    AppService,
     AppConstant,
     Toast,
     FormBuilder,
@@ -62,7 +69,8 @@ import { PushNotificationService } from './shared/services/push-notification.ser
     WebView,
     File,
     Push,
-    PushNotificationService
+    PushNotificationService,
+    FirebasedbService
   ],
   bootstrap: [AppComponent]
 })
