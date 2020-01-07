@@ -62,8 +62,8 @@ export class UserMoreMenuPage implements OnInit {
   public async unFriend() {
     this.dismissPopover();
     const alert = await this.alertController.create({
-      header: 'Confirm!',
-      message: 'Are you sure, You want to <strong>Unfriend</strong>?',
+      header: 'Confirmation!',
+      message: `Are you sure you'd like to <strong>Unfriend</strong>?`,
       buttons: [
         {
           text: 'Cancel',
@@ -87,8 +87,8 @@ export class UserMoreMenuPage implements OnInit {
   public async blockUser() {
     this.dismissPopover();
     const alert = await this.alertController.create({
-      header: 'Confirm!',
-      message: 'Are you sure, You want to <strong>block</strong>?',
+      header: 'Confirmation!',
+      message: `Are you sure you'd like to <strong>block</strong>?`,
       buttons: [
         {
           text: 'Cancel',
@@ -111,7 +111,6 @@ export class UserMoreMenuPage implements OnInit {
 
   public actionOnFriendRequest(user: UserFriends, friendshipStatus: number) {
     this.appService.actionOnFriendRequest(user, friendshipStatus).then(() => {
-      this.modalController.dismiss();
     });
   }
 

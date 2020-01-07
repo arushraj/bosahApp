@@ -25,6 +25,7 @@ export class AppConstant {
     readonly CHECK_VALID_REFERRAL_CODE = '/api/checkvalidityofreferralcode';
     readonly USER_UPDATE = '/api/updateUser';
     readonly UPDATE_USER_PASSWORD = '/api/user/forgotpasswordUpdate';
+    readonly PREFERRED_GIFTCARDS = '/api/getallgiftcards';
 
     /**
      * getURL() funtion to get url
@@ -78,6 +79,8 @@ export class AppConstant {
                 return this.APP_BASE_URL + this.USER_UPDATE;
             case UrlKey.Update_User_Password:
                 return this.APP_BASE_URL + this.UPDATE_USER_PASSWORD;
+            case UrlKey.Preferred_Giftcards:
+                return this.APP_BASE_URL + this.PREFERRED_GIFTCARDS;
             default:
                 break;
         }
@@ -107,7 +110,8 @@ export enum UrlKey {
     Flat_Search_Form,
     Check_Valid_Referral_Code,
     User_Update,
-    Update_User_Password
+    Update_User_Password,
+    Preferred_Giftcards
 }
 
 export enum StorageKey {

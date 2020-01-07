@@ -23,10 +23,14 @@ export class ReferralsPage implements OnInit {
 
   public shareApp() {
     const shareObject: object = {
-      message: `Hi, Checkout this Bosah app. perfect to find you ideal roomate and flat.` +
-        ` Use my referral code ${this.currentUser.ReferralCode} to get a gift card.`,
+      message: this.currentUser.ReferralMessage,
       subject: `Sharing App`
     };
+    // {
+    //   message: `Hi, Checkout this Bosah app. perfect to find you ideal roomate and flat.` +
+    //     ` Use my referral code ${this.currentUser.ReferralCode} to get a gift card.`,
+    //   subject: `Sharing App`
+    // }
     this.socialSharing.shareWithOptions(shareObject)
       .then((data) => { console.log(data); })
       .catch((error) => { console.log(error); });

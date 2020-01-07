@@ -3,7 +3,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AppConstant, UrlKey, StorageKey } from '../constant/app.constant';
 import { AppHttpService } from './rest.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast/ngx';
 import { NavController } from '@ionic/angular';
@@ -28,6 +28,7 @@ import { Pet } from '../model/pet.model';
 
 // Message Service
 import { FirebasedbService } from './firebasedb.service';
+import { PreferredGiftCards } from '../model/preferredGiftCards.model';
 
 @Injectable()
 export class AppService {
@@ -55,6 +56,8 @@ export class AppService {
     private requestedFriends = new BehaviorSubject<UserFriends[]>([]);
     private requestedFriendsList: { friends: UserFriends[] } = { friends: [] };
 
+    private preferredGiftcards = new BehaviorSubject<PreferredGiftCards[]>([]);
+
     private pushDevice: PushDevice;
 
     constructor(
@@ -67,10 +70,29 @@ export class AppService {
         private network: Network,
         private router: Router,
         private firebasedb: FirebasedbService,
-        private pushNotificationService: PushNotificationService) {
+        private pushNotificationService: PushNotificationService,
+        private alertController: AlertController) {
         this.pushNotificationService.getPushDevice().subscribe((value) => {
             this.pushDevice = value;
         });
+    }
+
+    public async showAlert(message: string, messageHeader: string) {
+        const alert = await this.alertController.create({
+            header: `${messageHeader}`,
+            message: `${message}`,
+            buttons: [
+                {
+                    text: 'Ok',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: (blah) => {
+                        console.log('Confirm Cancel');
+                    }
+                }
+            ]
+        });
+        await alert.present();
     }
 
     public getUsersValueByKey(key: string) {
@@ -109,6 +131,11 @@ export class AppService {
             AboutMe: (data && data.AboutMe) ? data.AboutMe : '',
             AgreementImagePath: (data && data.AgreementImagePath) ? data.AgreementImagePath : '',
             ReferralCode: (data && data.ReferralCode) ? data.ReferralCode : '',
+            IsNotificationEnabled: (data && data.IsNotificationEnabled) ? data.IsNotificationEnabled : false,
+            IsProfileHidden: (data && data.IsProfileHidden) ? data.IsProfileHidden : false,
+            IsUserDeactivated: (data && data.IsUserDeactivated) ? data.IsUserDeactivated : false,
+            ReferralMessage: (data && data.ReferralMessage) ? data.ReferralMessage : '',
+            SelectedGiftCardID: (data && data.SelectedGiftCardID) ? data.SelectedGiftCardID : null,
             RoommatePreferences: {
                 GenderIds: (data && data.RoommatePreferences && data.RoommatePreferences.GenderIds) ?
                     data.RoommatePreferences.GenderIds.toString().split(',').map(Number) : [],
@@ -260,6 +287,14 @@ export class AppService {
         this.registeredEvent.next(events);
     }
 
+    public getPreferredGiftcards(): Observable<PreferredGiftCards[]> {
+        return this.preferredGiftcards.asObservable();
+    }
+
+    private setPreferredGiftcards(preferredGiftcards: PreferredGiftCards[]) {
+        this.preferredGiftcards.next(preferredGiftcards);
+    }
+
     // functions for HTTP Calling
 
     public async getCurrentuserFromDB(updateOnline?: boolean) {
@@ -390,6 +425,19 @@ export class AppService {
             .then(res => {
                 const pets: Pet[] = JSON.parse(res.data);
                 this.setPets(pets);
+            })
+            .catch(error => {
+                // this.setPets([]);
+            })
+            .finally(() => { });
+    }
+
+    public getPreferredGiftcardsFromDB() {
+        const url = this.appConstant.getURL(UrlKey.Preferred_Giftcards);
+        this.http.get(url, {}, {})
+            .then(res => {
+                const preferredGiftcards: PreferredGiftCards[] = JSON.parse(res.data);
+                this.setPreferredGiftcards(preferredGiftcards);
             })
             .catch(error => {
                 // this.setPets([]);
@@ -847,6 +895,18 @@ export class AppService {
                             // loading.dismiss();
                             loading.dismiss().then(() => {
                                 this.toast.show(`${resData.ResponseMessage}`, `short`, 'bottom').subscribe(() => { });
+
+                                // Success Alert
+                                let message: string;
+                                let messageHearder: string;
+                                if (FriendshipStatus.Unfriended === friendshipStatus) {
+                                    message = `You're all set. You've successfully unfriended.`;
+                                    messageHearder = `Success Message`;
+                                } else if (FriendshipStatus.Blocked === friendshipStatus) {
+                                    message = `You're all set. You've successfully blocked.`;
+                                    messageHearder = `Success Message`;
+                                }
+                                this.showAlert(message, messageHearder);
                             });
                             const resData = JSON.parse(res.data);
                             if (resData.Status) {
@@ -1032,19 +1092,51 @@ export class AppService {
             });
     }
 
-    // public presentToast(msg, duration, cssClass): Promise<any> {
-    //     let toast = this.toast({
-    //       message: msg,
-    //       duration: duration,
-    //       position: 'bottom',
-    //       dismissOnPageChange: true,
-    //       cssClass: cssClass
-    //     });
+    public async deactivateUser(form: any) {
+        if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
+            this.toast.showShortBottom(`Please connect to internet.`).subscribe(() => { });
+            return;
+        }
+        const loading = await this.loadingController.create({
+            message: 'Please wait...',
+            translucent: true,
+            cssClass: ''
+        });
+        loading.present();
+        const url = this.appConstant.getURL(UrlKey.User_Update);
+        const data = form;
+        return this.http.post(url, data, {})
+            .then(async (res) => {
+                loading.dismiss();
+                const resData = JSON.parse(res.data);
+                this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
 
-    //     toast.onDidDismiss(() => {
-    //       // Do something
-    //     });
+                const alert = await this.alertController.create({
+                    header: `Success Message`,
+                    message: `Your account is now deactivated. When you log in again, your account will be reactivated.`,
+                    buttons: [
+                        {
+                            text: 'Ok',
+                            role: 'cancel',
+                            cssClass: 'secondary',
+                            handler: (blah) => {
+                                console.log('Confirm Cancel');
+                                this.userLogout();
+                            }
+                        }
+                    ]
+                });
+                await alert.present();
 
-    //     return toast.present();
-    //   }
+            })
+            .catch((err) => {
+                loading.dismiss();
+                this.toast
+                    .showShortBottom(`${err.message || JSON.parse(err.error).ResponseMessage}`)
+                    .subscribe(() => { });
+            })
+            .finally(() => {
+                loading.dismiss();
+            });
+    }
 }

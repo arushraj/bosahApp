@@ -26,7 +26,7 @@
                         <h2>{{friend.FName}}</h2>
                         <p *ngIf="friend.LastMessage">{{ friend.LastMessage.message}}
                             <span class="last-message-time">
-                                {{ friend.LastMessage.datetime | date:'h:mm aaa' | lowercase }}
+                                {{ friend.LastMessage.datetime | date:'medium' }}
                             </span>
                         </p>
                     </ion-label>

@@ -54,7 +54,7 @@ export class AppComponent {
     routerDirection: 'forward'
   }, {
     title: 'Profile Settings',
-    url: '',
+    url: 'profilesetting',
     icon: 'settings',
     routerDirection: 'forward'
   }, {
@@ -119,6 +119,7 @@ export class AppComponent {
       this.appService.getBedroomsFromDB();
       this.appService.getRentBudgetFromDB();
       this.appService.getPetsFromDB();
+      this.appService.getPreferredGiftcardsFromDB();
 
       this.appService.getCurrentUserIdfromLocalStorage()
         .then(value => {
