@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "423137540298",
+    "firebase_url": "https://demobosahapp-3304d.firebaseio.com",
+    "project_id": "demobosahapp-3304d",
+    "storage_bucket": "demobosahapp-3304d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423137540298:android:9a8641ab42ae71f085dc33",
+        "android_client_info": {
+          "package_name": "com.bosah.bosahapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "423137540298-b5bthnao3nd5nbm7vruij1tbo8lls99a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsJpYh7ZMJ7xHo8e-XinUDIgsvSp0A44g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "423137540298-b5bthnao3nd5nbm7vruij1tbo8lls99a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
