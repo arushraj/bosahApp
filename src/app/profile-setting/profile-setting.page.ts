@@ -14,21 +14,21 @@ export class ProfileSettingPage implements OnInit {
 
   public giftCard: PreferredGiftCards[];
   public currentUser: CurrentUser;
-  public userForm: FormGroup;
+  public formData = {
+    IsNotificationEnabled: false,
+    IsProfileHidden: false,
+    IsUserDeactivated: false
+  };
 
-  constructor(private appService: AppService, private fb: FormBuilder, private alertController: AlertController) {
-    this.userForm = this.fb.group({
-      IsNotificationEnabled: [false, Validators.compose([Validators.required])],
-      IsProfileHidden: [false, Validators.compose([Validators.required])],
-      IsUserDeactivated: [false, Validators.compose([Validators.required])]
-    });
+  constructor(private appService: AppService, private alertController: AlertController) {
+
     this.appService.getCurrentUser().subscribe((data) => {
       this.currentUser = data;
-      this.userForm.patchValue({
+      this.formData = {
         IsNotificationEnabled: this.currentUser.IsNotificationEnabled,
         IsProfileHidden: this.currentUser.IsProfileHidden,
         IsUserDeactivated: this.currentUser.IsUserDeactivated
-      });
+      };
     });
   }
 
@@ -36,27 +36,36 @@ export class ProfileSettingPage implements OnInit {
   }
 
   public setNotification() {
-    const data = {
-      IsNotificationEnabled: this.userForm.value.IsNotificationEnabled,
-      UserId: this.currentUser.UserId
-    };
-    this.appService.updateUser(data).then(() => { });
+    if (this.currentUser.IsNotificationEnabled !== this.formData.IsNotificationEnabled) {
+      const data = {
+        IsNotificationEnabled: this.formData.IsNotificationEnabled,
+        UserId: this.currentUser.UserId
+      };
+      this.appService.updateUser(data).then(() => { });
+    }
   }
 
   public setProfileHidden() {
-    const data = {
-      IsProfileHidden: this.userForm.value.IsProfileHidden,
-      UserId: this.currentUser.UserId
-    };
-    this.appService.updateUser(data).then(() => { });
+    if (this.currentUser.IsProfileHidden !== this.formData.IsProfileHidden) {
+      const data = {
+        IsProfileHidden: this.formData.IsProfileHidden,
+        UserId: this.currentUser.UserId
+      };
+      this.appService.updateUser(data).then(() => { });
+    }
   }
 
   public async setUserDeactivate() {
-    const data = {
-      IsProfileHidden: this.userForm.value.IsProfileHidden,
-      UserId: this.currentUser.UserId
-    };
-    if (this.userForm.value.IsUserDeactivated) {
+    if (this.formData.IsUserDeactivated) {
+      /*
+userState=2 deactivated
+userState=1 active
+userState-3 suspended
+      */
+      const data = {
+        userState: 2,
+        UserId: this.currentUser.UserId
+      };
       const alert = await this.alertController.create({
         header: `Confirmation!`,
         message: `Are you sure you want to <strong>deactivate account</strong>?`,
@@ -67,9 +76,7 @@ export class ProfileSettingPage implements OnInit {
             cssClass: 'secondary',
             handler: (blah) => {
               console.log('Confirm Cancel');
-              this.userForm.patchValue({
-                IsUserDeactivated: false
-              });
+              this.formData.IsUserDeactivated = !this.formData.IsUserDeactivated;
             }
           }, {
             text: 'Yes',
