@@ -330,7 +330,7 @@ export class AppService {
                                     this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                                 } else {
                                     const url = this.appConstant.getURL(UrlKey.Current_User).replace('uid', value);
-                                    this.http.get(url, {}, {})
+                                    this.http.get(url, {}, this.header)
                                         .then((res: any) => {
                                             loading.dismiss();
                                             const resUser: CurrentUser = JSON.parse(res.data);
@@ -363,7 +363,7 @@ export class AppService {
 
     public getUserLocationsFromDB() {
         const url = this.appConstant.getURL(UrlKey.User_Locations);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const resLocation: UserLocation[] = JSON.parse(res.data);
                 this.setLocation(resLocation);
@@ -376,7 +376,7 @@ export class AppService {
 
     public getUserReligionsFromDB() {
         const url = this.appConstant.getURL(UrlKey.User_Religions);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const resReligions: UserReligion[] = JSON.parse(res.data);
                 this.setReligion(resReligions);
@@ -389,7 +389,7 @@ export class AppService {
 
     public getBathroomsFromDB() {
         const url = this.appConstant.getURL(UrlKey.Bathrooms);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const bathrooms: Bathroom[] = JSON.parse(res.data);
                 this.setBathrooms(bathrooms);
@@ -402,7 +402,7 @@ export class AppService {
 
     public getBedroomsFromDB() {
         const url = this.appConstant.getURL(UrlKey.Bedrooms);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const bedrooms: Bedroom[] = JSON.parse(res.data);
                 this.setBedrooms(bedrooms);
@@ -415,7 +415,7 @@ export class AppService {
 
     public getRentBudgetFromDB() {
         const url = this.appConstant.getURL(UrlKey.Rent_Budget);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const rentBudget: RentBudget[] = JSON.parse(res.data);
                 this.setRentBudget(rentBudget);
@@ -428,7 +428,7 @@ export class AppService {
 
     public getPetsFromDB() {
         const url = this.appConstant.getURL(UrlKey.Pets);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const pets: Pet[] = JSON.parse(res.data);
                 this.setPets(pets);
@@ -441,7 +441,7 @@ export class AppService {
 
     public getPreferredGiftcardsFromDB() {
         const url = this.appConstant.getURL(UrlKey.Preferred_Giftcards);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const preferredGiftcards: PreferredGiftCards[] = JSON.parse(res.data);
                 this.setPreferredGiftcards(preferredGiftcards);
@@ -539,7 +539,7 @@ export class AppService {
             .then((userId) => {
                 if (userId) {
                     const url = this.appConstant.getURL(UrlKey.Requested_Friends).replace('uid', userId);
-                    this.http.get(url, {}, {})
+                    this.http.get(url, {}, this.header)
                         .then(res => {
                             const resdata = JSON.parse(res.data);
                             const friendList: UserFriends[] = resdata.FriendandPendingList;
@@ -574,7 +574,7 @@ export class AppService {
         this.setUpcomingEvent([]);
         loading.present();
         const url = this.appConstant.getURL(UrlKey.Upcoming_Event).replace('cityid', CtityId.toString()).replace('uid', UserId);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const resdata = JSON.parse(res.data);
                 const events: Event[] = resdata.UpcomingEventList;
@@ -604,7 +604,7 @@ export class AppService {
         this.setRegisteredEvent([]);
         loading.present();
         const url = this.appConstant.getURL(UrlKey.Registered_Event).replace('uid', UserId);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const resdata = JSON.parse(res.data);
                 const events: Event[] = resdata;
@@ -635,7 +635,7 @@ export class AppService {
         loading.present();
         const url = this.appConstant.getURL(UrlKey.User_Login);
         const data = { EmailID: email, Password: password, deviceid: this.pushDevice.registrationId };
-        return await this.http.post(url, data, {})
+        return await this.http.post(url, data, this.header)
             .then(res => {
                 const resData = JSON.parse(res.data);
                 if (resData.UserId > 0) {
@@ -675,7 +675,7 @@ export class AppService {
             ProfileFileName: currentUser.ProfileImagePath ? currentUser.ProfileImagePath.split('/')[2].replace('thumbnail_', '') : ''
         };
         this.http.uploadFile(this.appConstant.getURL(UrlKey.User_Profile_Image_Upload),
-            data, {}, imagePath, 'ProfilePics')
+            data, this.header, imagePath, 'ProfilePics')
             .then(res => {
 
                 const resdata = JSON.parse(res.data);
@@ -722,7 +722,7 @@ export class AppService {
                 loading.present();
                 const url = this.appConstant.getURL(UrlKey.User_Logout);
                 const data = { UserId: value, Token: token };
-                this.http.post(url, data, {})
+                this.http.post(url, data, this.header)
                     .then((res) => {
                         this.storage.remove(StorageKey.UserIdKey)
                             .then(() => {
@@ -768,7 +768,7 @@ export class AppService {
         }
         const url = this.appConstant.getURL(UrlKey.Send_Otp);
         const data = { otp, emailId, isForgotPassword };
-        return this.http.post(url, data, {});
+        return this.http.post(url, data, this.header);
     }
 
     public async userRegistration(newUser: NewUser) {
@@ -784,7 +784,7 @@ export class AppService {
         loading.present();
         const url = this.appConstant.getURL(UrlKey.User_Registration);
         const userImagePath = newUser.ProfileImagePath;
-        this.http.post(url, newUser, {})
+        this.http.post(url, newUser, this.header)
             .then(async res => {
                 const resData = JSON.parse(res.data);
                 loading.dismiss();
@@ -825,7 +825,7 @@ export class AppService {
             UserId: userId.toString()
         };
         this.http.uploadFile(this.appConstant.getURL(UrlKey.User_Profile_Image_Upload),
-            data, {}, ImagePath, '')
+            data, this.header, ImagePath, '')
             .then(uploadRes => {
                 loading.dismiss();
                 // this.router.navigate(['/userlogin']);
@@ -986,7 +986,7 @@ export class AppService {
             EventID: event.EventId.toString(),
             RegisterStatus: !event.isSubscribe
         };
-        this.http.post(url, data, {})
+        this.http.post(url, data, this.header)
             .then((res) => {
                 loading.dismiss();
                 const resData = JSON.parse(res.data);
@@ -1031,7 +1031,7 @@ export class AppService {
         loading.present();
         const url = this.appConstant.getURL(UrlKey.Flat_Search_Form);
         const data = form;
-        return this.http.post(url, data, {})
+        return this.http.post(url, data, this.header)
             .then((res) => {
                 loading.dismiss();
                 const resData = JSON.parse(res.data);
@@ -1054,7 +1054,7 @@ export class AppService {
             return;
         }
         const url = this.appConstant.getURL(UrlKey.Check_Valid_Referral_Code);
-        return this.http.get(url, { referralCode }, {});
+        return this.http.get(url, { referralCode }, this.header);
 
     }
 
@@ -1102,7 +1102,7 @@ export class AppService {
         loading.present();
         const url = this.appConstant.getURL(UrlKey.Update_User_Password);
         const data = form;
-        return this.http.post(url, data, {})
+        return this.http.post(url, data, this.header)
             .then((res) => {
 
                 loading.dismiss().then(() => {
@@ -1138,7 +1138,7 @@ export class AppService {
         loading.present();
         const url = this.appConstant.getURL(UrlKey.User_Update);
         const data = form;
-        return this.http.post(url, data, {})
+        return this.http.post(url, data, this.header)
             .then(async (res) => {
                 loading.dismiss();
                 const resData = JSON.parse(res.data);
