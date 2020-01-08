@@ -122,11 +122,14 @@ export class AppComponent {
       this.appService.getPreferredGiftcardsFromDB();
 
       this.appService.getCurrentUserIdfromLocalStorage()
-        .then(value => {
-          if (value !== null) {
-            this.appService.getCurrentuserFromDB();
-            this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
-            this.splashScreen.hide();
+        .then(userId => {
+          if (userId !== null) {
+            this.appService.getTokenfromLocalStorage().then((token) => {
+              this.appService.setHTTPHeader({ token, userId });
+              this.appService.getCurrentuserFromDB();
+              this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
+              this.splashScreen.hide();
+            });
           } else {
             this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
             this.splashScreen.hide();

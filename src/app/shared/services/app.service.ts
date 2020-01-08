@@ -29,6 +29,7 @@ import { Pet } from '../model/pet.model';
 // Message Service
 import { FirebasedbService } from './firebasedb.service';
 import { PreferredGiftCards } from '../model/preferredGiftCards.model';
+import { async } from '@angular/core/testing';
 
 @Injectable()
 export class AppService {
@@ -59,6 +60,11 @@ export class AppService {
     private preferredGiftcards = new BehaviorSubject<PreferredGiftCards[]>([]);
 
     private pushDevice: PushDevice;
+
+    private header = {
+        token: '',
+        userid: ''
+    };
 
     constructor(
         private http: HTTP, private appConstant: AppConstant,
@@ -95,6 +101,13 @@ export class AppService {
         await alert.present();
     }
 
+    public setHTTPHeader(data: any) {
+        this.header = {
+            token: data.token,
+            userid: data.userId.toString()
+        };
+    }
+
     public getUsersValueByKey(key: string) {
         return this.currentUser.asObservable()
             .pipe(map(user => {
@@ -105,12 +118,6 @@ export class AppService {
                 }
             }));
     }
-    // for city Id
-    // getTransaction(id: number): Observable<Transaction>{
-    //     return this.getTransactions().pipe(
-    //         map(txs => txs.find(txn => txn.id === id))
-    //     );
-    // }
 
     private createUser(data?: CurrentUser) {
         return {
@@ -458,7 +465,7 @@ export class AppService {
             .then(async (userId) => {
                 if (userId) {
                     const url = this.appConstant.getURL(UrlKey.User_Preferred).replace('uid', userId);
-                    await this.http.get(url, {}, {})
+                    await this.http.get(url, {}, this.header)
                         .then(res => {
                             loading.dismiss();
                             const resdata = JSON.parse(res.data);
@@ -497,7 +504,7 @@ export class AppService {
             .then((userId) => {
                 if (userId) {
                     const url = this.appConstant.getURL(UrlKey.User_Friends).replace('uid', userId);
-                    this.http.get(url, {}, {})
+                    this.http.get(url, {}, this.header)
                         .then(res => {
                             const resdata = JSON.parse(res.data);
                             const friendList: UserFriends[] = resdata.FriendandPendingList;
@@ -632,7 +639,9 @@ export class AppService {
             .then(res => {
                 const resData = JSON.parse(res.data);
                 if (resData.UserId > 0) {
+                    this.setHTTPHeader({ token: resData.Token, userId: resData.UserId });
                     this.storage.set(StorageKey.UserIdKey, resData.UserId).then(() => {
+                        this.storage.set(StorageKey.LoginTokenkey, resData.Token).then(() => { });
                         this.getCurrentuserFromDB();
                     });
                     // set user online for messaging
@@ -700,32 +709,56 @@ export class AppService {
     }
 
     public userLogout() {
-        this.toast.show(`Logout Success`, `short`, 'bottom').subscribe(() => { });
         this.storage.get(StorageKey.UserIdKey).then((value) => {
             // Set User Ofline for message
             this.firebasedb.setUserOffline(value.toString());
-            this.storage.remove(StorageKey.UserIdKey)
-                .then(() => {
-                    this.storage.remove(StorageKey.LocalCurrentUserKey)
-                        .then(() => {
-                            this.setCurrentUser(this.createUser());
-                            this.setUserPreferred(this.createuserPreferred());
 
-                            // Empty List of Users Friends.
-                            this.userFriendsList.friends = [];
-                            this.setFriendList(Object.assign({}, this.userFriendsList).friends);
-                        })
-                        .catch(() => { });
-                })
-                .catch(() => { })
-                .finally(() => {
-                    this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
+            this.storage.get(StorageKey.LoginTokenkey).then(async (token) => {
+                const loading = await this.loadingController.create({
+                    message: 'Please wait...',
+                    translucent: true,
+                    cssClass: ''
                 });
+                loading.present();
+                const url = this.appConstant.getURL(UrlKey.User_Logout);
+                const data = { UserId: value, Token: token };
+                this.http.post(url, data, {})
+                    .then((res) => {
+                        this.storage.remove(StorageKey.UserIdKey)
+                            .then(() => {
+                                this.storage.remove(StorageKey.LocalCurrentUserKey)
+                                    .then(() => {
+                                        this.setCurrentUser(this.createUser());
+                                        this.setUserPreferred(this.createuserPreferred());
+
+                                        // Empty List of Users Friends.
+                                        this.userFriendsList.friends = [];
+                                        this.setFriendList(Object.assign({}, this.userFriendsList).friends);
+                                    })
+                                    .catch(() => { });
+                            })
+                            .catch(() => { })
+                            .finally(() => {
+                                this.toast.show(`Logout Success`, `short`, 'bottom').subscribe(() => { });
+                                this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
+                            });
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                    .finally(() => {
+                        loading.dismiss();
+                    });
+            });
         });
     }
 
     public async getCurrentUserIdfromLocalStorage() {
         return await this.storage.get(StorageKey.UserIdKey);
+    }
+
+    public async getTokenfromLocalStorage() {
+        return await this.storage.get(StorageKey.LoginTokenkey);
     }
 
     public async sentotp(otp: string, emailId: string, isForgotPassword?: boolean) {
@@ -827,7 +860,7 @@ export class AppService {
                         FromFriendRequestID: userId.toString(),
                         ToFriendRequestID: friendUser.UserId.toString()
                     };
-                    this.http.post(url, data, {})
+                    this.http.post(url, data, this.header)
                         .then((res) => {
                             loading.dismiss();
                             const resData = JSON.parse(res.data);
@@ -890,7 +923,7 @@ export class AppService {
                         Status: friendshipStatus.toString()
                     };
                     loading.present();
-                    this.http.post(url, data, {})
+                    this.http.post(url, data, this.header)
                         .then((res) => {
                             // loading.dismiss();
                             loading.dismiss().then(() => {
@@ -1038,7 +1071,7 @@ export class AppService {
         loading.present();
         const url = this.appConstant.getURL(UrlKey.User_Update);
         const data = form;
-        return this.http.post(url, data, {})
+        return this.http.post(url, data, this.header)
             .then((res) => {
                 loading.dismiss();
                 const resData = JSON.parse(res.data);

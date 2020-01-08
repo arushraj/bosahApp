@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from '../shared/services/app.service';
 import { CurrentUser } from '../shared/model/current-user.model';
 import { PreferredGiftCards } from '../shared/model/preferredGiftcards.model';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-profile-setting',
@@ -20,7 +20,7 @@ export class ProfileSettingPage implements OnInit {
     IsUserDeactivated: false
   };
 
-  constructor(private appService: AppService, private alertController: AlertController) {
+  constructor(private appService: AppService, private alertController: AlertController, private inAppBrowser: InAppBrowser) {
 
     this.appService.getCurrentUser().subscribe((data) => {
       this.currentUser = data;
@@ -89,6 +89,13 @@ userState-3 suspended
       });
       await alert.present();
     }
+  }
+
+  public openLink() {
+    const options: InAppBrowserOptions = {
+      zoom: 'no'
+    };
+    const browser = this.inAppBrowser.create('http://bosahmobile.com/beta/', '_system');
   }
 
 }

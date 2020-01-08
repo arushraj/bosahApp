@@ -3,6 +3,7 @@ export class AppConstant {
     readonly APP_BASE_URL = 'https://bosahapivinay.azurewebsites.net/';
     readonly APP_IMG_BASE_URL = 'https://bosahapivinaystorage.blob.core.windows.net';
     readonly USER_LOGIN = '/api/login';
+    readonly USER_LOGOUT = '/api/logout';
     readonly CURRENT_USER_URL = '/api/User/uid';
     readonly PROFILE_IMAGE_UPLOAD = '/api/Upload';
     readonly SEND_OTP = '/api/sendEmail';
@@ -35,6 +36,8 @@ export class AppConstant {
         switch (urlType) {
             case UrlKey.User_Login:
                 return this.APP_BASE_URL + this.USER_LOGIN;
+            case UrlKey.User_Logout:
+                return this.APP_BASE_URL + this.USER_LOGOUT;
             case UrlKey.Current_User:
                 return this.APP_BASE_URL + this.CURRENT_USER_URL;
             case UrlKey.User_Profile_Image_Upload:
@@ -89,6 +92,7 @@ export class AppConstant {
 
 export enum UrlKey {
     User_Login,
+    User_Logout,
     Current_User,
     User_Profile_Image_Upload,
     Send_Otp,
@@ -116,5 +120,6 @@ export enum UrlKey {
 
 export enum StorageKey {
     UserIdKey = 'userId',
-    LocalCurrentUserKey = 'user'
+    LocalCurrentUserKey = 'user',
+    LoginTokenkey = 'userToken'
 }
