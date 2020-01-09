@@ -642,10 +642,13 @@ export class AppService {
                     this.setHTTPHeader({ token: resData.Token, userId: resData.UserId });
                     this.storage.set(StorageKey.UserIdKey, resData.UserId).then(() => {
                         this.storage.set(StorageKey.LoginTokenkey, resData.Token).then(() => { });
+
+                        // set user online for messaging
+                        this.firebasedb.setUserOnline(resData.UserId);
+
+                        // Get User Details from DB
                         this.getCurrentuserFromDB();
                     });
-                    // set user online for messaging
-                    this.firebasedb.setUserOnline(resData.UserId);
                 }
                 loading.dismiss();
                 return resData;
@@ -784,21 +787,31 @@ export class AppService {
         loading.present();
         const url = this.appConstant.getURL(UrlKey.User_Registration);
         const userImagePath = newUser.ProfileImagePath;
-        this.http.post(url, newUser, this.header)
+        this.http.post(url, newUser, {})
             .then(async res => {
                 const resData = JSON.parse(res.data);
                 loading.dismiss();
                 if (userImagePath) {
-                    this.toast.show(`${resData.ResponseMessage}`, `short`, `bottom`).subscribe(() => { });
+                    this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
                     await this.uploadUserRegistrationImage(resData.UserId, userImagePath);
                     // this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                 } else {
-                    this.toast.show(`${resData.ResponseMessage}`, `short`, `bottom`).subscribe(() => { });
+                    this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
                     // this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                 }
                 this.storage.set(StorageKey.UserIdKey, resData.UserId).then(() => {
-                    this.getCurrentuserFromDB();
-                    this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
+                    // this.getCurrentuserFromDB();
+                    // this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
+                    this.userLogin(newUser.EmailId, newUser.Password)
+                        .then((data) => {
+                            this.toast.showShortBottom(
+                                `${data.ResponseMessage}`
+                            ).subscribe(toast => { });
+                            if (data.UserId > 0) {
+                                this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
+                                // this.router.navigate(['/tabs']);
+                            }
+                        });
                 });
             })
             .catch(err => {
@@ -825,7 +838,7 @@ export class AppService {
             UserId: userId.toString()
         };
         this.http.uploadFile(this.appConstant.getURL(UrlKey.User_Profile_Image_Upload),
-            data, this.header, ImagePath, '')
+            data, {}, ImagePath, '')
             .then(uploadRes => {
                 loading.dismiss();
                 // this.router.navigate(['/userlogin']);
