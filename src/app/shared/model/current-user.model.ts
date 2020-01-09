@@ -17,6 +17,11 @@ export interface CurrentUser {
     AgreementImagePath: string;
     ReferralCode: string;
     RoommatePreferences: RoommatePreferences;
+    IsNotificationEnabled: boolean;
+    IsProfileHidden: boolean;
+    IsUserDeactivated: boolean;
+    ReferralMessage: string;
+    SelectedGiftCardID: number;
 }
 
 export interface RoommatePreferences {

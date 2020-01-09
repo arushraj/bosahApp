@@ -7,6 +7,7 @@ import { AppService } from '../shared/services/app.service';
 import { UserReligion } from '../shared/model/religion.model';
 import { CurrentUser } from '../shared/model/current-user.model';
 import { UserLocation } from '../shared/model/location.model';
+import { PreferredGiftCards } from '../shared/model/preferredGiftCards.model';
 
 @Component({
   selector: 'app-profile-update',
@@ -19,9 +20,10 @@ export class ProfileUpdatePage implements OnInit {
   public genders: Array<{ genderId: number, gender: string }> = [];
   public religions: UserReligion[];
   public locations: UserLocation[];
+  public giftCard: PreferredGiftCards[];
   public currentUser: CurrentUser;
-  public isActionCompleted:boolean = false;
- 
+  public isActionCompleted: boolean;
+
 
   constructor(private fb: FormBuilder, private appService: AppService) {
     this.userForm = fb.group({
@@ -36,6 +38,7 @@ export class ProfileUpdatePage implements OnInit {
       GenderId: ['', Validators.compose([Validators.required])],
       ReligionId: ['', Validators.compose([Validators.required])],
       CityId: ['', Validators.compose([Validators.required])],
+      SelectedGiftCardTypeID: ['']
     });
     this.bindValues();
   }
@@ -68,6 +71,16 @@ export class ProfileUpdatePage implements OnInit {
           CityId: this.locations.find(item => {
             return item.City === this.currentUser.City;
           }).CityId
+        });
+      }
+    });
+    this.appService.getPreferredGiftcards().subscribe((gift) => {
+      this.giftCard = gift;
+      if (gift.length > 0 && (this.currentUser && this.currentUser.SelectedGiftCardID)) {
+        this.userForm.patchValue({
+          SelectedGiftCardTypeID: this.giftCard.find(item => {
+            return item.GiftCardTypeID === this.currentUser.SelectedGiftCardID;
+          }).GiftCardTypeID
         });
       }
     });
@@ -107,12 +120,21 @@ export class ProfileUpdatePage implements OnInit {
             });
           }
         }
+        if (this.giftCard.length > 0) {
+          const oldgift = this.giftCard.find(item => {
+            return item.GiftCardTypeID === this.currentUser.SelectedGiftCardID;
+          });
+          if (oldgift !== undefined) {
+            this.userForm.patchValue({
+              SelectedGiftCardTypeID: oldgift.GiftCardTypeID
+            });
+          }
+        }
       }
     });
   }
 
   public onSubmit() {
-    //console.log(this.userForm);
     const data = Object.assign({}, this.userForm).value;
     data.UserId = this.currentUser.UserId;
     this.appService.updateUser(data).then(() => {

@@ -37,15 +37,22 @@ const routes: Routes = [
     loadChildren: './forget-password/forget-password.module#ForgetPasswordPageModule'
   }, {
     path: 'messaging',
-    loadChildren: './messaging/messaging.module#MessagingPageModule'
+    loadChildren: './messaging/messaging.module#MessagingPageModule',
+    canActivate: [AuthGuard]
   }, {
     path: 'referrals',
-    loadChildren: './referrals/referrals.module#ReferralsPageModule'
+    loadChildren: './referrals/referrals.module#ReferralsPageModule',
+    canActivate: [AuthGuard]
+  }, {
+    path: 'profilesetting',
+    loadChildren: './profile-setting/profile-setting.module#ProfileSettingPageModule',
+    canActivate: [AuthGuard]
   }, {
     path: '**',
     redirectTo: 'landing',
     pathMatch: 'full'
   }
+
 
 
 

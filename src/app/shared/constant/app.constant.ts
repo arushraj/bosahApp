@@ -3,6 +3,7 @@ export class AppConstant {
     readonly APP_BASE_URL = 'https://bosahapivinay.azurewebsites.net/';
     readonly APP_IMG_BASE_URL = 'https://bosahapivinaystorage.blob.core.windows.net';
     readonly USER_LOGIN = '/api/login';
+    readonly USER_LOGOUT = '/api/logout';
     readonly CURRENT_USER_URL = '/api/User/uid';
     readonly PROFILE_IMAGE_UPLOAD = '/api/Upload';
     readonly SEND_OTP = '/api/sendEmail';
@@ -25,6 +26,7 @@ export class AppConstant {
     readonly CHECK_VALID_REFERRAL_CODE = '/api/checkvalidityofreferralcode';
     readonly USER_UPDATE = '/api/updateUser';
     readonly UPDATE_USER_PASSWORD = '/api/user/forgotpasswordUpdate';
+    readonly PREFERRED_GIFTCARDS = '/api/getallgiftcards';
 
     /**
      * getURL() funtion to get url
@@ -34,6 +36,8 @@ export class AppConstant {
         switch (urlType) {
             case UrlKey.User_Login:
                 return this.APP_BASE_URL + this.USER_LOGIN;
+            case UrlKey.User_Logout:
+                return this.APP_BASE_URL + this.USER_LOGOUT;
             case UrlKey.Current_User:
                 return this.APP_BASE_URL + this.CURRENT_USER_URL;
             case UrlKey.User_Profile_Image_Upload:
@@ -78,6 +82,8 @@ export class AppConstant {
                 return this.APP_BASE_URL + this.USER_UPDATE;
             case UrlKey.Update_User_Password:
                 return this.APP_BASE_URL + this.UPDATE_USER_PASSWORD;
+            case UrlKey.Preferred_Giftcards:
+                return this.APP_BASE_URL + this.PREFERRED_GIFTCARDS;
             default:
                 break;
         }
@@ -86,6 +92,7 @@ export class AppConstant {
 
 export enum UrlKey {
     User_Login,
+    User_Logout,
     Current_User,
     User_Profile_Image_Upload,
     Send_Otp,
@@ -107,10 +114,12 @@ export enum UrlKey {
     Flat_Search_Form,
     Check_Valid_Referral_Code,
     User_Update,
-    Update_User_Password
+    Update_User_Password,
+    Preferred_Giftcards
 }
 
 export enum StorageKey {
     UserIdKey = 'userId',
-    LocalCurrentUserKey = 'user'
+    LocalCurrentUserKey = 'user',
+    LoginTokenkey = 'userToken'
 }

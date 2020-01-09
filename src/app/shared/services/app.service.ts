@@ -3,7 +3,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AppConstant, UrlKey, StorageKey } from '../constant/app.constant';
 import { AppHttpService } from './rest.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast/ngx';
 import { NavController } from '@ionic/angular';
@@ -28,6 +28,8 @@ import { Pet } from '../model/pet.model';
 
 // Message Service
 import { FirebasedbService } from './firebasedb.service';
+import { PreferredGiftCards } from '../model/preferredGiftCards.model';
+import { async } from '@angular/core/testing';
 
 @Injectable()
 export class AppService {
@@ -55,7 +57,14 @@ export class AppService {
     private requestedFriends = new BehaviorSubject<UserFriends[]>([]);
     private requestedFriendsList: { friends: UserFriends[] } = { friends: [] };
 
+    private preferredGiftcards = new BehaviorSubject<PreferredGiftCards[]>([]);
+
     private pushDevice: PushDevice;
+
+    private header = {
+        token: '',
+        userid: ''
+    };
 
     constructor(
         private http: HTTP, private appConstant: AppConstant,
@@ -67,10 +76,36 @@ export class AppService {
         private network: Network,
         private router: Router,
         private firebasedb: FirebasedbService,
-        private pushNotificationService: PushNotificationService) {
+        private pushNotificationService: PushNotificationService,
+        private alertController: AlertController) {
         this.pushNotificationService.getPushDevice().subscribe((value) => {
             this.pushDevice = value;
         });
+    }
+
+    public async showAlert(message: string, messageHeader: string) {
+        const alert = await this.alertController.create({
+            header: `${messageHeader}`,
+            message: `${message}`,
+            buttons: [
+                {
+                    text: 'Ok',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: (blah) => {
+                        console.log('Confirm Cancel');
+                    }
+                }
+            ]
+        });
+        await alert.present();
+    }
+
+    public setHTTPHeader(data: any) {
+        this.header = {
+            token: data.token,
+            userid: data.userId.toString()
+        };
     }
 
     public getUsersValueByKey(key: string) {
@@ -83,12 +118,6 @@ export class AppService {
                 }
             }));
     }
-    // for city Id
-    // getTransaction(id: number): Observable<Transaction>{
-    //     return this.getTransactions().pipe(
-    //         map(txs => txs.find(txn => txn.id === id))
-    //     );
-    // }
 
     private createUser(data?: CurrentUser) {
         return {
@@ -109,6 +138,11 @@ export class AppService {
             AboutMe: (data && data.AboutMe) ? data.AboutMe : '',
             AgreementImagePath: (data && data.AgreementImagePath) ? data.AgreementImagePath : '',
             ReferralCode: (data && data.ReferralCode) ? data.ReferralCode : '',
+            IsNotificationEnabled: (data && data.IsNotificationEnabled) ? data.IsNotificationEnabled : false,
+            IsProfileHidden: (data && data.IsProfileHidden) ? data.IsProfileHidden : false,
+            IsUserDeactivated: (data && data.IsUserDeactivated) ? data.IsUserDeactivated : false,
+            ReferralMessage: (data && data.ReferralMessage) ? data.ReferralMessage : '',
+            SelectedGiftCardID: (data && data.SelectedGiftCardID) ? data.SelectedGiftCardID : null,
             RoommatePreferences: {
                 GenderIds: (data && data.RoommatePreferences && data.RoommatePreferences.GenderIds) ?
                     data.RoommatePreferences.GenderIds.toString().split(',').map(Number) : [],
@@ -260,6 +294,14 @@ export class AppService {
         this.registeredEvent.next(events);
     }
 
+    public getPreferredGiftcards(): Observable<PreferredGiftCards[]> {
+        return this.preferredGiftcards.asObservable();
+    }
+
+    private setPreferredGiftcards(preferredGiftcards: PreferredGiftCards[]) {
+        this.preferredGiftcards.next(preferredGiftcards);
+    }
+
     // functions for HTTP Calling
 
     public async getCurrentuserFromDB(updateOnline?: boolean) {
@@ -288,7 +330,7 @@ export class AppService {
                                     this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                                 } else {
                                     const url = this.appConstant.getURL(UrlKey.Current_User).replace('uid', value);
-                                    this.http.get(url, {}, {})
+                                    this.http.get(url, {}, this.header)
                                         .then((res: any) => {
                                             loading.dismiss();
                                             const resUser: CurrentUser = JSON.parse(res.data);
@@ -321,7 +363,7 @@ export class AppService {
 
     public getUserLocationsFromDB() {
         const url = this.appConstant.getURL(UrlKey.User_Locations);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const resLocation: UserLocation[] = JSON.parse(res.data);
                 this.setLocation(resLocation);
@@ -334,7 +376,7 @@ export class AppService {
 
     public getUserReligionsFromDB() {
         const url = this.appConstant.getURL(UrlKey.User_Religions);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const resReligions: UserReligion[] = JSON.parse(res.data);
                 this.setReligion(resReligions);
@@ -347,7 +389,7 @@ export class AppService {
 
     public getBathroomsFromDB() {
         const url = this.appConstant.getURL(UrlKey.Bathrooms);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const bathrooms: Bathroom[] = JSON.parse(res.data);
                 this.setBathrooms(bathrooms);
@@ -360,7 +402,7 @@ export class AppService {
 
     public getBedroomsFromDB() {
         const url = this.appConstant.getURL(UrlKey.Bedrooms);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const bedrooms: Bedroom[] = JSON.parse(res.data);
                 this.setBedrooms(bedrooms);
@@ -373,7 +415,7 @@ export class AppService {
 
     public getRentBudgetFromDB() {
         const url = this.appConstant.getURL(UrlKey.Rent_Budget);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const rentBudget: RentBudget[] = JSON.parse(res.data);
                 this.setRentBudget(rentBudget);
@@ -386,10 +428,23 @@ export class AppService {
 
     public getPetsFromDB() {
         const url = this.appConstant.getURL(UrlKey.Pets);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const pets: Pet[] = JSON.parse(res.data);
                 this.setPets(pets);
+            })
+            .catch(error => {
+                // this.setPets([]);
+            })
+            .finally(() => { });
+    }
+
+    public getPreferredGiftcardsFromDB() {
+        const url = this.appConstant.getURL(UrlKey.Preferred_Giftcards);
+        this.http.get(url, {}, this.header)
+            .then(res => {
+                const preferredGiftcards: PreferredGiftCards[] = JSON.parse(res.data);
+                this.setPreferredGiftcards(preferredGiftcards);
             })
             .catch(error => {
                 // this.setPets([]);
@@ -410,7 +465,7 @@ export class AppService {
             .then(async (userId) => {
                 if (userId) {
                     const url = this.appConstant.getURL(UrlKey.User_Preferred).replace('uid', userId);
-                    await this.http.get(url, {}, {})
+                    await this.http.get(url, {}, this.header)
                         .then(res => {
                             loading.dismiss();
                             const resdata = JSON.parse(res.data);
@@ -449,7 +504,7 @@ export class AppService {
             .then((userId) => {
                 if (userId) {
                     const url = this.appConstant.getURL(UrlKey.User_Friends).replace('uid', userId);
-                    this.http.get(url, {}, {})
+                    this.http.get(url, {}, this.header)
                         .then(res => {
                             const resdata = JSON.parse(res.data);
                             const friendList: UserFriends[] = resdata.FriendandPendingList;
@@ -484,7 +539,7 @@ export class AppService {
             .then((userId) => {
                 if (userId) {
                     const url = this.appConstant.getURL(UrlKey.Requested_Friends).replace('uid', userId);
-                    this.http.get(url, {}, {})
+                    this.http.get(url, {}, this.header)
                         .then(res => {
                             const resdata = JSON.parse(res.data);
                             const friendList: UserFriends[] = resdata.FriendandPendingList;
@@ -519,7 +574,7 @@ export class AppService {
         this.setUpcomingEvent([]);
         loading.present();
         const url = this.appConstant.getURL(UrlKey.Upcoming_Event).replace('cityid', CtityId.toString()).replace('uid', UserId);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const resdata = JSON.parse(res.data);
                 const events: Event[] = resdata.UpcomingEventList;
@@ -549,7 +604,7 @@ export class AppService {
         this.setRegisteredEvent([]);
         loading.present();
         const url = this.appConstant.getURL(UrlKey.Registered_Event).replace('uid', UserId);
-        this.http.get(url, {}, {})
+        this.http.get(url, {}, this.header)
             .then(res => {
                 const resdata = JSON.parse(res.data);
                 const events: Event[] = resdata;
@@ -580,11 +635,13 @@ export class AppService {
         loading.present();
         const url = this.appConstant.getURL(UrlKey.User_Login);
         const data = { EmailID: email, Password: password, deviceid: this.pushDevice.registrationId };
-        return await this.http.post(url, data, {})
+        return await this.http.post(url, data, this.header)
             .then(res => {
                 const resData = JSON.parse(res.data);
                 if (resData.UserId > 0) {
+                    this.setHTTPHeader({ token: resData.Token, userId: resData.UserId });
                     this.storage.set(StorageKey.UserIdKey, resData.UserId).then(() => {
+                        this.storage.set(StorageKey.LoginTokenkey, resData.Token).then(() => { });
                         this.getCurrentuserFromDB();
                     });
                     // set user online for messaging
@@ -618,7 +675,7 @@ export class AppService {
             ProfileFileName: currentUser.ProfileImagePath ? currentUser.ProfileImagePath.split('/')[2].replace('thumbnail_', '') : ''
         };
         this.http.uploadFile(this.appConstant.getURL(UrlKey.User_Profile_Image_Upload),
-            data, {}, imagePath, 'ProfilePics')
+            data, this.header, imagePath, 'ProfilePics')
             .then(res => {
 
                 const resdata = JSON.parse(res.data);
@@ -652,32 +709,56 @@ export class AppService {
     }
 
     public userLogout() {
-        this.toast.show(`Logout Success`, `short`, 'bottom').subscribe(() => { });
         this.storage.get(StorageKey.UserIdKey).then((value) => {
             // Set User Ofline for message
             this.firebasedb.setUserOffline(value.toString());
-            this.storage.remove(StorageKey.UserIdKey)
-                .then(() => {
-                    this.storage.remove(StorageKey.LocalCurrentUserKey)
-                        .then(() => {
-                            this.setCurrentUser(this.createUser());
-                            this.setUserPreferred(this.createuserPreferred());
 
-                            // Empty List of Users Friends.
-                            this.userFriendsList.friends = [];
-                            this.setFriendList(Object.assign({}, this.userFriendsList).friends);
-                        })
-                        .catch(() => { });
-                })
-                .catch(() => { })
-                .finally(() => {
-                    this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
+            this.storage.get(StorageKey.LoginTokenkey).then(async (token) => {
+                const loading = await this.loadingController.create({
+                    message: 'Please wait...',
+                    translucent: true,
+                    cssClass: ''
                 });
+                loading.present();
+                const url = this.appConstant.getURL(UrlKey.User_Logout);
+                const data = { UserId: value, Token: token };
+                this.http.post(url, data, this.header)
+                    .then((res) => {
+                        this.storage.remove(StorageKey.UserIdKey)
+                            .then(() => {
+                                this.storage.remove(StorageKey.LocalCurrentUserKey)
+                                    .then(() => {
+                                        this.setCurrentUser(this.createUser());
+                                        this.setUserPreferred(this.createuserPreferred());
+
+                                        // Empty List of Users Friends.
+                                        this.userFriendsList.friends = [];
+                                        this.setFriendList(Object.assign({}, this.userFriendsList).friends);
+                                    })
+                                    .catch(() => { });
+                            })
+                            .catch(() => { })
+                            .finally(() => {
+                                this.toast.show(`Logout Success`, `short`, 'bottom').subscribe(() => { });
+                                this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
+                            });
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                    .finally(() => {
+                        loading.dismiss();
+                    });
+            });
         });
     }
 
     public async getCurrentUserIdfromLocalStorage() {
         return await this.storage.get(StorageKey.UserIdKey);
+    }
+
+    public async getTokenfromLocalStorage() {
+        return await this.storage.get(StorageKey.LoginTokenkey);
     }
 
     public async sentotp(otp: string, emailId: string, isForgotPassword?: boolean) {
@@ -687,7 +768,7 @@ export class AppService {
         }
         const url = this.appConstant.getURL(UrlKey.Send_Otp);
         const data = { otp, emailId, isForgotPassword };
-        return this.http.post(url, data, {});
+        return this.http.post(url, data, this.header);
     }
 
     public async userRegistration(newUser: NewUser) {
@@ -703,7 +784,7 @@ export class AppService {
         loading.present();
         const url = this.appConstant.getURL(UrlKey.User_Registration);
         const userImagePath = newUser.ProfileImagePath;
-        this.http.post(url, newUser, {})
+        this.http.post(url, newUser, this.header)
             .then(async res => {
                 const resData = JSON.parse(res.data);
                 loading.dismiss();
@@ -744,7 +825,7 @@ export class AppService {
             UserId: userId.toString()
         };
         this.http.uploadFile(this.appConstant.getURL(UrlKey.User_Profile_Image_Upload),
-            data, {}, ImagePath, '')
+            data, this.header, ImagePath, '')
             .then(uploadRes => {
                 loading.dismiss();
                 // this.router.navigate(['/userlogin']);
@@ -779,7 +860,7 @@ export class AppService {
                         FromFriendRequestID: userId.toString(),
                         ToFriendRequestID: friendUser.UserId.toString()
                     };
-                    this.http.post(url, data, {})
+                    this.http.post(url, data, this.header)
                         .then((res) => {
                             loading.dismiss();
                             const resData = JSON.parse(res.data);
@@ -842,11 +923,23 @@ export class AppService {
                         Status: friendshipStatus.toString()
                     };
                     loading.present();
-                    this.http.post(url, data, {})
+                    this.http.post(url, data, this.header)
                         .then((res) => {
                             // loading.dismiss();
                             loading.dismiss().then(() => {
                                 this.toast.show(`${resData.ResponseMessage}`, `short`, 'bottom').subscribe(() => { });
+
+                                // Success Alert
+                                let message: string;
+                                let messageHearder: string;
+                                if (FriendshipStatus.Unfriended === friendshipStatus) {
+                                    message = `You're all set. You've successfully unfriended.`;
+                                    messageHearder = `Success Message`;
+                                } else if (FriendshipStatus.Blocked === friendshipStatus) {
+                                    message = `You're all set. You've successfully blocked.`;
+                                    messageHearder = `Success Message`;
+                                }
+                                this.showAlert(message, messageHearder);
                             });
                             const resData = JSON.parse(res.data);
                             if (resData.Status) {
@@ -893,7 +986,7 @@ export class AppService {
             EventID: event.EventId.toString(),
             RegisterStatus: !event.isSubscribe
         };
-        this.http.post(url, data, {})
+        this.http.post(url, data, this.header)
             .then((res) => {
                 loading.dismiss();
                 const resData = JSON.parse(res.data);
@@ -938,7 +1031,7 @@ export class AppService {
         loading.present();
         const url = this.appConstant.getURL(UrlKey.Flat_Search_Form);
         const data = form;
-        return this.http.post(url, data, {})
+        return this.http.post(url, data, this.header)
             .then((res) => {
                 loading.dismiss();
                 const resData = JSON.parse(res.data);
@@ -961,7 +1054,7 @@ export class AppService {
             return;
         }
         const url = this.appConstant.getURL(UrlKey.Check_Valid_Referral_Code);
-        return this.http.get(url, { referralCode }, {});
+        return this.http.get(url, { referralCode }, this.header);
 
     }
 
@@ -978,7 +1071,7 @@ export class AppService {
         loading.present();
         const url = this.appConstant.getURL(UrlKey.User_Update);
         const data = form;
-        return this.http.post(url, data, {})
+        return this.http.post(url, data, this.header)
             .then((res) => {
                 loading.dismiss();
                 const resData = JSON.parse(res.data);
@@ -1009,7 +1102,7 @@ export class AppService {
         loading.present();
         const url = this.appConstant.getURL(UrlKey.Update_User_Password);
         const data = form;
-        return this.http.post(url, data, {})
+        return this.http.post(url, data, this.header)
             .then((res) => {
 
                 loading.dismiss().then(() => {
@@ -1032,19 +1125,51 @@ export class AppService {
             });
     }
 
-    // public presentToast(msg, duration, cssClass): Promise<any> {
-    //     let toast = this.toast({
-    //       message: msg,
-    //       duration: duration,
-    //       position: 'bottom',
-    //       dismissOnPageChange: true,
-    //       cssClass: cssClass
-    //     });
+    public async deactivateUser(form: any) {
+        if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
+            this.toast.showShortBottom(`Please connect to internet.`).subscribe(() => { });
+            return;
+        }
+        const loading = await this.loadingController.create({
+            message: 'Please wait...',
+            translucent: true,
+            cssClass: ''
+        });
+        loading.present();
+        const url = this.appConstant.getURL(UrlKey.User_Update);
+        const data = form;
+        return this.http.post(url, data, this.header)
+            .then(async (res) => {
+                loading.dismiss();
+                const resData = JSON.parse(res.data);
+                this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
 
-    //     toast.onDidDismiss(() => {
-    //       // Do something
-    //     });
+                const alert = await this.alertController.create({
+                    header: `Success Message`,
+                    message: `Your account is now deactivated. When you log in again, your account will be reactivated.`,
+                    buttons: [
+                        {
+                            text: 'Ok',
+                            role: 'cancel',
+                            cssClass: 'secondary',
+                            handler: (blah) => {
+                                console.log('Confirm Cancel');
+                                this.userLogout();
+                            }
+                        }
+                    ]
+                });
+                await alert.present();
 
-    //     return toast.present();
-    //   }
+            })
+            .catch((err) => {
+                loading.dismiss();
+                this.toast
+                    .showShortBottom(`${err.message || JSON.parse(err.error).ResponseMessage}`)
+                    .subscribe(() => { });
+            })
+            .finally(() => {
+                loading.dismiss();
+            });
+    }
 }

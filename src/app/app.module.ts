@@ -19,6 +19,7 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 // In App
 import { AppComponent } from './app.component';
@@ -69,6 +70,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     WebView,
     File,
     Push,
+    InAppBrowser,
     PushNotificationService,
     FirebasedbService
   ],

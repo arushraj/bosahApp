@@ -94,5 +94,4 @@ export class MoreMenuPage implements OnInit {
       this.modalController.dismiss();
     });
   }
-
 }

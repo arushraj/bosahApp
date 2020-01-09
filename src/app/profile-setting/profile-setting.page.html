@@ -1,0 +1,55 @@
+<ion-header translucent>
+  <ion-toolbar color="client-header">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Profile Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-list>
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>In-App Notifications</ion-label>
+      </ion-item-divider>
+
+      <ion-item>
+        <ion-label>Show Notifications</ion-label>
+        <ion-toggle [(ngModel)]="formData.IsNotificationEnabled" (ionChange)="setNotification()" slot="end">
+        </ion-toggle>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Account Setting</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label color="danger">
+          Hide My Profile
+          <br /><span class="description-text">Your profile will be hidden from the search,<br />
+            but you can unhide your profile at any time when you're ready to find your next roommate.</span>
+        </ion-label>
+        <ion-toggle [(ngModel)]="formData.IsProfileHidden" (ionChange)="setProfileHidden()" slot="end" color="danger">
+        </ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label color="danger">Deactivate My Account </ion-label>
+        <ion-toggle [(ngModel)]="formData.IsUserDeactivated" (ionChange)="setUserDeactivate()" slot="end"
+          color="danger"></ion-toggle>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Terms & Conditions, Privacy Policy and IABS</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-button (click)="openLink()" fill="clear">
+          Terms & Conditions
+        </ion-button>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+</ion-content>

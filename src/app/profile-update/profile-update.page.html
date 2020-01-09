@@ -47,7 +47,6 @@
         </ion-label>
         <ion-input required formControlName="dateofBirth" type="Date"></ion-input>
       </ion-item> -->
-
       <ion-item>
         <ion-label position="floating">Gender <ion-text color="danger">*</ion-text>
         </ion-label>
@@ -56,9 +55,6 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
-
-     
-
       <ion-item>
         <ion-label position="stacked">City <ion-text color="danger">*</ion-text>
         </ion-label>
@@ -67,7 +63,15 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
-
+      <ion-item>
+        <ion-label position="stacked">Preferred Giftcards
+        </ion-label>
+        <ion-select placeholder="Select One" formControlName="SelectedGiftCardTypeID">
+          <ion-select-option *ngFor="let item of giftCard" [value]="item.GiftCardTypeID">
+            {{item.GiftCardProvider.trim()}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
       <ion-item>
         <ion-label position="floating">About Me</ion-label>
         <ion-textarea formControlName="AboutMe" type="text" autoCapitalize='words'></ion-textarea>

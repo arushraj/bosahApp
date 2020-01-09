@@ -30,10 +30,10 @@ export class DateTextBinderPipe implements PipeTransform {
             return '';
         } else {
             try {
-                if (new Date(value).toDateString() < new Date().toDateString()) {
-                    return `${new Date(value).toDateString()}`;
+                if (new Date(value).toLocaleDateString() < new Date().toLocaleDateString()) {
+                    return `${new Date(value).toLocaleString()}`;
                 } else {
-                    return `${new Date(value).toTimeString()}`;
+                    return `${new Date(value).toLocaleTimeString()}`;
                 }
             } catch (error) {
                 return '';

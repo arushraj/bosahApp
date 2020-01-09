@@ -23,12 +23,11 @@
                             (ionError)="setdefultImage($event)"> </ion-img>
                     </ion-thumbnail>
                     <ion-label (click)="openDetails(friend, item.id)">
-                        <h2>{{friend.FName}}</h2>
-                        <p *ngIf="friend.LastMessage">{{ friend.LastMessage.message}}
-                            <span class="last-message-time">
-                                {{ friend.LastMessage.datetime | date:'h:mm aaa' | lowercase }}
-                            </span>
-                        </p>
+                        <h2>{{friend.FName}}
+                            <span *ngIf="friend.LastMessage" class="last-message-time">
+                                {{ friend.LastMessage.datetime | date:'medium' }}
+                            </span> </h2>
+                        <p *ngIf="friend.LastMessage">{{ friend.LastMessage.message}}</p>
                     </ion-label>
                     <ion-icon button slot="end" name="more" (click)="openMoreOption($event, friend)"></ion-icon>
                     <ion-fab vertical="center" horizontal="end" class="fab-button-group" *ngIf="item.id === 1">

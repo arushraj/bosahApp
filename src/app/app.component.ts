@@ -54,7 +54,7 @@ export class AppComponent {
     routerDirection: 'forward'
   }, {
     title: 'Profile Settings',
-    url: '',
+    url: 'profilesetting',
     icon: 'settings',
     routerDirection: 'forward'
   }, {
@@ -119,13 +119,17 @@ export class AppComponent {
       this.appService.getBedroomsFromDB();
       this.appService.getRentBudgetFromDB();
       this.appService.getPetsFromDB();
+      this.appService.getPreferredGiftcardsFromDB();
 
       this.appService.getCurrentUserIdfromLocalStorage()
-        .then(value => {
-          if (value !== null) {
-            this.appService.getCurrentuserFromDB();
-            this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
-            this.splashScreen.hide();
+        .then(userId => {
+          if (userId !== null) {
+            this.appService.getTokenfromLocalStorage().then((token) => {
+              this.appService.setHTTPHeader({ token, userId });
+              this.appService.getCurrentuserFromDB();
+              this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
+              this.splashScreen.hide();
+            });
           } else {
             this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
             this.splashScreen.hide();
