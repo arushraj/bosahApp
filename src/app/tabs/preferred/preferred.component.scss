@@ -35,3 +35,16 @@ ion-slide ion-card ion-card-header ion-card-subtitle span ion-icon {
     text-align: justify;
     margin-bottom: 0;
 }
+
+.badge-color {
+    background-color: #d2c965;
+
+    span {
+        color: #29333d;
+    }
+}
+
+.ion-empty-label {
+    margin: auto;
+    padding-top: 50%;
+}
