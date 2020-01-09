@@ -93,9 +93,10 @@ userState-3 suspended
 
   public openLink() {
     const options: InAppBrowserOptions = {
-      zoom: 'no'
+      zoom: 'no',
+      location: 'no'
     };
-    const browser = this.inAppBrowser.create('http://bosahmobile.com/beta/', '_system');
+    const browser = this.inAppBrowser.create('https://google.com/', '_self');
   }
 
 }

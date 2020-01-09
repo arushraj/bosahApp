@@ -21,11 +21,11 @@ import { FormBuilder, Form, FormGroup, Validators } from '@angular/forms';
 })
 export class UserRegistrationComponent implements OnInit, AfterViewInit {
 
-  public lastImage:string;
+  public lastImage: string;
   public otpsend = false;
   private otp;
   private isValid = false;
-  private isBackbuttonDisabled=false;
+  private isBackbuttonDisabled = false;
   public displayImage = '/assets/no-image.png';
   public newUser = {
     email: '',
@@ -55,16 +55,16 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   public locations: UserLocation[];
   public religions: UserReligion[];
   public pets: Pet[];
- // public passwordRegex:RegExp;
+  // public passwordRegex:RegExp;
   public signaturePadOptions = {
     minWidth: 2,
     canvasWidth: 500,
     canvasHeight: 300
   };
   public signatureImage: string;
-  private emailRegex:RegExp=new RegExp('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
+  private emailRegex: RegExp = new RegExp('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
   private passwordRegex: RegExp = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
-  private isValidEmail:boolean=true;
+  private isValidEmail = true;
   public otpForm: FormGroup;
   public passwordForm: FormGroup;
   @ViewChild('agerange', { read: IonRange, static: true }) agerange: IonRange;
@@ -80,19 +80,19 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     private filePath: FilePath,
     private file: File,
     private webView: WebView,
-    private loadingController: LoadingController,private fb: FormBuilder) {
+    private loadingController: LoadingController, private fb: FormBuilder) {
 
-      this.otpForm = this.fb.group({
-        email: ['', Validators.compose([Validators.required, Validators.email])]       
-      });
+    this.otpForm = this.fb.group({
+      email: ['', Validators.compose([Validators.required, Validators.email])]
+    });
 
-      this.passwordForm = this.fb.group({
-        password: ['', [Validators.required, Validators.pattern(this.passwordRegex)]],
-        confirmPassword: ['', Validators.compose([Validators.required])]
-      }, {
-           validators: this.mustMatchPassword('password', 'confirmPassword')
-      });
-     }
+    this.passwordForm = this.fb.group({
+      password: ['', [Validators.required, Validators.pattern(this.passwordRegex)]],
+      confirmPassword: ['', Validators.compose([Validators.required])]
+    }, {
+      validators: this.mustMatchPassword('password', 'confirmPassword')
+    });
+  }
 
   ngOnInit() {
     this.registrationslides.lockSwipes(true).then(() => { });
@@ -211,13 +211,13 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
         this.newUser.otp = this.otp;
         this.isValid = true;
         event.target.blur();
-        this.isBackbuttonDisabled=true;
+        this.isBackbuttonDisabled = true;
         this.goToNext();
       }
     }
   }
 
- public async checkReferralCode() {
+  public async checkReferralCode() {
     if (this.newUser.referCode) {
       const loading = await this.loadingController.create({
         message: 'Please wait...',
@@ -268,16 +268,14 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     this.registrationslides.getActiveIndex().then(index => {
       if (index === 2) {
         /*vinay*/
-       // this.passwordRegex= new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
+        // this.passwordRegex= new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
         if (!this.newUser.password) {
           this.toast.showShortBottom('Please enter your password.').subscribe(() => { });
           return;
-        } 
-        else if (!this.passwordRegex.test(this.newUser.password)) { 
+        } else if (!this.passwordRegex.test(this.newUser.password)) {
           this.toast.showShortBottom('Password Must contain one capital,small,number and special character').subscribe(() => { });
           return;
-        }
-        else if (this.newUser.password !== this.newUser.confirmPassword) {
+        } else if (this.newUser.password !== this.newUser.confirmPassword) {
           this.toast.showShortBottom('Password mismatching with confirm password.').subscribe(() => { });
           return;
         }
@@ -295,14 +293,11 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
 
           this.toast.showShortBottom('Please enter your date of birth.').subscribe(() => { });
           return;
-        }
-        else if(this.newUser.dob)
-        {
+        } else if (this.newUser.dob) {
           const bdate = new Date(this.newUser.dob);
-          const timeDiff = Math.abs(Date.now() - bdate.getTime() );
+          const timeDiff = Math.abs(Date.now() - bdate.getTime());
           const age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
-          if(age < 21)
-          {
+          if (age < 21) {
             this.toast.showShortBottom('Minimum Age to use this platform is 21').subscribe(() => { });
             return;
           }
@@ -396,11 +391,9 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
           }, (err) => {
             this.toast.show(`Fileerror: ${err}`, `long`, 'bottom').subscribe(() => { });
           });
-      } 
-      else 
-      {      
-        var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-        var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+      } else {
+        currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+        correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
         this.copyFileToLocalDirIOS(correctPath, currentName, this.createFileName());
       }
     }, (err) => {
@@ -409,23 +402,23 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     });
   }
 
-    // Copy the image to a local folder
-private copyFileToLocalDirIOS(namePath, currentName, newFileName) {
-  this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
-   // this.startUpload(this.file.dataDirectory + newFileName);
-    this.lastImage = newFileName;
-  }, error => {
-    this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
-  });
-}
+  // Copy the image to a local folder
+  private copyFileToLocalDirIOS(namePath, currentName, newFileName) {
+    this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
+      // this.startUpload(this.file.dataDirectory + newFileName);
+      this.lastImage = newFileName;
+    }, error => {
+      this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
+    });
+  }
 
-// Create a new name for the image
-private createFileName() {
-  var d = new Date(),
-  n = d.getTime(),
-  newFileName =  n + ".jpg";
-  return newFileName;
-}
+  // Create a new name for the image
+  private createFileName() {
+    const d = new Date(),
+      n = d.getTime(),
+      newFileName = n + '.jpg';
+    return newFileName;
+  }
 
 
 
