@@ -13,4 +13,8 @@ export interface PreferredUser {
     Religion: string;
     SendRequest: boolean;
     AboutMe: string;
+    UserPet: string;
+    UserDrinking: string;
+    UserSmoking: string;
+
 }

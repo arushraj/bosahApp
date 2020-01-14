@@ -176,7 +176,11 @@ export class AppService {
             Age: (data && data.Age) ? data.Age : null,
             Religion: (data && data.Religion) ? data.Religion : null,
             SendRequest: (data && data.SendRequest) ? data.SendRequest : false,
-            AboutMe: (data && data.AboutMe) ? data.AboutMe : ''
+            AboutMe: (data && data.AboutMe) ? data.AboutMe : '',
+            UserPet: (data && data.UserPet) ? data.UserPet : '',
+            UserDrinking: (data && data.UserDrinking) ? data.UserDrinking : '',
+            UserSmoking: (data && data.UserSmoking) ? data.UserSmoking : ''
+
         }];
     }
 

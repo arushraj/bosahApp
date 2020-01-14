@@ -94,9 +94,10 @@ userState-3 suspended
   public openLink() {
     const options: InAppBrowserOptions = {
       zoom: 'no',
-      location: 'no'
+      location: 'no',
+      toolbar: 'no'
     };
-    const browser = this.inAppBrowser.create('https://google.com/', '_self');
+    const browser = this.inAppBrowser.create('https://ionicframework.com/', '_self',{ toolbar: 'no'});
   }
 
 }
