@@ -13,6 +13,8 @@ import { UserLocation } from '../shared/model/location.model';
 import { UserReligion } from '../shared/model/religion.model';
 import { Pet } from '../shared/model/pet.model';
 import { FormBuilder, Form, FormGroup, Validators } from '@angular/forms';
+import { Smoking } from '../shared/model/smoking.model';
+import { Drinking } from '../shared/model/drinking.model';
 
 @Component({
   selector: 'app-user-registration',
@@ -49,12 +51,17 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     minAge: 21,
     maxAge: 60,
     aboutMe: '',
-    preferredPets: []
+    preferredPets: [],
+    UserPetId: 4,
+    UserDrinkingID: 6,
+    UserSmokingId: 4
   };
 
   public locations: UserLocation[];
   public religions: UserReligion[];
   public pets: Pet[];
+  public smokingOptions: Smoking[];
+  public drinkingOptions: Drinking[];
   // public passwordRegex:RegExp;
   public signaturePadOptions = {
     minWidth: 2,
@@ -105,6 +112,14 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     });
     this.appService.getPets().subscribe((pets: Pet[]) => {
       this.pets = pets;
+    });
+
+    this.appService.getsmokingOptions().subscribe((drinkingOptions: Drinking[]) => {
+      this.drinkingOptions = drinkingOptions;
+    });
+
+    this.appService.getsmokingOptions().subscribe((smokingOptions: Smoking[]) => {
+      this.smokingOptions = smokingOptions;
     });
   }
 
@@ -196,8 +211,12 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
       MaxAge: this.newUser.maxAge,
       UsedReferralCode: this.newUser.referCode,
       AboutMe: this.newUser.aboutMe,
-      PreferredPetIds: this.newUser.preferredPets.join(',')
+      PreferredPetIds: this.newUser.preferredPets.join(','),
+      UserSelectedPetId : this.newUser.UserPetId,
+      UserSelectedSmokingId: this.newUser.UserSmokingId,
+      UserSelectedDrinkingId: this.newUser.UserDrinkingID
     };
+
     this.appService.userRegistration(user);
   }
 

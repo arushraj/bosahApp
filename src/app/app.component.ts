@@ -119,6 +119,8 @@ export class AppComponent {
       this.appService.getBedroomsFromDB();
       this.appService.getRentBudgetFromDB();
       this.appService.getPetsFromDB();
+      this.appService.getsmokingOptionsFromDB();
+      this.appService.getdrinkingOptionsFromDB();
       this.appService.getPreferredGiftcardsFromDB();
 
       this.appService.getCurrentUserIdfromLocalStorage()

@@ -212,6 +212,33 @@
                   {{religion.Religion}}</ion-select-option>
               </ion-select>
             </ion-item>
+          
+            <ion-item class="pet-select">
+              <ion-label>Pet
+              </ion-label>
+              <ion-select placeholder="Select One" [(ngModel)]="newUser.UserPetId" name="Userpet" id="Userpet">
+                <ion-select-option *ngFor="let pet of pets" [value]="pet.PetId">
+                  {{pet.PetName}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item class="Drinking-select">
+              <ion-label>Drinking </ion-label>
+              <ion-select placeholder="Select One" [(ngModel)]="newUser.UserDrinkingID" name="UserDrinking"
+                id="UserDrinking">
+                <ion-select-option *ngFor="let item of drinkingOptions" [value]="item.Id">
+                  {{item.Details}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item class="Smoking-select">
+              <ion-label>Smoking</ion-label>
+              <ion-select placeholder="Select One" [(ngModel)]="newUser.UserSmokingId" name="Usersmoking"
+                id="Usersmoking">
+                <ion-select-option *ngFor="let item of smokingOptions" [value]="item.Id">
+                  {{item.Details}}</ion-select-option>
+              </ion-select>
+            </ion-item>
           </form>
           <div class="navigation-button">
             <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back

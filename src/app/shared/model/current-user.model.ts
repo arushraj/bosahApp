@@ -49,6 +49,9 @@ export interface NewUser {
     PreferredReligionIds: string;
     Age: number;
     DOB: string;
+    UserSelectedSmokingId: number;
+    UserSelectedDrinkingId: number;
+    UserSelectedPetId: number;
     MinAge: number;
     MaxAge: number;
     UsedReferralCode: string;

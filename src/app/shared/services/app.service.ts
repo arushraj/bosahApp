@@ -25,6 +25,8 @@ import { Bathroom } from '../model/bathroom.model';
 import { Bedroom } from '../model/bedroom.model';
 import { RentBudget } from '../model/rent-budget.model';
 import { Pet } from '../model/pet.model';
+import { Smoking } from '../model/smoking.model';
+import { Drinking } from '../model/drinking.model';
 
 // Message Service
 import { FirebasedbService } from './firebasedb.service';
@@ -41,6 +43,8 @@ export class AppService {
     private bedrooms = new BehaviorSubject<Bedroom[]>([]);
     private rentBudget = new BehaviorSubject<RentBudget[]>([]);
     private pets = new BehaviorSubject<Pet[]>([]);
+    private smokingOptions = new BehaviorSubject<Smoking[]>([]);
+    private drinkingOptions = new BehaviorSubject<Drinking[]>([]);
 
     private upcomingEvent = new BehaviorSubject<Event[]>([]);
     private upcomingEventList: { events: Event[] } = { events: [] };
@@ -258,6 +262,23 @@ export class AppService {
         this.pets.next(pets);
     }
 
+    public getdrinkingOptions(): Observable<Drinking[]> {
+        return this.drinkingOptions.asObservable();
+    }
+
+    private setdrinkingOptions(drinkingOptions: Drinking[]) {
+        this.drinkingOptions.next(drinkingOptions);
+    }
+
+    public getsmokingOptions(): Observable<Smoking[]> {
+        return this.smokingOptions.asObservable();
+    }
+
+    private setsmokingOptions(smokingOptions: Smoking[]) {
+        this.smokingOptions.next(smokingOptions);
+    }
+
+
     public getUserPreferred(): Observable<PreferredUser[]> {
         return this.userPreferred.asObservable();
     }
@@ -443,6 +464,32 @@ export class AppService {
             .finally(() => { });
     }
 
+    public getdrinkingOptionsFromDB() {
+        const url = this.appConstant.getURL(UrlKey.Drinking_Options);
+        this.http.get(url, {}, this.header)
+            .then(res => {
+                const drinkingOptions: Drinking[] = JSON.parse(res.data);
+                this.setdrinkingOptions(drinkingOptions);
+            })
+            .catch(error => {
+                // this.setPets([]);
+            })
+            .finally(() => { });
+    }
+
+    public getsmokingOptionsFromDB() {
+        const url = this.appConstant.getURL(UrlKey.Smoking_Options);
+        this.http.get(url, {}, this.header)
+            .then(res => {
+                const smokingOptions: Smoking[] = JSON.parse(res.data);
+                this.setsmokingOptions(smokingOptions);
+            })
+            .catch(error => {
+                // this.setPets([]);
+            })
+            .finally(() => { });
+    }
+
     public getPreferredGiftcardsFromDB() {
         const url = this.appConstant.getURL(UrlKey.Preferred_Giftcards);
         this.http.get(url, {}, this.header)
@@ -455,6 +502,8 @@ export class AppService {
             })
             .finally(() => { });
     }
+
+    
 
     public async getUserPreferredFromDB() {
         const loading = await this.loadingController.create({

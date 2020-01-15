@@ -27,6 +27,8 @@ export class AppConstant {
     readonly USER_UPDATE = '/api/updateUser';
     readonly UPDATE_USER_PASSWORD = '/api/user/forgotpasswordUpdate';
     readonly PREFERRED_GIFTCARDS = '/api/getallgiftcards';
+    readonly SMOKING_OPTIONS = '/api/getallsmokingOptions';
+    readonly DRINKING_OPTIONS = '/api/getalldrinkingOptions';
 
     /**
      * getURL() funtion to get url
@@ -84,6 +86,12 @@ export class AppConstant {
                 return this.APP_BASE_URL + this.UPDATE_USER_PASSWORD;
             case UrlKey.Preferred_Giftcards:
                 return this.APP_BASE_URL + this.PREFERRED_GIFTCARDS;
+
+            case UrlKey.Smoking_Options:
+                return this.APP_BASE_URL + this.SMOKING_OPTIONS;
+
+            case UrlKey.Drinking_Options:
+                return this.APP_BASE_URL + this.DRINKING_OPTIONS;
             default:
                 break;
         }
@@ -115,7 +123,9 @@ export enum UrlKey {
     Check_Valid_Referral_Code,
     User_Update,
     Update_User_Password,
-    Preferred_Giftcards
+    Preferred_Giftcards,
+    Smoking_Options,
+    Drinking_Options
 }
 
 export enum StorageKey {
