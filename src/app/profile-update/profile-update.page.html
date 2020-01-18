@@ -73,16 +73,40 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">About Me</ion-label>
-        <ion-textarea formControlName="AboutMe" type="text" autoCapitalize='words'></ion-textarea>
-      </ion-item>
-      <ion-item>
         <ion-label position="floating">Religion <ion-text color="danger">*</ion-text>
         </ion-label>
         <ion-select placeholder="Select One" required formControlName="ReligionId">
           <ion-select-option *ngFor="let item of religions" [value]="item.ReligionId">{{item.Religion}}
           </ion-select-option>
         </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Pets <ion-text color="danger">*</ion-text>
+        </ion-label>
+        <ion-select placeholder="Select One" required formControlName="UserSelectedPetId">
+          <ion-select-option *ngFor="let item of petsOptions" [value]="item.PetId">{{item.PetName}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Smoking <ion-text color="danger">*</ion-text>
+        </ion-label>
+        <ion-select placeholder="Select One" required formControlName="UserSelectedSmokingId">
+          <ion-select-option *ngFor="let item of SmokingOptions" [value]="item.Id">{{item.Details}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Drinking <ion-text color="danger">*</ion-text>
+        </ion-label>
+        <ion-select placeholder="Select One" required formControlName="UserSelectedDrinkingId">
+          <ion-select-option *ngFor="let item of DrinkingOptions" [value]="item.Id">{{item.Details}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">About Me</ion-label>
+        <ion-textarea formControlName="AboutMe" type="text" autoCapitalize='words'></ion-textarea>
       </ion-item>
       <div class="ion-padding">
         <ion-button expand="block" type="submit" [disabled]="userForm.invalid || userForm.pristine"

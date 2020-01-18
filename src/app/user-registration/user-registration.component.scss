@@ -19,11 +19,13 @@ ion-slide>img {
 
 .otp-slide,
 .refer-slide,
-.personal-slide,
-.profession-slide,
-.user-slide,
 .password-slide {
-    margin: auto 0;
+    margin: 40% 0;
+}
+
+.personal-slide,
+.user-slide {
+    margin: 20% 0;
 }
 
 .otp-slide ion-item:last-child {
@@ -38,9 +40,17 @@ ion-slide>img {
     margin-bottom: 10%;
 }
 
-.user-form {
-    margin-bottom: 10%;
+.term-condition {
+    margin-top: 5%;
+
+    ion-label {
+        color: #fff;
+    }
 }
+
+// .user-form {
+//     margin-bottom: 10%;
+// }
 
 // .otp-form .otp-message,
 // .refer-form .refer-message-label,.preference-message-label,.about-you-label {

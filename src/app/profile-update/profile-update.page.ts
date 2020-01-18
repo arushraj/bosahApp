@@ -8,6 +8,9 @@ import { UserReligion } from '../shared/model/religion.model';
 import { CurrentUser } from '../shared/model/current-user.model';
 import { UserLocation } from '../shared/model/location.model';
 import { PreferredGiftCards } from '../shared/model/preferredGiftCards.model';
+import { Drinking } from '../shared/model/drinking.model';
+import { Smoking } from '../shared/model/smoking.model';
+import { Pet } from '../shared/model/pet.model';
 
 @Component({
   selector: 'app-profile-update',
@@ -21,6 +24,9 @@ export class ProfileUpdatePage implements OnInit {
   public religions: UserReligion[];
   public locations: UserLocation[];
   public giftCard: PreferredGiftCards[];
+  public DrinkingOptions: Drinking[];
+  public SmokingOptions: Smoking[];
+  public petsOptions: Pet[];
   public currentUser: CurrentUser;
   public isActionCompleted: boolean;
 
@@ -38,7 +44,10 @@ export class ProfileUpdatePage implements OnInit {
       GenderId: ['', Validators.compose([Validators.required])],
       ReligionId: ['', Validators.compose([Validators.required])],
       CityId: ['', Validators.compose([Validators.required])],
-      SelectedGiftCardTypeID: ['']
+      SelectedGiftCardTypeID: [''],
+      UserSelectedSmokingId: ['', Validators.compose([Validators.required])],
+      UserSelectedDrinkingId: ['', Validators.compose([Validators.required])],
+      UserSelectedPetId: ['', Validators.compose([Validators.required])]
     });
     this.bindValues();
   }
@@ -81,6 +90,36 @@ export class ProfileUpdatePage implements OnInit {
           SelectedGiftCardTypeID: this.giftCard.find(item => {
             return item.GiftCardTypeID === this.currentUser.SelectedGiftCardID;
           }).GiftCardTypeID
+        });
+      }
+    });
+    this.appService.getdrinkingOptions().subscribe((drinkoptions) => {
+      this.DrinkingOptions = drinkoptions;
+      if (drinkoptions.length > 0 && (this.currentUser && this.currentUser.SelectedDrinkingId)) {
+        this.userForm.patchValue({
+          UserSelectedDrinkingId: this.DrinkingOptions.find(item => {
+            return item.Id === this.currentUser.SelectedDrinkingId;
+          }).Id
+        });
+      }
+    });
+    this.appService.getsmokingOptions().subscribe((smokingoptions) => {
+      this.SmokingOptions = smokingoptions;
+      if (smokingoptions.length > 0 && (this.currentUser && this.currentUser.SelectedSmokingId)) {
+        this.userForm.patchValue({
+          UserSelectedSmokingId: this.SmokingOptions.find(item => {
+            return item.Id === this.currentUser.SelectedDrinkingId;
+          }).Id
+        });
+      }
+    });
+    this.appService.getPets().subscribe((options) => {
+      this.petsOptions = options;
+      if (options.length > 0 && (this.currentUser && this.currentUser.SelectedPetId)) {
+        this.userForm.patchValue({
+          UserSelectedPetId: this.petsOptions.find(item => {
+            return item.PetId === this.currentUser.SelectedPetId;
+          }).PetId
         });
       }
     });
@@ -127,6 +166,36 @@ export class ProfileUpdatePage implements OnInit {
           if (oldgift !== undefined) {
             this.userForm.patchValue({
               SelectedGiftCardTypeID: oldgift.GiftCardTypeID
+            });
+          }
+        }
+        if (this.DrinkingOptions.length > 0) {
+          const option = this.DrinkingOptions.find(item => {
+            return item.Id === this.currentUser.SelectedDrinkingId;
+          });
+          if (option !== undefined) {
+            this.userForm.patchValue({
+              UserSelectedDrinkingId: option.Id
+            });
+          }
+        }
+        if (this.SmokingOptions.length > 0) {
+          const option = this.SmokingOptions.find(item => {
+            return item.Id === this.currentUser.SelectedSmokingId;
+          });
+          if (option !== undefined) {
+            this.userForm.patchValue({
+              UserSelectedSmokingId: option.Id
+            });
+          }
+        }
+        if (this.petsOptions.length > 0) {
+          const option = this.petsOptions.find(item => {
+            return item.PetId === this.currentUser.SelectedPetId;
+          });
+          if (option !== undefined) {
+            this.userForm.patchValue({
+              UserSelectedPetId: option.PetId
             });
           }
         }

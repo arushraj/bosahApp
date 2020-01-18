@@ -22,6 +22,9 @@ export interface CurrentUser {
     IsUserDeactivated: boolean;
     ReferralMessage: string;
     SelectedGiftCardID: number;
+    SelectedPetId: number;
+    SelectedDrinkingId: number;
+    SelectedSmokingId: number;
 }
 
 export interface RoommatePreferences {

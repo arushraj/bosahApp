@@ -97,7 +97,7 @@ userState-3 suspended
       location: 'no',
       toolbar: 'no'
     };
-    const browser = this.inAppBrowser.create('https://ionicframework.com/', '_self',{ toolbar: 'no'});
+    const browser = this.inAppBrowser.create('https://ionicframework.com/', '_self', options);
   }
 
 }

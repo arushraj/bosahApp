@@ -212,7 +212,7 @@
                   {{religion.Religion}}</ion-select-option>
               </ion-select>
             </ion-item>
-          
+
             <ion-item class="pet-select">
               <ion-label>Pet
               </ion-label>
@@ -295,6 +295,17 @@
                 <ion-label slot="end">Max Age ({{newUser.maxAge}})</ion-label>
               </ion-range>
             </ion-item>
+            <div class="term-condition">
+              <ion-label>
+                <ion-checkbox slot="start" [(ngModel)]="userAcceptTermsAndConditions"
+                  name="userAcceptTermsAndConditions" id="userAcceptTermsAndConditions"></ion-checkbox>&nbsp;&nbsp;I
+                accept the Terms & Conditions.
+              </ion-label>
+              <br /><br />
+              <ion-button (click)="openLink()" fill="clear">
+                Terms & Conditions
+              </ion-button>
+            </div>
           </form>
           <div class="navigation-button">
             <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back

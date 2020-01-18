@@ -147,6 +147,9 @@ export class AppService {
             IsUserDeactivated: (data && data.IsUserDeactivated) ? data.IsUserDeactivated : false,
             ReferralMessage: (data && data.ReferralMessage) ? data.ReferralMessage : '',
             SelectedGiftCardID: (data && data.SelectedGiftCardID) ? data.SelectedGiftCardID : null,
+            SelectedPetId: (data && data.SelectedPetId) ? data.SelectedPetId : null,
+            SelectedDrinkingId: (data && data.SelectedDrinkingId) ? data.SelectedDrinkingId : null,
+            SelectedSmokingId: (data && data.SelectedSmokingId) ? data.SelectedSmokingId : null,
             RoommatePreferences: {
                 GenderIds: (data && data.RoommatePreferences && data.RoommatePreferences.GenderIds) ?
                     data.RoommatePreferences.GenderIds.toString().split(',').map(Number) : [],
@@ -503,7 +506,7 @@ export class AppService {
             .finally(() => { });
     }
 
-    
+
 
     public async getUserPreferredFromDB() {
         const loading = await this.loadingController.create({

@@ -8,6 +8,7 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { IonSlides, IonRange } from '@ionic/angular';
+import { InAppBrowserOptions, InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 import { UserLocation } from '../shared/model/location.model';
 import { UserReligion } from '../shared/model/religion.model';
@@ -56,6 +57,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     UserDrinkingID: 6,
     UserSmokingId: 4
   };
+  public userAcceptTermsAndConditions = false;
 
   public locations: UserLocation[];
   public religions: UserReligion[];
@@ -87,7 +89,9 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     private filePath: FilePath,
     private file: File,
     private webView: WebView,
-    private loadingController: LoadingController, private fb: FormBuilder) {
+    private loadingController: LoadingController,
+    private fb: FormBuilder,
+    private inAppBrowser: InAppBrowser) {
 
     this.otpForm = this.fb.group({
       email: ['', Validators.compose([Validators.required, Validators.email])]
@@ -102,7 +106,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.registrationslides.lockSwipes(true).then(() => { });
+    // this.registrationslides.lockSwipes(true).then(() => { });
 
     this.appService.getLocation().subscribe((locations: UserLocation[]) => {
       this.locations = locations;
@@ -114,7 +118,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
       this.pets = pets;
     });
 
-    this.appService.getsmokingOptions().subscribe((drinkingOptions: Drinking[]) => {
+    this.appService.getdrinkingOptions().subscribe((drinkingOptions: Drinking[]) => {
       this.drinkingOptions = drinkingOptions;
     });
 
@@ -190,6 +194,12 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     } else if (this.newUser.preferredReligion.length === 0) {
       this.toast.showShortBottom('Please select preferred religions for your roommate.').subscribe(() => { });
       return;
+    } else if (this.newUser.preferredPets.length === 0) {
+      this.toast.showShortBottom('Please select preferred pets for your roommate.').subscribe(() => { });
+      return;
+    } else if (!this.userAcceptTermsAndConditions) {
+      this.toast.showShortBottom('Please accept the terms and conditions.').subscribe(() => { });
+      return;
     }
     const user: NewUser = {
       FirstName: this.newUser.firstName,
@@ -212,7 +222,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
       UsedReferralCode: this.newUser.referCode,
       AboutMe: this.newUser.aboutMe,
       PreferredPetIds: this.newUser.preferredPets.join(','),
-      UserSelectedPetId : this.newUser.UserPetId,
+      UserSelectedPetId: this.newUser.UserPetId,
       UserSelectedSmokingId: this.newUser.UserSmokingId,
       UserSelectedDrinkingId: this.newUser.UserDrinkingID
     };
@@ -439,8 +449,6 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     return newFileName;
   }
 
-
-
   private copyFileToLocalDir(namePath, currentName, fileExtension) {
     const newFileName = this.newUser.firstName.replace(' ', '_') + `_${new Date().getTime()}` + fileExtension;
     this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
@@ -452,4 +460,14 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
       this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
     });
   }
+
+  public openLink() {
+    const options: InAppBrowserOptions = {
+      zoom: 'no',
+      location: 'no',
+      toolbar: 'no'
+    };
+    const browser = this.inAppBrowser.create('https://ionicframework.com/', '_self', options);
+  }
+
 }
