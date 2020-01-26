@@ -467,7 +467,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
       location: 'no',
       toolbar: 'no'
     };
-    const browser = this.inAppBrowser.create('https://ionicframework.com/', '_self', options);
+    const browser = this.inAppBrowser.create('http://bosahmobile.com/beta/terms-conditions/', '_self', options);
   }
 
 }
