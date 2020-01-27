@@ -106,7 +106,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // this.registrationslides.lockSwipes(true).then(() => { });
+    this.registrationslides.lockSwipes(true).then(() => { });
 
     this.appService.getLocation().subscribe((locations: UserLocation[]) => {
       this.locations = locations;
