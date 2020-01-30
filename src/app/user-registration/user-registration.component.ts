@@ -166,7 +166,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
       this.otp = Math.floor(1000 + Math.random() * 9000).toString();
       // this.toast.show(`${this.otp}`, `short`, `bottom`).subscribe(() => { });
 
-      this.appService.sentotp(this.otp, this.newUser.email)
+      this.appService.sentotp(this.otp, this.newUser.email, 0)
         .then(res => {
           const resData = JSON.parse(res.data);
           loading.dismiss();

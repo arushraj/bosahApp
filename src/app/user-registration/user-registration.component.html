@@ -1,7 +1,7 @@
 <ion-header translucent>
   <ion-toolbar color="client-header">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="userlogin" disabled="isBackbuttonDisabled"></ion-back-button>
+      <ion-back-button defaultHref="userlogin"></ion-back-button>
     </ion-buttons>
     <ion-title>
       Sign Up
@@ -23,10 +23,11 @@
             <ion-item class="email-textbox">
 
               <ion-icon slot="start" name="at" class="auto-top-bottom-marging" color="primary"></ion-icon>
-              <ion-input type="email" formControlName="email" [(ngModel)]="newUser.email" name="email"
-                [disabled]="otpsend" id="email">
+              <ion-input type="email" placeholder="e-mail" formControlName="email" [(ngModel)]="newUser.email"
+                name="email" [disabled]="otpsend" id="email">
               </ion-input>
-              <ion-button slot="end" expand="block" fill="clean" shape="round" (click)="sendOTP()" [disabled]="otpsend">
+              <ion-button slot="end" expand="block" fill="clean" shape="round" (click)="sendOTP()"
+                [disabled]="otpsend || otpForm.controls.email.errors">
                 <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
               </ion-button>
             </ion-item>
@@ -40,15 +41,15 @@
               <ion-button fill="clear" (click)="reSendOTP()">Resend Code</ion-button>
             </h3>
           </form>
-          <div class="navigation-button">
+          <!-- <div class="navigation-button">
             <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back
               <ion-icon slot="start" name="arrow-round-back"></ion-icon>
             </ion-button>
-            <ion-button class="next-button" fill="clear" [disabled]="otpForm.controls.email.errors" (click)="sendOTP()">
+            <ion-button class="next-button" fill="clear" [disabled]="otpForm.controls.email.errors">
               Continue
               <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
             </ion-button>
-          </div>
+          </div> -->
         </ion-card-content>
       </ion-card>
     </ion-slide>
@@ -58,11 +59,11 @@
         <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
         <ion-card-content>
           <form padding-right class="refer-form">
-            <h3 class="appText">Did someone refer you?Enter their referral code and you’ll each receive gift cards upon
-              lease signing</h3>
+            <h3 class="appText">Did someone refer you? Enter their referral code
+              and you’ll each receive gift cards after lease is signed.</h3>
             <ion-item class="refer-textbox">
               <ion-input type="text" [(ngModel)]="newUser.referCode" name="referCode" id="referCode"
-                placeholder="Referral Code">
+                placeholder="Referral Code (Optional)">
               </ion-input>
             </ion-item>
           </form>
@@ -142,11 +143,19 @@
               </ion-input>
             </ion-item>
             <ion-item class="dob-textbox">
-              <ion-label class="date-label">Date Of Birth <ion-text>*</ion-text>
+              <ion-label>Date Of Birth <ion-text color="danger">*</ion-text>
               </ion-label>
               <ion-datetime [(ngModel)]="newUser.dob" name="dob" id="dob" placeholder="MM-DD-YYYY"
                 displayFormat="MM-DD-YYYY"></ion-datetime>
               <!-- <ion-input [(ngModel)]="newUser.dob" type="date" name="dob" id="dob" placeholder="DD-MM-YYYY"></ion-input> -->
+            </ion-item>
+            <ion-item class="gender-select">
+              <ion-label>Gender <ion-text color="danger">*</ion-text>
+              </ion-label>
+              <ion-select placeholder="Select One" [(ngModel)]="newUser.gender" name="gender" id="gender">
+                <ion-select-option value="1">Male</ion-select-option>
+                <ion-select-option value="2">Female</ion-select-option>
+              </ion-select>
             </ion-item>
           </form>
           <div class="navigation-button">
@@ -184,7 +193,7 @@
               </ion-input>
             </ion-item>
             <ion-item class="job-textbox">
-              <ion-input type="text" [(ngModel)]="newUser.job" name="job" id="job" placeholder="Job Title*"
+              <ion-input type="text" [(ngModel)]="newUser.job" name="job" id="job" placeholder="Job*"
                 autoCapitalize='words'>
               </ion-input>
             </ion-item>
@@ -196,14 +205,14 @@
                 </ion-select-option>
               </ion-select>
             </ion-item>
-            <ion-item class="gender-select">
+            <!-- <ion-item class="gender-select">
               <ion-label>Gender <ion-text color="danger">*</ion-text>
               </ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.gender" name="gender" id="gender">
                 <ion-select-option value="1">Male</ion-select-option>
                 <ion-select-option value="2">Female</ion-select-option>
               </ion-select>
-            </ion-item>
+            </ion-item> -->
             <ion-item class="religion-select">
               <ion-label>Religion <ion-text color="danger">*</ion-text>
               </ion-label>
@@ -214,7 +223,7 @@
             </ion-item>
 
             <ion-item class="pet-select">
-              <ion-label>Pet
+              <ion-label>Pet (Optional)
               </ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.UserPetId" name="Userpet" id="Userpet">
                 <ion-select-option *ngFor="let pet of pets" [value]="pet.PetId">
@@ -223,7 +232,7 @@
             </ion-item>
 
             <ion-item class="Drinking-select">
-              <ion-label>Drinking </ion-label>
+              <ion-label>Drinking (Optional)</ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.UserDrinkingID" name="UserDrinking"
                 id="UserDrinking">
                 <ion-select-option *ngFor="let item of drinkingOptions" [value]="item.Id">
@@ -232,7 +241,7 @@
             </ion-item>
 
             <ion-item class="Smoking-select">
-              <ion-label>Smoking</ion-label>
+              <ion-label>Smoking (Optional)</ion-label>
               <ion-select placeholder="Select One" [(ngModel)]="newUser.UserSmokingId" name="Usersmoking"
                 id="Usersmoking">
                 <ion-select-option *ngFor="let item of smokingOptions" [value]="item.Id">
@@ -289,12 +298,25 @@
               </ion-select>
             </ion-item>
             <ion-item class="age-range">
-              <ion-range min="21" max="60" dualKnobs="true" pin="true" pin value="60" color="primary"
-                (ionChange)="rangeChange($event)" #agerange>
-                <ion-label slot="start">Min Age ({{newUser.minAge}})</ion-label>
-                <ion-label slot="end">Max Age ({{newUser.maxAge}})</ion-label>
-              </ion-range>
+              <ion-grid fixed>
+                <ion-row>
+                  <ion-col size="6" class="ion-text-left">
+                    <ion-label>Min Age ({{newUser.minAge}})</ion-label>
+                  </ion-col>
+                  <ion-col size="6" class="ion-text-right">
+                    <ion-label>Max Age ({{newUser.maxAge}})</ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-range no-padding min="21" max="60" dualKnobs="true" pin="true" pin value="60" color="primary"
+                      (ionChange)="rangeChange($event)" #agerange>
+                    </ion-range>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-item>
+
             <div class="term-condition">
               <ion-label>
                 <ion-checkbox slot="start" [(ngModel)]="userAcceptTermsAndConditions"

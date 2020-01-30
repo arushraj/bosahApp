@@ -11,27 +11,6 @@
   <ion-img src="/assets/ICON WITH TITLE.png" alt="" class="headerImage"></ion-img>
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <ion-list lines="full" class="ion-no-margin ion-no-padding">
-      <!-- <ion-item>
-        <ion-label position="floating">First Name <ion-text color="danger">*</ion-text>
-        </ion-label>
-        <ion-input required formControlName="FirstName" type="text" class="readonly-input" readonly></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Last Name <ion-text color="danger">*</ion-text>
-        </ion-label>
-        <ion-input required formControlName="LastName" type="text" class="lastNameInput" autoCapitalize='words'>
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">E-Mail <ion-text color="danger">*</ion-text>
-        </ion-label>
-        <ion-input required formControlName="EmailId" type="text" class="readonly-input" readonly></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Phone Number <ion-text color="danger">*</ion-text>
-        </ion-label>
-        <ion-input required formControlName="PhoneNumber" type="tel" class="readonly-input" readonly></ion-input>
-      </ion-item> -->
       <ion-item>
         <ion-label position="floating">Education <ion-text color="danger">*</ion-text>
         </ion-label>
@@ -42,11 +21,6 @@
         </ion-label>
         <ion-input required formControlName="Job" type="text" autoCapitalize='words'></ion-input>
       </ion-item>
-      <!-- <ion-item>
-        <ion-label position="floating">Date Of Birth <ion-text color="danger">*</ion-text>
-        </ion-label>
-        <ion-input required formControlName="dateofBirth" type="Date"></ion-input>
-      </ion-item> -->
       <ion-item>
         <ion-label position="floating">Gender <ion-text color="danger">*</ion-text>
         </ion-label>
@@ -116,6 +90,4 @@
       </div>
     </ion-list>
   </form>
-
-
 </ion-content>

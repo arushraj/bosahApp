@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../shared/services/app.service';
 import { CurrentUser } from '../shared/model/current-user.model';
-import { PreferredGiftCards } from '../shared/model/preferredGiftcards.model';
+import { PreferredGiftCards } from '../shared/model/preferredGiftCards.model';
 import { AlertController } from '@ionic/angular';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 
@@ -14,41 +14,61 @@ export class ProfileSettingPage implements OnInit {
 
   public giftCard: PreferredGiftCards[];
   public currentUser: CurrentUser;
-  public formData = {
-    IsNotificationEnabled: false,
-    IsProfileHidden: false,
-    IsUserDeactivated: false
-  };
+  public IsNotificationEnabled = false;
+  public IsProfileHidden = false;
+  public IsUserDeactivated = false;
+  // public formData :any= {
+  //   IsNotificationEnabled: false,
+
+  //   IsProfileHidden: false,
+  //   IsUserDeactivated: false
+  // };
 
   constructor(private appService: AppService, private alertController: AlertController, private inAppBrowser: InAppBrowser) {
 
-    this.appService.getCurrentUser().subscribe((data) => {
-      this.currentUser = data;
-      this.formData = {
-        IsNotificationEnabled: this.currentUser.IsNotificationEnabled,
-        IsProfileHidden: this.currentUser.IsProfileHidden,
-        IsUserDeactivated: this.currentUser.IsUserDeactivated
-      };
-    });
+    // this.appService.getCurrentUser().subscribe((data) => {
+    //   this.currentUser = data;
+    //   this.isNotiEnable=true;
+    //   this.formData = {
+    //     IsNotificationEnabled: this.currentUser.IsNotificationEnabled,
+    //     IsProfileHidden: this.currentUser.IsProfileHidden,
+    //     IsUserDeactivated: this.currentUser.IsUserDeactivated
+    //   };
+    // });
   }
 
   ngOnInit() {
+    this.appService.getCurrentUser().subscribe((data) => {
+      this.currentUser = data;
+      this.IsNotificationEnabled = this.currentUser.IsNotificationEnabled;
+      this.IsProfileHidden = this.currentUser.IsProfileHidden;
+      this.IsUserDeactivated = this.currentUser.IsUserDeactivated;
+      // this.formData = {
+      //   IsNotificationEnabled: this.currentUser.IsNotificationEnabled,
+      //   IsProfileHidden: this.currentUser.IsProfileHidden,
+      //   IsUserDeactivated: this.currentUser.IsUserDeactivated
+      // };
+    });
   }
 
   public setNotification() {
-    if (this.currentUser.IsNotificationEnabled !== this.formData.IsNotificationEnabled) {
+    if (this.currentUser.IsNotificationEnabled !== this.IsNotificationEnabled) {
+
+      const selectedNotificationValue = (this.IsNotificationEnabled === true) ? 1 : 0;
       const data = {
-        IsNotificationEnabled: this.formData.IsNotificationEnabled,
+        IsNotificationEnabled: selectedNotificationValue,
         UserId: this.currentUser.UserId
       };
+
       this.appService.updateUser(data).then(() => { });
     }
   }
 
   public setProfileHidden() {
-    if (this.currentUser.IsProfileHidden !== this.formData.IsProfileHidden) {
+    if (this.currentUser.IsProfileHidden !== this.IsProfileHidden) {
+      const selectedProfileHiddenValue = (this.IsProfileHidden === true) ? 1 : 0;
       const data = {
-        IsProfileHidden: this.formData.IsProfileHidden,
+        IsProfileHidden: selectedProfileHiddenValue,
         UserId: this.currentUser.UserId
       };
       this.appService.updateUser(data).then(() => { });
@@ -56,12 +76,14 @@ export class ProfileSettingPage implements OnInit {
   }
 
   public async setUserDeactivate() {
-    if (this.formData.IsUserDeactivated) {
+    if (this.IsUserDeactivated) {
       /*
 userState=2 deactivated
 userState=1 active
 userState-3 suspended
+ const selectedProfileHiddenValue=(this.IsProfileHidden==true) ? 1:0;
       */
+
       const data = {
         userState: 2,
         UserId: this.currentUser.UserId
@@ -76,7 +98,7 @@ userState-3 suspended
             cssClass: 'secondary',
             handler: (blah) => {
               console.log('Confirm Cancel');
-              this.formData.IsUserDeactivated = !this.formData.IsUserDeactivated;
+              this.IsUserDeactivated = !this.IsUserDeactivated;
             }
           }, {
             text: 'Yes',

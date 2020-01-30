@@ -16,7 +16,7 @@
 
       <ion-item>
         <ion-label>Show Notifications</ion-label>
-        <ion-toggle [(ngModel)]="formData.IsNotificationEnabled" (ionChange)="setNotification()" slot="end">
+        <ion-toggle [(ngModel)]="IsNotificationEnabled" (ionChange)="setNotification()" slot="end">
         </ion-toggle>
       </ion-item>
     </ion-item-group>
@@ -31,12 +31,12 @@
           <br /><span class="description-text">Your profile will be hidden from the search,<br />
             but you can unhide your profile at any time when you're ready to find your next roommate.</span>
         </ion-label>
-        <ion-toggle [(ngModel)]="formData.IsProfileHidden" (ionChange)="setProfileHidden()" slot="end" color="danger">
+        <ion-toggle [(ngModel)]="IsProfileHidden" (ionChange)="setProfileHidden()" slot="end" color="danger">
         </ion-toggle>
       </ion-item>
       <ion-item>
         <ion-label color="danger">Deactivate My Account </ion-label>
-        <ion-toggle [(ngModel)]="formData.IsUserDeactivated" (ionChange)="setUserDeactivate()" slot="end"
+        <ion-toggle [(ngModel)]="IsUserDeactivated" (ionChange)="setUserDeactivate()" slot="end"
           color="danger"></ion-toggle>
       </ion-item>
     </ion-item-group>

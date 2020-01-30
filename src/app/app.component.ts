@@ -38,12 +38,12 @@ export class AppComponent {
     icon: 'calendar',
     routerDirection: 'forward'
   }, {
-    title: 'Modify Preferences',
+    title: 'Roommate Preferences',
     url: '/modifypreferences',
     icon: 'construct',
     routerDirection: 'forward'
   }, {
-    title: 'Profile Update',
+    title: 'Update Profile',
     url: '/profileupdate',
     icon: 'create',
     routerDirection: 'forward'
@@ -53,7 +53,7 @@ export class AppComponent {
     icon: 'search',
     routerDirection: 'forward'
   }, {
-    title: 'Profile Settings',
+    title: 'Settings',
     url: 'profilesetting',
     icon: 'settings',
     routerDirection: 'forward'

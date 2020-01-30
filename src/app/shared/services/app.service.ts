@@ -820,7 +820,7 @@ export class AppService {
         return await this.storage.get(StorageKey.LoginTokenkey);
     }
 
-    public async sentotp(otp: string, emailId: string, isForgotPassword?: boolean) {
+    public async sentotp(otp: string, emailId: string, isForgotPassword?: number) {
         if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
             this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
             return;

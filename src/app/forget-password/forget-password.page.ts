@@ -13,7 +13,7 @@ export class ForgetPasswordPage implements OnInit {
 
   @ViewChild('forgetPasswordslides', { read: IonSlides, static: true }) forgetPasswordslides: IonSlides;
   public userForm: FormGroup;
-  public userEmailForm:FormGroup;
+  public userEmailForm: FormGroup;
   public otpsend: boolean;
 
   private otp: string;
@@ -26,12 +26,12 @@ export class ForgetPasswordPage implements OnInit {
     }, {
       validators: this.mustMatchPassword('password', 'confirmPassword')
     });
-    this.userEmailForm=this.fb.group({
+    this.userEmailForm = this.fb.group({
       email: ['', Validators.compose([Validators.required, Validators.email])]
 
     });
   }
-  
+
 
   private mustMatchPassword(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
@@ -51,7 +51,7 @@ export class ForgetPasswordPage implements OnInit {
       }
     };
   }
-  
+
 
   ngOnInit() {
     this.forgetPasswordslides.lockSwipes(true).then(() => { });
@@ -67,7 +67,7 @@ export class ForgetPasswordPage implements OnInit {
       loading.present();
       this.otp = Math.floor(1000 + Math.random() * 9000).toString();
 
-      this.appService.sentotp(this.otp, this.userEmailForm.value.email, true)
+      this.appService.sentotp(this.otp, this.userEmailForm.value.email, 1)
         .then(res => {
           const resData = JSON.parse(res.data);
           loading.dismiss();
