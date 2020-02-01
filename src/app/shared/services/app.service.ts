@@ -994,32 +994,31 @@ export class AppService {
                     loading.present();
                     this.http.post(url, data, this.header)
                         .then((res) => {
-                            // loading.dismiss();
-                            loading.dismiss().then(() => {
-                                this.toast.show(`${resData.ResponseMessage}`, `short`, 'bottom').subscribe(() => { });
-
-                                // Success Alert
-                                let message: string;
-                                let messageHearder: string;
-                                if (FriendshipStatus.Unfriended === friendshipStatus) {
-                                    message = `You're all set. You've successfully unfriended.`;
-                                    messageHearder = `Success Message`;
-                                } else if (FriendshipStatus.Blocked === friendshipStatus) {
-                                    message = `You're all set. You've successfully blocked.`;
-                                    messageHearder = `Success Message`;
-                                }
-                                this.showAlert(message, messageHearder);
-                            });
                             const resData = JSON.parse(res.data);
-                            if (resData.Status) {
-                                this.userFriendsList.friends.forEach((value, key) => {
-                                    if (value.UserId === friendUser.UserId) {
-                                        value.Status = friendshipStatus;
-                                    }
-                                });
-                                this.setFriendList(Object.assign({}, this.userFriendsList).friends);
-                            }
-                            // this.toast.show(`${resData.ResponseMessage}`, `short`, 'bottom').subscribe(() => { });
+                            loading.dismiss().then(() => {
+                                let message: string;
+                                // Success Alert
+                                if (FriendshipStatus.Unfriended === friendshipStatus && resData.ResponseMessage === 'Success') {
+                                    message = `You're all set. You've successfully unfriended.`;
+                                    this.toast.showShortBottom(`${message}`).subscribe(() => { });
+                                } else if (FriendshipStatus.Blocked === friendshipStatus && resData.ResponseMessage === 'Success') {
+                                    message = `You're all set. You've successfully blocked.`;
+                                    this.toast.showShortBottom(`${message}`).subscribe(() => { });
+                                } else if (FriendshipStatus.Accepted === friendshipStatus && resData.ResponseMessage === 'Success') {
+                                    message = `Success.`;
+                                    this.toast.showShortBottom(`${message}`).subscribe(() => { });
+                                } else {
+                                    this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
+                                }
+                                if (resData.Status) {
+                                    this.userFriendsList.friends.forEach((value, key) => {
+                                        if (value.UserId === friendUser.UserId) {
+                                            value.Status = friendshipStatus;
+                                        }
+                                    });
+                                    this.setFriendList(Object.assign({}, this.userFriendsList).friends);
+                                }
+                            });
                         })
                         .catch((err) => {
                             loading.dismiss();
