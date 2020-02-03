@@ -4,7 +4,7 @@
             <ion-card *ngIf="user.UserId">
                 <ion-img [src]="user.ProfileImagePath | imageBinder:user.Gender" alt="" class="user-img"
                     (ionError)="setdefultImage($event)"> </ion-img>
-                <ion-card-header *ngIf="user.UserId">
+                <ion-card-header *ngIf="user.UserId" padding-horizontal no-padding>
                     <ion-card-title>
                         {{user.FName | blankValue}}, {{user.Age | blankValue}}
                     </ion-card-title>
@@ -24,16 +24,15 @@
                             <span>
                                 <ion-icon slot="start" name="paw"></ion-icon>
                                 {{user.UserPet | blankValue}}
-                                
+
                             </span>
                         </ion-badge>
-                        <!-- <br /> -->
                         &nbsp;&nbsp;&nbsp;
                         <ion-badge class="badge-color">
                             <span>
                                 <ion-icon slot="start" name="logo-no-smoking"></ion-icon>
                                 {{user.UserSmoking | blankValue}}
-                               
+
                             </span>
                         </ion-badge>
                         &nbsp;&nbsp;&nbsp;
@@ -41,7 +40,7 @@
                             <span>
                                 <ion-icon slot="start" name="wine"></ion-icon>
                                 {{user.UserDrinking | blankValue}}
-                                
+
                             </span>
                         </ion-badge>
                         <br />
@@ -51,7 +50,7 @@
                     </ion-card-subtitle>
                 </ion-card-header>
                 <ion-card-content *ngIf="user.UserId">
-                    <ion-fab horizontal="start" vertical="center">
+                    <ion-fab class="ion-fab-relative" horizontal="start" vertical="center">
                         <ion-fab-button color="light" size="small" [disabled]="user.SendRequest"
                             (click)="notIntrested()">
                             <ion-icon name="close" color="danger"></ion-icon>

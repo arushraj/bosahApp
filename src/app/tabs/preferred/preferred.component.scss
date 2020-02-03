@@ -9,14 +9,18 @@ ion-slide ion-card .user-img {
 
 ion-slide ion-card ion-card-header {
     text-align: left;
-    margin-top: 5%;
+    // margin-top: 5%;
 }
 
 ion-slide ion-card ion-card-content {
     padding: 0;
     width: 40%;
-    height: 100px;
+    // height: 100px;
     margin: 0 auto;
+
+    .ion-fab-relative {
+        position: relative;
+    }
 }
 
 
