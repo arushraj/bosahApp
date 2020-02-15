@@ -5,6 +5,7 @@ import * as CryptoJS from 'crypto-js';
 
 import { UserMessage } from '../model/message';
 import { OnlineUser } from '../model/user';
+import { AppService } from 'src/app/shared/services/app.service';
 
 
 @Injectable()
@@ -12,7 +13,7 @@ export class MessageService {
     private itemsCollection: AngularFirestoreCollection<UserMessage>;
     private currentOnlineUser: AngularFirestoreDocument<OnlineUser>;
     private friendOnlineUser: AngularFirestoreDocument<OnlineUser>;
-    constructor(private db: AngularFirestore) { }
+    constructor(private db: AngularFirestore, private appService: AppService) { }
 
     public subscribeMessageCollection(documentKey: string) {
         // encrypt to MD5
@@ -29,7 +30,9 @@ export class MessageService {
     public getMessages(): Observable<UserMessage[]> {
         return this.itemsCollection.valueChanges();
     }
-
+    public sendNotification(form: any) {
+        this.appService.sendNotification(form);
+    }
     public pushNewMsg(message: UserMessage) {
         return this.itemsCollection.add(message);
     }

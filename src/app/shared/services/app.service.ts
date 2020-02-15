@@ -1240,4 +1240,20 @@ export class AppService {
                 loading.dismiss();
             });
     }
+
+    public async sendNotification(form: any) {
+        if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
+            // this.toast.showShortBottom(`Please connect to internet.`).subscribe(() => { });
+            return;
+        }
+        const url = this.appConstant.getURL(UrlKey.Send_Notification);
+        const data = form;
+        return this.http.post(url, data, this.header)
+            .then((res) => {
+            })
+            .catch((err) => {
+            })
+            .finally(() => {
+            });
+    }
 }

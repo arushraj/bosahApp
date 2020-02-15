@@ -28,6 +28,7 @@ export class AppConstant {
     readonly PREFERRED_GIFTCARDS = '/api/getallgiftcards';
     readonly SMOKING_OPTIONS = '/api/getallsmokingOptions';
     readonly DRINKING_OPTIONS = '/api/getalldrinkingOptions';
+    readonly SEND_NOTIFICATION = '/api/sendMessageNotification';
 
     /**
      * getURL() funtion to get url
@@ -85,12 +86,12 @@ export class AppConstant {
                 return this.APP_BASE_URL + this.UPDATE_USER_PASSWORD;
             case UrlKey.Preferred_Giftcards:
                 return this.APP_BASE_URL + this.PREFERRED_GIFTCARDS;
-
             case UrlKey.Smoking_Options:
                 return this.APP_BASE_URL + this.SMOKING_OPTIONS;
-
             case UrlKey.Drinking_Options:
                 return this.APP_BASE_URL + this.DRINKING_OPTIONS;
+            case UrlKey.Send_Notification:
+                return this.APP_BASE_URL + this.SEND_NOTIFICATION;
             default:
                 break;
         }
@@ -124,7 +125,8 @@ export enum UrlKey {
     Update_User_Password,
     Preferred_Giftcards,
     Smoking_Options,
-    Drinking_Options
+    Drinking_Options,
+    Send_Notification
 }
 
 export enum StorageKey {
