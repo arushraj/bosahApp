@@ -6,12 +6,12 @@ import { ModalController } from '@ionic/angular';
 
 
 @Component({
-  selector: 'user-details',
+  selector: 'messaging-user-details',
   templateUrl: './user-details.component.html',
   styleUrls: ['./user-details.component.scss'],
 })
 
-export class UserDetailsComponent {
+export class MessagingUserDetailsComponent {
 
   @Input() user: UserFriends;
   @Input() enableActionButton: boolean;

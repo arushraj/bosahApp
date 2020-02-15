@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { PopoverController, NavController, ModalController, AlertController } from '@ionic/angular';
 import { AppService } from '../../shared/services/app.service';
 import { UserFriends, FriendshipStatus } from '../../shared/model/user-friend.model';
-import { UserDetailsComponent } from '../user-details/user-details.component';
+import { MessagingUserDetailsComponent } from '../user-details/user-details.component';
 
 @Component({
   selector: 'app-more-menu',
@@ -32,7 +32,7 @@ export class MoreMenuPage implements OnInit {
       this.friend.ProfileImagePath = '';
     }
     const modal = await this.modalController.create({
-      component: UserDetailsComponent,
+      component: MessagingUserDetailsComponent,
       componentProps: { user: this.friend, enableActionButton: false }
     });
     this.popoverCtrl.dismiss();

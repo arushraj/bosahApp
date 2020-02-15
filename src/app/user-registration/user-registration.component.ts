@@ -27,7 +27,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   public lastImage: string;
   public otpsend = false;
   private otp;
-  private isValid = false;
+  public isValid = false;
   private isBackbuttonDisabled = false;
   public displayImage = '/assets/no-image.png';
   public newUser = {
