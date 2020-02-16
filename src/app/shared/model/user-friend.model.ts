@@ -8,6 +8,11 @@ export interface UserFriends {
     Status: number;
     AboutMe: string;
     LastMessage: any;
+    UserPet: string;
+    UserDrinking: string;
+    UserSmoking: string;
+    College: string;
+    Job: string;
 }
 
 export enum FriendshipStatus {

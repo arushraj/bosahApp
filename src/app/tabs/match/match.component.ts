@@ -112,7 +112,7 @@ export class MatchComponent implements OnInit {
     });
   }
 
-  public setdefultImage(event) {
+  public setdefultImage(event: any) {
     event.target.src = '/assets/no-image.png';
   }
 
@@ -140,7 +140,7 @@ export class MatchComponent implements OnInit {
       });
       return await modal.present();
     } else {
-      let from, fromUserName;
+      let from: string, fromUserName: string;
       await this.appService.getUsersValueByKey('UserId').subscribe((value) => {
         from = value;
       });
@@ -152,8 +152,7 @@ export class MatchComponent implements OnInit {
         toUserName: user.FName,
         toProfileImagePath: user.ProfileImagePath,
         from,
-        fromUserName,
-        friend: user
+        fromUserName
       };
       this.navCtrl.navigateForward(`/messaging?info=${JSON.stringify(info)}`, { animated: true, animationDirection: 'forward' });
     }

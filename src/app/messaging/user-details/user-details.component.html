@@ -6,18 +6,50 @@
 </ion-header>
 <ion-content fullscreen>
     <ion-card>
-        <!-- <img [src]="user.ProfileImagePath.replace('thumbnail_','') | imageBinder:user.Gender" alt="" class="user-img" /> -->
         <ion-img [src]="user.ProfileImagePath.replace('thumbnail_','') | imageBinder:user.Gender" alt=""
             class="user-img" (ionError)="setdefultImage($event)">
         </ion-img>
         <ion-card-header>
-            <ion-card-title>{{user.FName | blankValue}}</ion-card-title>
+            <ion-card-title>
+                {{user.FName | blankValue}}, {{user.Age | blankValue}}
+            </ion-card-title>
             <ion-card-subtitle>
-                <span>
-                    <ion-icon slot="start" name="pin"></ion-icon>
-                    {{user.City | blankValue}}
-                </span>
-                <br />
+                <div class="genral-Info">
+                    <p>
+                        <ion-icon slot="start" name="pin"></ion-icon>
+                        {{user.City | blankValue}}
+                    </p>
+                    <p>
+                        <ion-icon slot="start" name="briefcase"></ion-icon>
+                        {{user.Job | blankValue}}
+                    </p>
+                    <p>
+                        <ion-icon slot="start" name="school"></ion-icon>
+                        {{user.College | blankValue}}
+                    </p>
+                </div>
+                <div class="more-info" *ngIf="user.UserPet || user.UserSmoking || user.UserDrinking">
+                    <ion-badge class="badge-color" *ngIf="user.UserPet">
+                        <span>
+                            <ion-icon slot="start" name="paw"></ion-icon>
+                            {{user.UserPet | blankValue}}
+                        </span>
+                    </ion-badge>
+                    <ion-badge class="badge-color" *ngIf="user.UserSmoking">
+                        <span>
+                            <ion-icon slot="start" name="logo-no-smoking"></ion-icon>
+                            {{user.UserSmoking | blankValue}}
+
+                        </span>
+                    </ion-badge>
+                    <ion-badge class="badge-color" *ngIf="user.UserDrinking">
+                        <span>
+                            <ion-icon slot="start" name="wine"></ion-icon>
+                            {{user.UserDrinking | blankValue}}
+
+                        </span>
+                    </ion-badge>
+                </div>
                 <p class="about-me-label">
                     {{user.AboutMe}}
                 </p>

@@ -7,6 +7,8 @@ import { IonContent, IonInput, PopoverController } from '@ionic/angular';
 import { AppConstant } from '../shared/constant/app.constant';
 import { OnlineUser } from './model/user';
 import { MoreMenuPage } from './more-menu/more-menu.page';
+import { AppService } from '../shared/services/app.service';
+import { UserFriends } from '../shared/model/user-friend.model';
 
 @Component({
   selector: 'app-messaging',
@@ -16,6 +18,7 @@ import { MoreMenuPage } from './more-menu/more-menu.page';
 export class MessagingPage implements OnInit, OnDestroy {
 
   public messages: UserMessage[] = [];
+  private friend: UserFriends;
   public queryInfo;
   // {to: string, toUserName: string, toProfileImagePath: string, from: string, fromUserName: string}
   public messageForm: FormGroup;
@@ -28,7 +31,8 @@ export class MessagingPage implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private appConstant: AppConstant,
-    private popoverCtrl: PopoverController) {
+    private popoverCtrl: PopoverController,
+    private appService: AppService) {
     this.route.queryParams.subscribe(params => {
       if (params && params.info) {
         this.setQueryinfo(params.info);
@@ -108,7 +112,7 @@ export class MessagingPage implements OnInit, OnDestroy {
     };
   }
 
-  public setdefultImage(event) {
+  public setdefultImage(event: any) {
     event.target.src = '/assets/no-image.png';
   }
 
@@ -130,10 +134,13 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   public async openMoreOption(event: any) {
+    this.appService.getFriendList().subscribe((friends) => {
+      this.friend = friends.find(value => value.UserId === this.queryInfo.to);
+    });
     const popover = await this.popoverCtrl.create({
       animated: true,
       backdropDismiss: true,
-      componentProps: { friend: this.queryInfo.friend },
+      componentProps: { friend: this.friend },
       component: MoreMenuPage,
       event,
       translucent: true

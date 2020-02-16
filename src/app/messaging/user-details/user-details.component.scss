@@ -13,3 +13,26 @@ ion-card .user-img {
     text-align: justify;
     margin-bottom: 0;
 }
+
+ion-card-subtitle {
+    .genral-Info>p {
+        margin: 0;
+        padding-bottom: 3px;
+    }
+
+    .genral-Info {
+        margin-bottom: 3%;
+    }
+
+    .more-info>ion-badge {
+        margin-left: 3%;
+    }
+
+    .more-info>ion-badge:first-child {
+        margin-left: 0;
+    }
+
+    .more-info {
+        margin-bottom: 3%;
+    }
+}
