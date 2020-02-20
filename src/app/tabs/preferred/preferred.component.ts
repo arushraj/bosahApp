@@ -18,7 +18,6 @@ export class PreferredComponent implements OnInit {
     cancelable: true
   };
   public preferredUser: PreferredUser[];
-
   @ViewChild('preferredUserSlides', { read: IonSlides, static: true }) preferredUserSlides: IonSlides;
 
   constructor(

@@ -47,18 +47,14 @@ export class PushNotificationService {
     const options: PushOptions = {
       android: {
         senderID: '423137540298',
-        sound: true,
-        vibrate: true,
+        sound: 'true',
+        vibrate: 'true',
         icon: 'ic_launcher'
       },
       ios: {
         alert: 'true',
-        badge: true,
-        sound: 'false'
-      },
-      windows: {},
-      browser: {
-        pushServiceURL: 'http://push.api.phonegap.com/v1/push'
+        badge: 'true',
+        sound: 'true'
       }
     };
 

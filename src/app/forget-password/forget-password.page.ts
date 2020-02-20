@@ -106,7 +106,8 @@ export class ForgetPasswordPage implements OnInit {
     console.log(this.userForm);
     const data = {
       EmailId: this.userEmailForm.value.email,
-      Password: this.userForm.value.password
+      Password: this.userForm.value.password,
+      otp: this.otp
     };
     this.appService.updateUserPassword(data);
   }
