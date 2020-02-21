@@ -32,4 +32,10 @@ ion-slides ion-slide .ion-empty-label {
 .last-message-time {
     float: right;
     font-weight: 300;
+    text-align: center;
+}
+
+.message-unread {
+    font-weight: 800;
+    color: #58d4f1;
 }

@@ -17,6 +17,7 @@ export class MatchComponent implements OnInit {
 
   public pageTabs: Array<{ id: number, tabName: string, friends: UserFriends[] }>;
   public selectedTab: number;
+  public currentUserId: string;
   public slideOpts = {
     initialSlide: 0,
     speed: 300,
@@ -48,13 +49,12 @@ export class MatchComponent implements OnInit {
       this.pageTabs[0].friends = this.friendFilter(friends, FriendshipStatus.Accepted);
       this.pageTabs[1].friends = this.friendFilter(friends, FriendshipStatus.Pending);
 
-      let currentUserId: string;
       this.appService.getUsersValueByKey('UserId').subscribe((value) => {
-        currentUserId = value;
+        this.currentUserId = value;
       });
       // bind the last message
       this.pageTabs[0].friends.forEach((friend) => {
-        this.firebasedb.subscribeLastMessageItem(friend.UserId, currentUserId).subscribe((value) => {
+        this.firebasedb.subscribeLastMessageItem(friend.UserId, this.currentUserId).subscribe((value) => {
           if (value[0]) {
             value[0].message = this.firebasedb.aesDecrypt(value[0].message, value[0].userId);
           }

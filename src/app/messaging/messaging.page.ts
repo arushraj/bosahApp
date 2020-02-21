@@ -17,9 +17,10 @@ import { UserFriends } from '../shared/model/user-friend.model';
 })
 export class MessagingPage implements OnInit, OnDestroy {
 
-  public messages: UserMessage[] = [];
+  public messages: any = [];
   private friend: UserFriends;
   public queryInfo;
+  private currentUserId: string;
   // {to: string, toUserName: string, toProfileImagePath: string, from: string, fromUserName: string}
   public messageForm: FormGroup;
   public friendUserStatus: OnlineUser;
@@ -49,8 +50,19 @@ export class MessagingPage implements OnInit, OnDestroy {
         this.messageService.getMessages().subscribe((data) => {
           if (this.messages.length === 0) {
             this.messages = data;
+            const unReadMessage = this.messages.filter((msg: any) => {
+              return msg.payload.doc.data().isRead === false && msg.payload.doc.data().userId !== this.currentUserId;
+            });
+            if (unReadMessage && unReadMessage.length > 0) {
+              unReadMessage.forEach((unreadmsg: any) => {
+                this.messageService.updateMsg(unreadmsg.payload.doc.id);
+              });
+            }
           } else {
             if (this.messages.length < data.length) {
+              if (data[this.messages.length].payload.doc.data().userId !== this.currentUserId) {
+                this.messageService.updateMsg(data[this.messages.length].payload.doc.id);
+              }
               this.messages.push(data[this.messages.length]);
             }
           }
@@ -76,6 +88,7 @@ export class MessagingPage implements OnInit, OnDestroy {
     this.queryInfo = {
       ...JSON.parse(queryInfo)
     };
+    this.currentUserId = Object.assign({}, this.queryInfo).from.toString();
     this.queryInfo.firebaseCollection = (this.queryInfo.to > this.queryInfo.from) ?
       (this.queryInfo.from.toString() + '—' + this.queryInfo.to.toString())
       : (this.queryInfo.to.toString() + '—' + this.queryInfo.from.toString());
@@ -88,7 +101,9 @@ export class MessagingPage implements OnInit, OnDestroy {
       const message: UserMessage = {
         userId: this.queryInfo.from,
         message: this.messageForm.value.message,
-        datetime: new Date().toISOString()
+        datetime: new Date().toISOString(),
+        isRead: false,
+        readDateTime: ''
       };
       this.messageService.sendNotification({
         SenderName: this.queryInfo.fromUserName,

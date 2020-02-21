@@ -27,14 +27,21 @@ export class MessageService {
         return this.db.collection('onlineUsers').doc<OnlineUser>(documentKey);
     }
 
-    public getMessages(): Observable<UserMessage[]> {
-        return this.itemsCollection.valueChanges();
+    public getMessages(): Observable<any> {
+        return this.itemsCollection.snapshotChanges();
     }
     public sendNotification(form: any) {
         this.appService.sendNotification(form);
     }
     public pushNewMsg(message: UserMessage) {
         return this.itemsCollection.add(message);
+    }
+
+    public updateMsg(unReadMsgId: any) {
+        this.itemsCollection.doc(unReadMsgId).update({
+            isRead: true,
+            readDateTime: new Date().toISOString()
+        });
     }
 
     public setUserOffline(userId: string) {
