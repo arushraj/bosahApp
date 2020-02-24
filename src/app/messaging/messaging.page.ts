@@ -9,6 +9,7 @@ import { OnlineUser } from './model/user';
 import { MoreMenuPage } from './more-menu/more-menu.page';
 import { AppService } from '../shared/services/app.service';
 import { UserFriends } from '../shared/model/user-friend.model';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-messaging',
@@ -47,7 +48,12 @@ export class MessagingPage implements OnInit, OnDestroy {
           }
         });
         this.messageService.subscribeMessageCollection(this.queryInfo.firebaseCollection);
-        this.messageService.getMessages().subscribe((data) => {
+
+        this.appService.getUsersValueByKey('UserId').subscribe((value) => {
+          this.currentUserId = value;
+        });
+        // Subscribe for Messages Data.
+        this.messageService.getMessages().subscribe((data: any) => {
           if (this.messages.length === 0) {
             this.messages = data;
             const unReadMessage = this.messages.filter((msg: any) => {
@@ -60,7 +66,7 @@ export class MessagingPage implements OnInit, OnDestroy {
             }
           } else {
             if (this.messages.length < data.length) {
-              if (data[this.messages.length].payload.doc.data().userId !== this.currentUserId) {
+              if (this.currentUserId && data[this.messages.length].payload.doc.data().userId !== this.currentUserId) {
                 this.messageService.updateMsg(data[this.messages.length].payload.doc.id);
               }
               this.messages.push(data[this.messages.length]);
@@ -79,6 +85,7 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.currentUserId = null;
   }
 
   ionViewDidEnter() {
@@ -88,7 +95,7 @@ export class MessagingPage implements OnInit, OnDestroy {
     this.queryInfo = {
       ...JSON.parse(queryInfo)
     };
-    this.currentUserId = Object.assign({}, this.queryInfo).from.toString();
+    // this.currentUserId = Object.assign({}, this.queryInfo).from.toString();
     this.queryInfo.firebaseCollection = (this.queryInfo.to > this.queryInfo.from) ?
       (this.queryInfo.from.toString() + '—' + this.queryInfo.to.toString())
       : (this.queryInfo.to.toString() + '—' + this.queryInfo.from.toString());
