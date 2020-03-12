@@ -27,73 +27,137 @@
 
 @import "~animate.css/animate.min.css";
 
-body {
-    font-family: "Lato" !important;
-}
+// body {
+//     font-family: "Lato" !important;
+// }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: "Montserrat";
-}
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+//     font-family: "Montserrat";
+// }
 
-.menu-button {
-    background-color: var(--ion-color-client-menu);
-    border-radius: 3px;
-}
+// .menu-button {
+//     background-color: var(--ion-color-client-menu);
+//     border-radius: 3px;
+// }
 
-.menu-content {
-    background-color: var(--ion-color-client-menu);
-}
+// .menu-content {
+//     background-color: var(--ion-color-client-menu);
+// }
 
-.divider {
-    border-top: #4c4c4c solid 1px;
-}
+// .divider {
+//     border-top: #4c4c4c solid 1px;
+// }
 
-.app-background-img {
-    --background: url(/assets/street-map.png) 0 0/100% 50%;
-}
+// .app-background-img {
+//     --background: url(/assets/street-map.png) 0 0/100% 50%;
+// }
 
-.auto-top-bottom-marging {
-    margin: auto !important;
-}
+// .auto-top-bottom-marging {
+//     margin: auto !important;
+// }
 
-.auto-right-left-marging {
-    margin: 0 auto !important;
-}
+// .auto-right-left-marging {
+//     margin: 0 auto !important;
+// }
 
-.sticky-box-shadow {
-    // background-color: #e3e5e6;    
-    -webkit-box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
-    -moz-box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
-    box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
-}
+// .sticky-box-shadow {
+//     // background-color: #e3e5e6;    
+//     -webkit-box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
+//     -moz-box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
+//     box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
+// }
 
-.appText {
-    color: #58A18D;
-    margin: 5% 0;
-    // font-size: 1.2em;
-    font-weight: normal;
-    padding-left: 5% !important;
-    font-style: italic;
+// .appText {
+//     color: #58A18D;
+//     margin: 5% 0;
+//     // font-size: 1.2em;
+//     font-weight: normal;
+//     padding-left: 5% !important;
+//     font-style: italic;
 
-}
+// }
 
-.appTitle {
-    color: #58A18D;
-    margin: 5% 0;
-    font-size: 1.2em;
-    font-weight: bold;
-}
+// .appTitle {
+//     color: #58A18D;
+//     margin: 5% 0;
+//     font-size: 1.2em;
+//     font-weight: bold;
+// }
 
-.slide-image {
-    width: 85%;
-    margin: 0 auto;
-}
+// .slide-image {
+//     width: 85%;
+//     margin: 0 auto;
+// }
 
-.headerImage {
-    margin: 5% 25%;
-}
+// .headerImage {
+//     margin: 5% 25%;
+// }
+
+ion-button {
+    --ripple-color: transparent;
+    --box-shadow: none;
+  }
+  ion-header {
+    ion-toolbar {
+      --background: var(--my_theme);
+      ion-title {
+        font-size: 18px;
+        font-family: "poppins_r";
+        color: var(--white);
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 0 90px 1px;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        text-transform: capitalize;
+      }
+  
+      ion-buttons {
+        position: relative;
+        ion-menu-button {
+          color: var(--white);
+        }
+        ion-back-button {
+          color: var(--white);
+        }
+      }
+    }
+  }
+  
+  .main_btn {
+    height: 45px;
+    --background: var(--my_theme);
+    --color: var(--white);
+    font-size: 16px;
+    font-family: "poppins_r";
+    margin: 0;
+    letter-spacing: 0;
+  }
+  
+  .transparent_btn {
+    --background: transparent;
+    --border: none;
+    --padding-start: none;
+    --padding-end: none;
+    --background-activated: none;
+    margin: 0px;
+  }
+  
+  textarea {
+    line-height: 4ch !important;
+    background-image: linear-gradient(
+      transparent,
+      transparent calc(4ch - 1px),
+      var(--sfont) 0px
+    ) !important;
+    background-size: 100% 4ch !important;
+    --background: var(--gray);
+  }
+  
