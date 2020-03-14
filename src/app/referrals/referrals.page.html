@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar color="client-header">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
@@ -22,4 +22,31 @@
       </ion-button>
     </ion-card-content>
   </ion-card>
+</ion-content> -->
+
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="md">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home" icon="chevron-back-outline" text="" mode="md"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Referrals</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main_div ion-margin-horizontal">
+    <div class="back_img">
+      <img src="/assets/bosahgroup.png">
+    </div>
+    <div class="referral_div">
+      <img src="/assets/refferal_im.png">
+      <p class="info_lbl">Send Your Friends discount Codes</p>
+      <p class="referral_lbl">Your Referral Code</p>
+      <p class="code">{{currentUser.ReferralCode | uppercase}}</p>
+      <ion-button class="invite_btn main_btn" expand="block" (click)="shareApp()">
+        <ion-icon name="exit"></ion-icon>invite Your Friends
+      </ion-button>
+    </div>
+
+  </div>
 </ion-content>

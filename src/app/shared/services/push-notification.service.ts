@@ -78,10 +78,19 @@ export class PushNotificationService {
     }).then(() => console.log('Channel created'));
 
     pushObject.on('notification').subscribe((notification: any) => {
+      // tslint:disable-next-line: no-debugger
+      debugger;
       console.log('Received a notification', notification);
-      if (notification.additionalData.foreground) {
-      } else {
-      }
+      // if(notification.additionalData.redirectAction.length>0) {
+      //this.navCtrl.navigateRoot('/messaging', { animated: true, animationDirection: 'forward' });
+     // this.navCtrl.push('messaging');
+      this.navCtrl.navigateForward('./messaging/messaging.module#MessagingPageModule');
+
+      // }
+      // if (notification.additionalData.foreground) {
+      // } 
+      // else {
+      // }
     });
 
     pushObject.on('registration').subscribe((registration: any) => {
