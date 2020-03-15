@@ -1,3 +1,65 @@
 .readonly-input {
     opacity: 0.5 !important;
 }
+
+ion-header {
+    ion-button {
+      text-transform: capitalize;
+      --color: var(--white);
+      font-size: 14px;
+      font-family: "poppins_r";
+    }
+  }
+  
+  ion-content {
+    .logo_div {
+      text-align: center;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      img {
+        width: 200px;
+      }
+    }
+    .data_div {
+      width: 100%;
+      height: 70px;
+      background-color: var(--gray);
+      border-radius: 20px;
+      display: flex;
+      padding: 10px 16px;
+      margin-bottom: 10px;
+      .img_div {
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+          height: 22px;
+        }
+      }
+  
+      .info_div {
+        margin-left: 20px;
+        padding-left: 20px;
+        border-left: solid;
+        border-left-color: var(--dark_gray);
+        border-left-width: 1px;
+        padding-top: 7px;
+        width: 100%;
+        .info_lbl {
+          color: var(--lht_black);
+          font-size: 12px;
+          font-family: "poppins_r";
+          margin: 0;
+        }
+      }
+      ion-input {
+        --color: var(--black);
+        font-size: 14px;
+        font-family: "poppins_me";
+        --padding-start: 0px;
+        height: 30px;
+      }
+    }
+  }
+  

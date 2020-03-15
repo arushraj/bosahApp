@@ -1,4 +1,4 @@
-<ion-header translucent class="sticky-box-shadow">
+<!-- <ion-header translucent class="sticky-box-shadow">
   <ion-toolbar color="client-header">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs"></ion-back-button>
@@ -93,4 +93,158 @@
       </div>
     </ion-list>
   </form>
+</ion-content> -->
+
+
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="md">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home" icon="chevron-back-outline" text="" mode="md"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="onSubmit()">Done</ion-button>
+    </ion-buttons>
+    <ion-title>Update profile</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="userForm">
+  <div class="main_div ion-margin-horizontal">
+    <div class="logo_div">
+      <img src="/assets/logo.png">
+    </div>
+    <div class="data_div">
+      <div class="img_div">
+        <img src="/assets/education.png">
+      </div>
+
+      <div class="info_div">
+        <h3 class="info_lbl">Education</h3>
+        <ion-input required formControlName="College"  type="text"></ion-input>
+      </div>
+    </div>
+    <div class="data_div">
+      <div class="img_div">
+        <img src="/assets/job.png">
+      </div>
+
+      <div class="info_div">
+        <h3 class="info_lbl">Job</h3>
+        <ion-input required formControlName="Job" type="text" autoCapitalize='words'></ion-input>
+      </div>
+    </div>
+    <div class="data_div">
+      <div class="img_div">
+        <img src="/assets/gender.png">
+      </div>
+
+      <div class="info_div">
+        <h3 class="info_lbl">Gender</h3>
+        <ion-select placeholder="Select One" required formControlName="GenderId">
+          <ion-select-option *ngFor="let item of genders" [value]="item.genderId">{{item.gender}}
+          </ion-select-option>
+        </ion-select>
+      </div>
+    </div>
+    <div class="data_div">
+      <div class="img_div">
+        <img src="/assets/age.png">
+      </div>
+
+      <div class="info_div">
+        <h3 class="info_lbl">Age</h3>
+        <ion-input value="26" type="tel"></ion-input>
+      </div>
+    </div>
+    <div class="data_div">
+      <div class="img_div">
+        <img src="/assets/email.png">
+      </div>
+
+      <div class="info_div">
+        <h3 class="info_lbl">Email</h3>
+        <ion-input value="example@mail.com" type="email"></ion-input>
+      </div>
+    </div>
+    <div class="data_div">
+      <div class="img_div">
+        <img src="/assets/call.png">
+      </div>
+
+      <div class="info_div">
+        <h3 class="info_lbl">Phone</h3>
+        <ion-input value="+1125 325 3366" type="tel"></ion-input>
+      </div>
+    </div>
+    <div class="data_div">
+      <div class="img_div">
+        <img src="/assets/pin.png">
+      </div>
+
+      <div class="info_div">
+        <h3 class="info_lbl">Address</h3>
+        <ion-select placeholder="Select One" required formControlName="CityId">
+          <ion-select-option *ngFor="let item of locations" [value]="item.CityId">{{item.City}}
+          </ion-select-option>
+        </ion-select>
+      </div>
+    </div>
+    <div class="data_div">
+      <div class="img_div">
+        <img src="/assets/pin.png">
+      </div>
+
+      <div class="info_div">
+        <h3 class="info_lbl">Religion</h3>
+        <ion-select placeholder="Select One" required formControlName="ReligionId">
+          <ion-select-option *ngFor="let item of religions" [value]="item.ReligionId">{{item.Religion}}
+          </ion-select-option>
+        </ion-select>
+      </div>
+     </div>  
+
+     <div class="data_div">
+      <div class="img_div">
+        <img src="/assets/men_flit.svg">
+      </div>
+      <div class="info_div">
+        <h3 class="info_lbl">Pets</h3>
+        <ion-select placeholder="Select One" required formControlName="UserSelectedPetId">
+          <ion-select-option *ngFor="let item of petsOptions" [value]="item.PetId">{{item.PetName}}
+          </ion-select-option>
+        </ion-select>
+      </div>
+
+     </div>
+     
+     <div class="data_div">
+      <div class="img_div">
+        <img src="/assets/smoke.svg">
+      </div>
+
+      <div class="info_div">
+        <h3 class="info_lbl">Smoking</h3>
+        <ion-select placeholder="Select One" required formControlName="UserSelectedSmokingId">
+          <ion-select-option *ngFor="let item of SmokingOptions" [value]="item.Id">{{item.Details}}
+          </ion-select-option>
+        </ion-select>
+      </div>
+     </div>
+
+     <div class="data_div">
+      <div class="img_div">
+        <img src="/assets/drink.svg">
+      </div>
+      <div class="info_div">
+        <h3 class="info_lbl">Drinking</h3>
+        <ion-select placeholder="Select One" required formControlName="UserSelectedDrinkingId">
+          <ion-select-option *ngFor="let item of DrinkingOptions" [value]="item.Id">{{item.Details}}
+          </ion-select-option>
+        </ion-select>
+      </div>       
+     </div> 
+  </div>
+</form>
 </ion-content>
