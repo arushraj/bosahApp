@@ -99,10 +99,10 @@
 <ion-header class="ion-no-border">
   <ion-toolbar mode="md">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="home" icon="chevron-back-outline" text="" mode="md"></ion-back-button>
+      <ion-back-button defaultHref="home"  text="" mode="md"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="onSubmit()">Done</ion-button>
+      <ion-button (click)="onSubmit()" [disabled]="userForm.invalid || userForm.pristine">Done</ion-button>
     </ion-buttons>
     <ion-title>Update profile</ion-title>
 

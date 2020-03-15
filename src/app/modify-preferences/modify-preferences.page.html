@@ -56,7 +56,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar mode="md">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs" icon="chevron-back-outline" text="" mode="md"></ion-back-button>
+      <ion-back-button defaultHref="/tabs"  text="" mode="md"></ion-back-button>
     </ion-buttons>
     <ion-title>Roommate Preferences</ion-title>
   </ion-toolbar>
@@ -86,7 +86,6 @@
           </div>
         </div>
         <ion-item mode="md">
-
           <ion-label class="info_lbl" position="stacked" mode="ios">
             Roommate Religion
           </ion-label>
@@ -112,14 +111,12 @@
             <h3 class="info_lbl">Select Age</h3>
             <!-- <ion-range id="dual-range" dual-knobs pin>
           </ion-range> -->
-
             <ion-range min="21" max="60" dualKnobs="true" pin="true" pin [value]="rangeValue" color="primary"
               (ionChange)="rangeChange($event)" #agerange>
               <ion-label slot="start">21</ion-label>
               <ion-label slot="end">60</ion-label>
             </ion-range>
           </ion-label>
-
         </ion-item>
         <ion-button class="main_btn register_btn" type="submit" expand="block" class="ion-no-margin">
           Submit
