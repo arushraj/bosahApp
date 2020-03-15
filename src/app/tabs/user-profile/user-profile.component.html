@@ -1,4 +1,4 @@
-<ion-content fullscreen class="animated fadeInUp fast" #ionContent>
+<!-- <ion-content fullscreen class="animated fadeInUp fast" #ionContent>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="refresh-circle" refreshingSpinner="crescent"></ion-refresher-content>
   </ion-refresher>
@@ -66,4 +66,102 @@
       </ion-button>
     </ion-card-content>
   </ion-card>
+</ion-content> -->
+
+
+<ion-content class="animated fadeInUp fast" #ionContent>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="refresh-circle" refreshingSpinner="crescent"></ion-refresher-content>
+  </ion-refresher>
+  <div class="main_div">
+    <div class="div_img">
+      <img src="/assets/logo.png" height="70">
+      <img src="/assets/profile_shape.png" class="style_img" height="126">
+    </div>
+    <div class="data_div ion-margin-horizontal">
+      <div class="info_div">
+        <div class="profile_div">
+          <ion-img [src]="ProfileImagePath" alt="" (ionError)="setdefultImage($event)">
+          </ion-img>
+          <ion-button class="upload_btn" (click)="selectImage()">
+            <ion-icon src="/assets/plus.svg"></ion-icon>
+
+          </ion-button>
+          <h3 class="name">{{currentUser.FName | blankValue}}</h3>
+        </div>
+
+        <div class="detail_div">
+          <div class="detail_row">
+            <div class="icon_div">
+              <ion-icon src="/assets/men_white.svg"></ion-icon>
+            </div>
+            <p class="detail_p">{{currentUser.Age | blankValue}}</p>
+          </div>
+          <div class="detail_row">
+            <div class="icon_div">
+              <ion-icon src="/assets/pin_white.svg" class="icn_change"></ion-icon>
+
+            </div>
+            <p class="detail_p">{{currentUser.City | blankValue}}</p>
+          </div>
+          <div class="detail_row">
+            <div class="icon_div">
+              <ion-icon src="/assets/job_white.svg" class="icn_change"></ion-icon>
+
+            </div>
+            <p class="detail_p">{{currentUser.Job| blankValue}}</p>
+          </div>
+
+
+        </div>
+      </div>
+      <div class="personal_info">
+        <div class="picon_div">
+          <ion-icon src="/assets/email_green.svg"></ion-icon>
+        </div>
+        <div class="personal_detail_row">
+          <h3 class="info_lbl">Email</h3>
+          <p class="pdata_p">{{currentUser.EmailId | blankValue}}</p>
+        </div>
+      </div>
+      <div class="personal_info">
+        <div class="picon_div">
+          <ion-icon src="/assets/call_green.svg"></ion-icon>
+        </div>
+        <div class="personal_detail_row">
+          <h3 class="info_lbl">Mobile</h3>
+          <p class="pdata_p">+1-{{currentUser.PhoneNumber | blankValue}}</p>
+        </div>
+      </div>
+      <div class="personal_info">
+        <div class="picon_div">
+          <ion-icon src="/assets/gender_icon.svg"></ion-icon>
+        </div>
+        <div class="personal_detail_row">
+          <h3 class="info_lbl">Gender</h3>
+          <p class="pdata_p">{{currentUser.GenderName | blankValue}}</p>
+        </div>
+      </div>
+      <div class="personal_info">
+        <div class="picon_div">
+          <ion-icon src="/assets/degree_icon.svg"></ion-icon>
+        </div>
+        <div class="personal_detail_row">
+          <h3 class="info_lbl">Degree</h3>
+          <p class="pdata_p">{{currentUser.College | blankValue}}</p>
+        </div>
+      </div>
+      <div class="ion-text-center">
+        <!-- <ion-button class="update_btn" shape="round" (click)="updateProfile()">
+          update profile
+        </ion-button> -->
+        <ion-button shape="round" outline class="update_btn" slot="start" routerLink="/profileupdate" routerDirection="forward">        
+          Update Profile
+        </ion-button>
+      </div>
+
+    </div>
+  </div>
+
+
 </ion-content>

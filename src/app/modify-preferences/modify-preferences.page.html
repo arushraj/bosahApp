@@ -1,4 +1,4 @@
-<ion-header translucent class="sticky-box-shadow">
+<!-- <ion-header translucent class="sticky-box-shadow">
   <ion-toolbar color="client-header">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs"></ion-back-button>
@@ -19,7 +19,6 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
-
       <ion-item>
         <ion-label position="stacked">Roommate Religion <ion-text color="danger">*</ion-text>
         </ion-label>
@@ -52,4 +51,86 @@
       </ion-button>
     </div>
   </form>
+</ion-content> -->
+
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="md">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs" icon="chevron-back-outline" text="" mode="md"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Roommate Preferences</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <div class="main_div ion-margin-horizontal">
+    <div class="logo_div">
+      <img src="/assets/logo.png">
+    </div>
+    <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+      <div class="data_div">
+        <div class="gender_div">
+          <p class="info_lbl">
+            Roommate Gender
+          </p>
+          <div class="btn_div">
+            <ion-button [ngClass]="female==1 ? 'active':''" (click)="female=1;male=0;other=0">
+              Female
+            </ion-button>
+            <ion-button [ngClass]="male==1 ? 'active' :''" (click)="female=0;male=1;other=0">
+              male
+            </ion-button>
+            <ion-button [ngClass]="other==1 ? 'active' :''" (click)="female=0;male=0;other=1">
+              Other
+            </ion-button>
+          </div>
+        </div>
+        <ion-item mode="md">
+
+          <ion-label class="info_lbl" position="stacked" mode="ios">
+            Roommate Religion
+          </ion-label>
+          <ion-select placeholder="Select One" required multiple="true" formControlName="preferredReligion">
+            <ion-select-option *ngFor="let item of religions" [value]="item.ReligionId">{{item.Religion}}
+            </ion-select-option>
+          </ion-select>
+
+
+        </ion-item>
+        <ion-item mode="md">
+          <ion-label class="info_lbl" position="stacked" mode="ios">
+            Preferred Pets
+          </ion-label>
+          <ion-select placeholder="Select One" multiple="true" formControlName="preferredPets">
+            <ion-select-option *ngFor="let item of pets" [value]="item.PetId">{{item.PetName}}
+            </ion-select-option>
+          </ion-select>
+
+        </ion-item>
+        <ion-item mode="md" lines="none">
+          <ion-label>
+            <h3 class="info_lbl">Select Age</h3>
+            <!-- <ion-range id="dual-range" dual-knobs pin>
+          </ion-range> -->
+
+            <ion-range min="21" max="60" dualKnobs="true" pin="true" pin [value]="rangeValue" color="primary"
+              (ionChange)="rangeChange($event)" #agerange>
+              <ion-label slot="start">({{rangeValue.lower}})</ion-label>
+              <ion-label slot="end">({{rangeValue.upper}})</ion-label>
+            </ion-range>
+          </ion-label>
+
+        </ion-item>
+        <ion-button class="main_btn register_btn" type="submit" expand="block" class="ion-no-margin">
+          Submit
+        </ion-button>
+      </div>
+    </form>
+  </div>
 </ion-content>
+<!-- <ion-footer class="ion-no-border">
+  <ion-button class="main_btn register_btn" expand="block">
+    submit
+  </ion-button>
+
+</ion-footer> -->

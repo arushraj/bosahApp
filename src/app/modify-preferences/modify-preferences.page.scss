@@ -1,0 +1,73 @@
+// ion-header {
+//     ion-title {
+//       font-size: 16px;
+//       padding: 0 82px 1px;
+//     }
+//   }
+  
+  ion-content {
+    .logo_div {
+      text-align: center;
+      padding-top: 25px;
+      padding-bottom: 5px;
+      img {
+        width: 200px;
+      }
+    }
+    .info_lbl {
+      font-size: 13px;
+      color: var(--balck);
+      font-family: "poppins_r";
+    }
+    .gender_div {
+      padding-bottom: 15px;
+      .btn_div {
+        display: flex;
+        ion-button {
+          --background: var(--white);
+          --color: var(--balck);
+          font-size: 16px;
+          font-family: "poppins_me";
+          --box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.16);
+          --border-radius: 5px;
+          height: 35px;
+          margin: 0px 10px 0px 0px;
+          text-transform: capitalize;
+        }
+        .active {
+          --background: var(--my_theme);
+          --color: var(--white);
+          --background-activated: var(--my_theme);
+        }
+      }
+    }
+    ion-item {
+      --padding-start: 0;
+      --inner-padding-end: 0;
+      margin-bottom: 10px;
+      ion-select {
+        max-width: 100%;
+        font-family: "poppins_r";
+        font-size: 16px;
+        padding: 0;
+      }
+      ion-range {
+        padding-left: 6px;
+        padding-right: 6px;
+        --bar-background-active: var(--my_theme);
+        --bar-background: var(--black);
+        --knob-background: var(--black);
+      }
+    }
+    .item_label {
+      font-size: 20px;
+    }
+  }
+  
+    .register_btn {
+      text-transform: capitalize;
+      margin: 0px 16px;
+      font-size: 18px;
+      --border-radius: 10px;
+  }
+  
