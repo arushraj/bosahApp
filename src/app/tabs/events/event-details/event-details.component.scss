@@ -1,3 +1,52 @@
-ion-card .user-img {
-    height: 400px;
-}
+// ion-card .user-img {
+//     height: 400px;
+// }
+
+ion-content {
+    .logo_div {
+      margin-top: 15px;
+      background-color: var(--black);
+      height: 200px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 200px;
+        height: 80px;
+      }
+    }
+    .main_lbl {
+      color: var(--black);
+      font-family: "poppins_sb";
+      font-size: 25px;
+      margin-top: 30px;
+      margin-bottom: 0;
+    }
+    .info_lbl {
+      color: var(--black);
+      font-size: 17px;
+      font-family: "poppins_me";
+      margin-top: 5px;
+      margin-bottom: 35px;
+    }
+    .data_lbl {
+      font-size: 16px;
+      font-family: "poppins_me";
+      color: var(--black);
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      ion-icon {
+        margin-right: 10px;
+      }
+    }
+  }
+  ion-footer {
+    .register_btn {
+      text-transform: capitalize;
+      margin: 0px 16px;
+      font-size: 18px;
+      --border-radius: 10px;
+    }
+  }

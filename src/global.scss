@@ -160,4 +160,12 @@ ion-button {
     background-size: 100% 4ch !important;
     --background: var(--gray);
   }
+  .ion-page {
+    top:2%;
+}
+
+.sc-ion-segment-ios-hion-toolbar.sc-ion-segment-ios-s > ion-segment-button, ion-toolbar .sc-ion-segment-ios-h.sc-ion-segment-ios-s > ion-segment-button{
+  max-width: 300px;
+}
+
   

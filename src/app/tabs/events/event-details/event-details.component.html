@@ -1,15 +1,22 @@
-<ion-header translucent>
+<!-- <ion-header translucent>
     <ion-toolbar>
         <ion-title></ion-title>
         <ion-button slot="end" fill="clean" (click)="dismissModal()">Close</ion-button>
     </ion-toolbar>
+</ion-header> -->
+
+<ion-header class="ion-no-border">
+    <ion-toolbar mode="md">
+        <ion-button slot="end" fill="clean" (click)="dismissModal()">Close</ion-button>
+        <ion-title>event</ion-title>
+    </ion-toolbar>
 </ion-header>
+
 <ion-content fullscreen>
-    <ion-card>
+    <!-- <ion-card>
         <ion-img [src]="event.EventImageFileName.replace('thumbnail_','') | eventImageBinder" alt=""
             (ionError)="setdefultImage($event)" class="user-img">
         </ion-img>
-        <!-- <img [src]="event.EventImageFileName.replace('thumbnail_','') | eventImageBinder" alt="" class="user-img" /> -->
         <ion-card-header>
             <ion-card-title>{{event.EventName}}</ion-card-title>
             <ion-card-subtitle>
@@ -25,5 +32,34 @@
         </ion-button>
         <ion-button *ngIf="event.isSubscribe" expand="full" color="danger" (click)="subscribeEvent()">Deregister
         </ion-button>
-    </ion-card>
+    </ion-card> -->
+
+    <div class="main_div ion-margin-horizontal">
+        <div class="logo_div">
+            <ion-img [src]="event.EventImageFileName.replace('thumbnail_','') | eventImageBinder" alt=""
+                (ionError)="setdefultImage($event)" class="user-img">
+            </ion-img>
+        </div>
+        <h3 class="main_lbl">{{event.EventName}}</h3>
+        <p class="info_lbl"> {{event.EventDesc | blankValue}}</p>
+        <p class="data_lbl">
+            <ion-icon src="/assets/black-pin.svg"></ion-icon> {{event.City | blankValue}}
+        </p>
+        <p class="data_lbl">
+            <ion-icon src="/assets/time.svg"></ion-icon> {{event.EventDate | date:'shortTime'}}
+        </p>
+        <p class="data_lbl">
+            <ion-icon src="/assets/cal.svg"></ion-icon>
+            {{event.EventDate | date}}
+        </p>
+    </div>
 </ion-content>
+
+<ion-footer class="ion-no-border">
+    <ion-button class="main_btn register_btn" *ngIf="!event.isSubscribe" expand="full" (click)="subscribeEvent()">
+        Register
+    </ion-button>
+    <ion-button class="main_btn register_btn" *ngIf="event.isSubscribe" expand="full" color="danger"
+        (click)="subscribeEvent()">Deregister
+    </ion-button>
+</ion-footer>
