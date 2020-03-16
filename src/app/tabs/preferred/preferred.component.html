@@ -9,7 +9,7 @@
                         (ionError)="setdefultImage($event)"> </ion-img>
                     <img src="/assets/Shape.png" class="style_img">
                 </div>
-                <ion-card-header *ngIf="user.UserId"  padding-horizontal no-padding horizontal="start">
+                <ion-card-header *ngIf="user.UserId" padding-horizontal no-padding horizontal="start">
                     <ion-card-title horizontal="start">
                         <div class="data_div ion-margin-horizontal">
                             <h3 class="name">{{user.FName | blankValue}}</h3>
@@ -33,14 +33,13 @@
                             </ion-chip>
                             <p class="test_p"> {{user.AboutMe}}</p>
                             <div class="btn_div" *ngIf="user.UserId">
-                              
-                                    <button (click)='notIntrested()'>
-                                        <ion-icon src="/assets/cancel.svg"></ion-icon>
-                                    </button>
-                                    <button (click)="sendFriendRequest(user)">
-                                        <ion-icon src="/assets/gree_heart.svg"></ion-icon>
-                                    </button>
-                              
+                                <ion-button (click)='notIntrested()'>
+                                    <ion-icon src="/assets/cancel.svg"></ion-icon>
+                                </ion-button>
+                                <ion-button (click)="sendFriendRequest(user)">
+                                    <ion-icon src="/assets/gree_heart.svg"></ion-icon>
+                                </ion-button>
+
 
                             </div>
                         </div>
