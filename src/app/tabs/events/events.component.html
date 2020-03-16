@@ -1,12 +1,20 @@
-<ion-header translucent>
+<!-- <ion-header translucent>
   <ion-toolbar color="client-header">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs"></ion-back-button>
     </ion-buttons>
     <ion-title>Events</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
+<ion-header translucent class="ion-no-border">
+  <ion-toolbar mode="md">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs"  text="" mode="md"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Events</ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-content fullscreen>
   <ion-item-divider sticky class="ion-no-padding">
     <ion-segment [(ngModel)]="selectedTab">

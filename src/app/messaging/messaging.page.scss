@@ -19,10 +19,8 @@ ion-title {
 
 .main {
     .chat-box {
-
         .message-area {
             padding: 0px 10px;
-
             .message {
                 p {
                     margin: 0px;
@@ -102,4 +100,7 @@ ion-title {
 
 ion-header ion-toolbar ion-title{
     color:black;
+}
+ion-item{
+    --background:none;
 }
