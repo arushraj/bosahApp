@@ -34,12 +34,22 @@ const routes: Routes = [
           }
         ]
       }, {
+        path: 'flatsearchform',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../flat-search-form/flat-search-form.module').then(m => m.FlatSearchFormPageModule)
+          }
+        ]
+      },{
         path: '**',
         redirectTo: 'preferred'
       }
     ]
   }
 ];
+
+
 
 @NgModule({
   imports: [

@@ -13,7 +13,6 @@
     </div>
 </ion-header>
 
-
 <ion-content fullscreen class="animated fadeIn fast" #ionContent>
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content pullingIcon="refresh-circle" refreshingSpinner="crescent"></ion-refresher-content>
@@ -26,36 +25,26 @@
                     <ion-thumbnail slot="start" (click)="openDetails(friend, item.id)">
                         <ion-img [src]="friend.ProfileImagePath | imageBinder:friend.Gender" alt=""
                             (ionError)="setdefultImage($event)"> </ion-img>
-
                     </ion-thumbnail>
                     <ion-label (click)="openDetails(friend, item.id)">
-                        <h3>{{friend.FName}}
+                        <h3>{{friend?.FName}}
                             <span *ngIf="friend.LastMessage" class="last-message-time ion-float-right"
                                 [ngClass]="{'message-unread': friend.LastMessage.isRead === false && friend.LastMessage.userId != currentUserId }">
-                                {{ friend.LastMessage.datetime | date:'shortDate' }}
+                                {{ friend.LastMessage?.datetime | date:'shortDate' }}
                             </span> </h3>
                         <p *ngIf="friend.LastMessage" class="msg"
                             [ngClass]="{'message-unread': friend.LastMessage.isRead === false && friend.LastMessage.userId != currentUserId }">
-                            {{ friend.LastMessage.message}}</p>
+                            {{ friend.LastMessage?.message}}</p>
                     </ion-label>
 
                     <ion-fab vertical="center" horizontal="end" class="fab-button-group" *ngIf="item.id === 1">
-
-                         <ion-fab-button class="match_btn ion-float-right" (click)="acceptFriendShip(friend)">
+                        <ion-fab-button class="match_btn ion-float-right" (click)="acceptFriendShip(friend)">
                             <ion-icon src="/assets/heart.svg"></ion-icon>
                         </ion-fab-button>
                         <ion-fab-button class="match_btn ion-float-right" (click)="rejectFriendShip(friend)">
                             <ion-icon src="/assets/close.svg"></ion-icon>
                         </ion-fab-button>
-                       
                     </ion-fab>
-
-                    <!-- <ion-button class="match_btn ion-float-right">
-                        <ion-icon src="/assets/heart.svg"></ion-icon>
-                    </ion-button>
-                    <ion-button class="match_btn ion-float-right">
-                        <ion-icon src="/assets/close.svg"></ion-icon>
-                    </ion-button> -->
                 </ion-item>
             </ion-list>
             <ion-label class="ion-empty-label" *ngIf="item.id === 0 && item.friends.length === 0" color="dark">
@@ -66,48 +55,6 @@
                 <ion-icon name="clipboard" slot="start"></ion-icon>
                 No pending Request
             </ion-label>
-            <!-- <ion-label class="ion-empty-label" *ngIf="item.id === 2 && item.friends.length === 0" color="dark">
-                <ion-icon name="clipboard" slot="start"></ion-icon>
-                No pending Sent Request
-            </ion-label> -->
         </ion-slide>
     </ion-slides>
 </ion-content>
-
-
-
-<!-- 
-<ion-content>
-    <div [ngSwitch]="selectedTab" class="ion-margin-horizontal main_div">
-        <div *ngSwitchCase="'matches'">
-            <ion-item mode="md" *ngFor="let item of matches ;let i = index"
-                [attr.lines]="i + 1 !== matches.length ? 'inset' : 'none'">
-                <ion-avatar slot="start">
-                    <img
-                        src="https://images.pexels.com/photos/1308881/pexels-photo-1308881.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
-                </ion-avatar>
-                <ion-label>
-                    <h3 class="name">{{item?.name}} <span class="ion-float-right">{{item?.time}}</span></h3>
-                    <p class="msg">{{item?.msg}}</p>
-                </ion-label>
-            </ion-item>
-        </div>
-        <div *ngSwitchCase="'pending'">
-            <ion-item mode="md" *ngFor="let item of pendingdata ;let i = index">
-                <ion-avatar slot="start" class="pending_img">
-                    <img
-                        src="https://images.pexels.com/photos/1308881/pexels-photo-1308881.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
-                </ion-avatar>
-                <ion-label>
-                    <h3 class="name">{{item?.name}}</h3>
-                    <ion-button class="match_btn ion-float-right">
-                        <ion-icon src="../../../assets/image/heart.svg"></ion-icon>
-                    </ion-button>
-                    <ion-button class="match_btn ion-float-right">
-                        <ion-icon src="../../../assets/image/close.svg"></ion-icon>
-                    </ion-button>
-                </ion-label>
-            </ion-item>
-        </div>
-    </div>
-</ion-content> -->
