@@ -40,22 +40,22 @@
 //     font-family: "Montserrat";
 // }
 
-// .menu-button {
-//     background-color: var(--ion-color-client-menu);
-//     border-radius: 3px;
-// }
+.menu-button {
+    background-color: var(--ion-color-client-menu);
+    border-radius: 3px;
+}
 
-// .menu-content {
-//     background-color: var(--ion-color-client-menu);
-// }
+.menu-content {
+    background-color: var(--ion-color-client-menu);
+}
 
-// .divider {
-//     border-top: #4c4c4c solid 1px;
-// }
+.divider {
+    border-top: #4c4c4c solid 1px;
+}
 
-// .app-background-img {
-//     --background: url(/assets/street-map.png) 0 0/100% 50%;
-// }
+.app-background-img {
+    --background: url(/assets/street-map.png) 0 0/100% 50%;
+}
 
 // .auto-top-bottom-marging {
 //     margin: auto !important;
@@ -65,12 +65,12 @@
 //     margin: 0 auto !important;
 // }
 
-// .sticky-box-shadow {
-//     // background-color: #e3e5e6;    
-//     -webkit-box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
-//     -moz-box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
-//     box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
-// }
+.sticky-box-shadow {
+    // background-color: #e3e5e6;    
+    -webkit-box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
+    -moz-box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
+    box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
+}
 
 .appText {
     color: #58A18D;
@@ -94,9 +94,9 @@
 //     margin: 0 auto;
 // }
 
-// .headerImage {
-//     margin: 5% 25%;
-// }
+.headerImage {
+    margin: 5% 25%;
+}
 
 ion-button {
     --ripple-color: transparent;
