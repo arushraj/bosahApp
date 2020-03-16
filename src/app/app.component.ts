@@ -63,15 +63,6 @@ export class AppComponent {
     icon: 'people',
     routerDirection: 'forward'
   }
-    // {
-    //   title: 'Preferred List',
-    //   url: '/preferredprofile',
-    //   icon: 'heart'
-    // }, {
-    //   title: 'User Login',
-    //   url: 'userlogin',
-    //   icon: 'person'
-    // }
   ];
 
   constructor(

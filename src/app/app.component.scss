@@ -5,7 +5,10 @@
 ion-menu-toggle {
     ion-icon {
         font-size: 2em;
-        color: #61afff;
+        // color: #61afff;
+    }
+    ion-item{
+        --background:none;
     }
 
     ion-label {
