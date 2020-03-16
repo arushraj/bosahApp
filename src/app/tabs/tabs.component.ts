@@ -14,16 +14,26 @@ export class TabsComponent implements OnInit {
   public tabs = [{
     name: 'Suggested',
     icon: 'star',
-    route: 'preferred'
+    route: 'preferred',
+    index:  0
   }, {
     name: 'Match',
-    icon: 'heart',
-    route: 'match'
+    icon: '/assets/heart.svg',
+    route: 'match',
+    index:  1
   }, {
     name: 'Profile',
-    icon: 'person',
-    route: 'userprofile'
-  }];
+    icon: 'Person',
+    route: 'userprofile',
+    index:  2
+  },
+  {
+    name: 'Search',
+    icon: 'Search',
+    route: 'flatsearchform',
+    index:  3
+  }
+];
   // {
   //   name: 'Events',
   //   icon: 'calendar',
