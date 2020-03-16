@@ -22,6 +22,8 @@ export class ModifyPreferencesPage implements OnInit {
   public pets: Pet[];
   public genders: Array<{ genderId: number, gender: string }> = [];
   public currentUser: CurrentUser;
+  public female: boolean;
+  public male: boolean;
 
   constructor(private appService: AppService, private fb: FormBuilder) {
     this.userForm = this.fb.group({
@@ -42,6 +44,13 @@ export class ModifyPreferencesPage implements OnInit {
     this.appService.getCurrentUser().subscribe((user) => {
       this.currentUser = user;
       if (user.UserId) {
+        this.currentUser.RoommatePreferences.GenderIds.forEach(item => {
+          if (item === 1) {
+            this.male = true;
+          } else if (item === 2) {
+            this.female = true;
+          }
+        });
         this.userForm.patchValue({
           preferredGender: this.currentUser.RoommatePreferences.GenderIds,
           preferredReligion: this.currentUser.RoommatePreferences.ReligionIds,
@@ -61,6 +70,13 @@ export class ModifyPreferencesPage implements OnInit {
   }
 
   public submitForm() {
+    this.userForm.value.preferredGender = [];
+    if (this.male) {
+      this.userForm.value.preferredGender.push(1);
+    }
+    if (this.female) {
+      this.userForm.value.preferredGender.push(2);
+    }
     const data = {
       UserId: this.currentUser.UserId,
       PreferredGenderIds: this.userForm.value.preferredGender.join(','),
