@@ -27,10 +27,10 @@ export class FlatSearchFormPage implements OnInit {
 
   constructor(private appService: AppService, private toast: Toast, private fb: FormBuilder) {
     this.userForm = this.fb.group({
-      RentBudgetId: ['', Validators.compose([Validators.required])],
+      // RentBudgetId: ['', Validators.compose([Validators.required])],
       CityId: ['', Validators.compose([Validators.required])],
       BedroomTypeId: ['', Validators.compose([Validators.required])],
-      BathroomTypeId: ['', Validators.compose([Validators.required])],
+      // BathroomTypeId: ['', Validators.compose([Validators.required])],
       DesiredMoveInDate: ['', Validators.compose([Validators.required])],
       Comments: ['']
     });
@@ -65,4 +65,11 @@ export class FlatSearchFormPage implements OnInit {
   private cleanForm() {
     this.userForm.reset();
   }
+
+  private selectBdRoom(event: any) {
+    debugger;
+    this.userForm.value.BedroomTypeId = event;
+    
+  }
+
 }

@@ -30,7 +30,7 @@
           <ion-label position="stacked">Select City <ion-text color="danger">*</ion-text>
           </ion-label>
           <ion-select placeholder="Select One" required formControlName="CityId">
-            <ion-select-option required *ngFor="let item of locations" [value]="item.CityId">{{item.City}}
+            <ion-select-option  *ngFor="let item of locations" [value]="item.CityId">{{item.City}}
             </ion-select-option>
           </ion-select>
         </ion-item>
@@ -38,7 +38,7 @@
         <div class="btn_div ion-margin-horizontal">
           <p class="info_lbl">Number of Bedrooms</p>
          
-            <ion-button *ngFor="let item of bedrooms" [ngClass]="one==1 ? 'active':''" (click)="one=1;two=0;three=0;four=0;five=0">
+            <ion-button *ngFor="let item of bedrooms" [ngClass]="one==1 ? 'active':''" (click)="selectBdRoom(item.BedroomType)">
               {{item.BedroomType}}
             </ion-button>
           
@@ -48,7 +48,7 @@
             <h3 class="info_lbl">Desired Move-in-Date<ion-text color="danger">*</ion-text></h3>
             <div class="date_div">
               <ion-icon src="/assets/date_time.svg"></ion-icon>
-              <ion-datetime displayFormat="DD-MMM-YYYY" required formControlName="DesiredMoveInDate">
+              <ion-datetime displayFormat="DD-MMM-YYYY"  formControlName="DesiredMoveInDate">
               </ion-datetime>
               <ion-button class="close_btn  transparent_btn" slot="end">
                 <ion-icon src="/assets/black_close.svg"></ion-icon>
