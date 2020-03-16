@@ -44,3 +44,79 @@ ion-card-subtitle {
         }
     }
 }
+
+
+
+//new
+
+ion-content {
+    .img_div {
+      img {
+        width: 100%;
+      }
+      .style_img {
+        margin-top: -53px;
+      }
+    }
+    .data_div {
+      padding-left: 20px;
+      .name {
+        color: var(--my_theme);
+        font-size: 30px;
+        font-family: "poppins_sb";
+        margin-top: -30px;
+        margin-bottom: 16px;
+      }
+      .job {
+        color: var(--black);
+        font-family: "poppins_me";
+        font-size: 18px;
+        margin-top: 0;
+        margin-bottom: 10px;
+        ion-icon {
+          margin-right: 10px;
+        }
+      }
+      ion-chip {
+        width: 200px;
+        --background: var(--chip_back);
+        ion-icon {
+          margin-right: 25px;
+          margin-left: 8px;
+        }
+        .chip_lbl {
+          font-size: 16px;
+          font-family: "poppins_r";
+          color: var(--sfont);
+        }
+      }
+      .test_p {
+        color: var(--black);
+        font-size: 16px;
+        font-family: "poppins_me";
+        margin: 0;
+        padding-left: 10px;
+      }
+      .btn_div {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        text-align: center;
+        ion-button {
+          height: 30px;
+          width: 30px;
+          --border-radius: 50%;
+          --background: var(--white);
+          --box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.2);
+          --padding-start: 0;
+          --padding-end: 0;
+          margin-left: 10px;
+          margin-right: 5px;
+          ion-icon {
+            color: var(--my_theme);
+            height: 14px;
+          }
+        }
+      }
+    }
+  }
+  

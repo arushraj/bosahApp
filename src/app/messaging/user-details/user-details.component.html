@@ -4,7 +4,7 @@
         <ion-button slot="end" fill="clean" (click)="dismissModal()">Close</ion-button>
     </ion-toolbar>
 </ion-header>
-<ion-content fullscreen>
+<!-- <ion-content fullscreen>
     <ion-card>
         <ion-img [src]="user.ProfileImagePath.replace('thumbnail_','') | imageBinder:user.Gender" alt=""
             class="user-img" (ionError)="setdefultImage($event)">
@@ -71,4 +71,46 @@
         </ion-card-content>
 
     </ion-card>
-</ion-content>
+</ion-content> -->
+
+<ion-content>
+    <div class="main_div">
+      <div class="img_div">
+        <ion-img [src]="user.ProfileImagePath.replace('thumbnail_','') | imageBinder:user.Gender" alt=""
+            class="user-img" (ionError)="setdefultImage($event)">
+        </ion-img>
+        <img src="/assets/Shape.png" class="style_img">
+      </div>
+      <div class="data_div ion-margin-horizontal">
+        <h3 class="name"> {{user.FName | blankValue}}</h3>
+        <p class="job">
+          <ion-icon src="/assets/job.svg"></ion-icon>  {{user.Job | blankValue}}
+        </p>
+        <p class="job">
+          <ion-icon src="/assets/degree.svg"></ion-icon>  {{user.College | blankValue}}
+        </p>
+        <ion-chip>
+          <ion-icon src="/assets/smoke.svg"></ion-icon>
+          <ion-label class="chip_lbl"> {{user.UserSmoking | blankValue}}</ion-label>
+        </ion-chip>
+        <ion-chip>
+          <ion-icon src="/assets/drink.svg"></ion-icon>
+          <ion-label class="chip_lbl"> {{user.UserDrinking | blankValue}}</ion-label>
+        </ion-chip>
+        <ion-chip>
+          <ion-icon src="/assets/men_flit.svg"></ion-icon>
+          <ion-label class="chip_lbl">{{user.UserPet | blankValue}}</ion-label>
+        </ion-chip>
+        <p class="test_p"> {{user.AboutMe}}</p>
+        <!-- <div class="btn_div">
+          <ion-button>
+            <ion-icon src="/assets/cancel.svg"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon src="/assets/gree_heart.svg"></ion-icon>
+          </ion-button>
+        </div> -->
+      </div>
+  
+    </div>
+  </ion-content>

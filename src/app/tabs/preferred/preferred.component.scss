@@ -13,16 +13,12 @@ ion-slide ion-card ion-card-header {
     // margin-top: 5%;
 }
 
-// ion-slide ion-card ion-card-content {
-//     padding: 0;
-//     width: 40%;
-//     // height: 100px;
-//     margin: 0 auto;
-
-//     .ion-fab-relative {
-//         position: relative;
-//     }
-// }
+ion-slide ion-card ion-card-content {
+    padding: 0;
+    width: 40%;
+    // height: 100px;
+    margin: 0 auto;
+}
 
 
 
@@ -77,6 +73,7 @@ ion-content {
     .img_div {
         ion-img {
         width: 100%;
+        max-height: 40%;
       }
       .style_img {
         margin-top: -53px;

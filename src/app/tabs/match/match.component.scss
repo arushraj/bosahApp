@@ -39,3 +39,76 @@ ion-slides ion-slide .ion-empty-label {
     font-weight: 800;
     color: #58d4f1;
 }
+
+//New CSS
+ion-header {
+    .segment_div {
+      padding: 10px 16px;
+      margin-top: 16px;
+      ion-segment {
+        --background: var(--white);
+        border-radius: 20px;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+        ion-segment-button {
+          margin: 0;
+          --indicator-color: var(--my_theme);
+          --color: var(--sfont);
+          --color-checked: var(--white);
+          --border-radius: 20px;
+          --background-checked: var(--my_theme);
+  
+          ion-label {
+            font-family: "poppins_r";
+          }
+        }
+      }
+    }
+
+    ion-toolbar {
+        --background: none;
+        }
+  }
+
+  ion-content {
+    .main_div {
+      padding-top: 10px;
+      ion-item {
+        --padding-start: 0;
+        --inner-padding-end: 0;
+        .name {
+          font-size: 16px;
+          color: var(--black);
+          font-family: "poppins_sb";
+          span {
+            font-size: 12px;
+            color: var(--black);
+            font-family: "poppins_r";
+            padding-top: 5px;
+          }
+        }
+        .msg {
+          font-size: 14px;
+          color: var(--dark_gray);
+          font-family: "poppins_r";
+        }
+        .match_btn {
+          height: 30px;
+          width: 30px;
+          --border-radius: 50%;
+          --background: var(--white);
+          --box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.2);
+          --padding-start: 0;
+          --padding-end: 0;
+          margin-left: 10px;
+          margin-right: 5px;
+          ion-icon {
+            color: var(--my_theme);
+            height: 14px;
+          }
+        }
+        .pending_img {
+          margin-top: -8px;
+        }
+      }
+    }
+  }
