@@ -1,5 +1,5 @@
-<ion-header translucent class="sticky-box-shadow">
-  <ion-toolbar color="client-header">
+<ion-header translucent class="ion-no-border">
+  <ion-toolbar mode="md">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs"></ion-back-button>
     </ion-buttons>
@@ -8,61 +8,74 @@
 </ion-header>
 
 <ion-content fullscreen>
-  <ion-img src="/assets/Title_Logo.jpg" alt="Bosah Icon Image" class="headerImage"></ion-img> 
-  <form [formGroup]="userForm" (ngSubmit)="submitForm()">
-    <ion-list lines="full" class="ion-no-margin ion-no-padding">
-      <ion-item>
-        <ion-label position="stacked">Select City <ion-text color="danger">*</ion-text>
-        </ion-label>
-        <ion-select placeholder="Select One" required formControlName="CityId">
-          <ion-select-option required *ngFor="let item of locations" [value]="item.CityId">{{item.City}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Rent Budget Per Person<ion-text color="danger">*</ion-text>
-        </ion-label>
-        <ion-select placeholder="Select One" required formControlName="RentBudgetId">
-          <ion-select-option *ngFor="let item of rentBudget" [value]="item.RentBudgetID">{{item.RentBudgetType}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Number of Bedrooms<ion-text color="danger">*</ion-text>
-        </ion-label>
-        <ion-select placeholder="Select One" required formControlName="BedroomTypeId">
-          <ion-select-option *ngFor="let item of bedrooms" [value]="item.BedroomID">{{item.BedroomType}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Number of Bathrooms<ion-text color="danger">*</ion-text>
-        </ion-label>
-        <ion-select placeholder="Select One" required formControlName="BathroomTypeId">
-          <ion-select-option *ngFor="let item of bathrooms" [value]="item.BathroomID">{{item.BathRoomType}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Desired Move-In Date <ion-text color="danger">*</ion-text>
-        </ion-label>
-        <ion-input required formControlName="DesiredMoveInDate" placeholder="DD-MM-YYYY" type="Date"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Neighborhoods and Desired Amenities</ion-label>
-        <ion-textarea formControlName="Comments"></ion-textarea>
-      </ion-item>
-    </ion-list>
-
-    <div class="ion-padding">
-      <ion-button expand="block" type="submit" class="ion-no-margin" [disabled]="userForm.invalid">
-        <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon> Submit
-      </ion-button>
+  <div class="main_div">
+    <div class="logo_div">
+      <div class="img_div">
+        <ion-img src="/assets/bosahgroup.png"></ion-img> 
+      </div>
     </div>
-  </form>
+
+    <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+      <ion-list lines="full" class="ion-no-margin ion-no-padding">
+       
+        <ion-item mode="md" lines="none" class="rent_item ion-margin-start">
+          <ion-label>
+            <h3 class="info_lbl rent_lbl">Rent Budget Per Person</h3>
+            <ion-range id="dual-range" dual-knobs pin min="800" max="2000" value="1400" mode="md">
+            </ion-range>
+          </ion-label>
+    
+        </ion-item>        
+        <ion-item>
+          <ion-label position="stacked">Select City <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-select placeholder="Select One" required formControlName="CityId">
+            <ion-select-option  *ngFor="let item of locations" [value]="item.CityId">{{item.City}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <div class="btn_div ion-margin-horizontal">
+          <p class="info_lbl">Number of Bedrooms</p>
+         
+            <ion-button *ngFor="let item of bedrooms" [ngClass]="one==1 ? 'active':''" (click)="selectBdRoom(item.BedroomType)">
+              {{item.BedroomType}}
+            </ion-button>
+          
+        </div>     
+        <ion-item mode="md" class="ion-margin-horizontal desired_item">
+          <ion-label>
+            <h3 class="info_lbl">Desired Move-in-Date<ion-text color="danger">*</ion-text></h3>
+            <div class="date_div">
+              <ion-icon src="/assets/date_time.svg"></ion-icon>
+              <ion-datetime displayFormat="DD-MMM-YYYY"  formControlName="DesiredMoveInDate">
+              </ion-datetime>
+              <ion-button class="close_btn  transparent_btn" slot="end">
+                <ion-icon src="/assets/black_close.svg"></ion-icon>
+              </ion-button>
+            </div>
+    
+          </ion-label>
+        </ion-item>      
+       
+        <ion-item class="neighborhood ion-margin-horizontal">
+          <ion-label class="info_lbl" position="stacked">Neighborhoods and Desired Amenities</ion-label>
+          <ion-textarea formControlName="Comments" rows="2"></ion-textarea>
+        </ion-item>
+
+      </ion-list>
+  
+      <div class="ion-padding">
+        <ion-button expand="block" type="submit" class="ion-no-margin" >
+          <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon> Submit
+        </ion-button>
+      </div>
+    </form>
+  </div>
+  
 </ion-content>
+
+
+
+
+

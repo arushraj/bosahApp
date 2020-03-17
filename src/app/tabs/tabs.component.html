@@ -1,14 +1,13 @@
 <ion-tabs (ionTabsDidChange)="tabsDidChange()" #apptabs>
   <ion-tab-bar slot="bottom">
     <ion-tab-button [tab]="tab.route" *ngFor="let tab of tabs">
-
-      <ion-icon [src]="tab.icon" class="tab-icon"  *ngIf="tab.index==1"></ion-icon>
-      <ion-icon [name]="tab.icon" class="tab-icon" style="font-size:30px"  *ngIf="tab.index!=1"></ion-icon>
+      <ion-icon [src]="tab.icon" class="tab-icon" *ngIf="tab.name == 'Match'"></ion-icon>
+      <ion-icon [name]="tab.icon" class="tab-icon" style="font-size:30px" *ngIf="tab.name != 'Match'"></ion-icon>
       <ion-label>{{tab.name}}</ion-label>
     </ion-tab-button>
     <ion-tab-button>
       <ion-menu-button></ion-menu-button>
       <ion-label>Menu</ion-label>
-    </ion-tab-button> 
+    </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
