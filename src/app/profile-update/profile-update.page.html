@@ -135,6 +135,7 @@
         <ion-input required formControlName="Job" type="text" autoCapitalize='words'></ion-input>
       </div>
     </div>
+
     <div class="data_div">
       <div class="img_div">
         <img src="/assets/gender.png">
@@ -148,24 +149,24 @@
         </ion-select>
       </div>
     </div>
-    <div class="data_div">
+    <!-- <div class="data_div">
       <div class="img_div">
         <img src="/assets/age.png">
       </div>
 
       <div class="info_div">
         <h3 class="info_lbl">Age</h3>
-        <ion-input value="26" type="tel"></ion-input>
+        <ion-input value="26" type="tel"  readonly></ion-input>
       </div>
-    </div>
+    </div> -->
     <div class="data_div">
       <div class="img_div">
-        <img src="/assets/email.png">
+        <img src="/assets/email_green.svg">
       </div>
 
       <div class="info_div">
         <h3 class="info_lbl">Email</h3>
-        <ion-input value="example@mail.com" type="email"></ion-input>
+        <ion-input required formControlName="EmailId" type="email" readonly></ion-input>
       </div>
     </div>
     <div class="data_div">
@@ -175,7 +176,7 @@
 
       <div class="info_div">
         <h3 class="info_lbl">Phone</h3>
-        <ion-input value="+1125 325 3366" type="tel"></ion-input>
+        <ion-input required formControlName="PhoneNumber" type="tel" readonly></ion-input>
       </div>
     </div>
     <div class="data_div">
@@ -245,6 +246,17 @@
         </ion-select>
       </div>       
      </div> 
+
+     <div class="data_div">
+      <div class="img_div">
+        <img src="/assets/job.png">
+      </div>
+
+      <div class="info_div">
+        <h3 class="info_lbl">About Me</h3>
+        <ion-input  formControlName="AboutMe" type="text" autoCapitalize='words'></ion-input>
+      </div>
+    </div>
   </div>
 </form>
 </ion-content>

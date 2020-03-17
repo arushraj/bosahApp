@@ -67,7 +67,6 @@ export class FlatSearchFormPage implements OnInit {
   }
 
   private selectBdRoom(event: any) {
-    debugger;
     this.userForm.value.BedroomTypeId = event;
     
   }
