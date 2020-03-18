@@ -68,12 +68,11 @@
   </ion-card>
 </ion-content> -->
 
-
 <ion-content class="animated fadeInUp fast" #ionContent>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="refresh-circle" refreshingSpinner="crescent"></ion-refresher-content>
   </ion-refresher>
-  <div class="main_div">
+  <div class="main_div" *ngIf="currentUser">
     <div class="div_img">
       <img src="/assets/logo.png" height="70">
       <img src="/assets/profile_shape.png" class="style_img" height="126">
@@ -85,8 +84,8 @@
           </ion-img>
           <ion-button class="upload_btn" (click)="selectImage()">
             <ion-icon src="/assets/plus.svg"></ion-icon>
-
           </ion-button>
+
           <h3 class="name">{{currentUser.FName | blankValue}}</h3>
         </div>
 

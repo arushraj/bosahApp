@@ -24,6 +24,8 @@ export class FlatSearchFormPage implements OnInit {
   public bathrooms: Bathroom[];
   public userId: string;
   public userForm: FormGroup;
+  public rangeValue = { lower: 800, upper: 2000 };
+  public selectedBedroomType:string;
 
   constructor(private appService: AppService, private toast: Toast, private fb: FormBuilder) {
     this.userForm = this.fb.group({
@@ -32,7 +34,8 @@ export class FlatSearchFormPage implements OnInit {
       BedroomTypeId: ['', Validators.compose([Validators.required])],
       // BathroomTypeId: ['', Validators.compose([Validators.required])],
       DesiredMoveInDate: ['', Validators.compose([Validators.required])],
-      Comments: ['']
+      Comments: [''],
+      roomrentRange: ['', Validators.compose([Validators.required])]
     });
     this.appService.getLocation().subscribe((locations) => {
       this.locations = locations;
@@ -56,6 +59,7 @@ export class FlatSearchFormPage implements OnInit {
 
   public submitForm() {
     const data = Object.assign({}, this.userForm).value;
+    console.log(data);
     data.UserId = this.userId;
     this.appService.submitFlatSearchForm(data).then(() => {
       this.cleanForm();
@@ -66,9 +70,15 @@ export class FlatSearchFormPage implements OnInit {
     this.userForm.reset();
   }
 
-  private selectBdRoom(event: any) {
+  private selectBedRoom(event: any) {
     this.userForm.value.BedroomTypeId = event;
+    this.selectedBedroomType=event;
     
+  }
+
+  public rangeChange(event) {
+    this.rangeValue.lower = event.detail.value.lower;
+    this.rangeValue.upper = event.detail.value.upper;
   }
 
 }

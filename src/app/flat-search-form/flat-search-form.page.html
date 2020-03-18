@@ -21,7 +21,10 @@
         <ion-item mode="md" lines="none" class="rent_item ion-margin-start">
           <ion-label>
             <h3 class="info_lbl rent_lbl">Rent Budget Per Person</h3>
-            <ion-range id="dual-range" dual-knobs pin min="800" max="2000" value="1400" mode="md">
+            <ion-range id="dual-range"  min="800" max="2000"  mode="md"  dualKnobs="true" pin="true"  [value]="rangeValue" 
+            (ionChange)="rangeChange($event)" #roomrentRange>
+            <ion-label slot="start">800</ion-label>
+              <ion-label slot="end">2000</ion-label>
             </ion-range>
           </ion-label>
     
@@ -38,7 +41,7 @@
         <div class="btn_div ion-margin-horizontal">
           <p class="info_lbl">Number of Bedrooms</p>
          
-            <ion-button *ngFor="let item of bedrooms" [ngClass]="one==1 ? 'active':''" (click)="selectBdRoom(item.BedroomType)">
+            <ion-button *ngFor="let item of bedrooms" [ngClass]="item.BedroomType==selectedBedroomType ? 'active':''" (click)="selectBedRoom(item.BedroomType)">
               {{item.BedroomType}}
             </ion-button>
           
