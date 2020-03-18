@@ -33,13 +33,14 @@
                             </ion-chip>
                             <p class="test_p"> {{user.AboutMe}}</p>
                             <div class="btn_div" *ngIf="user.UserId">
-                                <ion-button (click)='notIntrested()'>
-                                    <ion-icon src="/assets/cancel.svg"></ion-icon>
-                                </ion-button>
-                                <ion-button (click)="sendFriendRequest(user)">
-                                    <ion-icon src="/assets/gree_heart.svg"></ion-icon>
-                                </ion-button>
-
+                              
+                                    <ion-button (click)='notIntrested()'>
+                                        <ion-icon src="/assets/cancel.svg"></ion-icon>
+                                    </ion-button>
+                                    <ion-button (click)="sendFriendRequest(user)">
+                                        <ion-icon src="/assets/gree_heart.svg"></ion-icon>
+                                    </ion-button>
+                              
 
                             </div>
                         </div>
