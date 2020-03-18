@@ -22,10 +22,10 @@
         <ion-slide *ngFor="let item of pageTabs">
             <ion-list *ngIf="item.friends.length>0" class="animated slideInRight fastest">
                 <ion-item *ngFor="let friend of item.friends" mode="md">
-                    <ion-thumbnail slot="start" (click)="openDetails(friend, item.id)">
+                    <ion-avatar  slot="start" (click)="openDetails(friend, item.id)">
                         <ion-img [src]="friend.ProfileImagePath | imageBinder:friend.Gender" alt=""
                             (ionError)="setdefultImage($event)"> </ion-img>
-                    </ion-thumbnail>
+                    </ion-avatar>
                     <ion-label (click)="openDetails(friend, item.id)">
                         <h3>{{friend?.FName}}
                             <span *ngIf="friend.LastMessage" class="last-message-time ion-float-right"
