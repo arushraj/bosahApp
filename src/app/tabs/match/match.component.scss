@@ -43,20 +43,22 @@ ion-slides ion-slide .ion-empty-label {
 
 //New CSS
 ion-header {
+  background-color: var(--my_theme);
     .segment_div {
       padding: 10px 16px;
       margin-top: 16px;
       ion-segment {
-        --background: var(--white);
+       --background: none;
         border-radius: 20px;
         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
         ion-segment-button {
           margin: 0;
           --indicator-color: var(--my_theme);
           --color: var(--sfont);
-          --color-checked: var(--white);
+          --color-checked: var(--my_theme);
           --border-radius: 20px;
           --background-checked: var(--my_theme);
+            background-color: white;
   
           ion-label {
             font-family: "poppins_r";
@@ -65,8 +67,10 @@ ion-header {
       }
     }
 
-    ion-toolbar {
-        --background: none;
+        ion-item-divider 
+        {
+         background: none;
+          
         }
   }
 

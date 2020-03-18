@@ -21,7 +21,7 @@
         class="ion-margin-horizontal main_div">
         <ion-slide *ngFor="let item of pageTabs">
             <ion-list *ngIf="item.friends.length>0" class="animated slideInRight fastest">
-                <ion-item *ngFor="let friend of item.friends" mode="md">
+                <ion-item *ngFor="let friend of item.friends" mode="ios">
                     <ion-avatar  slot="start" (click)="openDetails(friend, item.id)">
                         <ion-img [src]="friend.ProfileImagePath | imageBinder:friend.Gender" alt=""
                             (ionError)="setdefultImage($event)"> </ion-img>

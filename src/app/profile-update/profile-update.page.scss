@@ -5,7 +5,7 @@
 ion-header {
     ion-button {
       text-transform: capitalize;
-      --color: var(--white);
+      --color: var(--white) !important;
       font-size: 14px;
       font-family: "poppins_r";
     }

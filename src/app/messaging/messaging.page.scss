@@ -1,6 +1,8 @@
 ion-title {
     padding-left: 10px;
 
+   
+
     .user-name {
         position: relative;
         top: 5px;
@@ -15,6 +17,10 @@ ion-title {
     .online {
         color: #39ef39;
     }
+}
+
+ion-back-button{
+    --color:white;
 }
 
 .main {

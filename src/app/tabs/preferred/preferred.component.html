@@ -1,3 +1,9 @@
+<ion-header  class="ion-no-border">
+    <ion-toolbar mode="md">     
+      <ion-title>Suggested</ion-title>
+    </ion-toolbar>
+  </ion-header> 
+
 <ion-content fullscreen class="animated fadeInUp fast" horizontal="start">
     <ion-slides [options]="slideOpts" #preferredUserSlides>
         <ion-slide *ngFor="let user of preferredUser" class="animated zoomIn">
