@@ -1,4 +1,4 @@
-<ion-header translucent class="ion-no-border">
+<ion-header  class="ion-no-border">
   <ion-toolbar mode="md">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs"></ion-back-button>
@@ -11,14 +11,14 @@
   <div class="main_div">
     <div class="logo_div">
       <div class="img_div">
-        <ion-img src="/assets/bosahgroup.png"></ion-img> 
+        <img src="/assets/bosahgroup.png">
       </div>
     </div>
 
     <form [formGroup]="userForm" (ngSubmit)="submitForm()">
-      <ion-list lines="full" class="ion-no-margin ion-no-padding">
-       
+      <ion-list lines="full" class="ion-no-margin ion-no-padding">       
         <ion-item mode="md" lines="none" class="rent_item ion-margin-start">
+          
           <ion-label>
             <h3 class="info_lbl rent_lbl">Rent Budget Per Person</h3>
             <ion-range id="dual-range"  min="800" max="2000"  mode="md"  dualKnobs="true" pin="true"  [value]="rangeValue" 
@@ -30,6 +30,7 @@
     
         </ion-item>        
         <ion-item>
+          <ion-icon src="/assets/pin_svg.svg"></ion-icon>
           <ion-label position="stacked">Select City <ion-text color="danger">*</ion-text>
           </ion-label>
           <ion-select placeholder="Select One" required formControlName="CityId">

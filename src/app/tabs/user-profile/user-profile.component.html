@@ -80,8 +80,8 @@
     <div class="data_div ion-margin-horizontal">
       <div class="info_div">
         <div class="profile_div">
-          <ion-img [src]="ProfileImagePath" alt="" (ionError)="setdefultImage($event)">
-          </ion-img>
+          <img [src]="ProfileImagePath" alt="" (ionError)="setdefultImage($event)">
+          <!-- </ion-img> -->
           <ion-button class="upload_btn" (click)="selectImage()">
             <ion-icon src="/assets/plus.svg"></ion-icon>
           </ion-button>
