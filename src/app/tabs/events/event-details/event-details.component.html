@@ -36,9 +36,9 @@
 
     <div class="main_div ion-margin-horizontal">
         <div class="logo_div">
-            <ion-img [src]="event.EventImageFileName.replace('thumbnail_','') | eventImageBinder" alt=""
+            <img [src]="event.EventImageFileName.replace('thumbnail_','') | eventImageBinder" alt=""
                 (ionError)="setdefultImage($event)" class="user-img">
-            </ion-img>
+            <!-- </ion-img> -->
         </div>
         <h3 class="main_lbl">{{event.EventName}}</h3>
         <p class="info_lbl"> {{event.EventDesc | blankValue}}</p>
