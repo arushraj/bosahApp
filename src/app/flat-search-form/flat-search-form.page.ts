@@ -36,7 +36,7 @@ export class FlatSearchFormPage implements OnInit {
       BathroomTypeId: ['', Validators.compose([Validators.required])],
       DesiredMoveInDate: ['', Validators.compose([Validators.required])],
       Comments: [''],
-      roomrentRange: ['']
+      // roomrentRange: ['']
     });
     this.appService.getLocation().subscribe((locations) => {
       this.locations = locations;
@@ -59,7 +59,6 @@ export class FlatSearchFormPage implements OnInit {
   }
 
   public submitForm() {
-    debugger;
     this.userForm.value.BedroomTypeId=this.selectedBedroomId;
     this.userForm.value.BathroomTypeId=(this.selectedBathroomId);
     const data = Object.assign({}, this.userForm).value;
@@ -74,6 +73,8 @@ export class FlatSearchFormPage implements OnInit {
 
   private cleanForm() {
     this.userForm.reset();
+    this.selectedBedroomId=null;
+    this.selectedBathroomId=null;
   }
 
   private selectBedRoom(selectedBedRoom: number) {
@@ -83,8 +84,13 @@ export class FlatSearchFormPage implements OnInit {
   }
 
   private selectBathRoom(selectedBathroom: any) {
-    this.userForm.value.BathroomTypeId = selectedBathroom;
-    this.selectedBathroomId=selectedBathroom;
+    // if(this.selectedBathroomId !-selectedBathroom)
+    // {
+      this.userForm.value.BathroomTypeId = selectedBathroom;
+      this.selectedBathroomId=selectedBathroom;
+
+    // }
+   
     
   }
 
