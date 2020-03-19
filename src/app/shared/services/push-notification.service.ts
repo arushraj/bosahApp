@@ -46,10 +46,10 @@ export class PushNotificationService {
 
     const options: PushOptions = {
       android: {
-        senderID: '423137540298',
+        senderID: '423137540298', 
         sound: 'true',
         vibrate: 'true',
-        icon: 'ic_launcher'
+        icon: 'android_icon'
       },
       ios: {
         alert: 'true',

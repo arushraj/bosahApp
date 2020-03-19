@@ -42,11 +42,20 @@
         <div class="btn_div ion-margin-horizontal">
           <p class="info_lbl">Number of Bedrooms</p>
          
-            <ion-button *ngFor="let item of bedrooms" [ngClass]="item.BedroomType==selectedBedroomType ? 'active':''" (click)="selectBedRoom(item.BedroomType)">
+            <ion-button *ngFor="let item of bedrooms" [ngClass]="item.BedroomID==selectedBedroomId ? 'active':''" (click)="selectBedRoom(item.BedroomType)">
               {{item.BedroomType}}
             </ion-button>
           
         </div>     
+
+        <div class="btn_div ion-margin-horizontal">
+          <p class="info_lbl">Number of Bathrooms</p>
+         
+            <ion-button *ngFor="let item of bathrooms" [ngClass]="item.BathroomID==selectedBathroomId ? 'active':''" (click)="selectBathRoom(item.BathroomID)">
+              {{item.BathRoomType}}
+            </ion-button>
+          
+        </div>   
         <ion-item mode="md" class="ion-margin-horizontal desired_item">
           <ion-label>
             <h3 class="info_lbl">Desired Move-in-Date<ion-text color="danger">*</ion-text></h3>

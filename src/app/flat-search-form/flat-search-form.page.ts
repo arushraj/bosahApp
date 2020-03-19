@@ -25,17 +25,18 @@ export class FlatSearchFormPage implements OnInit {
   public userId: string;
   public userForm: FormGroup;
   public rangeValue = { lower: 800, upper: 2000 };
-  public selectedBedroomType:string;
+  public selectedBedroomId:number;
+  public selectedBathroomId:number;
 
   constructor(private appService: AppService, private toast: Toast, private fb: FormBuilder) {
     this.userForm = this.fb.group({
       // RentBudgetId: ['', Validators.compose([Validators.required])],
       CityId: ['', Validators.compose([Validators.required])],
       BedroomTypeId: ['', Validators.compose([Validators.required])],
-      // BathroomTypeId: ['', Validators.compose([Validators.required])],
+      BathroomTypeId: ['', Validators.compose([Validators.required])],
       DesiredMoveInDate: ['', Validators.compose([Validators.required])],
       Comments: [''],
-      roomrentRange: ['', Validators.compose([Validators.required])]
+      roomrentRange: ['']
     });
     this.appService.getLocation().subscribe((locations) => {
       this.locations = locations;
@@ -58,7 +59,12 @@ export class FlatSearchFormPage implements OnInit {
   }
 
   public submitForm() {
+    debugger;
+    this.userForm.value.BedroomTypeId=this.selectedBedroomId;
+    this.userForm.value.BathroomTypeId=(this.selectedBathroomId);
     const data = Object.assign({}, this.userForm).value;
+    data.minRentBudget= this.rangeValue.lower,
+    data.maxRentBudget= this.rangeValue.upper
     console.log(data);
     data.UserId = this.userId;
     this.appService.submitFlatSearchForm(data).then(() => {
@@ -70,9 +76,15 @@ export class FlatSearchFormPage implements OnInit {
     this.userForm.reset();
   }
 
-  private selectBedRoom(event: any) {
-    this.userForm.value.BedroomTypeId = event;
-    this.selectedBedroomType=event;
+  private selectBedRoom(selectedBedRoom: number) {
+    this.userForm.value.BedroomTypeId = selectedBedRoom;
+    this.selectedBedroomId=selectedBedRoom;
+    
+  }
+
+  private selectBathRoom(selectedBathroom: any) {
+    this.userForm.value.BathroomTypeId = selectedBathroom;
+    this.selectedBathroomId=selectedBathroom;
     
   }
 
