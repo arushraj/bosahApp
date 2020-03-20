@@ -22,7 +22,7 @@
           <ion-label>
             <h3 class="info_lbl rent_lbl">Rent Budget Per Person</h3>
             <ion-range id="dual-range"  min="800" max="2000"  mode="md"  dualKnobs="true" pin="true"  [value]="rangeValue" 
-            (ionChange)="rangeChange($event)" #roomrentRange>
+            (ionChange)="rangeChange($event)" #roomrentRange class="rentRange">
             <ion-label slot="start">800</ion-label>
               <ion-label slot="end">2000</ion-label>
             </ion-range>
@@ -80,7 +80,7 @@
       </ion-list>
   
       <div class="ion-padding">
-        <ion-button expand="block" type="submit" class="ion-no-margin">
+        <ion-button expand="block" type="submit" class="ion-no-margin btnSubmit">
           <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon> Submit
         </ion-button>
       </div>

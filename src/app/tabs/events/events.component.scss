@@ -20,3 +20,7 @@ ion-slides ion-slide .ion-empty-label {
     margin: auto;
     padding-top: 50%;
 }
+
+.segment-button-checked{
+    --background-checked:var(--my_theme);
+}

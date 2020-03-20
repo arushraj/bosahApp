@@ -47,12 +47,14 @@ export class AppComponent {
     url: '/profileupdate',
     icon: 'create',
     routerDirection: 'forward'
-  }, {
-    title: 'Apartment Search',
-    url: '/flatsearchform',
-    icon: 'search',
-    routerDirection: 'forward'
-  }, {
+  }, 
+  // {
+  //   title: 'Apartment Search',
+  //   url: '/flatsearchform',
+  //   icon: 'search',
+  //   routerDirection: 'forward'
+  // }, 
+  {
     title: 'Settings',
     url: 'profilesetting',
     icon: 'settings',

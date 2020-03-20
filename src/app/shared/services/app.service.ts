@@ -124,8 +124,11 @@ export class AppService {
     }
 
     private createUser(data?: CurrentUser) {
+       
         return {
+            
             UserId: (data && data.UserId) ? data.UserId : '',
+            RoleId: (data && data.RoleId) ? data.RoleId : 1,
             EmailId: (data && data.EmailId) ? data.EmailId : '',
             FName: (data && data.FName) ? data.FName : '',
             LName: (data && data.LName) ? data.LName : '',
@@ -361,6 +364,7 @@ export class AppService {
                                     this.http.get(url, {}, this.header)
                                         .then((res: any) => {
                                             loading.dismiss();
+                        
                                             const resUser: CurrentUser = JSON.parse(res.data);
                                             resUser.UserId = value.toString();
                                             this.setCurrentUser(this.createUser(resUser));

@@ -1,24 +1,13 @@
-ion-card {
-    // margin: 5% 5% 10px 5%;
-    width: 100%;
-}
-
-
-// .user-img {
-//     height: 300px;
-// }
-
 ion-slide ion-card ion-card-header {
     text-align: left;
     // margin-top: 5%;
 }
 
-ion-slide ion-card ion-card-content {
-    padding: 0;
-    width: 40%;
-    // height: 100px;
-    margin: 0 auto;
-}
+// ion-slide ion-card ion-card-content {
+//     padding: 0;
+//     width: 40%;
+//     margin: 0 auto;
+// }
 
 
 
@@ -70,10 +59,14 @@ ion-slide ion-card ion-card-content {
 // }
 ion-content {
     padding-top: 5%;
+    width: 100%;
     .img_div {
         ion-img,img{
         width: 100%;
-        max-height: 40%;
+        // max-height: 40%;
+        .user-img {
+          height: 40%;
+      }
       }
       .style_img {
         margin-top: -53px;
@@ -113,7 +106,7 @@ ion-content {
       }
       .test_p {
         color: var(--black);
-        font-size: 16px;
+        font-size: 13px;
         font-family: "poppins_me";
         margin: 0;
         padding-left: 0px;
@@ -139,5 +132,6 @@ ion-content {
         }
       }
     }
+   
   }
   

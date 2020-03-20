@@ -15,7 +15,7 @@
                         (ionError)="setdefultImage($event)"> </ion-img>
                     <img src="/assets/Shape.png" class="style_img">
                 </div>
-                <ion-card-header *ngIf="user.UserId" padding-horizontal no-padding horizontal="start">
+                <ion-card-header *ngIf="user.UserId" class="ion-no-padding ion-padding-horizontal"  horizontal="start">
                     <ion-card-title horizontal="start">
                         <div class="data_div ion-margin-horizontal">
                             <h3 class="name">{{user.FName | blankValue}}</h3>

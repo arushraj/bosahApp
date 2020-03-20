@@ -25,6 +25,7 @@ export interface CurrentUser {
     SelectedPetId: number;
     SelectedDrinkingId: number;
     SelectedSmokingId: number;
+    RoleId: number;
 }
 
 export interface RoommatePreferences {

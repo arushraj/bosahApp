@@ -122,7 +122,7 @@ ion-button {
       ion-buttons {
         position: relative;
         ion-menu-button {
-          color: red;
+          color: var(--my_theme);
         }
         ion-back-button {
           color: var(--white);
@@ -176,7 +176,5 @@ ion-back-button{
   --color: black !important;
 }
 
-ion-button{
-  --background: var(--my_theme);
-}
+
 
