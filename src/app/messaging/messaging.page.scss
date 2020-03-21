@@ -17,6 +17,10 @@ ion-title {
     .online {
         color: #39ef39;
     }
+
+    .moreOption{
+        color: white;
+    }
 }
 
 
@@ -108,3 +112,15 @@ ion-header ion-toolbar ion-title{
 ion-item{
     --background:none;
 }
+
+ ion-header 
+ {
+   ion-toolbar {
+         ion-item { 
+             ion-button
+             {
+                 color: white;
+             }
+         }
+        }
+    }

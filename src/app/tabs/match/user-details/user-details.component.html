@@ -20,15 +20,15 @@
         <p class="job">
           <ion-icon src="/assets/degree.svg"></ion-icon>  {{user.College | blankValue}}
         </p>
-        <ion-chip>
+        <ion-chip *ngIf="user.UserSmoking">
           <ion-icon src="/assets/smoke.svg"></ion-icon>
           <ion-label class="chip_lbl"> {{user.UserSmoking | blankValue}}</ion-label>
         </ion-chip>
-        <ion-chip>
+        <ion-chip *ngIf="user.UserDrinking">
           <ion-icon src="/assets/drink.svg"></ion-icon>
           <ion-label class="chip_lbl"> {{user.UserDrinking | blankValue}}</ion-label>
         </ion-chip>
-        <ion-chip>
+        <ion-chip *ngIf="user.UserPet">
           <ion-icon src="/assets/men_flit.svg"></ion-icon>
           <ion-label class="chip_lbl">{{user.UserPet | blankValue}}</ion-label>
         </ion-chip>
