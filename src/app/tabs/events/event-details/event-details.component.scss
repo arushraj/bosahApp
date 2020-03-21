@@ -6,7 +6,6 @@ ion-content {
     .logo_div {
       margin-top: 15px;
       background-color: var(--black);
-      height: 200px;
       border-radius: 10px;
       display: flex;
       justify-content: center;
@@ -50,4 +49,16 @@ ion-content {
       font-size: 18px;
       --border-radius: 10px;
     }
+    margin-bottom: 10%;
   }
+
+  ion-header{
+    ion-button
+    {
+      color:white;
+  
+    }
+
+  }
+ 
+ 

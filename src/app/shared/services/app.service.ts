@@ -168,6 +168,7 @@ export class AppService {
                     data.RoommatePreferences.PetIds.toString().split(',').map(Number) : [],
             }
             // (data && data.RoommatePreferences) ? data.RoommatePreferences : null
+           
         };
     }
 

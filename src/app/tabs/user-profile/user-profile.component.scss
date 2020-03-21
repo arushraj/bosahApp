@@ -144,7 +144,8 @@ ion-content {
           margin-bottom: 16px;
           .info_lbl {
             font-size: 11px;
-            color: var(--lbl_gray);
+           // color: var(--lbl_gray);
+            font-weight: bold;
             font-family: "poppins_r";
             margin: 0;
           }
