@@ -11,7 +11,9 @@ ion-menu-toggle {
         --background:none;
     }
 
-    ion-label {
-        color: #262626;
+    ion-label {      
+      color: var(--balck); 
+      font-weight:bold;
+      font-family: "poppins_r";
     }
 }
