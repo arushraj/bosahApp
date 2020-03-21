@@ -4,75 +4,6 @@
         <ion-button slot="end" fill="clean" (click)="dismissModal()">Close</ion-button>
     </ion-toolbar>
 </ion-header>
-<!-- <ion-content fullscreen>
-    <ion-card>
-        <ion-img [src]="user.ProfileImagePath.replace('thumbnail_','') | imageBinder:user.Gender" alt=""
-            class="user-img" (ionError)="setdefultImage($event)">
-        </ion-img>
-        <ion-card-header>
-            <ion-card-title>
-                {{user.FName | blankValue}}, {{user.Age | blankValue}}
-            </ion-card-title>
-            <ion-card-subtitle>
-                <div class="genral-Info">
-                    <p>
-                        <ion-icon slot="start" name="pin"></ion-icon>
-                        {{user.City | blankValue}}
-                    </p>
-                    <p>
-                        <ion-icon slot="start" name="briefcase"></ion-icon>
-                        {{user.Job | blankValue}}
-                    </p>
-                    <p>
-                        <ion-icon slot="start" name="school"></ion-icon>
-                        {{user.College | blankValue}}
-                    </p>
-                </div>
-                <div class="more-info" *ngIf="user.UserPet || user.UserSmoking || user.UserDrinking">
-                    <ion-badge class="badge-color" *ngIf="user.UserPet">
-                        <span>
-                            <ion-icon slot="start" name="paw"></ion-icon>
-                            {{user.UserPet | blankValue}}
-                        </span>
-                    </ion-badge>
-                    <ion-badge class="badge-color" *ngIf="user.UserSmoking">
-                        <span>
-                            <ion-icon slot="start" name="logo-no-smoking"></ion-icon>
-                            {{user.UserSmoking | blankValue}}
-
-                        </span>
-                    </ion-badge>
-                    <ion-badge class="badge-color" *ngIf="user.UserDrinking">
-                        <span>
-                            <ion-icon slot="start" name="wine"></ion-icon>
-                            {{user.UserDrinking | blankValue}}
-
-                        </span>
-                    </ion-badge>
-                </div>
-                <p class="about-me-label">
-                    {{user.AboutMe}}
-                </p>
-            </ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content *ngIf="!isActionTaken && enableActionButton">
-            <div class="fab-buttons">
-                <ion-fab horizontal="start" vertical="center">
-                    <ion-fab-button color="light" size="small" (click)="rejectFriendShip()">
-                        <ion-icon name="close" color="danger"></ion-icon>
-                    </ion-fab-button>
-                </ion-fab>
-                <ion-fab horizontal="end" vertical="center">
-                    <ion-fab-button color="light" size="small" (click)="acceptFriendShip()">
-                        <ion-icon name="heart-empty" color="primary"></ion-icon>
-                    </ion-fab-button>
-                </ion-fab>
-            </div>
-        </ion-card-content>
-
-    </ion-card>
-</ion-content> -->
-
 <ion-content>
     <div class="main_div">
       <div class="img_div">
@@ -102,14 +33,6 @@
           <ion-label class="chip_lbl">{{user.UserPet | blankValue}}</ion-label>
         </ion-chip>
         <p class="test_p"> {{user.AboutMe}}</p>
-        <!-- <div class="btn_div">
-          <ion-button>
-            <ion-icon src="/assets/cancel.svg"></ion-icon>
-          </ion-button>
-          <ion-button>
-            <ion-icon src="/assets/gree_heart.svg"></ion-icon>
-          </ion-button>
-        </div> -->
       </div>
   
     </div>
