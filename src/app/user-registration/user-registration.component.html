@@ -31,13 +31,13 @@
                 <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
               </ion-button>
             </ion-item>
-            <h3 class="appText" *ngIf="otpsend">Please enter one time verification code send to<br />
+            <h3 class="appText" *ngIf="otpsend">Please enter one time verification code sent to<br />
               {{newUser.email}}</h3>
             <ion-item class="otp-textbox" *ngIf="otpsend">
               <ion-label position="floating" class="auto-right-left-marging">ENTER OTP</ion-label>
               <ion-input type="number" (keyup)="onKey($event)" maxlength="4"></ion-input>
             </ion-item>
-            <h3 class="otp-resend" *ngIf="otpsend">Not received your code?<br />
+            <h3 class="otp-resend" *ngIf="otpsend">Haven’t received your code? <br/>
               <ion-button fill="clear" (click)="reSendOTP()">Resend Code</ion-button>
             </h3>
           </form>
