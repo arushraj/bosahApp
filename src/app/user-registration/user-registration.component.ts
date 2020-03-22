@@ -421,8 +421,10 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
             this.toast.show(`Fileerror: ${err}`, `long`, 'bottom').subscribe(() => { });
           });
       } else {
+      
         currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
         correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+        this.displayImage = correctPath+currentName;
         this.copyFileToLocalDirIOS(correctPath, currentName, this.createFileName());
       }
     }, (err) => {
@@ -431,11 +433,15 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // Copy the image to a local folder
+  // Copy the image to a local folder of IOS Devices
   private copyFileToLocalDirIOS(namePath, currentName, newFileName) {
     this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
       // this.startUpload(this.file.dataDirectory + newFileName);
+      const currentImagefilePath = this.webView.convertFileSrc(this.file.dataDirectory + newFileName);
+      // this.toast.show(`Image: ${JSON.stringify(success)}`, `long`, 'bottom').subscribe(() => { });
+      this.displayImage = currentImagefilePath;
       this.lastImage = newFileName;
+      this.newUser.userImage = this.file.dataDirectory + newFileName;
     }, error => {
       this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
     });
