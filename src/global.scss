@@ -54,8 +54,9 @@ h6 ,ion-label{
 }
 
 .app-background-img {
-    --background: url(/assets/street-map.png) 0 0/100% 50%;
+  --background: url(/assets/street-map.png) 0 0/100% 50%;
 }
+
 
 // .auto-top-bottom-marging {
 //     margin: auto !important;
@@ -70,7 +71,9 @@ h6 ,ion-label{
     -webkit-box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
     -moz-box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
     box-shadow: 1px 1px 10px 0px rgba(208, 206, 206, 1);
+    
 }
+
 
 .appText {
     color: #58A18D;
