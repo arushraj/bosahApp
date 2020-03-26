@@ -119,7 +119,9 @@ ion-item{
          ion-item { 
              ion-button
              {
-                 color: white;
+                 ion-icon{
+                     color: white;
+                 }
              }
          }
         }

@@ -13,7 +13,7 @@
   <ion-slides #registrationslides>
     <ion-slide class="otp-slide">
       <ion-card>
-        <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
+        <img class="slide-image" src="/assets/logo.png" alt="" />
         <ion-card-content>
           <form [formGroup]="otpForm" class="otp-form">
             <!-- <form  [formGroup]="" class="otp-form"> -->
@@ -23,12 +23,12 @@
             <ion-item class="email-textbox">
 
               <ion-icon slot="start" name="at" class="auto-top-bottom-marging" color="primary"></ion-icon>
-              <ion-input type="email" placeholder="e-mail" formControlName="email" [(ngModel)]="newUser.email"
+              <ion-input type="email" placeholder="E-mail" formControlName="email" [(ngModel)]="newUser.email"
                 name="email" [disabled]="otpsend" id="email">
               </ion-input>
               <ion-button slot="end" expand="block" fill="clean" shape="round" (click)="sendOTP()"
                 [disabled]="otpsend || otpForm.controls.email.errors">
-                <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
+                <ion-icon slot="end" name="arrow-forward"></ion-icon>
               </ion-button>
             </ion-item>
             <h3 class="appText" *ngIf="otpsend">Please enter one time verification code sent to<br />
@@ -56,7 +56,7 @@
 
     <ion-slide class="refer-slide">
       <ion-card>
-        <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
+        <img class="slide-image" src="/assets/logo.png" alt="" />
         <ion-card-content>
           <form padding-right class="refer-form">
             <h3 class="appText">Did someone refer you? Enter their referral code
@@ -72,7 +72,7 @@
               <ion-icon slot="start" name="arrow-round-back"></ion-icon>
             </ion-button> -->
             <ion-button class="next-button" fill="clear" [disabled]="!isValid" (click)="checkReferralCode()">Continue
-              <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
+              <ion-icon slot="end" name="arrow-forward"></ion-icon>
             </ion-button>
           </div>
         </ion-card-content>
@@ -81,7 +81,7 @@
 
     <ion-slide class="password-slide">
       <ion-card>
-        <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
+        <img class="slide-image" src="/assets/logo.png" alt="" />
         <ion-card-content>
           <form padding-right class="password-form" [formGroup]="passwordForm">
 
@@ -106,7 +106,7 @@
               <ion-icon slot="start" name="arrow-round-back"></ion-icon>
             </ion-button>
             <ion-button class="next-button" fill="clear" [disabled]="passwordForm.invalid" (click)="goToNext()">Continue
-              <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
+              <ion-icon slot="end" name="arrow-forward"></ion-icon>
             </ion-button>
           </div>
         </ion-card-content>
@@ -115,22 +115,22 @@
 
     <ion-slide class="personal-slide">
       <ion-card>
-        <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
+        <img class="slide-image" src="/assets/logo.png" alt="" />
 
         <ion-card-content>
-          <form padding-right class="personal-form">
+          <form class="personal-form ion-padding-right">
             <!-- <h3 class="appTitle">About You</h3> -->
 
             <p class="appText">Tell potential roommates about yourself</p>
 
             <ion-item class="firstname-textbox">
               <ion-input type="text" [(ngModel)]="newUser.firstName" name="firstName" id="firstName"
-                placeholder="FirstName*" autoCapitalize='words'>
+                placeholder="FirstName*" autocapitalize="on" autocorrect="on" autocomplete="on">
               </ion-input>
             </ion-item>
             <ion-item class="lastname-textbox">
               <ion-input type="text" [(ngModel)]="newUser.lastName" name="lastName" id="lastName"
-                placeholder="LastName*" autoCapitalize='words'>
+                placeholder="LastName*" autocapitalize="on" autocorrect="on" autocomplete="on">
               </ion-input>
             </ion-item>
             <!-- <ion-item class="age-textbox">
@@ -163,7 +163,7 @@
               <ion-icon slot="start" name="arrow-round-back"></ion-icon>
             </ion-button>
             <ion-button class="next-button" fill="clear" [disabled]="!isValid" (click)="goToNext()">Continue
-              <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
+              <ion-icon slot="end" name="arrow-forward"></ion-icon>
             </ion-button>
           </div>
         </ion-card-content>
@@ -172,14 +172,14 @@
 
     <ion-slide class="profession-slide">
       <ion-card>
-        <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
+        <img class="slide-image" src="/assets/logo.png" alt="" />
         <ion-card-header class="ion-no-padding">
           <ion-avatar class="user-avatar">
             <ion-img src="{{displayImage}}" alt="UserImage" (ionError)="setdefultImage($event)"></ion-img>
           </ion-avatar>
           <ion-card-title>
             <ion-chip color="primary" (click)="selectImage()">
-              <ion-icon class="camera" name="Camera"></ion-icon>
+              <ion-icon class="camera" name="camera-reverse"></ion-icon>
             </ion-chip>
           </ion-card-title>
         </ion-card-header>
@@ -189,12 +189,12 @@
 
             <ion-item class="college-textbox">
               <ion-input type="text" [(ngModel)]="newUser.college" name="college" id="college" placeholder="Education*"
-                autoCapitalize='words'>
+              autocapitalize="on" autocorrect="on" autocomplete="on">
               </ion-input>
             </ion-item>
             <ion-item class="job-textbox">
               <ion-input type="text" [(ngModel)]="newUser.job" name="job" id="job" placeholder="Job*"
-                autoCapitalize='words'>
+              autocapitalize="on" autocorrect="on" autocomplete="on">
               </ion-input>
             </ion-item>
             <ion-item class="city-select">
@@ -254,7 +254,7 @@
               <ion-icon slot="start" name="arrow-round-back"></ion-icon>
             </ion-button>
             <ion-button class="next-button" fill="clear" [disabled]="!isValid" (click)="goToNext()">Continue
-              <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
+              <ion-icon slot="end" name="arrow-forward"></ion-icon>
             </ion-button>
           </div>
         </ion-card-content>
@@ -263,7 +263,7 @@
 
     <ion-slide class="user-slide">
       <ion-card>
-        <img class="slide-image" src="/assets/ICON WITH TITLE.png" alt="" />
+        <img class="slide-image" src="/assets/logo.png" alt="" />
         <ion-card-content>
           <h3 class="appTitle"> Roommate Preferences </h3>
           <p class="appText">

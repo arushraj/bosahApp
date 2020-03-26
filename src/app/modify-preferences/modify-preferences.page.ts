@@ -24,6 +24,7 @@ export class ModifyPreferencesPage implements OnInit {
   public currentUser: CurrentUser;
   public female: boolean;
   public male: boolean;
+  public isFormTouched: boolean=false;
 
   constructor(private appService: AppService, private fb: FormBuilder) {
     this.userForm = this.fb.group({
@@ -67,6 +68,7 @@ export class ModifyPreferencesPage implements OnInit {
   public rangeChange(event) {
     this.rangeValue.lower = event.detail.value.lower;
     this.rangeValue.upper = event.detail.value.upper;
+    this.isFormTouched=true;
   }
 
   public submitForm() {

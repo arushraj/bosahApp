@@ -12,28 +12,27 @@
     border-radius: 0 0 5px 5px;
 }
 
-.username-textbox ion-input,
-.password-textbox ion-input {
-    padding-left: 5% !important;
-}
-
 .username-textbox ion-icon,
 .password-textbox ion-icon {
     font-size: 35px;
 }
 
-// .login-form .link-group ion-button:last-child {
-//     float: right;
-// }
 
 .login-form{
     display: block;
 }
 
 .welcome-card {
-    margin-top: 10%;
+    margin-top: 20%;
+    background-color: transparent;
 }
 
-.ion-margin-top-google {
-    margin-top: 5px;
+
+ion-input {
+    --color: var(--black);
+    font-size: 14px;
+    font-family: "poppins_me";
+    --padding-start: 0px;
+    height: 30px;
 }
+  

@@ -23,7 +23,7 @@
         </span>
       </ion-title>
       <ion-button fill="clear" slot="end" (click)="openMoreOption($event)">
-        <ion-icon slot="icon-only" name="more" class="moreOption"></ion-icon>
+        <ion-icon slot="icon-only" name="ellipsis-horizontal" class="moreOption"></ion-icon>
       </ion-button>
       <!-- <ion-icon button slot="end" name="more" (click)="openMoreOption($event)"></ion-icon> -->
     </ion-item>
@@ -49,7 +49,7 @@
       <div class="input-area">
         <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
           <ion-input (ionFocus)="checkFocus()" (keyup)="onKey($event)" (focusout)="stopTyping()" required
-            formControlName="message" type="text" placeholder="Type a message" #messageInput></ion-input>
+            formControlName="message" type="text" placeholder="Type a message" autocapitalize="on" autocorrect="on" autocomplete="on"  #messageInput></ion-input>
           <ion-button [disabled]="messageForm.invalid" type="submit" size="default" fill="clean">
             <ion-icon slot="icon-only" name="send" color="primary"></ion-icon>
           </ion-button>

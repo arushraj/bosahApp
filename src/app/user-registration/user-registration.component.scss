@@ -67,9 +67,9 @@ ion-slide>img {
     margin-top: 5%;
 }
 
-.email-textbox ion-input {
-    padding-left: 5% !important;
-}
+// .email-textbox ion-input {
+//     padding-left: 5% !important;
+// }
 
 .email-textbox ion-icon {
     font-size: 35px;
@@ -115,4 +115,8 @@ signature-pad {
 
 .date-label {
     color: #969696;
+}
+
+ion-card{
+    background-color: transparent;
 }

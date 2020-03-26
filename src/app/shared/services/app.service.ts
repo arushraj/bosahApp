@@ -521,13 +521,14 @@ export class AppService {
         });
         // Setting Value null
         this.setUserPreferred(this.createuserPreferred());
-        loading.present();
+       // loading.present();
         this.getCurrentUserIdfromLocalStorage()
             .then(async (userId) => {
                 if (userId) {
                     const url = this.appConstant.getURL(UrlKey.User_Preferred).replace('uid', userId);
                     await this.http.get(url, {}, this.header)
                         .then(res => {
+                          console.log('response',res);
                             loading.dismiss();
                             const resdata = JSON.parse(res.data);
                             const resPreferred: PreferredUser[] = resdata.PreferredUserList;
@@ -535,6 +536,7 @@ export class AppService {
                             this.setUserPreferred(Object.assign({}, this.userPreferredList).users);
                         })
                         .catch(error => {
+                            console.log('error',error);
                             loading.dismiss();
                             this.userPreferredList.users = [];
                             this.setUserPreferred(this.createuserPreferred());

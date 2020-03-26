@@ -7,9 +7,11 @@ ion-content {
     .img_div {
       background-color: var(--div_back);
       padding: 10px 20px;
-      border-radius: 7px;
+      border-radius: 7px; 
+      width:80%;
       img {
         height: 50px;
+        margin-left: 27%;
       }
     }
     .info_lbl {

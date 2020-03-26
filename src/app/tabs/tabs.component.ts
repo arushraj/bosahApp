@@ -13,7 +13,7 @@ export class TabsComponent implements OnInit {
 
   public tabs = [{
     name: 'Suggested',
-    icon: 'star',
+    icon: 'star-outline',
     route: 'preferred',
     index:  0
   }, {
@@ -23,13 +23,13 @@ export class TabsComponent implements OnInit {
     index:  1
   }, {
     name: 'Profile',
-    icon: 'Person',
+    icon: 'person-circle-outline',
     route: 'userprofile',
     index:  2
   },
   {
     name: 'Search',
-    icon: 'Search',
+    icon: 'search-circle-outline',
     route: 'flatsearchform',
     index:  3
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // services
@@ -10,6 +10,7 @@ import { RentBudget } from '../shared/model/rent-budget.model';
 import { Bedroom } from '../shared/model/bedroom.model';
 import { Bathroom } from '../shared/model/bathroom.model';
 import { Toast } from '@ionic-native/toast/ngx';
+import { IonContent } from '@ionic/angular';
 
 @Component({
   selector: 'app-flat-search-form',
@@ -27,6 +28,7 @@ export class FlatSearchFormPage implements OnInit {
   public rangeValue = { lower: 800, upper: 2000 };
   public selectedBedroomId:number;
   public selectedBathroomId:number;
+  @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
 
   constructor(private appService: AppService, private toast: Toast, private fb: FormBuilder) {
     this.userForm = this.fb.group({
@@ -58,6 +60,10 @@ export class FlatSearchFormPage implements OnInit {
   ngOnInit() {
   }
 
+  ionViewDidEnter() {
+    this.ionContent.scrollToTop(500);
+  }
+
   public submitForm() {
     this.userForm.value.BedroomTypeId=this.selectedBedroomId;
     this.userForm.value.BathroomTypeId=(this.selectedBathroomId);
@@ -77,13 +83,13 @@ export class FlatSearchFormPage implements OnInit {
     this.selectedBathroomId=null;
   }
 
-  private selectBedRoom(selectedBedRoom: number) {
+  public selectBedRoom(selectedBedRoom: number) {
     this.userForm.value.BedroomTypeId = selectedBedRoom;
     this.selectedBedroomId=selectedBedRoom;
     
   }
 
-  private selectBathRoom(selectedBathroom: any) {
+  public selectBathRoom(selectedBathroom: any) {
     // if(this.selectedBathroomId !-selectedBathroom)
     // {
       this.userForm.value.BathroomTypeId = selectedBathroom;

@@ -22,6 +22,7 @@ export class MessagingPage implements OnInit, OnDestroy {
   private friend: UserFriends;
   public queryInfo;
   private currentUserId: string;
+  private messageSubscribe: any;
   // {to: string, toUserName: string, toProfileImagePath: string, from: string, fromUserName: string}
   public messageForm: FormGroup;
   public friendUserStatus: OnlineUser;
@@ -53,7 +54,8 @@ export class MessagingPage implements OnInit, OnDestroy {
           this.currentUserId = value;
         });
         // Subscribe for Messages Data.
-        this.messageService.getMessages().subscribe((data: any) => {
+        
+        this.messageSubscribe = this.messageService.getMessages().subscribe((data: any) => {
           if (this.messages.length === 0) {
             this.messages = data;
             const unReadMessage = this.messages.filter((msg: any) => {
@@ -85,7 +87,7 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentUserId = null;
+    this.messageSubscribe.unsubscribe();
   }
 
   ionViewDidEnter() {

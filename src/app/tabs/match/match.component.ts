@@ -91,6 +91,7 @@ export class MatchComponent implements OnInit {
   }
 
   currentSlide() {
+    
     this.SwipedTabsSlider.getActiveIndex().then(index => {
       this.selectedTab = index;
     });

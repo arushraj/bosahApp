@@ -1,9 +1,4 @@
-// ion-header {
-//     ion-title {
-//       font-size: 16px;
-//       padding: 0 82px 1px;
-//     }
-//   }
+
   
   ion-content {
     .logo_div {
@@ -70,6 +65,10 @@
       margin: 0px 16px;
       font-size: 18px;
       --border-radius: 10px;
-      --background: var(--my_theme) !important;
+     
+      button{
+        background: var(--my_theme) !important;
+
+      }
   }
   

@@ -79,6 +79,7 @@ export class UserLoginComponent implements OnInit {
 
   public userLogin() {
     this.appService.userLogin(this.loginForm.value.email, this.loginForm.value.password)
+    
       .then((data) => {
         this.toast.show(
           `${data.ResponseMessage}`,

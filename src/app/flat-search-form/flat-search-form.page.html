@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
+<ion-content fullscreen class="animated fadeIn fast" #ionContent>
   <div class="main_div">
     <div class="logo_div">
       <div class="img_div">
@@ -74,7 +74,7 @@
        
         <ion-item class="neighborhood ion-margin-horizontal">
           <ion-label class="info_lbl" position="stacked">Neighborhoods and Desired Amenities</ion-label>
-          <ion-textarea formControlName="Comments" rows="2"></ion-textarea>
+          <ion-textarea formControlName="Comments" rows="2" autocapitalize="on" autocorrect="on"></ion-textarea>
         </ion-item>
 
       </ion-list>

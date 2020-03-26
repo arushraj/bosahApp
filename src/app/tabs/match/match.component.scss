@@ -19,6 +19,14 @@ ion-slides ion-slide {
 
 ion-slides ion-slide ion-list {
     width: 100%;
+    ion-item{
+      margin-top: 2%;
+      ion-fab{
+        padding-top: 8px;
+      }
+
+    }
+
 }
 
 ion-slides ion-slide .ion-empty-label {
@@ -50,14 +58,15 @@ ion-header {
       ion-segment {
        --background: none;
         border-radius: 20px;
-        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 0px 10px 0px #00000033;
         ion-segment-button {
           margin: 0;
-          --indicator-color: var(--my_theme);
+         // --indicator-color: var(--my_theme);
           --color: var(--sfont);
           --color-checked: var(--my_theme);
           --border-radius: 20px;
           --background-checked: var(--my_theme);
+          --background-activated: none;
             background-color: white;
             font-weight: bold;
   
@@ -70,7 +79,7 @@ ion-header {
 
         ion-item-divider 
         {
-         background: none;
+         background: transparent;
           
         }
   }
