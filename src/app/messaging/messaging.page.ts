@@ -54,7 +54,7 @@ export class MessagingPage implements OnInit, OnDestroy {
           this.currentUserId = value;
         });
         // Subscribe for Messages Data.
-        
+
         this.messageSubscribe = this.messageService.getMessages().subscribe((data: any) => {
           if (this.messages.length === 0) {
             this.messages = data;
