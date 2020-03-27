@@ -53,15 +53,22 @@ export class MatchComponent implements OnInit {
         this.currentUserId = value;
       });
       // bind the last message
-      this.pageTabs[0].friends.forEach((friend) => {
+      this.pageTabs[0].friends.forEach((friend, index) => {
         this.firebasedb.subscribeLastMessageItem(friend.UserId, this.currentUserId).subscribe((value) => {
           if (value[0]) {
             value[0].message = this.firebasedb.aesDecrypt(value[0].message, value[0].userId);
           }
-          friend.LastMessage = value[0] ? value[0] : [];
+          friend.LastMessage = value[0] ? value[0] : null;
 
+          // if (index === this.pageTabs[0].friends.length - 1) {
+          const lastMessageArray = this.pageTabs[0].friends.filter((i) => {
+            return i.LastMessage != null;
+          });
+          const nullMessageArray = this.pageTabs[0].friends.filter((i) => {
+            return i.LastMessage === null;
+          });
           // sorting Array
-          const newArray = this.pageTabs[0].friends
+          const newArray = lastMessageArray
             .sort((a, b) => {
               if (a.LastMessage && b.LastMessage) {
                 if (new Date(a.LastMessage.datetime) > new Date(b.LastMessage.datetime)) {
@@ -75,6 +82,13 @@ export class MatchComponent implements OnInit {
                 return 0;
               }
             });
+          nullMessageArray.forEach((item) => {
+            newArray.push(item);
+          });
+          if (newArray.length === this.pageTabs[0].friends.length) {
+            this.pageTabs[0].friends = newArray;
+          }
+          // }
         });
       });
     });
@@ -91,7 +105,6 @@ export class MatchComponent implements OnInit {
   }
 
   currentSlide() {
-    
     this.SwipedTabsSlider.getActiveIndex().then(index => {
       this.selectedTab = index;
     });

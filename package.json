@@ -29,7 +29,7 @@
     "@ionic-native/file": "^5.19.1",
     "@ionic-native/file-path": "^5.19.1",
     "@ionic-native/http": "^5.19.1",
-    "@ionic-native/in-app-browser": "^4.20.0",
+    "@ionic-native/in-app-browser": "^5.23.0",
     "@ionic-native/ionic-webview": "^5.19.1",
     "@ionic-native/network": "^5.19.1",
     "@ionic-native/push": "^5.19.1",
