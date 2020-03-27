@@ -186,7 +186,7 @@ export class MatchComponent implements OnInit {
     });
     return popover.present();
   }
-  public doRefresh(event) {
+  public doRefresh(event: any) {
     this.appService.getUserFriendsFromDB().then(() => {
       event.target.complete();
     });

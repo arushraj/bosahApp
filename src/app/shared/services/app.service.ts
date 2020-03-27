@@ -124,9 +124,9 @@ export class AppService {
     }
 
     private createUser(data?: CurrentUser) {
-       
+
         return {
-            
+
             UserId: (data && data.UserId) ? data.UserId : '',
             RoleId: (data && data.RoleId) ? data.RoleId : 1,
             EmailId: (data && data.EmailId) ? data.EmailId : '',
@@ -168,7 +168,7 @@ export class AppService {
                     data.RoommatePreferences.PetIds.toString().split(',').map(Number) : [],
             }
             // (data && data.RoommatePreferences) ? data.RoommatePreferences : null
-           
+
         };
     }
 
@@ -365,7 +365,7 @@ export class AppService {
                                     this.http.get(url, {}, this.header)
                                         .then((res: any) => {
                                             loading.dismiss();
-                        
+
                                             const resUser: CurrentUser = JSON.parse(res.data);
                                             resUser.UserId = value.toString();
                                             this.setCurrentUser(this.createUser(resUser));
@@ -521,14 +521,14 @@ export class AppService {
         });
         // Setting Value null
         this.setUserPreferred(this.createuserPreferred());
-       // loading.present();
+        loading.present();
         this.getCurrentUserIdfromLocalStorage()
             .then(async (userId) => {
                 if (userId) {
                     const url = this.appConstant.getURL(UrlKey.User_Preferred).replace('uid', userId);
                     await this.http.get(url, {}, this.header)
                         .then(res => {
-                          console.log('response',res);
+                            console.log('response', res);
                             loading.dismiss();
                             const resdata = JSON.parse(res.data);
                             const resPreferred: PreferredUser[] = resdata.PreferredUserList;
@@ -536,7 +536,7 @@ export class AppService {
                             this.setUserPreferred(Object.assign({}, this.userPreferredList).users);
                         })
                         .catch(error => {
-                            console.log('error',error);
+                            console.log('error', error);
                             loading.dismiss();
                             this.userPreferredList.users = [];
                             this.setUserPreferred(this.createuserPreferred());

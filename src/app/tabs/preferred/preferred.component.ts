@@ -34,10 +34,12 @@ export class PreferredComponent implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.appService.getUserPreferredFromDB();
+    if (this.preferredUser.length === 1 && this.preferredUser[0].UserId === '') {
+      this.appService.getUserPreferredFromDB();
+    }
   }
 
-  public setdefultImage(event) {
+  public setdefultImage(event: any) {
     event.target.src = '/assets/no-image.png';
   }
 
@@ -47,6 +49,12 @@ export class PreferredComponent implements OnInit {
 
   public async sendFriendRequest(newFriend: PreferredUser) {
     this.appService.sendFriendRequest(newFriend);
+  }
+
+  public doRefresh(event: any) {
+    this.appService.getUserPreferredFromDB().then(() => {
+      event.target.complete();
+    });
   }
 
 }
