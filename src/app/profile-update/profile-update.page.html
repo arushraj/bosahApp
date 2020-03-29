@@ -165,11 +165,17 @@
       </div>
 
       <div class="info_div">
-        <h3 class="info_lbl">Email</h3>
-        <ion-input required formControlName="EmailId" type="email" readonly></ion-input>
+        <h3 class="info_lbl">Preferred Giftcards</h3>
+          <ion-select placeholder="Select One" formControlName="SelectedGiftCardTypeID">
+            <ion-select-option *ngFor="let item of giftCard" [value]="item.GiftCardTypeID">
+              {{item.GiftCardProvider.trim()}}
+            </ion-select-option>
+          </ion-select>
+    
+        <!-- <ion-input required formControlName="EmailId" type="email" readonly></ion-input> -->
       </div>
     </div>
-    <div class="data_div">
+    <!-- <div class="data_div">
       <div class="img_div">
         <img src="/assets/call.png">
       </div>
@@ -178,7 +184,7 @@
         <h3 class="info_lbl">Phone</h3>
         <ion-input required formControlName="PhoneNumber" type="tel" readonly></ion-input>
       </div>
-    </div>
+    </div> -->
     <div class="data_div">
       <div class="img_div">
         <img src="/assets/pin.png">
@@ -194,7 +200,9 @@
     </div>
     <div class="data_div">
       <div class="img_div">
-        <img src="/assets/pin.png">
+        <!-- <ionimg src="/assets/pin.png"> -->
+          <!-- <ion-img name="snow"></ion-img> -->
+          <ion-icon name="snow-outline"></ion-icon>
       </div>
 
       <div class="info_div">

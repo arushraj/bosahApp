@@ -119,7 +119,7 @@ userState-3 suspended
       location: 'no',
       toolbar: 'no'
     };
-    const browser = this.inAppBrowser.create('http://bosahmobile.com/beta/terms-conditions/', '_self', options);
+    const browser = this.inAppBrowser.create('http://bosahmobile.com/terms-conditions/', '_self', options);
   }
 
 }
