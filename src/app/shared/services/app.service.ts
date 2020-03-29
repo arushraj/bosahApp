@@ -534,10 +534,17 @@ export class AppService {
                             this.setUserPreferred(Object.assign({}, this.userPreferredList).users);
                         })
                         .catch(error => {
+                          
                             console.log('error', error);
                             loading.dismiss();
                             this.userPreferredList.users = [];
                             this.setUserPreferred(this.createuserPreferred());
+                            if (error.status === 401) {
+                                this.userLogout();
+                            }
+                                                  
+                                              
+                          
                         })
                         .finally(() => {
                             loading.dismiss();
@@ -585,6 +592,9 @@ export class AppService {
             })
             .catch((err) => {
                 loading.dismiss();
+                if (err.status === 401) {
+                    this.userLogout();
+                }
             });
     }
 
@@ -612,6 +622,9 @@ export class AppService {
                             this.requestedFriendsList.friends = [];
                             this.setRequestedFriendList([]);
                             loading.dismiss();
+                            if (error.status === 401) {
+                                this.userLogout();
+                            }
                         })
                         .finally(() => {
                             loading.dismiss();
@@ -647,6 +660,9 @@ export class AppService {
                 this.upcomingEventList.events = [];
                 this.setUpcomingEvent([]);
                 loading.dismiss();
+                if (error.status === 401) {
+                    this.userLogout();
+                }
             })
             .finally(() => {
                 loading.dismiss();
@@ -677,6 +693,9 @@ export class AppService {
                 this.registeredEventList.events = [];
                 this.setRegisteredEvent([]);
                 loading.dismiss();
+                if (error.status === 401) {
+                    this.userLogout();
+                }
             })
             .finally(() => {
                 loading.dismiss();
@@ -763,6 +782,9 @@ export class AppService {
                 // loading.dismiss();
             }).catch((err) => {
                 loading.dismiss().then(() => {
+                    if (err.status === 401) {
+                        this.userLogout();
+                    }
                     this.toast.show(`Upload catch Error: ${JSON.stringify(err)}`, `short`, 'bottom').subscribe(() => { });
                 });
 
@@ -925,7 +947,7 @@ export class AppService {
             translucent: true,
             cssClass: ''
         });
-        loading.present();
+       // loading.present();
         await this.getCurrentUserIdfromLocalStorage()
             .then(async (userId) => {
                 if (userId) {
@@ -951,6 +973,9 @@ export class AppService {
                         })
                         .catch((err) => {
                             loading.dismiss();
+                            if (err.status === 401) {
+                                this.userLogout();
+                            }
                             this.toast.show(`${JSON.parse(err.error).ResponseMessage}`, `short`, 'bottom').subscribe(() => { });
                         })
                         .finally(() => {
@@ -1027,6 +1052,9 @@ export class AppService {
                         })
                         .catch((err) => {
                             loading.dismiss();
+                            if (err.status === 401) {
+                                this.userLogout();
+                            }
                             this.toast
                                 .showShortBottom(`${err.message || JSON.parse(err.error).ResponseMessage}`)
                                 .subscribe(() => { });
@@ -1082,6 +1110,9 @@ export class AppService {
             })
             .catch((err) => {
                 loading.dismiss();
+                if (err.status === 401) {
+                    this.userLogout();
+                }
                 this.toast
                     .showShortBottom(`${err.message || JSON.parse(err.error).ResponseMessage}`)
                     .subscribe(() => { });
@@ -1237,6 +1268,9 @@ export class AppService {
             })
             .catch((err) => {
                 loading.dismiss();
+                if (err.status === 401) {
+                    this.userLogout();
+                }
                 this.toast
                     .showShortBottom(`${err.message || JSON.parse(err.error).ResponseMessage}`)
                     .subscribe(() => { });
