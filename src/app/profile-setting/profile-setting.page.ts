@@ -3,7 +3,6 @@ import { AppService } from '../shared/services/app.service';
 import { CurrentUser } from '../shared/model/current-user.model';
 import { PreferredGiftCards } from '../shared/model/preferredGiftCards.model';
 import { AlertController } from '@ionic/angular';
-import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-profile-setting',
@@ -24,7 +23,7 @@ export class ProfileSettingPage implements OnInit {
   //   IsUserDeactivated: false
   // };
 
-  constructor(private appService: AppService, private alertController: AlertController, private inAppBrowser: InAppBrowser) {
+  constructor(private appService: AppService, private alertController: AlertController) {
 
     // this.appService.getCurrentUser().subscribe((data) => {
     //   this.currentUser = data;
@@ -114,12 +113,13 @@ userState-3 suspended
   }
 
   public openLink() {
-    const options: InAppBrowserOptions = {
-      zoom: 'no',
-      location: 'no',
-      toolbar: 'no'
-    };
-    const browser = this.inAppBrowser.create('http://bosahmobile.com/terms-conditions/', '_self', options);
+    // const options: InAppBrowserOptions = {
+    //   zoom: 'no',
+    //   location: 'no',
+    //   toolbar: 'no'
+    // };
+    // const browser = this.inAppBrowser.create('http://bosahmobile.com/terms-conditions/', '_self', options);
+    window.open('http://bosahmobile.com/terms-conditions/', '_system');
   }
 
 }

@@ -26,16 +26,16 @@ export class FlatSearchFormPage implements OnInit {
   public userId: string;
   public userForm: FormGroup;
   public rangeValue = { lower: 800, upper: 2000 };
-  public selectedBedroomId:number;
-  public selectedBathroomId:number;
-  public minDate: string ;  
-  public maxDate: string ;  
+  public selectedBedroomId: number;
+  public selectedBathroomId: number;
+  public minDate: string;
+  public maxDate: string;
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
 
   constructor(private appService: AppService, private toast: Toast, private fb: FormBuilder) {
-   
-    this.minDate=this.getmiStringDate();
-    this.maxDate=this.getmaxStringDate();
+
+    this.minDate = this.getmiStringDate();
+    this.maxDate = this.getmaxStringDate();
     this.userForm = this.fb.group({
       // RentBudgetId: ['', Validators.compose([Validators.required])],
       CityId: ['', Validators.compose([Validators.required])],
@@ -70,11 +70,11 @@ export class FlatSearchFormPage implements OnInit {
   }
 
   public submitForm() {
-    this.userForm.value.BedroomTypeId=this.selectedBedroomId;
-    this.userForm.value.BathroomTypeId=(this.selectedBathroomId);
+    this.userForm.value.BedroomTypeId = this.selectedBedroomId;
+    this.userForm.value.BathroomTypeId = (this.selectedBathroomId);
     const data = Object.assign({}, this.userForm).value;
-    data.minRentBudget= this.rangeValue.lower,
-    data.maxRentBudget= this.rangeValue.upper
+    data.minRentBudget = this.rangeValue.lower;
+    data.maxRentBudget = this.rangeValue.upper;
     console.log(data);
     data.UserId = this.userId;
     this.appService.submitFlatSearchForm(data).then(() => {
@@ -84,25 +84,25 @@ export class FlatSearchFormPage implements OnInit {
 
   private cleanForm() {
     this.userForm.reset();
-    this.selectedBedroomId=null;
-    this.selectedBathroomId=null;
+    this.selectedBedroomId = null;
+    this.selectedBathroomId = null;
   }
 
   public selectBedRoom(selectedBedRoom: number) {
     this.userForm.value.BedroomTypeId = selectedBedRoom;
-    this.selectedBedroomId=selectedBedRoom;
-    
+    this.selectedBedroomId = selectedBedRoom;
+
   }
 
   public selectBathRoom(selectedBathroom: any) {
     // if(this.selectedBathroomId !-selectedBathroom)
     // {
-      this.userForm.value.BathroomTypeId = selectedBathroom;
-      this.selectedBathroomId=selectedBathroom;
+    this.userForm.value.BathroomTypeId = selectedBathroom;
+    this.selectedBathroomId = selectedBathroom;
 
     // }
-   
-    
+
+
   }
 
   public rangeChange(event) {
@@ -110,21 +110,19 @@ export class FlatSearchFormPage implements OnInit {
     this.rangeValue.upper = event.detail.value.upper;
   }
 
-  public getmiStringDate():string
-  {
-    let today = new Date();
-    let  dd = String(today.getDate()+1).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    let yyyy = today.getFullYear();
+  public getmiStringDate(): string {
+    const today = new Date();
+    const dd = String(today.getDate() + 1).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const yyyy = today.getFullYear();
     return yyyy + '-' + mm + '-' + dd;
   }
 
-  public getmaxStringDate():string
-  {
-    let today = new Date();
-    let  dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    let yyyy = today.getFullYear()+1;
+  public getmaxStringDate(): string {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const yyyy = today.getFullYear() + 1;
     return yyyy + '-' + mm + '-' + dd;
   }
 
