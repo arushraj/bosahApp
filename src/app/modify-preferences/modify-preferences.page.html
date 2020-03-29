@@ -74,10 +74,10 @@
             Roommate Gender
           </p>
           <div class="btn_div">
-            <ion-button [ngClass]="female ? 'active':''" (click)="female=!female;isFormTouched=true;">
+            <ion-button [ngClass]="female ? 'active':''" (click)="checkMe('F')">
               Female
             </ion-button>
-            <ion-button [ngClass]="male ? 'active' :''" (click)="male=!male;">
+            <ion-button [ngClass]="male ? 'active' :''" (click)="checkMe('M')">
               male
             </ion-button>
             <!-- <ion-button [ngClass]="other==1 ? 'active' :''" (click)="female=0;male=0;other=1">
@@ -118,7 +118,7 @@
             </ion-range>
           </ion-label>
         </ion-item>
-        <ion-button  type="submit" name="checkmark-circle-outline" expand="block" class="main_btn register_btn ion-no-margin" [disabled]="!isFormTouched  || userForm.invalid || userForm.pristine">
+        <ion-button  type="submit" name="checkmark-circle-outline" expand="block" class="main_btn register_btn ion-no-margin" [disabled]="userForm.invalid || userForm.pristine">
           Submit
         </ion-button>
       </div>

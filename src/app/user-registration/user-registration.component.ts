@@ -8,7 +8,6 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { IonSlides, IonRange } from '@ionic/angular';
-import { InAppBrowserOptions, InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 import { UserLocation } from '../shared/model/location.model';
 import { UserReligion } from '../shared/model/religion.model';
@@ -30,8 +29,8 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   public isValid = false;
   private isBackbuttonDisabled = false;
   public displayImage = '/assets/no-image.png';
-  public minDate: string ;  
-  public maxDate: string ;  
+  public minDate: string;
+  public maxDate: string;
   public newUser = {
     email: '',
     otp: '',
@@ -92,10 +91,9 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     private file: File,
     private webView: WebView,
     private loadingController: LoadingController,
-    private fb: FormBuilder,
-    private inAppBrowser: InAppBrowser) {
-      this.minDate=this.getmiStringDate();
-      this.maxDate=this.getmaxStringDate();
+    private fb: FormBuilder) {
+    this.minDate = this.getmiStringDate();
+    this.maxDate = this.getmaxStringDate();
 
     this.otpForm = this.fb.group({
       email: ['', Validators.compose([Validators.required, Validators.email])]
@@ -472,29 +470,28 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   }
 
   public openLink() {
-    const options: InAppBrowserOptions = {
-      zoom: 'no',
-      location: 'no',
-      toolbar: 'no'
-    };
-    const browser = this.inAppBrowser.create('http://bosahmobile.com/beta/terms-conditions/', '_self', options);
+    // const options: InAppBrowserOptions = {
+    //   zoom: 'no',
+    //   location: 'no',
+    //   toolbar: 'no'
+    // };
+    // const browser = this.inAppBrowser.create('http://bosahmobile.com/beta/terms-conditions/', '_self', options);
+    window.open('http://bosahmobile.com/terms-conditions/', '_system');
   }
 
-  public getmiStringDate():string
-  {
-    let today = new Date();
-    let  dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    let yyyy = today.getFullYear()-70;
+  public getmiStringDate(): string {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const yyyy = today.getFullYear() - 70;
     return yyyy + '-' + mm + '-' + dd;
   }
 
-  public getmaxStringDate ():string
-  {
-    let today = new Date();
-    let  dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    let yyyy = today.getFullYear()-21;
+  public getmaxStringDate(): string {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const yyyy = today.getFullYear() - 21;
     return yyyy + '-' + mm + '-' + dd;
   }
 

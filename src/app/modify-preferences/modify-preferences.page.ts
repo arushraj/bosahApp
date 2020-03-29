@@ -24,7 +24,6 @@ export class ModifyPreferencesPage implements OnInit {
   public currentUser: CurrentUser;
   public female: boolean;
   public male: boolean;
-  public isFormTouched: boolean=false;
 
   constructor(private appService: AppService, private fb: FormBuilder) {
     this.userForm = this.fb.group({
@@ -68,10 +67,16 @@ export class ModifyPreferencesPage implements OnInit {
   public rangeChange(event) {
     this.rangeValue.lower = event.detail.value.lower;
     this.rangeValue.upper = event.detail.value.upper;
-    this.isFormTouched=true;
+
+    this.userForm.markAsDirty();
   }
 
-  public submitForm() {
+  public checkMe(gender: string) {
+    if (gender === 'F') {
+      this.female = !this.female;
+    } else if (gender === 'M') {
+      this.male = !this.male;
+    }
     this.userForm.value.preferredGender = [];
     if (this.male) {
       this.userForm.value.preferredGender.push(1);
@@ -79,6 +84,14 @@ export class ModifyPreferencesPage implements OnInit {
     if (this.female) {
       this.userForm.value.preferredGender.push(2);
     }
+    if (this.userForm.value.preferredGender.length === 0) {
+      this.userForm.markAsPristine();
+    } else {
+      this.userForm.markAsDirty();
+    }
+  }
+
+  public submitForm() {
     const data = {
       UserId: this.currentUser.UserId,
       PreferredGenderIds: this.userForm.value.preferredGender.join(','),

@@ -1,129 +1,140 @@
 ion-list-header {
-    border-bottom: 0.1px solid;
-    font-size: 20px;
-    background: var(--white);
+  border-bottom: 0.1px solid;
+  font-size: 20px;
+  background: var(--white);
 }
 
 .fab-button-group {
-    display: flex;
+  display: flex;
 }
 
 ion-slides {
-    min-height: 100%;
+  min-height: 100%;
 }
 
 ion-slides ion-slide {
-    align-items: flex-start;
-    justify-content: flex-start;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 ion-slides ion-slide ion-list {
-    width: 100%;
-    ion-item{
-      margin-top: 2%;
-      ion-fab{
-        padding-top: 8px;
-      }
+  width: 100%;
 
+  ion-item {
+    margin-top: 2%;
+
+    ion-fab {
+      padding-top: 8px;
     }
+
+  }
 
 }
 
 ion-slides ion-slide .ion-empty-label {
-    margin: auto;
-    padding-top: 50%;
+  margin: auto;
+  padding-top: 50%;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .last-message-time {
-    float: right;
-    font-weight: 300;
-    text-align: center;
+  float: right;
+  font-weight: 300;
+  text-align: center;
 }
 
 .message-unread {
-    font-weight: 800;
-    color: #58d4f1;
+  font-weight: 800;
+  color: #58d4f1;
 }
 
 //New CSS
 ion-header {
   background-color: var(--my_theme);
-    .segment_div {
-      padding: 10px 16px;
-      margin-top: 16px;
-      ion-segment {
-       --background: none;
-        border-radius: 20px;
-        box-shadow: 0px 0px 10px 0px #00000033;
-        ion-segment-button {
-          margin: 0;
-         // --indicator-color: var(--my_theme);
-          --color: var(--sfont);
-          --color-checked: var(--my_theme);
-          --border-radius: 20px;
-          --background-checked: var(--my_theme);
-          --background-activated: none;
-            background-color: white;
-            font-weight: bold;
-  
-          ion-label {
-            font-family: "poppins_r";
-          }
-        }
-      }
-    }
 
-        ion-item-divider 
-        {
-         background: transparent;
-          
-        }
-  }
+  .segment_div {
+    padding: 10px 16px;
+    margin-top: 5px;
 
-  ion-content {
-    .main_div {
-      padding-top: 10px;
-      ion-item {
-        --padding-start: 0;
-        --inner-padding-end: 0;
-        .name {
-          font-size: 16px;
-          color: var(--black);
-          font-family: "poppins_sb";
-          span {
-            font-size: 12px;
-            color: var(--black);
-            font-family: "poppins_r";
-            padding-top: 5px;
-          }
-        }
-        .msg {
-          font-size: 14px;
-          color: var(--dark_gray);
+    ion-segment {
+      --background: none;
+      // border-radius: 10px;
+      // box-shadow: 0px 0px 10px 0px #00000033;
+
+      ion-segment-button {
+        margin: 0;
+        // --indicator-color: var(--my_theme);
+        --color: var(--sfont);
+        --color-checked: var(--my_theme);
+        --border-radius: 20px;
+        --background-checked: var(--my_theme);
+        --background-activated: none;
+        background-color: white;
+        font-weight: bold;
+
+        ion-label {
           font-family: "poppins_r";
         }
-        .match_btn {
-          height: 30px;
-          width: 30px;
-          --border-radius: 50%;
-          --background: var(--white);
-          --box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.2);
-          --padding-start: 0;
-          --padding-end: 0;
-          margin-left: 10px;
-          margin-right: 5px;
-          ion-icon {
-            color: var(--my_theme);
-            height: 14px;
-          }
-        }
-        .pending_img {
-          margin-top: -8px;
-        }
       }
     }
   }
+
+  ion-item-divider {
+    background: transparent;
+
+  }
+}
+
+ion-content {
+  .main_div {
+    padding-top: 10px;
+
+    ion-item {
+      --padding-start: 0;
+      --inner-padding-end: 0;
+
+      .name {
+        font-size: 16px;
+        color: var(--black);
+        font-family: "poppins_sb";
+
+        span {
+          font-size: 12px;
+          color: var(--black);
+          font-family: "poppins_r";
+          padding-top: 5px;
+        }
+      }
+
+      .msg {
+        font-size: 14px;
+        color: var(--dark_gray);
+        font-family: "poppins_r";
+      }
+
+      .match_btn {
+        height: 30px;
+        width: 30px;
+        --border-radius: 50%;
+        --background: var(--white);
+        --box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.2);
+        --padding-start: 0;
+        --padding-end: 0;
+        margin-left: 10px;
+        margin-right: 5px;
+
+        ion-icon {
+          color: var(--my_theme);
+          height: 14px;
+        }
+      }
+
+      .pending_img {
+        margin-top: -8px;
+      }
+    }
+  }
+}
