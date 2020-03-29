@@ -146,7 +146,7 @@
               <ion-label>Date Of Birth <ion-text color="danger">*</ion-text>
               </ion-label>
               <ion-datetime [(ngModel)]="newUser.dob" name="dob" id="dob" placeholder="MM-DD-YYYY"
-                displayFormat="MM-DD-YYYY"></ion-datetime>
+                displayFormat="MM-DD-YYYY" [min]="minDate" [max]="maxDate"></ion-datetime>
               <!-- <ion-input [(ngModel)]="newUser.dob" type="date" name="dob" id="dob" placeholder="DD-MM-YYYY"></ion-input> -->
             </ion-item>
             <ion-item class="gender-select">
