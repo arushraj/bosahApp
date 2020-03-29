@@ -124,9 +124,7 @@ export class AppService {
     }
 
     private createUser(data?: CurrentUser) {
-
         return {
-
             UserId: (data && data.UserId) ? data.UserId : '',
             RoleId: (data && data.RoleId) ? data.RoleId : 1,
             EmailId: (data && data.EmailId) ? data.EmailId : '',
