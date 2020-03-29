@@ -62,7 +62,7 @@
             <h3 class="info_lbl">Desired Move-in-Date<ion-text color="danger">*</ion-text></h3>
             <div class="date_div">
               <ion-icon src="/assets/date_time.svg"></ion-icon>
-              <ion-datetime displayFormat="MMM-DD-YYYY"  formControlName="DesiredMoveInDate">
+              <ion-datetime displayFormat="MMM-DD-YYYY"  formControlName="DesiredMoveInDate" [min]="minDate" [max]="maxDate">
               </ion-datetime>
               <ion-button class="close_btn  transparent_btn" slot="end">
                 <ion-icon src="/assets/black_close.svg"></ion-icon>

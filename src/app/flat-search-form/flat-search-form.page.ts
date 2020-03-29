@@ -28,9 +28,14 @@ export class FlatSearchFormPage implements OnInit {
   public rangeValue = { lower: 800, upper: 2000 };
   public selectedBedroomId:number;
   public selectedBathroomId:number;
+  public minDate: string ;  
+  public maxDate: string ;  
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
 
   constructor(private appService: AppService, private toast: Toast, private fb: FormBuilder) {
+   
+    this.minDate=this.getmiStringDate();
+    this.maxDate=this.getmaxStringDate();
     this.userForm = this.fb.group({
       // RentBudgetId: ['', Validators.compose([Validators.required])],
       CityId: ['', Validators.compose([Validators.required])],
@@ -103,6 +108,24 @@ export class FlatSearchFormPage implements OnInit {
   public rangeChange(event) {
     this.rangeValue.lower = event.detail.value.lower;
     this.rangeValue.upper = event.detail.value.upper;
+  }
+
+  public getmiStringDate():string
+  {
+    let today = new Date();
+    let  dd = String(today.getDate()+1).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+    return yyyy + '-' + mm + '-' + dd;
+  }
+
+  public getmaxStringDate():string
+  {
+    let today = new Date();
+    let  dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear()+1;
+    return yyyy + '-' + mm + '-' + dd;
   }
 
 }
