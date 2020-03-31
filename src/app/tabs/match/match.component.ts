@@ -168,7 +168,7 @@ export class MatchComponent implements OnInit {
         from,
         fromUserName
       };
-      this.navCtrl.navigateForward(`/messaging?info=${JSON.stringify(info)}`, { animated: true, animationDirection: 'forward' });
+       this.navCtrl.navigateForward(`/messaging?info=${JSON.stringify(info)}`, { animated: true, animationDirection: 'forward' });
     }
   }
 

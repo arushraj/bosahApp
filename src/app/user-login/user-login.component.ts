@@ -40,42 +40,27 @@ export class UserLoginComponent implements OnInit {
     });
   }
 
-  public googleLogin() {
-    this.toast.show(
-      `Coming Soon..`,
-      '2000',
-      'bottom')
-      .subscribe(toast => {
-        // console.log(JSON.stringify(toast));
-      });
-    // this.googleplus.login({})
-    //   .then(res => {
-    //     this.user = res;
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-  }
+  // public googleLogin() {
+  //   this.toast.show(
+  //     `Coming Soon..`,
+  //     '2000',
+  //     'bottom')
+  //     .subscribe(toast => {
+       
+  //     });
+   
+  // }
 
-  public fbLogin() {
-    this.toast.show(
-      `Coming Soon..`,
-      '2000',
-      'bottom')
-      .subscribe(toast => {
-        // console.log(JSON.stringify(toast));
-      });
-    // this.fb.login(['public_profile'])
-    //   .then((res: FacebookLoginResponse) => {
-    //     this.user = res;
-    //     this.fb.api('/me?fields=id,name,birthday,gender,email', ['public_profile', 'user_birthday', 'user_gender', 'email'])
-    //       .then(data => {
-    //         this.user = data;
-    //       });
-    //   })
-    //   .catch(e => console.log('Error logging into Facebook', e));
-    // this.fb.logEvent(this.fb.EVENTS.EVENT_NAME_ADDED_TO_CART);
-  }
+  // public fbLogin() {
+  //   this.toast.show(
+  //     `Coming Soon..`,
+  //     '2000',
+  //     'bottom')
+  //     .subscribe(toast => {
+       
+  //     });
+   
+  // }
 
   public userLogin() {
     this.appService.userLogin(this.loginForm.value.email, this.loginForm.value.password)
@@ -87,6 +72,8 @@ export class UserLoginComponent implements OnInit {
           `bottom`
         ).subscribe(toast => { });
         if (data.UserId > 0) {
+         
+         
           this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
           // this.router.navigate(['/tabs']);
         }
