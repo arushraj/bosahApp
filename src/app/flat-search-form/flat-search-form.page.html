@@ -17,8 +17,7 @@
 
     <form [formGroup]="userForm" (ngSubmit)="submitForm()">
       <ion-list lines="full" class="ion-no-margin ion-no-padding">       
-        <ion-item mode="md" lines="none" class="rent_item ion-margin-start">
-          
+        <ion-item mode="md" lines="none" class="rent_item ion-margin-start">          
           <ion-label>
             <h3 class="info_lbl rent_lbl">Rent Budget Per Person</h3>
             <ion-range id="dual-range"  min="800" max="2000"  mode="md"  dualKnobs="true" pin="true"  [value]="rangeValue" 

@@ -1,0 +1,40 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="md">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs" text="" mode="md"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Contact Us</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="animated fadeIn fast" #ionContent>
+  <div class="main_div">
+    <div class="logo_div">
+      <div class="img_div">
+        <img src="/assets/bosahgroup.png">
+      </div>
+    </div>
+    <form [formGroup]="contactUsForm" (ngSubmit)="onSubmit()">
+      <ion-list lines="full" class="ion-no-margin ion-no-padding">
+        <ion-item mode="md" lines="none">
+          <ion-label position="stacked" mode="ios">Name <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required formControlName="name" type="text"></ion-input>
+        </ion-item>
+        <ion-item mode="md" lines="none">
+          <ion-label position="stacked" mode="ios">E-Mail <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required formControlName="email" type="email"></ion-input>
+        </ion-item>
+        <ion-item mode="md" lines="none">
+          <ion-label position="stacked" mode="ios">Message <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required formControlName="message" type="text"></ion-input>
+        </ion-item>
+        <ion-button block type="submit" [disabled]="contactUsForm.invalid && contactUsForm.pristine">
+          SEND MESSAGE
+        </ion-button>
+      </ion-list>
+    </form>
+  </div>
+</ion-content>

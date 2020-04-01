@@ -64,8 +64,12 @@ export class AppComponent {
     url: '/referrals',
     icon: 'people',
     routerDirection: 'forward'
-  }
-  ];
+  }, {
+    title: 'Contact Us',
+    url: '/contactus',
+    icon: 'mail',
+    routerDirection: 'forward'
+  }];
 
   constructor(
     private platform: Platform,
