@@ -43,9 +43,16 @@ ion-segment {
        --background-checked: var(--my_theme);
          background-color: white;
          font-weight: bold;
+         span{
+             font-weight: bold;
+             color:black;
+         }
 
        ion-label {
          font-family: "poppins_r";
        }
      }
+   }
+   ion-item-divider{
+    --background: none;
    }
