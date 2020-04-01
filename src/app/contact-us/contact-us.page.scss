@@ -1,132 +1,62 @@
 ion-content {
-    .logo_div {
-        display: flex;
-        padding-top: 15px;
-        justify-content: center;
-    }
-
-    .img_div {
+    .back_img {
         background-color: var(--div_back);
-        padding: 10px 20px;
-        border-radius: 7px;
-        width: 80%;
+        text-align: center;
+        padding: 20px 0px;
+        border-radius: 5px;
+        margin-top: 16px;
 
         img {
-            height: 50px;
-            margin-left: 27%;
+            //width: 70%;
+            width: 230px;
+            height: 101px;
         }
     }
 
-    .info_lbl {
-        font-size: 13px;
-        color: var(--balck);
-        font-weight: bold;
-        font-family: "poppins_r";
-    }
+    .referral_div {
+        text-align: center;
+        padding-top: 40px;
 
-    .rent_item {
-        .rent_lbl {
-            padding-left: 10px;
+        .mail-icon {
+            font-size: 100px;
+            color: #7fc5b2;
         }
 
-        ion-range {
-            --bar-background-active: var(--my_theme);
-            --bar-background: var(--black);
-            --knob-background: var(--black);
-        }
-    }
-
-    ion-item {
-        ion-icon {
-            margin-right: 10px;
-            height: 18px;
+        .info_lbl {
+            color: var(--div_back);
+            font-size: 25px;
+            font-family: "poppins_sb";
+            margin-top: 20px;
+            margin-bottom: 0;
         }
 
-        ion-select {
-            font-size: 14px;
-            color: var(--balck);
-            font-family: "poppins_me";
-            max-width: 100%;
-
-            width: 100%;
-        }
-
-        .select_lbl {
-            font-size: 15px;
-            color: var(--balck);
-            font-family: "poppins_me";
-        }
-    }
-
-    .data_item {
-        margin: 0px 16px;
-    }
-
-    .btn_div {
-        ion-button {
-            --background: var(--white);
-            --color: var(--balck);
+        .referral_lbl {
             font-size: 16px;
-            font-family: "poppins_me";
-            --box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.16);
-            --border-radius: 5px;
-            height: 35px;
-            margin: 0px 10px 10px 0px;
-            text-transform: capitalize;
-            width: 90px;
-        }
-
-        .active {
-            --background: var(--my_theme);
-            --color: var(--white);
-            --background-activated: var(--my_theme);
-        }
-    }
-
-    .date_div {
-        display: flex;
-        align-items: center;
-
-        ion-datetime {
-            padding: 0;
-            font-size: 16px;
+            color: var(--div_back);
             font-family: "poppins_r";
+            margin-bottom: 0;
         }
 
-        ion-button {
-            position: absolute;
-            right: 0;
-            height: 25px;
+        .code {
+            color: var(--my_theme);
+            font-family: "poppins_sb";
+            font-size: 35px;
+            margin-top: 0;
+            margin-bottom: 10px;
 
-            ion-icon {
-                height: 13px;
+            a {
+                color: var(--my_theme);
             }
         }
-    }
 
-    .desired_item {
-        --padding-start: 0;
-    }
+        .invite_btn {
+            text-transform: capitalize;
+            margin: 0px 30px;
+            --border-radius: 10px;
 
-    .neighborhood {
-        ion-textarea {
-            font-family: "poppins_r";
-            font-size: 12px;
-            --background: var(--gray);
-            padding: 5px 16px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            height: 87px;
-            --padding-top: 0;
+            ion-icon {
+                transform: rotate(-90deg);
+            }
         }
-    }
-
-    .btnSubmit {
-        --background: var(--my_theme);
-    }
-
-    .rentRange {
-        margin-top: -4%;
-
     }
 }

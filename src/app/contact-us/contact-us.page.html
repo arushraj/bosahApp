@@ -7,34 +7,23 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen class="animated fadeIn fast" #ionContent>
-  <div class="main_div">
-    <div class="logo_div">
-      <div class="img_div">
-        <img src="/assets/bosahgroup.png">
-      </div>
+<ion-content fullscreen>
+  <div class="main_div ion-margin-horizontal">
+    <div class="back_img">
+      <img src="/assets/bosahgroup.png">
     </div>
-    <form [formGroup]="contactUsForm" (ngSubmit)="onSubmit()">
-      <ion-list lines="full" class="ion-no-margin ion-no-padding">
-        <ion-item mode="md" lines="none">
-          <ion-label position="stacked" mode="ios">Name <ion-text color="danger">*</ion-text>
-          </ion-label>
-          <ion-input required formControlName="name" type="text"></ion-input>
-        </ion-item>
-        <ion-item mode="md" lines="none">
-          <ion-label position="stacked" mode="ios">E-Mail <ion-text color="danger">*</ion-text>
-          </ion-label>
-          <ion-input required formControlName="email" type="email"></ion-input>
-        </ion-item>
-        <ion-item mode="md" lines="none">
-          <ion-label position="stacked" mode="ios">Message <ion-text color="danger">*</ion-text>
-          </ion-label>
-          <ion-input required formControlName="message" type="text"></ion-input>
-        </ion-item>
-        <ion-button block type="submit" [disabled]="contactUsForm.invalid && contactUsForm.pristine">
-          SEND MESSAGE
-        </ion-button>
-      </ion-list>
-    </form>
+    <div class="referral_div">
+      <ion-icon class="mail-icon" name="mail"></ion-icon>
+      <p class="info_lbl">
+        Our team is happy to answer your questions. Please mail us on below email and we'll be in touch as soon as
+        possible.</p>
+      <br />
+      <br />
+      <p class="code"><a href="mailto:bosahgroup@gmail.com">bosahgroup@gmail.com</a></p>
+      <!-- <ion-button class="invite_btn main_btn" expand="block">
+        <ion-icon name="exit"></ion-icon>invite Your Friends
+      </ion-button> -->
+    </div>
+
   </div>
 </ion-content>
