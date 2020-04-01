@@ -119,7 +119,6 @@ export class AppComponent {
       this.appService.getsmokingOptionsFromDB();
       this.appService.getdrinkingOptionsFromDB();
       this.appService.getPreferredGiftcardsFromDB();
-
       this.appService.getCurrentUserIdfromLocalStorage()
         .then(userId => {
           if (userId !== null) {

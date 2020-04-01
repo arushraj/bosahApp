@@ -36,6 +36,8 @@ export class FlatSearchFormPage implements OnInit {
 
     this.minDate = this.getmiStringDate();
     this.maxDate = this.getmaxStringDate();
+    this.rangeValue.lower = 800;
+    this.rangeValue.upper = 2000;
     this.userForm = this.fb.group({
       // RentBudgetId: ['', Validators.compose([Validators.required])],
       CityId: ['', Validators.compose([Validators.required])],

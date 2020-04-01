@@ -9,7 +9,6 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { AppConstant } from 'src/app/shared/constant/app.constant';
 
-
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',

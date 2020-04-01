@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen class="animated fadeIn fast" #ionContent>
+<ion-content fullscreen class="animated fadeIn fast" #ionContent no-bounce has-bouncing="false" forceOverscroll="false">
   <div class="main_div">
     <div class="logo_div">
       <div class="img_div">
@@ -22,8 +22,8 @@
             <h3 class="info_lbl rent_lbl">Rent Budget Per Person</h3>
             <ion-range id="dual-range"  min="800" max="2000"  mode="md"  dualKnobs="true" pin="true"  [value]="rangeValue" 
             (ionChange)="rangeChange($event)" #roomrentRange class="rentRange">
-            <ion-label slot="start">800</ion-label>
-              <ion-label slot="end">2000</ion-label>
+            <ion-label slot="start">{{rangeValue.lower}}$</ion-label>
+              <ion-label slot="end">{{rangeValue.upper}}$</ion-label>
             </ion-range>
           </ion-label>
     

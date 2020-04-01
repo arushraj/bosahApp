@@ -3,6 +3,7 @@ import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
 import { Platform, AlertController, NavController } from '@ionic/angular';
 import { PushDevice } from '../model/push-notification.model';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { Toast } from '@ionic-native/toast/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class PushNotificationService {
   constructor(
     private push: Push,
     private platform: Platform,
+    private toast:Toast,
     private alertCtrl: AlertController,
     private navCtrl: NavController) {
     this.platform.ready().then(() => {
@@ -77,21 +79,21 @@ export class PushNotificationService {
       importance: 4
     }).then(() => console.log('Channel created'));
 
-    pushObject.on('notification').subscribe((notification: any) => {
-      // tslint:disable-next-line: no-debugger
-      debugger;
-      console.log('Received a notification', notification);
-      // if(notification.additionalData.redirectAction.length>0) {
-      //this.navCtrl.navigateRoot('/messaging', { animated: true, animationDirection: 'forward' });
-     // this.navCtrl.push('messaging');
-      this.navCtrl.navigateForward('./messaging/messaging.module#MessagingPageModule');
+    pushObject.on('notification').subscribe((notification: any) => {  
+      if (notification.additionalData.foreground) {
+       console.log('Received a notification in foreground', notification);
+       } 
+       else {
 
-      // }
-      // if (notification.additionalData.foreground) {
-      // } 
-      // else {
-      // }
-    });
+        console.log('Received a notification in background', notification.additionalData);
+        
+         //  this.navCtrl.navigateForward('./messaging/messaging.module#MessagingPageModule');       
+     
+       }
+       
+      
+       
+     });
 
     pushObject.on('registration').subscribe((registration: any) => {
       console.log('Device registered', registration);

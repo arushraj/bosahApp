@@ -68,7 +68,7 @@
   </ion-card>
 </ion-content> -->
 
-<ion-content fullscreen class="animated fadeInUp fast" #ionContent>
+<ion-content fullscreen class="animated fadeInUp fast" #ionContent no-bounce has-bouncing="false" forceOverscroll="false">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="refresh-circle" refreshingSpinner="crescent"></ion-refresher-content>
   </ion-refresher>
@@ -146,7 +146,7 @@
           <ion-icon src="/assets/degree_icon.svg"></ion-icon>
         </div>
         <div class="personal_detail_row">
-          <h3 class="info_lbl">Degree</h3>
+          <h3 class="info_lbl">Education</h3>
           <p class="pdata_p">{{currentUser.College | blankValue}}</p>
         </div>
       </div>

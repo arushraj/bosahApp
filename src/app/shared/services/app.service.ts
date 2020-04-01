@@ -335,34 +335,37 @@ export class AppService {
     // functions for HTTP Calling
 
     public async getCurrentuserFromDB(updateOnline?: boolean) {
-        const loading = await this.loadingController.create({
-            message: 'Please wait...',
-            translucent: true,
-            cssClass: ''
-        });
-        loading.present();
+        // const loading = await this.loadingController.create({
+        //     message: 'Please wait...',
+        //     translucent: true,
+        //     cssClass: ''
+        // });
+        // loading.present();
         this.storage.get(StorageKey.LocalCurrentUserKey)
             .then((user) => {
                 if ((user === null || user === undefined) || updateOnline) {
                     if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
-                        loading.dismiss().then(() => {
-                            this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
-                        });
+                        this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
+                        // loading.dismiss().then(() => {
+                        //     this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
+                        // });
 
                     } else {
                         this.getCurrentUserIdfromLocalStorage()
                             .then(value => {
                                 if (value === null || value === undefined) {
-                                    loading.dismiss().then(() => {
-                                        this.toast.show(`Session expired`, `short`, 'bottom').subscribe(() => { });
-                                    });
+                                    this.toast.show(`Session expired`, `short`, 'bottom').subscribe(() => { });
+                                    // loading.dismiss().then(() => {
+
+                                    //     this.toast.show(`Session expired`, `short`, 'bottom').subscribe(() => { });
+                                    // });
 
                                     this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                                 } else {
                                     const url = this.appConstant.getURL(UrlKey.Current_User).replace('uid', value);
                                     this.http.get(url, {}, this.header)
                                         .then((res: any) => {
-                                            loading.dismiss();
+                                           // loading.dismiss();
 
                                             const resUser: CurrentUser = JSON.parse(res.data);
                                             resUser.UserId = value.toString();
@@ -370,25 +373,25 @@ export class AppService {
                                             this.storage.set(StorageKey.LocalCurrentUserKey, resUser);
                                         })
                                         .catch(error => {
-                                            loading.dismiss();
+                                           // loading.dismiss();
                                             this.setCurrentUser(this.createUser());
                                             this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                                             const msg = error.error || 'Invalid User';
                                             this.toast.show(`${msg}`, `short`, 'bottom').subscribe(() => { });
                                         })
                                         .finally(() => {
-                                            loading.dismiss();
+                                            //loading.dismiss();
                                         });
                                 }
                             });
                     }
                 } else {
-                    loading.dismiss();
+                    //loading.dismiss();
                     this.setCurrentUser(this.createUser(user));
                 }
             })
             .catch(() => {
-                loading.dismiss();
+               // loading.dismiss();
             });
     }
 
@@ -534,10 +537,17 @@ export class AppService {
                             this.setUserPreferred(Object.assign({}, this.userPreferredList).users);
                         })
                         .catch(error => {
+                          
                             console.log('error', error);
                             loading.dismiss();
                             this.userPreferredList.users = [];
                             this.setUserPreferred(this.createuserPreferred());
+                            if (error.status === 401) {
+                                this.userLogout();
+                            }
+                                                  
+                                              
+                          
                         })
                         .finally(() => {
                             loading.dismiss();
@@ -554,13 +564,13 @@ export class AppService {
     }
 
     public async getUserFriendsFromDB() {
-        const loading = await this.loadingController.create({
-            message: 'Please wait...',
-            translucent: true,
-            cssClass: ''
-        });
+        // const loading = await this.loadingController.create({
+        //     message: 'Please wait...',
+        //     translucent: true,
+        //     cssClass: ''
+        // });
         this.setFriendList(this.createFriendList());
-        loading.present();
+        //loading.present();
         this.getCurrentUserIdfromLocalStorage()
             .then((userId) => {
                 if (userId) {
@@ -571,20 +581,23 @@ export class AppService {
                             const friendList: UserFriends[] = resdata.FriendandPendingList;
                             this.userFriendsList.friends = friendList;
                             this.setFriendList(Object.assign({}, this.userFriendsList).friends);
-                            loading.dismiss();
+                            //loading.dismiss();
                         })
                         .catch(error => {
                             this.userFriendsList.friends = [];
                             this.setFriendList(this.createFriendList());
-                            loading.dismiss();
+                           // loading.dismiss();
                         })
                         .finally(() => {
-                            loading.dismiss();
+                            //loading.dismiss();
                         });
                 }
             })
             .catch((err) => {
-                loading.dismiss();
+              //  loading.dismiss();
+                if (err.status === 401) {
+                    this.userLogout();
+                }
             });
     }
 
@@ -612,6 +625,9 @@ export class AppService {
                             this.requestedFriendsList.friends = [];
                             this.setRequestedFriendList([]);
                             loading.dismiss();
+                            if (error.status === 401) {
+                                this.userLogout();
+                            }
                         })
                         .finally(() => {
                             loading.dismiss();
@@ -627,13 +643,13 @@ export class AppService {
         if (!CtityId) {
             return;
         }
-        const loading = await this.loadingController.create({
-            message: 'Please wait...',
-            translucent: true,
-            cssClass: ''
-        });
+        // const loading = await this.loadingController.create({
+        //     message: 'Please wait...',
+        //     translucent: true,
+        //     cssClass: ''
+        // });
         this.setUpcomingEvent([]);
-        loading.present();
+       // loading.present();
         const url = this.appConstant.getURL(UrlKey.Upcoming_Event).replace('cityid', CtityId.toString()).replace('uid', UserId);
         this.http.get(url, {}, this.header)
             .then(res => {
@@ -641,15 +657,18 @@ export class AppService {
                 const events: Event[] = resdata.UpcomingEventList;
                 this.upcomingEventList.events = events;
                 this.setUpcomingEvent(Object.assign({}, this.upcomingEventList).events);
-                loading.dismiss();
+               // loading.dismiss();
             })
             .catch(error => {
                 this.upcomingEventList.events = [];
                 this.setUpcomingEvent([]);
-                loading.dismiss();
+               // loading.dismiss();
+                if (error.status === 401) {
+                    this.userLogout();
+                }
             })
             .finally(() => {
-                loading.dismiss();
+               // loading.dismiss();
             });
     }
 
@@ -657,13 +676,13 @@ export class AppService {
         if (!UserId) {
             return;
         }
-        const loading = await this.loadingController.create({
-            message: 'Please wait...',
-            translucent: true,
-            cssClass: ''
-        });
+        // const loading = await this.loadingController.create({
+        //     message: 'Please wait...',
+        //     translucent: true,
+        //     cssClass: ''
+        // });
         this.setRegisteredEvent([]);
-        loading.present();
+       // loading.present();
         const url = this.appConstant.getURL(UrlKey.Registered_Event).replace('uid', UserId);
         this.http.get(url, {}, this.header)
             .then(res => {
@@ -671,15 +690,18 @@ export class AppService {
                 const events: Event[] = resdata;
                 this.registeredEventList.events = events;
                 this.setRegisteredEvent(Object.assign({}, this.registeredEventList).events);
-                loading.dismiss();
+              //  loading.dismiss();
             })
             .catch(error => {
                 this.registeredEventList.events = [];
                 this.setRegisteredEvent([]);
-                loading.dismiss();
+                //loading.dismiss();
+                if (error.status === 401) {
+                    this.userLogout();
+                }
             })
             .finally(() => {
-                loading.dismiss();
+                //loading.dismiss();
             });
     }
 
@@ -728,12 +750,12 @@ export class AppService {
             this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
             return;
         }
-        const loading = await this.loadingController.create({
-            message: 'Please wait...',
-            translucent: true,
-            cssClass: ''
-        });
-        loading.present();
+        // const loading = await this.loadingController.create({
+        //     message: 'Please wait...',
+        //     translucent: true,
+        //     cssClass: ''
+        // });
+       // loading.present();
         const data = {
             UserId: currentUser.UserId,
             ProfileFileName: currentUser.ProfileImagePath ? currentUser.ProfileImagePath.split('/')[2].replace('thumbnail_', '') : ''
@@ -743,9 +765,9 @@ export class AppService {
             .then(res => {
 
                 const resdata = JSON.parse(res.data);
-                loading.dismiss().then(() => {
+                // loading.dismiss().then(() => {
                     this.toast.show(`${resdata.Message}`, `short`, 'bottom').subscribe(() => { });
-                });
+                // });
                 // if (data.ProfileFileName === '') {
                 //     this.storage.remove(StorageKey.LocalCurrentUserKey).then(value => {
                 //         this.getCurrentuserFromDB();
@@ -762,13 +784,16 @@ export class AppService {
                 });
                 // loading.dismiss();
             }).catch((err) => {
-                loading.dismiss().then(() => {
+                // loading.dismiss().then(() => {
+                    if (err.status === 401) {
+                        this.userLogout();
+                    }
                     this.toast.show(`Upload catch Error: ${JSON.stringify(err)}`, `short`, 'bottom').subscribe(() => { });
-                });
+                // });
 
             })
             .finally(() => {
-                loading.dismiss();
+               // loading.dismiss();
             });
     }
 
@@ -925,7 +950,7 @@ export class AppService {
             translucent: true,
             cssClass: ''
         });
-        loading.present();
+       // loading.present();
         await this.getCurrentUserIdfromLocalStorage()
             .then(async (userId) => {
                 if (userId) {
@@ -951,6 +976,9 @@ export class AppService {
                         })
                         .catch((err) => {
                             loading.dismiss();
+                            if (err.status === 401) {
+                                this.userLogout();
+                            }
                             this.toast.show(`${JSON.parse(err.error).ResponseMessage}`, `short`, 'bottom').subscribe(() => { });
                         })
                         .finally(() => {
@@ -1027,6 +1055,9 @@ export class AppService {
                         })
                         .catch((err) => {
                             loading.dismiss();
+                            if (err.status === 401) {
+                                this.userLogout();
+                            }
                             this.toast
                                 .showShortBottom(`${err.message || JSON.parse(err.error).ResponseMessage}`)
                                 .subscribe(() => { });
@@ -1082,6 +1113,9 @@ export class AppService {
             })
             .catch((err) => {
                 loading.dismiss();
+                if (err.status === 401) {
+                    this.userLogout();
+                }
                 this.toast
                     .showShortBottom(`${err.message || JSON.parse(err.error).ResponseMessage}`)
                     .subscribe(() => { });
@@ -1237,6 +1271,9 @@ export class AppService {
             })
             .catch((err) => {
                 loading.dismiss();
+                if (err.status === 401) {
+                    this.userLogout();
+                }
                 this.toast
                     .showShortBottom(`${err.message || JSON.parse(err.error).ResponseMessage}`)
                     .subscribe(() => { });
