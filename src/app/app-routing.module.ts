@@ -48,15 +48,14 @@ const routes: Routes = [
     loadChildren: './profile-setting/profile-setting.module#ProfileSettingPageModule',
     canActivate: [AuthGuard]
   }, {
+    path: 'contactus',
+    loadChildren: './contact-us/contact-us.module#ContactUsPageModule',
+    canActivate: [AuthGuard]
+  }, {
     path: '**',
     redirectTo: 'landing',
     pathMatch: 'full'
-  }
-
-
-
-
-];
+  }];
 
 @NgModule({
   imports: [

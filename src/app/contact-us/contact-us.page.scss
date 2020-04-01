@@ -1,0 +1,62 @@
+ion-content {
+    .back_img {
+        background-color: var(--div_back);
+        text-align: center;
+        padding: 20px 0px;
+        border-radius: 5px;
+        margin-top: 16px;
+
+        img {
+            //width: 70%;
+            width: 230px;
+            height: 101px;
+        }
+    }
+
+    .referral_div {
+        text-align: center;
+        padding-top: 40px;
+
+        .mail-icon {
+            font-size: 100px;
+            color: #7fc5b2;
+        }
+
+        .info_lbl {
+            color: var(--div_back);
+            font-size: 25px;
+            font-family: "poppins_sb";
+            margin-top: 20px;
+            margin-bottom: 0;
+        }
+
+        .referral_lbl {
+            font-size: 16px;
+            color: var(--div_back);
+            font-family: "poppins_r";
+            margin-bottom: 0;
+        }
+
+        .code {
+            color: var(--my_theme);
+            font-family: "poppins_sb";
+            font-size: 35px;
+            margin-top: 0;
+            margin-bottom: 10px;
+
+            a {
+                color: var(--my_theme);
+            }
+        }
+
+        .invite_btn {
+            text-transform: capitalize;
+            margin: 0px 30px;
+            --border-radius: 10px;
+
+            ion-icon {
+                transform: rotate(-90deg);
+            }
+        }
+    }
+}
