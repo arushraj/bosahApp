@@ -89,7 +89,7 @@
           <ion-label class="info_lbl" position="stacked" mode="ios">
             Roommate Religion
           </ion-label>
-          <ion-select placeholder="Select One" required multiple="true" formControlName="preferredReligion" interface="popover" mode="ios">
+          <ion-select placeholder="Select One" required multiple="true" formControlName="preferredReligion">
             <ion-select-option *ngFor="let item of religions" [value]="item.ReligionId">{{item.Religion}}
             </ion-select-option>
           </ion-select>
@@ -100,7 +100,7 @@
           <ion-label class="info_lbl" position="stacked" mode="ios">
             Preferred Pets
           </ion-label>
-          <ion-select placeholder="Select One" multiple="true" formControlName="preferredPets" interface="popover" mode="ios">
+          <ion-select placeholder="Select One" multiple="true" formControlName="preferredPets">
             <ion-select-option *ngFor="let item of pets" [value]="item.PetId">{{item.PetName}}
             </ion-select-option>
           </ion-select>
