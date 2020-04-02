@@ -143,7 +143,7 @@
 
       <div class="info_div">
         <h3 class="info_lbl">Gender</h3>
-        <ion-select placeholder="Select One" required formControlName="GenderId">
+        <ion-select placeholder="Select One" required formControlName="GenderId" interface="popover" mode="ios">
           <ion-select-option *ngFor="let item of genders" [value]="item.genderId">{{item.gender}}
           </ion-select-option>
         </ion-select>
@@ -167,7 +167,7 @@
 
       <div class="info_div">
         <h3 class="info_lbl">Preferred Giftcards</h3>
-          <ion-select placeholder="Select One" formControlName="SelectedGiftCardTypeID">
+          <ion-select placeholder="Select One" formControlName="SelectedGiftCardTypeID" interface="popover" mode="ios">
             <ion-select-option *ngFor="let item of giftCard" [value]="item.GiftCardTypeID">
               {{item.GiftCardProvider.trim()}}
             </ion-select-option>
@@ -193,7 +193,7 @@
 
       <div class="info_div">
         <h3 class="info_lbl">City</h3>
-        <ion-select placeholder="Select One" required formControlName="CityId">
+        <ion-select placeholder="Select One" required formControlName="CityId" interface="popover" mode="ios">
           <ion-select-option *ngFor="let item of locations" [value]="item.CityId">{{item.City}}
           </ion-select-option>
         </ion-select>
@@ -208,7 +208,7 @@
 
       <div class="info_div">
         <h3 class="info_lbl">Religion</h3>
-        <ion-select placeholder="Select One" required formControlName="ReligionId">
+        <ion-select placeholder="Select One" required formControlName="ReligionId" interface="popover" mode="ios">
           <ion-select-option *ngFor="let item of religions" [value]="item.ReligionId">{{item.Religion}}
           </ion-select-option>
         </ion-select>
@@ -221,7 +221,7 @@
       </div>
       <div class="info_div">
         <h3 class="info_lbl">Pets</h3>
-        <ion-select placeholder="Select One" required formControlName="UserSelectedPetId">
+        <ion-select placeholder="Select One" required formControlName="UserSelectedPetId" interface="popover" mode="ios">
           <ion-select-option *ngFor="let item of petsOptions" [value]="item.PetId">{{item.PetName}}
           </ion-select-option>
         </ion-select>
@@ -236,7 +236,7 @@
 
       <div class="info_div">
         <h3 class="info_lbl">Smoking</h3>
-        <ion-select placeholder="Select One" required formControlName="UserSelectedSmokingId">
+        <ion-select placeholder="Select One" required formControlName="UserSelectedSmokingId" interface="popover" mode="ios">
           <ion-select-option *ngFor="let item of SmokingOptions" [value]="item.Id">{{item.Details}}
           </ion-select-option>
         </ion-select>
@@ -249,7 +249,7 @@
       </div>
       <div class="info_div">
         <h3 class="info_lbl">Drinking</h3>
-        <ion-select placeholder="Select One" required formControlName="UserSelectedDrinkingId">
+        <ion-select placeholder="Select One" required formControlName="UserSelectedDrinkingId" interface="popover" mode="ios">
           <ion-select-option *ngFor="let item of DrinkingOptions" [value]="item.Id">{{item.Details}}
           </ion-select-option>
         </ion-select>
