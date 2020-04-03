@@ -3,7 +3,6 @@
       <ion-title>Suggested</ion-title>
     </ion-toolbar>
   </ion-header> 
-
 <ion-content fullscreen class="animated fadeInUp fast" horizontal="start">
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content pullingIcon="refresh-circle" refreshingSpinner="crescent"></ion-refresher-content>
@@ -11,8 +10,6 @@
     <ion-slides [options]="slideOpts" #preferredUserSlides>
         <ion-slide *ngFor="let user of preferredUser" class="animated zoomIn">
             <ion-card *ngIf="user.UserId" horizontal="start">
-                <!-- <ion-img [src]="user.ProfileImagePath | imageBinder:user.Gender" alt="" class="user-img"
-                    (ionError)="setdefultImage($event)"> </ion-img> -->
                 <div class="img_div">
                     <ion-img [src]="user.ProfileImagePath | imageBinder:user.Gender" alt="" class="user-img"
                         (ionError)="setdefultImage($event)"> </ion-img>
@@ -55,55 +52,9 @@
                          
                         </div>
                     </ion-card-title>
-                    <!-- <ion-card-subtitle>
-                        <div class="genral-Info">
 
-                       
-                            <p>
-                                <ion-icon slot="start" name="school"></ion-icon>
-                                {{user.College | blankValue}}
-                            </p>
-                        </div>
-                        <div class="more-info" *ngIf="user.UserPet || user.UserSmoking || user.UserDrinking">
-                            <ion-badge class="badge-color" *ngIf="user.UserPet">
-                                <span>
-                                    <ion-icon slot="start" name="paw"></ion-icon>
-                                    {{user.UserPet | blankValue}}
-                                </span>
-                            </ion-badge>
-                            <ion-badge class="badge-color" *ngIf="user.UserSmoking">
-                                <span>
-                                    <ion-icon slot="start" name="logo-no-smoking"></ion-icon>
-                                    {{user.UserSmoking | blankValue}}
-                                </span>
-                            </ion-badge>
-                            <ion-badge class="badge-color" *ngIf="user.UserDrinking">
-                                <span>
-                                    <ion-icon slot="start" name="wine"></ion-icon>
-                                    {{user.UserDrinking | blankValue}}
-
-                                </span>
-                            </ion-badge>
-                        </div>
-                        <p class="about-me-label">
-                            {{user.AboutMe}}
-                        </p>
-                    </ion-card-subtitle> -->
                 </ion-card-header>
-                <!-- <ion-card-content *ngIf="user.UserId">
-                    <ion-fab class="ion-fab-relative" horizontal="start" vertical="center">
-                        <ion-fab-button color="light" size="small" [disabled]="user.SendRequest"
-                            (click)="notIntrested()">
-                            <ion-icon name="close" color="danger"></ion-icon>
-                        </ion-fab-button>
-                    </ion-fab>
-                    <ion-fab horizontal="end" vertical="center">
-                        <ion-fab-button color="light" size="small" (click)="sendFriendRequest(user)">
-                            <ion-icon name="heart-empty" color="primary" *ngIf="!user.SendRequest"></ion-icon>
-                            <ion-icon name="heart" color="primary" *ngIf="user.SendRequest"></ion-icon>
-                        </ion-fab-button>
-                    </ion-fab>
-                </ion-card-content> -->
+               
             </ion-card>
             <ion-label class="ion-empty-label" *ngIf="preferredUser.length === 1 && user.UserId === ''" color="dark">
                 <ion-icon name="clipboard" slot="center"></ion-icon>

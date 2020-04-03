@@ -112,8 +112,22 @@ userState-3 suspended
     }
   }
 
-  public openLink() {
-    window.open('http://bosahmobile.com/terms-conditions/', '_system');
+  public openLink(urlNumber:number) {
+
+    switch(urlNumber) { 
+      case 1: { 
+        window.open('http://thebosahapp.com/terms-conditions/', '_system');
+         break; 
+      } 
+      case 2: { 
+        window.open('http://thebosahapp.com/privacy-policy/', '_system');
+         break; 
+      } 
+      case 3: { 
+        window.open('http://thebosahapp.com/information-about-broker-services/', '_system');
+         break; 
+      } 
+   } 
   }
 
 }
