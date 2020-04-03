@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../../shared/services/app.service';
 import { PreferredUser } from '../../shared/model/preferred-user.model';
-import { IonSlides, LoadingController } from '@ionic/angular';
+import { IonSlides, ActionSheetController } from '@ionic/angular';
 import { Toast } from '@ionic-native/toast/ngx';
 
 
@@ -22,8 +22,8 @@ export class PreferredComponent implements OnInit {
 
   constructor(
     private appService: AppService,
-    private loadingController: LoadingController,
-    private toast: Toast) {
+    private toast: Toast,
+    private actionSheetController: ActionSheetController) {
     this.appService.getUserPreferred().subscribe((preferredUser) => {
       this.preferredUser = preferredUser;
     });
@@ -55,6 +55,50 @@ export class PreferredComponent implements OnInit {
     this.appService.getUserPreferredFromDB().then(() => {
       event.target.complete();
     });
+  }
+
+  public async openReportUserProfileMenu(userId: PreferredUser) {
+    const actionSheet = await this.actionSheetController.create({
+      mode: 'ios',
+      cssClass: 'report-action-menu',
+      header: `What's wrong with this profile?`,
+      subHeader: `Help us keep the Hive safe by telling us why you're reporting or blocking this user. Don't worry, this is anonymous.`,
+      buttons: [{
+        icon: 'eye-off',
+        text: `I don't want them to see me`,
+        handler: () => {
+          // call the function()
+          console.log(userId);
+        }
+      },
+      {
+        icon: 'sad',
+        text: `Made me uncomfortable`,
+        handler: () => {
+
+        }
+      },
+      {
+        icon: 'alert-circle',
+        text: `Inappropriate content`,
+        handler: () => {
+
+        }
+      },
+      {
+        icon: 'camera',
+        text: `Stolen photo`,
+        handler: () => {
+
+        }
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel'
+      }
+      ]
+    });
+    await actionSheet.present();
   }
 
 }

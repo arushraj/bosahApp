@@ -1,6 +1,25 @@
-ion-slide ion-card ion-card-header {
-    text-align: left;
-    // margin-top: 5%;
+ion-slide {
+  ion-card {
+    ion-card-header {
+      text-align: left;
+      // margin-top: 5%;
+    }
+
+    ion-card-subtitle {
+      float: right;
+    }
+  }
+}
+
+.report-action-menu {
+  .action-sheet-container {
+    .action-sheet-group {
+      .action-sheet-title {
+        background-color: #F5D230 !important; // #f7bc00;
+        color: #fff !important;
+      }
+    }
+  }
 }
 
 // ion-slide ion-card ion-card-content {
@@ -30,8 +49,8 @@ ion-slide ion-card ion-card-header {
 // }
 
 .ion-empty-label {
-    margin: auto;
-    padding-top: 50%;
+  margin: auto;
+  padding-top: 50%;
 }
 
 
@@ -58,81 +77,96 @@ ion-slide ion-card ion-card-header {
 //     }
 // }
 ion-content {
-    padding-top: 5%;
-    width: 100%;
-    .img_div {
-        ion-img,img{
-        width: 100%;
-        // max-height: 40%;
-        .user-img {
-          height: 40%;
-      }
-      }
-      .style_img {
-        margin-top: -12%;
-      }
-    }
-    .data_div {
-      // padding-left: 20px;
-      .name {
-        color: var(--my_theme);
-        font-size: 30px;
-        font-family: "poppins_sb";
-        margin-top: -30px;
-        margin-bottom: 16px;
-      }
-      .job {
-        color: var(--black);
-        font-family: "poppins_me";
-        font-size: 18px;
-        margin-top: 0;
-        margin-bottom: 10px;
-        ion-icon {
-          margin-right: 10px;
-        }
-      }
-      ion-chip {
-        width: 200px;
-        --background: var(--chip_back);
-        ion-icon {
-          margin-right: 25px;
-          margin-left: 8px;
-        }
-        .chip_lbl {
-          font-size: 16px;
-          font-family: "poppins_r";
-          color: var(--sfont);
-        }
-      }
-      .test_p {
-        color: var(--black);
-        font-size: 13px;
-        font-family: "poppins_me";
-        margin: 0;
-        padding-left: 0px;
-        margin-bottom: 5%;
-      }
-      .btn_div {
-       // padding-top: 10px;
-        padding-bottom: 10px;
-        text-align: center;
-        ion-button {
-          height: 30px;
-          width: 30px;
-          --border-radius: 50%;
-          --background: var(--white);
-          --box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.2);
-          --padding-start: 0;
-          --padding-end: 0;
-          margin-left: 10px;
-          margin-right: 5px;
-          ion-icon {
-            color: var(--my_theme);
-            height: 14px;
-          }
-        }
+  padding-top: 5%;
+  width: 100%;
+
+  .img_div {
+
+    ion-img,
+    img {
+      width: 100%;
+
+      // max-height: 40%;
+      .user-img {
+        height: 40%;
       }
     }
-   
+
+    .style_img {
+      margin-top: -12%;
+    }
   }
-  
+
+  .data_div {
+
+    // padding-left: 20px;
+    .name {
+      color: var(--my_theme);
+      font-size: 30px;
+      font-family: "poppins_sb";
+      margin-top: -30px;
+      margin-bottom: 16px;
+    }
+
+    .job {
+      color: var(--black);
+      font-family: "poppins_me";
+      font-size: 18px;
+      margin-top: 0;
+      margin-bottom: 10px;
+
+      ion-icon {
+        margin-right: 10px;
+      }
+    }
+
+    ion-chip {
+      width: 200px;
+      --background: var(--chip_back);
+
+      ion-icon {
+        margin-right: 25px;
+        margin-left: 8px;
+      }
+
+      .chip_lbl {
+        font-size: 16px;
+        font-family: "poppins_r";
+        color: var(--sfont);
+      }
+    }
+
+    .test_p {
+      color: var(--black);
+      font-size: 13px;
+      font-family: "poppins_me";
+      margin: 0;
+      padding-left: 0px;
+      margin-bottom: 5%;
+    }
+
+    .btn_div {
+      // padding-top: 10px;
+      padding-bottom: 10px;
+      text-align: center;
+
+      ion-button {
+        height: 30px;
+        width: 30px;
+        --border-radius: 50%;
+        --background: var(--white);
+        --box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.2);
+        --padding-start: 0;
+        --padding-end: 0;
+        margin-left: 10px;
+        margin-right: 5px;
+
+        ion-icon {
+          color: var(--my_theme);
+          height: 14px;
+        }
+      }
+    }
+  }
+
+}
