@@ -79,7 +79,7 @@
       </ion-list>
   
       <div class="ion-padding">
-        <ion-button expand="block" type="submit" class="ion-no-margin btnSubmit">
+        <ion-button expand="block" type="submit" class="ion-no-margin btnSubmit" [disabled]="userForm.invalid">
           <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon> Submit
         </ion-button>
       </div>

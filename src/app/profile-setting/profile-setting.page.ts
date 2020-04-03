@@ -113,12 +113,6 @@ userState-3 suspended
   }
 
   public openLink() {
-    // const options: InAppBrowserOptions = {
-    //   zoom: 'no',
-    //   location: 'no',
-    //   toolbar: 'no'
-    // };
-    // const browser = this.inAppBrowser.create('http://bosahmobile.com/terms-conditions/', '_self', options);
     window.open('http://bosahmobile.com/terms-conditions/', '_system');
   }
 
