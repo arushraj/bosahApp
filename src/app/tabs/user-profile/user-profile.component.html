@@ -1,73 +1,3 @@
-<!-- <ion-content fullscreen class="animated fadeInUp fast" #ionContent>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="refresh-circle" refreshingSpinner="crescent"></ion-refresher-content>
-  </ion-refresher>
-  <ion-card class="user-profile-card" *ngIf="currentUser">
-    <img src="/assets/COVER SOCIAL MEDIA.png" alt="" />
-    <ion-card-header class="ion-no-padding">
-      <ion-avatar class="user-avatar">
-        <ion-img [src]="ProfileImagePath" alt="" (ionError)="setdefultImage($event)">
-        </ion-img>
-      </ion-avatar>
-      <ion-card-title>
-        <ion-chip color="primary" (click)="selectImage()">
-          <ion-icon name="Camera"></ion-icon>
-          <ion-label>Change Profile Picture</ion-label>
-        </ion-chip>
-        <br />
-        <span>{{currentUser.FName | blankValue}}, {{currentUser.Age | blankValue}}</span>
-      </ion-card-title>
-      <ion-card-subtitle>{{currentUser.Country | blankValue}}</ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-item-divider>
-        <ion-icon slot="start" name="pin"></ion-icon>
-        <ion-label>{{currentUser.City | blankValue}}</ion-label>
-      </ion-item-divider>
-      <ion-item-divider>
-        <ion-icon slot="start" name="mail"></ion-icon>
-        <ion-label>{{currentUser.EmailId | blankValue}}</ion-label>
-      </ion-item-divider>
-      <ion-item-divider>
-        <ion-icon slot="start" name="phone-portrait"></ion-icon>
-        <ion-label>{{currentUser.PhoneNumber | blankValue}}</ion-label>
-      </ion-item-divider>
-      <ion-item-divider>
-        <ion-icon slot="start" [name]="currentUser.GenderName"></ion-icon>
-        <ion-label>{{currentUser.GenderName | blankValue}}</ion-label>
-      </ion-item-divider>
-      <ion-item-divider>
-        <ion-icon slot="start" name="school"></ion-icon>
-        <ion-label>{{currentUser.College | blankValue}}</ion-label>
-      </ion-item-divider>
-      <ion-item-divider>
-        <ion-icon slot="start" name="briefcase"></ion-icon>
-        <ion-label>{{currentUser.Job | blankValue}}</ion-label>
-      </ion-item-divider>
-      <ion-item-divider>
-        <ion-icon slot="start" name="snow"></ion-icon>
-        <ion-label>{{currentUser.Religion | blankValue}}</ion-label>
-      </ion-item-divider>
-      <ion-item-divider class="setting-button">
-        <ion-chip outline color="primary" slot="start" routerLink="/profileupdate" routerDirection="forward">
-          <ion-icon name="create"></ion-icon>
-          <ion-label>Update Profile</ion-label>
-        </ion-chip>
-
-        <ion-chip outline color="secondary" slot="start" routerLink="/modifypreferences" routerDirection="forward">
-          <ion-icon name="construct"></ion-icon>
-          <ion-label>Roommate Preferences</ion-label>
-        </ion-chip>
-        <ion-label></ion-label>
-      </ion-item-divider>
-      <ion-button class="logout-button" expand="block" color="danger" (click)="userLogout()">
-        <ion-icon name="log-out"></ion-icon>
-        &nbsp; logout
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
-</ion-content> -->
-
 <ion-content fullscreen class="animated fadeInUp fast" #ionContent no-bounce has-bouncing="false" forceOverscroll="false">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="refresh-circle" refreshingSpinner="crescent"></ion-refresher-content>
@@ -151,9 +81,6 @@
         </div>
       </div>
       <div class="ion-text-center">
-        <!-- <ion-button class="update_btn" shape="round" (click)="updateProfile()">
-          update profile
-        </ion-button> -->
         <ion-button shape="round" outline class="update_btn" slot="start" routerLink="/profileupdate" routerDirection="forward">        
           Update Profile
         </ion-button>
