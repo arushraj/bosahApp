@@ -80,12 +80,7 @@ export class UserProfileComponent implements OnInit {
           this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
         }
       },
-      // {
-      //   text: 'Use Camera',
-      //   handler: () => {
-      //     this.takePicture(this.camera.PictureSourceType.CAMERA);
-      //   }
-      // },
+      
       {
         text: 'Cancel',
         role: 'cancel'
@@ -101,9 +96,7 @@ export class UserProfileComponent implements OnInit {
       sourceType:sourceType,
       saveToPhotoAlbum: false,
       correctOrientation: true
-      // destinationType: this.camera.DestinationType.FILE_URI,
-      // encodingType: this.camera.EncodingType.JPEG,
-      // mediaType: this.camera.MediaType.PICTURE
+     
     };
     let correctPath;
     let currentName;
@@ -164,8 +157,6 @@ private createFileName() {
     const newFileName = this.currentUser.FName.replace(' ', '_') + `_${new Date().getTime()}` + fileExtension;
     this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
       const currentImagefilePath = this.webView.convertFileSrc(this.file.dataDirectory + newFileName);
-      // this.toast.show(`Image: ${JSON.stringify(success)}`, `long`, 'bottom').subscribe(() => { });
-      // this.currentUser.ProfileImagePath = currentImagefilePath;
       this.startUpload(this.file.dataDirectory + newFileName);
     }, error => {
       this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
