@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../../shared/services/app.service';
 import { PreferredUser } from '../../shared/model/preferred-user.model';
-import { IonSlides, LoadingController } from '@ionic/angular';
+import { IonSlides, ActionSheetController, AlertController } from '@ionic/angular';
 import { Toast } from '@ionic-native/toast/ngx';
+import { UserFriends, FriendshipStatus } from '../../shared/model/user-friend.model';
 
 
 @Component({
@@ -22,8 +23,8 @@ export class PreferredComponent implements OnInit {
 
   constructor(
     private appService: AppService,
-    private loadingController: LoadingController,
-    private toast: Toast) {
+    private alertController: AlertController,
+    private actionSheetController: ActionSheetController) {
     this.appService.getUserPreferred().subscribe((preferredUser) => {
       this.preferredUser = preferredUser;
     });
@@ -55,6 +56,87 @@ export class PreferredComponent implements OnInit {
     this.appService.getUserPreferredFromDB().then(() => {
       event.target.complete();
     });
+  }
+
+  public async openReportUserProfileMenu(user: PreferredUser) {
+    const actionSheet = await this.actionSheetController.create({
+      mode: 'ios',
+      cssClass: 'report-action-menu',
+      header: `What's wrong with this profile?`,
+      subHeader: `Help us keep the Hive safe by telling us why you're reporting or blocking this user. Don't worry, this is anonymous.`,
+      buttons: [{
+        icon: 'eye-off',
+        text: `Block`,
+        handler: () => {
+          const userObject = this.getFriendObject(user);
+          this.appService.actionOnFriendRequest(userObject, FriendshipStatus.Blocked).then(() => {
+          });
+        }
+      },
+      {
+        icon: 'alert-circle',
+        text: `Inappropriate content`,
+        handler: async () => {
+          const userObject = this.getFriendObject(user);
+          const alert = await this.alertController.create({
+            header: 'Thanks for Letting Us Know.',
+            message: 'Would you <strong>block</strong> user?',
+            buttons: [
+              {
+                text: 'No',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: (blah) => {
+                  console.log('Confirm Cancel');
+                  this.appService.actionOnFriendRequest(userObject, FriendshipStatus.Report).then(async () => { });
+                }
+              }, {
+                text: 'Yes',
+                handler: () => {
+                  console.log('Confirm Okay');
+                  this.appService.actionOnFriendRequest(userObject, FriendshipStatus.Report).then(async () => {
+                    this.appService.actionOnFriendRequest(userObject, FriendshipStatus.Blocked).then(() => { });
+                  });
+                }
+              }
+            ]
+          });
+          await alert.present();
+
+        }
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel'
+      }
+      ]
+    });
+    await actionSheet.present();
+  }
+
+  public actionOnFriendRequest(user: UserFriends, friendshipStatus: number) {
+    this.appService.actionOnFriendRequest(user, friendshipStatus).then(() => {
+    });
+  }
+
+  private getFriendObject(data: PreferredUser) {
+    const user: UserFriends = {
+      UserId: data.UserId,
+      FName: data.FName,
+      ProfileImagePath: data.ProfileImagePath,
+      City: data.City,
+      Age: data.Age,
+      Gender: '',
+      Status: 0,
+      AboutMe: '',
+      LastMessage: '',
+      UserPet: '',
+      UserDrinking: '',
+      UserSmoking: '',
+      College: '',
+      Job: ''
+    };
+    return user;
   }
 
 }

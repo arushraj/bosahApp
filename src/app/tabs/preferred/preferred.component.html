@@ -1,8 +1,8 @@
-<ion-header  class="ion-no-border">
-    <ion-toolbar mode="md">     
-      <ion-title>Suggested</ion-title>
+<ion-header class="ion-no-border">
+    <ion-toolbar mode="md">
+        <ion-title>Suggested</ion-title>
     </ion-toolbar>
-  </ion-header> 
+</ion-header>
 <ion-content fullscreen class="animated fadeInUp fast" horizontal="start">
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content pullingIcon="refresh-circle" refreshingSpinner="crescent"></ion-refresher-content>
@@ -15,21 +15,19 @@
                         (ionError)="setdefultImage($event)"> </ion-img>
                     <img src="/assets/Shape.png" class="style_img">
                 </div>
-                <ion-card-header *ngIf="user.UserId" class="ion-no-padding ion-padding-horizontal"  horizontal="start">
+                <ion-card-header *ngIf="user.UserId" class="ion-no-padding ion-padding-horizontal" horizontal="start">
                     <ion-card-title horizontal="start">
                         <div class="data_div ion-margin-horizontal">
                             <h3 class="name">{{user.FName | blankValue}}</h3>
                             <div class="btn_div" *ngIf="user.UserId">
-                              
+
                                 <ion-button (click)='notIntrested()'>
                                     <ion-icon src="/assets/cancel.svg"></ion-icon>
                                 </ion-button>
                                 <ion-button (click)="sendFriendRequest(user)">
                                     <ion-icon src="/assets/gree_heart.svg"></ion-icon>
                                 </ion-button>
-                          
-
-                        </div>
+                            </div>
                             <p class="job">
                                 <ion-icon src="/assets/job.svg"></ion-icon> {{user.Job | blankValue}}
                             </p>
@@ -49,12 +47,14 @@
                                 <ion-label class="chip_lbl"> {{user.UserPet | blankValue}}</ion-label>
                             </ion-chip>
                             <p class="test_p"> {{user.AboutMe}}</p>
-                         
                         </div>
                     </ion-card-title>
-
+                    <ion-card-subtitle>
+                        <ion-button (click)="openReportUserProfileMenu(user)" size="small" color="warning" mode="ios">
+                            <ion-icon name="alert-circle"></ion-icon> Report User
+                        </ion-button>
+                    </ion-card-subtitle>
                 </ion-card-header>
-               
             </ion-card>
             <ion-label class="ion-empty-label" *ngIf="preferredUser.length === 1 && user.UserId === ''" color="dark">
                 <ion-icon name="clipboard" slot="center"></ion-icon>

@@ -41,7 +41,8 @@ export class ImageBinderPipe implements PipeTransform {
                 return '/assets/no-image.png';
             }
         } else {
-            return `${this.appConstant.APP_IMG_BASE_URL}${value}?random=${Math.random()}`;
+            // return `${this.appConstant.APP_IMG_BASE_URL}${value}?random=${Math.random()}`;
+            return `${this.appConstant.APP_IMG_BASE_URL}${value}`;
         }
     }
 }

@@ -32,7 +32,7 @@ export class FlatSearchFormPage implements OnInit {
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
   email: string;
 
-  constructor(private appService: AppService, private toast: Toast, private fb: FormBuilder,private alertController: AlertController) {
+  constructor(private appService: AppService, private toast: Toast, private fb: FormBuilder, private alertController: AlertController) {
 
     this.minDate = this.getmiStringDate();
     this.maxDate = this.getmaxStringDate();
@@ -63,13 +63,13 @@ export class FlatSearchFormPage implements OnInit {
       this.userId = value;
     });
     this.appService.getCurrentUser()
-    .subscribe(user => {
-      this.email = user.EmailId;  
-    });
-   
+      .subscribe(user => {
+        this.email = user.EmailId;
+      });
+
   }
 
-  ngOnInit() { 
+  ngOnInit() {
   }
 
   ionViewDidEnter() {
@@ -121,24 +121,24 @@ export class FlatSearchFormPage implements OnInit {
   }
 
   public async submitForm() {
-    this.userForm.value.BedroomTypeId = this.selectedBedroomId==null? 2: this.selectedBedroomId;
-    this.userForm.value.BathroomTypeId = this.selectedBathroomId==null? 2:this.selectedBathroomId;
+    this.userForm.value.BedroomTypeId = this.selectedBedroomId == null ? 2 : this.selectedBedroomId;
+    this.userForm.value.BathroomTypeId = this.selectedBathroomId == null ? 2 : this.selectedBathroomId;
     const data = Object.assign({}, this.userForm).value;
     data.minRentBudget = this.rangeValue.lower;
     data.maxRentBudget = this.rangeValue.upper;
     data.UserId = this.userId;
     this.appService.submitFlatSearchForm(data).then(async () => {
-    this.cleanForm();
-    const alert = await this.alertController.create({
-      header: ``,
-      message: `Thanks for writting! We will write back to your registered email address:</strong><br/>`+this.email,
-      buttons: ['Ok']
-    }); 
-     await alert.present();
+      this.cleanForm();
+      const alert = await this.alertController.create({
+        header: ``,
+        message: `Thanks for writting! We will write back to your registered email address:</strong><br/>` + this.email,
+        buttons: ['Ok']
+      });
+      await alert.present();
     });
-   
-    
-    }
-  
+
+
+  }
+
 
 }
