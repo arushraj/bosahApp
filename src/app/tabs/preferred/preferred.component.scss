@@ -11,16 +11,32 @@ ion-slide {
   }
 }
 
-.report-action-menu {
-  .action-sheet-container {
-    .action-sheet-group {
-      .action-sheet-title {
-        background-color: #F5D230 !important; // #f7bc00;
-        color: #fff !important;
-      }
-    }
-  }
-}
+// ion-action-sheet {
+//   // .action-sheet-wrapper {
+//   //   .action-sheet-container {
+//   //     .action-sheet-group {
+
+//   //     }
+//   //   }
+//   // }
+//   .action-sheet-group-cancel {
+//     display: none;
+//   }
+// }
+
+// .report-action-menu {
+//   // .action-sheet-container {
+//   //   .action-sheet-group {
+//   //     .action-sheet-title {
+//   //       background-color: #F5D230 !important; // #f7bc00;
+//   //       color: #fff !important;
+//   //     }
+//   //   }
+//   // }
+//   .menu-item{
+//     color: var(--my_theme);
+//   }
+// }
 
 // ion-slide ion-card ion-card-content {
 //     padding: 0;

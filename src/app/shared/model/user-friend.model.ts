@@ -21,5 +21,6 @@ export enum FriendshipStatus {
     Unfriended,
     Rejected,
     Blocked,
-    Cancelled
+    Cancelled,
+    Report
 }
