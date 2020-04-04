@@ -469,14 +469,8 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public openLink() {
-    // const options: InAppBrowserOptions = {
-    //   zoom: 'no',
-    //   location: 'no',
-    //   toolbar: 'no'
-    // };
-    // const browser = this.inAppBrowser.create('http://bosahmobile.com/beta/terms-conditions/', '_self', options);
-    window.open('http://bosahmobile.com/terms-conditions/', '_system');
+  public openLink(urlNumber:number) {
+   urlNumber==1?window.open('http://thebosahapp.com/privacy-policy/', '_system'):window.open('http://thebosahapp.com/information-about-broker-services/', '_system');
   }
 
   public getmiStringDate(): string {

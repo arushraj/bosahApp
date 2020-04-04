@@ -48,10 +48,5 @@ export class TabsComponent implements OnInit {
 
   tabsDidChange() {
     console.log(this.apptabs.getSelected());
-    // if (this.apptabs.getSelected() === 'preferred') {
-    //   this.appService.getUserPreferredFromDB();
-    // } else if (this.apptabs.getSelected() === 'match') {
-    //   this.appService.getUserFriendsFromDB();
-    // }
   }
 }

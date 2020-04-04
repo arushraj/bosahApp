@@ -313,11 +313,14 @@
               <ion-label>
                 <ion-checkbox slot="start" [(ngModel)]="userAcceptTermsAndConditions"
                   name="userAcceptTermsAndConditions" id="userAcceptTermsAndConditions"></ion-checkbox>&nbsp;&nbsp;I
-                accept the Terms & Conditions.
+                  accept Privacy Policy & IABS
               </ion-label>
               <br /><br />
-              <ion-button (click)="openLink()" fill="clear">
-                Terms & Conditions
+              <ion-button (click)="openLink(1)" fill="clear">
+                Privacy Policy
+              </ion-button>
+              <ion-button (click)="openLink(2)" fill="clear">
+              IABS
               </ion-button>
             </div>
           </form>

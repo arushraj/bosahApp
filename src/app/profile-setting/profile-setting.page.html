@@ -1,12 +1,3 @@
-<!-- <ion-header translucent>
-  <ion-toolbar color="client-header">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="home"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Profile Settings</ion-title>
-  </ion-toolbar>
-</ion-header> -->
-
 <ion-header class="ion-no-border">
   <ion-toolbar mode="md">
     <ion-buttons slot="start">
@@ -52,13 +43,25 @@
 
     <ion-item-group>
       <ion-item-divider>
-        <ion-label>Terms & Conditions, Privacy Policy and IABS</ion-label>
+        <ion-label>T&C,Privacy Policy and IABS</ion-label>
       </ion-item-divider>
       <ion-item>
-        <ion-button (click)="openLink()" fill="clear">
+        <ion-button (click)="openLink(1)" fill="clear">
           Terms & Conditions
         </ion-button>
       </ion-item>
+      <ion-item>
+        <ion-button (click)="openLink(2)" fill="clear">
+         Privacy Policy
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-button (click)="openLink(3)" fill="clear">
+         IABS
+        </ion-button>
+      </ion-item>
     </ion-item-group>
+
+
   </ion-list>
 </ion-content>

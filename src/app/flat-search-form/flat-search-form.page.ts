@@ -121,8 +121,8 @@ export class FlatSearchFormPage implements OnInit {
   }
 
   public async submitForm() {
-    this.userForm.value.BedroomTypeId = this.selectedBedroomId;
-    this.userForm.value.BathroomTypeId = (this.selectedBathroomId);
+    this.userForm.value.BedroomTypeId = this.selectedBedroomId==null? 2: this.selectedBedroomId;
+    this.userForm.value.BathroomTypeId = this.selectedBathroomId==null? 2:this.selectedBathroomId;
     const data = Object.assign({}, this.userForm).value;
     data.minRentBudget = this.rangeValue.lower;
     data.maxRentBudget = this.rangeValue.upper;
