@@ -10,8 +10,7 @@ import { RentBudget } from '../shared/model/rent-budget.model';
 import { Bedroom } from '../shared/model/bedroom.model';
 import { Bathroom } from '../shared/model/bathroom.model';
 import { Toast } from '@ionic-native/toast/ngx';
-import { IonContent } from '@ionic/angular';
-
+import { IonContent, AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-flat-search-form',
   templateUrl: './flat-search-form.page.html',
@@ -31,8 +30,9 @@ export class FlatSearchFormPage implements OnInit {
   public minDate: string;
   public maxDate: string;
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
+  email: string;
 
-  constructor(private appService: AppService, private toast: Toast, private fb: FormBuilder) {
+  constructor(private appService: AppService, private toast: Toast, private fb: FormBuilder,private alertController: AlertController) {
 
     this.minDate = this.getmiStringDate();
     this.maxDate = this.getmaxStringDate();
@@ -41,8 +41,8 @@ export class FlatSearchFormPage implements OnInit {
     this.userForm = this.fb.group({
       // RentBudgetId: ['', Validators.compose([Validators.required])],
       CityId: ['', Validators.compose([Validators.required])],
-      BedroomTypeId: ['', Validators.compose([Validators.required])],
-      BathroomTypeId: ['', Validators.compose([Validators.required])],
+      // BedroomTypeId: ['', Validators.compose([Validators.required])],
+      // BathroomTypeId: ['', Validators.compose([Validators.required])],
       DesiredMoveInDate: ['', Validators.compose([Validators.required])],
       Comments: [''],
       // roomrentRange: ['']
@@ -62,26 +62,18 @@ export class FlatSearchFormPage implements OnInit {
     this.appService.getUsersValueByKey('UserId').subscribe((value) => {
       this.userId = value;
     });
+    this.appService.getCurrentUser()
+    .subscribe(user => {
+      this.email = user.EmailId;  
+    });
+   
   }
 
-  ngOnInit() {
+  ngOnInit() { 
   }
 
   ionViewDidEnter() {
     this.ionContent.scrollToTop(500);
-  }
-
-  public submitForm() {
-    this.userForm.value.BedroomTypeId = this.selectedBedroomId;
-    this.userForm.value.BathroomTypeId = (this.selectedBathroomId);
-    const data = Object.assign({}, this.userForm).value;
-    data.minRentBudget = this.rangeValue.lower;
-    data.maxRentBudget = this.rangeValue.upper;
-    console.log(data);
-    data.UserId = this.userId;
-    this.appService.submitFlatSearchForm(data).then(() => {
-      this.cleanForm();
-    });
   }
 
   private cleanForm() {
@@ -127,5 +119,26 @@ export class FlatSearchFormPage implements OnInit {
     const yyyy = today.getFullYear() + 1;
     return yyyy + '-' + mm + '-' + dd;
   }
+
+  public async submitForm() {
+    this.userForm.value.BedroomTypeId = this.selectedBedroomId;
+    this.userForm.value.BathroomTypeId = (this.selectedBathroomId);
+    const data = Object.assign({}, this.userForm).value;
+    data.minRentBudget = this.rangeValue.lower;
+    data.maxRentBudget = this.rangeValue.upper;
+    data.UserId = this.userId;
+    this.appService.submitFlatSearchForm(data).then(async () => {
+    this.cleanForm();
+    const alert = await this.alertController.create({
+      header: ``,
+      message: `Thanks for writting! We will write back to your registered email address:</strong><br/>`+this.email,
+      buttons: ['Ok']
+    }); 
+     await alert.present();
+    });
+   
+    
+    }
+  
 
 }

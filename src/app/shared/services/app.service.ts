@@ -211,7 +211,7 @@ export class AppService {
         }];
     }
 
-    public getCurrentUser(): Observable<CurrentUser> {
+    public getCurrentUser(): Observable<CurrentUser> { 
         return this.currentUser.asObservable();
     }
 
