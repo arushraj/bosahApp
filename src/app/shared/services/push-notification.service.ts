@@ -16,8 +16,7 @@ export class PushNotificationService {
     private push: Push,
     private platform: Platform,
     private toast:Toast,
-    private alertCtrl: AlertController,
-    private navCtrl: NavController) {
+    private alertCtrl: AlertController) {
     this.platform.ready().then(() => {
       this.initPushNotification();
     });
@@ -85,10 +84,13 @@ export class PushNotificationService {
        console.log('Received a notification in foreground', notification);
        } 
        else {
+        let navCtrl: NavController;
 
         console.log('Received a notification in background', notification.additionalData);
         
-         //  this.navCtrl.navigateForward('./messaging/messaging.module#MessagingPageModule');       
+        // this.navCtrl.navigateForward('./messaging/messaging.module#MessagingPageModule');    
+          navCtrl.navigateForward('/tabs/match');
+          //window.location = '/tabs/match'
      
        }
        
