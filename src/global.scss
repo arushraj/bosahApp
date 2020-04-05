@@ -106,7 +106,7 @@ ion-label {
 ion-button {
   --ripple-color: transparent;
   --box-shadow: none;
-  --background-activated: none;
+  --background-activated: var(--my_theme);
 }
 
 ion-header {
@@ -180,7 +180,7 @@ ion-back-button {
 }
 
 ion-segment-button {
-  --background-activated: none;
+  --background-activated: var(--my_theme);
 }
 
 .report-action-menu {
