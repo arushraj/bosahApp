@@ -8,7 +8,7 @@
         <ion-refresher-content pullingIcon="refresh-circle" refreshingSpinner="crescent"></ion-refresher-content>
     </ion-refresher>
     <ion-slides [options]="slideOpts" #preferredUserSlides>
-        <ion-slide *ngFor="let user of preferredUser" class="animated zoomIn">
+        <ion-slide *ngFor="let user of preferredUser" class="animated zoomIn"> 
             <ion-card *ngIf="user.UserId" horizontal="start">
                 <div class="img_div">
                     <ion-img [src]="user.ProfileImagePath | imageBinder:user.Gender" alt="" class="user-img"
@@ -18,7 +18,7 @@
                 <ion-card-header *ngIf="user.UserId" class="ion-no-padding ion-padding-horizontal" horizontal="start">
                     <ion-card-title horizontal="start">
                         <div class="data_div ion-margin-horizontal">
-                            <h3 class="name">{{user.FName | blankValue}}</h3>
+                            <h3 class="name">{{user.FName | blankValue}}, {{user.Age}}</h3>
                             <div class="btn_div" *ngIf="user.UserId">
 
                                 <ion-button (click)='notIntrested()'>

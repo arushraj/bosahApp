@@ -1088,7 +1088,7 @@ export class AppService {
         const data = {
             UserID: userId.toString(),
             EventID: event.EventId.toString(),
-            RegisterStatus: !event.isSubscribe
+            RegisterStatus: !event.isSubscribe==true? 1:0
         };
         this.http.post(url, data, this.header)
             .then((res) => {

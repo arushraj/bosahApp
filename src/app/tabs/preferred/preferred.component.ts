@@ -61,9 +61,10 @@ export class PreferredComponent implements OnInit {
   public async openReportUserProfileMenu(user: PreferredUser) {
     const actionSheet = await this.actionSheetController.create({
       mode: 'ios',
+     
       cssClass: 'report-action-menu',
-      header: `What's wrong with this profile?`,
-      subHeader: `Help us keep the Hive safe by telling us why you're reporting or blocking this user. Don't worry, this is anonymous.`,
+      header: `What’s Wrong With This Profile?`,
+      subHeader: `Help keep Bosah safe letting us know why you’re reporting or blocking this user.`,
       buttons: [{
         icon: 'eye-off',
         text: `Block`,
@@ -79,8 +80,8 @@ export class PreferredComponent implements OnInit {
         handler: async () => {
           const userObject = this.getFriendObject(user);
           const alert = await this.alertController.create({
-            header: 'Thanks for Letting Us Know.',
-            message: 'Would you <strong>block</strong> user?',
+            header: '',
+            message: 'Would you like to <strong>block</strong> this user?',
             buttons: [
               {
                 text: 'No',
