@@ -41,7 +41,7 @@ const routes: Routes = [
             loadChildren: () => import('../flat-search-form/flat-search-form.module').then(m => m.FlatSearchFormPageModule)
           }
         ]
-      },{
+      }, {
         path: '**',
         redirectTo: 'preferred'
       }

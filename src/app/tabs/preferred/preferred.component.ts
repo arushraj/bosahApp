@@ -70,6 +70,8 @@ export class PreferredComponent implements OnInit {
         handler: () => {
           const userObject = this.getFriendObject(user);
           this.appService.actionOnFriendRequest(userObject, FriendshipStatus.Blocked).then(() => {
+            const userIndex = this.preferredUser.indexOf(user);
+            this.preferredUser.splice(userIndex, 1);
           });
         }
       },
@@ -88,14 +90,20 @@ export class PreferredComponent implements OnInit {
                 cssClass: 'secondary',
                 handler: (blah) => {
                   console.log('Confirm Cancel');
-                  this.appService.actionOnFriendRequest(userObject, FriendshipStatus.Report).then(async () => { });
+                  this.appService.actionOnFriendRequest(userObject, FriendshipStatus.Report).then(async () => {
+                    const userIndex = this.preferredUser.indexOf(user);
+                    this.preferredUser.splice(userIndex, 1);
+                  });
                 }
               }, {
                 text: 'Yes',
                 handler: () => {
                   console.log('Confirm Okay');
                   this.appService.actionOnFriendRequest(userObject, FriendshipStatus.Report).then(async () => {
-                    this.appService.actionOnFriendRequest(userObject, FriendshipStatus.Blocked).then(() => { });
+                    this.appService.actionOnFriendRequest(userObject, FriendshipStatus.Blocked).then(() => {
+                      const userIndex = this.preferredUser.indexOf(user);
+                      this.preferredUser.splice(userIndex, 1);
+                    });
                   });
                 }
               }
