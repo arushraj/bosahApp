@@ -61,7 +61,6 @@ export class PreferredComponent implements OnInit {
   public async openReportUserProfileMenu(user: PreferredUser) {
     const actionSheet = await this.actionSheetController.create({
       mode: 'ios',
-     
       cssClass: 'report-action-menu',
       header: `What’s Wrong With This Profile?`,
       subHeader: `Help keep Bosah safe letting us know why you’re reporting or blocking this user.`,
@@ -71,6 +70,8 @@ export class PreferredComponent implements OnInit {
         handler: () => {
           const userObject = this.getFriendObject(user);
           this.appService.actionOnFriendRequest(userObject, FriendshipStatus.Blocked).then(() => {
+            const userIndex = this.preferredUser.indexOf(user);
+            this.preferredUser.splice(userIndex, 1);
           });
         }
       },
@@ -96,7 +97,10 @@ export class PreferredComponent implements OnInit {
                 handler: () => {
                   console.log('Confirm Okay');
                   this.appService.actionOnFriendRequest(userObject, FriendshipStatus.Report).then(async () => {
-                    this.appService.actionOnFriendRequest(userObject, FriendshipStatus.Blocked).then(() => { });
+                    this.appService.actionOnFriendRequest(userObject, FriendshipStatus.Blocked).then(() => {
+                      const userIndex = this.preferredUser.indexOf(user);
+                      this.preferredUser.splice(userIndex, 1);
+                    });
                   });
                 }
               }
