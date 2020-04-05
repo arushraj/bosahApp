@@ -18,6 +18,7 @@ export class MatchComponent implements OnInit {
   public pageTabs: Array<{ id: number, tabName: string, friends: UserFriends[] }>;
   public selectedTab: number;
   public currentUserId: string;
+  public isLoading = false;
   public slideOpts = {
     initialSlide: 0,
     speed: 300,
@@ -53,43 +54,47 @@ export class MatchComponent implements OnInit {
         this.currentUserId = value;
       });
       // bind the last message
-      this.pageTabs[0].friends.forEach((friend, index) => {
-        this.firebasedb.subscribeLastMessageItem(friend.UserId, this.currentUserId).subscribe((value) => {
-          if (value[0]) {
-            value[0].message = this.firebasedb.aesDecrypt(value[0].message, value[0].userId);
-          }
-          friend.LastMessage = value[0] ? value[0] : null;
+      this.pageTabs[0].friends.forEach((friend) => {
+        try {
+          this.firebasedb.subscribeLastMessageItem(friend.UserId, this.currentUserId).subscribe((value) => {
+            if (value[0]) {
+              value[0].message = this.firebasedb.aesDecrypt(value[0].message, value[0].userId);
+            }
+            friend.LastMessage = value[0] ? value[0] : null;
 
-          // if (index === this.pageTabs[0].friends.length - 1) {
-          const lastMessageArray = this.pageTabs[0].friends.filter((i) => {
-            return i.LastMessage != null;
-          });
-          const nullMessageArray = this.pageTabs[0].friends.filter((i) => {
-            return i.LastMessage === null;
-          });
-          // sorting Array
-          const newArray = lastMessageArray
-            .sort((a, b) => {
-              if (a.LastMessage && b.LastMessage) {
-                if (new Date(a.LastMessage.datetime) > new Date(b.LastMessage.datetime)) {
-                  return -1;
-                } else if (new Date(a.LastMessage.datetime) < new Date(b.LastMessage.datetime)) {
-                  return 1;
+            const lastMessageArray = this.pageTabs[0].friends.filter((i) => {
+              return i.LastMessage != null;
+            });
+            const nullMessageArray = this.pageTabs[0].friends.filter((i) => {
+              return i.LastMessage === null;
+            });
+            // sorting Array
+            const newArray = lastMessageArray
+              .sort((a, b) => {
+                if (a.LastMessage && b.LastMessage) {
+                  if (new Date(a.LastMessage.datetime) > new Date(b.LastMessage.datetime)) {
+                    return -1;
+                  } else if (new Date(a.LastMessage.datetime) < new Date(b.LastMessage.datetime)) {
+                    return 1;
+                  } else {
+                    return 0;
+                  }
                 } else {
                   return 0;
                 }
-              } else {
-                return 0;
-              }
+              });
+            nullMessageArray.forEach((item) => {
+              newArray.push(item);
             });
-          nullMessageArray.forEach((item) => {
-            newArray.push(item);
+            if (newArray.length === this.pageTabs[0].friends.length) {
+              this.pageTabs[0].friends = newArray;
+              this.isLoading = false;
+            }
           });
-          if (newArray.length === this.pageTabs[0].friends.length) {
-            this.pageTabs[0].friends = newArray;
-          }
-          // }
-        });
+        } catch (ex) {
+          console.log(ex);
+          this.isLoading = false;
+        }
       });
     });
     // No Needed as of Now.
@@ -116,6 +121,7 @@ export class MatchComponent implements OnInit {
     this.selectedTab = this.pageTabs[0].id;
 
     if (this.pageTabs[0].friends.length === 0) {
+      this.isLoading = true;
       this.appService.getUserFriendsFromDB();
     }
   }
@@ -168,7 +174,7 @@ export class MatchComponent implements OnInit {
         from,
         fromUserName
       };
-       this.navCtrl.navigateForward(`/messaging?info=${JSON.stringify(info)}`, { animated: true, animationDirection: 'forward' });
+      this.navCtrl.navigateForward(`/messaging?info=${JSON.stringify(info)}`, { animated: true, animationDirection: 'forward' });
     }
   }
 

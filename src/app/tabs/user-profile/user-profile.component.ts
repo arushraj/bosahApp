@@ -80,7 +80,7 @@ export class UserProfileComponent implements OnInit {
           this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
         }
       },
-      
+
       {
         text: 'Cancel',
         role: 'cancel'
@@ -96,7 +96,7 @@ export class UserProfileComponent implements OnInit {
       sourceType,
       saveToPhotoAlbum: false,
       correctOrientation: true
-     
+
     };
     let correctPath;
     let currentName;

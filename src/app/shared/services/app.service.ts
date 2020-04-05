@@ -341,8 +341,8 @@ export class AppService {
         //     cssClass: ''
         // });
         // loading.present();
-        this.storage.get(StorageKey.LocalCurrentUserKey)
-            .then((user) => {
+        await this.storage.get(StorageKey.LocalCurrentUserKey)
+            .then(async (user) => {
                 if ((user === null || user === undefined) || updateOnline) {
                     if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
                         this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
@@ -351,8 +351,8 @@ export class AppService {
                         // });
 
                     } else {
-                        this.getCurrentUserIdfromLocalStorage()
-                            .then(value => {
+                        await this.getCurrentUserIdfromLocalStorage()
+                            .then(async value => {
                                 if (value === null || value === undefined) {
                                     this.toast.show(`Session expired`, `short`, 'bottom').subscribe(() => { });
                                     // loading.dismiss().then(() => {
@@ -363,7 +363,7 @@ export class AppService {
                                     this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                                 } else {
                                     const url = this.appConstant.getURL(UrlKey.Current_User).replace('uid', value);
-                                    this.http.get(url, {}, this.header)
+                                    await this.http.get(url, {}, this.header)
                                         .then((res: any) => {
                                             // loading.dismiss();
 
@@ -522,15 +522,15 @@ export class AppService {
         });
         // Setting Value null
         this.setUserPreferred(this.createuserPreferred());
-        loading.present();
-        this.getCurrentUserIdfromLocalStorage()
+        // loading.present();
+        await this.getCurrentUserIdfromLocalStorage()
             .then(async (userId) => {
                 if (userId) {
                     const url = this.appConstant.getURL(UrlKey.User_Preferred).replace('uid', userId);
                     await this.http.get(url, {}, this.header)
                         .then(res => {
                             console.log('response', res);
-                            loading.dismiss();
+                            // loading.dismiss();
                             const resdata = JSON.parse(res.data);
                             const resPreferred: PreferredUser[] = resdata.PreferredUserList;
                             this.userPreferredList.users = resPreferred;
@@ -539,27 +539,24 @@ export class AppService {
                         .catch(error => {
 
                             console.log('error', error);
-                            loading.dismiss();
+                            // loading.dismiss();
                             this.userPreferredList.users = [];
                             this.setUserPreferred(this.createuserPreferred());
                             if (error.status === 401) {
                                 this.userLogout();
                             }
-
-
-
                         })
                         .finally(() => {
-                            loading.dismiss();
+                            // loading.dismiss();
                         });
                 }
             })
             .catch((err) => {
                 this.toast.showLongBottom(JSON.stringify(err)).subscribe(() => { });
-                loading.dismiss();
+                // loading.dismiss();
             })
             .finally(() => {
-                loading.dismiss();
+                // loading.dismiss();
             });
     }
 
@@ -571,11 +568,11 @@ export class AppService {
         // });
         this.setFriendList(this.createFriendList());
         // loading.present();
-        this.getCurrentUserIdfromLocalStorage()
-            .then((userId) => {
+        await this.getCurrentUserIdfromLocalStorage()
+            .then(async (userId) => {
                 if (userId) {
                     const url = this.appConstant.getURL(UrlKey.User_Friends).replace('uid', userId);
-                    this.http.get(url, {}, this.header)
+                    await this.http.get(url, {}, this.header)
                         .then(res => {
                             const resdata = JSON.parse(res.data);
                             const friendList: UserFriends[] = resdata.FriendandPendingList;
@@ -1088,7 +1085,7 @@ export class AppService {
         const data = {
             UserID: userId.toString(),
             EventID: event.EventId.toString(),
-            RegisterStatus: !event.isSubscribe==true? 1:0
+            RegisterStatus: !event.isSubscribe === true ? 1 : 0
         };
         this.http.post(url, data, this.header)
             .then((res) => {
