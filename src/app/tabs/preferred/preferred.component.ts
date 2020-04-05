@@ -90,10 +90,7 @@ export class PreferredComponent implements OnInit {
                 cssClass: 'secondary',
                 handler: (blah) => {
                   console.log('Confirm Cancel');
-                  this.appService.actionOnFriendRequest(userObject, FriendshipStatus.Report).then(async () => {
-                    const userIndex = this.preferredUser.indexOf(user);
-                    this.preferredUser.splice(userIndex, 1);
-                  });
+                  this.appService.actionOnFriendRequest(userObject, FriendshipStatus.Report).then(async () => { });
                 }
               }, {
                 text: 'Yes',
