@@ -61,7 +61,6 @@ export class PreferredComponent implements OnInit {
   public async openReportUserProfileMenu(user: PreferredUser) {
     const actionSheet = await this.actionSheetController.create({
       mode: 'ios',
-     
       cssClass: 'report-action-menu',
       header: `What’s Wrong With This Profile?`,
       subHeader: `Help keep Bosah safe letting us know why you’re reporting or blocking this user.`,
