@@ -48,7 +48,7 @@ export class PushNotificationService {
 
     const options: PushOptions = {
       android: {
-        senderID: '423137540298', 
+        senderID: '909966414988', 
         sound: 'true',
         vibrate: 'true',
         icon: 'android_icon'
@@ -80,6 +80,7 @@ export class PushNotificationService {
     }).then(() => console.log('Channel created'));
 
     pushObject.on('notification').subscribe((notification: any) => {  
+      debugger;
       if (notification.additionalData.foreground) {
        console.log('Received a notification in foreground', notification);
        } 

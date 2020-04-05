@@ -1,58 +1,3 @@
-<!-- <ion-header translucent class="sticky-box-shadow">
-  <ion-toolbar color="client-header">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Roommate Preferences</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content fullscreen>
-  <ion-img src="/assets/ICON WITH TITLE.png" alt="" class="headerImage"></ion-img>
-  <form [formGroup]="userForm" (ngSubmit)="submitForm()">
-    <ion-list lines="full" class="ion-no-margin ion-no-padding">
-      <ion-item>
-        <ion-label position="stacked">Roommate Gender <ion-text color="danger">*</ion-text>
-        </ion-label>
-        <ion-select placeholder="Select One" required formControlName="preferredGender" multiple="true">
-          <ion-select-option *ngFor="let item of genders" [value]="item.genderId">{{item.gender}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Roommate Religion <ion-text color="danger">*</ion-text>
-        </ion-label>
-        <ion-select placeholder="Select One" required formControlName="preferredReligion" multiple="true">
-          <ion-select-option *ngFor="let item of religions" [value]="item.ReligionId">{{item.Religion}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Preferred Pets </ion-label>
-        <ion-select placeholder="Select One" formControlName="preferredPets" multiple="true">
-          <ion-select-option *ngFor="let item of pets" [value]="item.PetId">{{item.PetName}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
-        <ion-range min="21" max="60" dualKnobs="true" pin="true" pin [value]="rangeValue" color="primary"
-          (ionChange)="rangeChange($event)" #agerange formControlName="ageRange">
-          <ion-label slot="start">Min Age ({{rangeValue.lower}})</ion-label>
-          <ion-label slot="end">Max Age ({{rangeValue.upper}})</ion-label>
-        </ion-range>
-      </ion-item>
-    </ion-list>
-
-    <div class="ion-padding">
-      <ion-button expand="block" type="submit" class="ion-no-margin" [disabled]="userForm.invalid || userForm.pristine">
-        <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon> Submit
-      </ion-button>
-    </div>
-  </form>
-</ion-content> -->
-
 <ion-header class="ion-no-border">
   <ion-toolbar mode="md">
     <ion-buttons slot="start">
@@ -93,8 +38,6 @@
             <ion-select-option *ngFor="let item of religions" [value]="item.ReligionId">{{item.Religion}}
             </ion-select-option>
           </ion-select>
-
-
         </ion-item>
         <ion-item mode="md">
           <ion-label class="info_lbl" position="stacked" mode="ios">
