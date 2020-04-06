@@ -19,6 +19,7 @@ export class PreferredComponent implements OnInit {
     cancelable: true
   };
   public preferredUser: PreferredUser[];
+  public isLoading = false;
   @ViewChild('preferredUserSlides', { read: IonSlides, static: true }) preferredUserSlides: IonSlides;
 
   constructor(
@@ -27,6 +28,9 @@ export class PreferredComponent implements OnInit {
     private actionSheetController: ActionSheetController) {
     this.appService.getUserPreferred().subscribe((preferredUser) => {
       this.preferredUser = preferredUser;
+      if (this.preferredUser[0].UserId !== '') {
+        this.isLoading = false;
+      }
     });
   }
 
@@ -36,6 +40,7 @@ export class PreferredComponent implements OnInit {
 
   ionViewDidEnter() {
     if (this.preferredUser.length === 1 && this.preferredUser[0].UserId === '') {
+      this.isLoading = true;
       this.appService.getUserPreferredFromDB();
     }
   }

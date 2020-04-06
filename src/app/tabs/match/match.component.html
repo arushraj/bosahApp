@@ -14,15 +14,19 @@
 </ion-header>
 
 <ion-content fullscreen class="animated fadeIn fast" #ionContent>
-    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <!-- <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content pullingIcon="refresh-circle" refreshingSpinner="crescent"></ion-refresher-content>
+    </ion-refresher> -->
+    <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)" #ionRefresher
+        [ngClass]="{'refresher-active refresher-refreshing': isLoading}">
+        <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     <ion-slides [options]="slideOpts" #SwipedTabsSlider (ionSlideDidChange)="currentSlide()"
         class="ion-margin-horizontal main_div">
         <ion-slide *ngFor="let item of pageTabs">
             <ion-list *ngIf="item.friends.length>0" class="animated slideInRight fastest">
                 <ion-item *ngFor="let friend of item.friends" mode="ios">
-                    <ion-avatar  slot="start" (click)="openDetails(friend, item.id)">
+                    <ion-avatar slot="start" (click)="openDetails(friend, item.id)">
                         <ion-img [src]="friend.ProfileImagePath | imageBinder:friend.Gender" alt=""
                             (ionError)="setdefultImage($event)"> </ion-img>
                     </ion-avatar>
@@ -41,11 +45,11 @@
                         <ion-fab-button class="match_btn ion-float-right" (click)="rejectFriendShip(friend)">
                             <ion-icon src="/assets/close.svg"></ion-icon>
                         </ion-fab-button>
-                        
+
                         <ion-fab-button class="match_btn ion-float-right" (click)="acceptFriendShip(friend)">
                             <ion-icon src="/assets/heart.svg"></ion-icon>
                         </ion-fab-button>
-                       
+
                     </ion-fab>
                 </ion-item>
             </ion-list>

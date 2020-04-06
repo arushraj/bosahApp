@@ -1,11 +1,15 @@
-<ion-content fullscreen class="animated fadeInUp fast" #ionContent no-bounce has-bouncing="false" forceOverscroll="false">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+<ion-content fullscreen class="animated fadeInUp fast" #ionContent no-bounce has-bouncing="false"
+  forceOverscroll="false">
+  <!-- <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="refresh-circle" refreshingSpinner="crescent"></ion-refresher-content>
+  </ion-refresher> -->
+  <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <div class="main_div" *ngIf="currentUser">
     <div class="div_img">
-      <img src="/assets/logo.png" height="70"> 
-      <img src="/assets/profile_shape.png" class="style_img" height="126"> 
+      <img src="/assets/logo.png" height="70">
+      <img src="/assets/profile_shape.png" class="style_img" height="126">
     </div>
     <div class="data_div ion-margin-horizontal">
       <div class="info_div">
@@ -13,7 +17,7 @@
           <img [src]="ProfileImagePath" alt="" (ionError)="setdefultImage($event)">
           <!-- </ion-img> -->
           <ion-button class="upload_btn" (click)="selectImage()">
-           <ion-icon src="/assets/plus.svg"></ion-icon>
+            <ion-icon src="/assets/plus.svg"></ion-icon>
           </ion-button>
           <h3 class="name">{{currentUser.FName | blankValue}} </h3>
           <ion-icon ios="ios-star" md="md-star" *ngIf="currentUser.RoleId==3"></ion-icon>
@@ -81,7 +85,8 @@
         </div>
       </div>
       <div class="ion-text-center">
-        <ion-button shape="round" outline class="update_btn" slot="start" routerLink="/profileupdate" routerDirection="forward">        
+        <ion-button shape="round" outline class="update_btn" slot="start" routerLink="/profileupdate"
+          routerDirection="forward">
           Update Profile
         </ion-button>
       </div>
