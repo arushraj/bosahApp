@@ -16,8 +16,9 @@ export class PushNotificationService {
     private push: Push,
     private platform: Platform,
     private toast:Toast,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,private navCtrl: NavController) {
     this.platform.ready().then(() => {
+
       this.initPushNotification();
     });
   }
@@ -78,19 +79,41 @@ export class PushNotificationService {
       importance: 4
     }).then(() => console.log('Channel created'));
 
-    pushObject.on('notification').subscribe((notification: any) => {  
-      debugger;
+    pushObject.on('notification').subscribe((notification: any) => {
       if (notification.additionalData.foreground) {
-       console.log('Received a notification in foreground', notification);
        } 
        else {
-        let navCtrl: NavController;
+        this.platform.ready().then(() => {
+          switch(notification.additionalData.redirectAction) { 
+            
+            //On receiving Message
+            case "1": { 
+              this.navCtrl.navigateForward('/tabs/match');           
+              break; 
+            } 
+             //On receiving Events
+            case "2": { 
+              this.navCtrl.navigateForward('/tabs/events'); 
+              break; 
+            } 
+             //On receiving Friend Request
+            case "3": { 
+              this.navCtrl.navigateForward('/tabs/match');  
+               break; 
+            } 
+             //On  Friend Request Accepted
 
-        console.log('Received a notification in background', notification.additionalData);
+            case "4": { 
+              this.navCtrl.navigateForward('/tabs/match');  
+              break; 
+            } 
+         } 
+      
+         // console.log('Received a notification in background', notification.additionalData);
         
         // this.navCtrl.navigateForward('./messaging/messaging.module#MessagingPageModule');    
-        navCtrl.navigateForward('/tabs/match');
-        //window.location = '/tabs/match'
+          
+        });
      
        }
        
