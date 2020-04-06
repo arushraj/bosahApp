@@ -89,8 +89,8 @@ export class PushNotificationService {
         console.log('Received a notification in background', notification.additionalData);
         
         // this.navCtrl.navigateForward('./messaging/messaging.module#MessagingPageModule');    
-          navCtrl.navigateForward('/tabs/match');
-          //window.location = '/tabs/match'
+        navCtrl.navigateForward('/tabs/match');
+        //window.location = '/tabs/match'
      
        }
        
