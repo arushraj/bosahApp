@@ -16,6 +16,7 @@ export class EventsComponent implements OnInit {
 
   private currentUser: CurrentUser;
   private locations: UserLocation[];
+  private isLoading:boolean=false;
   // public events: Event[];
   private cityId: number;
   public pageTabs: Array<{ id: number, tabName: string, events: Event[] }>;
@@ -37,6 +38,7 @@ export class EventsComponent implements OnInit {
   constructor(
     private appService: AppService,
     private modalController: ModalController) {
+   
     this.pageTabs = [
       { id: 0, tabName: 'Upcoming Events', events: [] },
       { id: 1, tabName: 'Registered Events', events: [] }
@@ -66,6 +68,7 @@ export class EventsComponent implements OnInit {
           value.isSubscribe = false;
         });
       }
+      // this.isLoading=false;
     });
 
     this.appService.getRegisteredEvent().subscribe(events => {
@@ -74,8 +77,11 @@ export class EventsComponent implements OnInit {
         this.pageTabs[1].events.forEach((value, key) => {
           value.isSubscribe = true;
         });
+       
       }
+      this.isLoading=false;
     });
+   
   }
 
   ngOnInit() { }
@@ -91,6 +97,7 @@ export class EventsComponent implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.isLoading=true;
     this.currentSegment(this.pageTabs[0].id);
     this.selectedTab = this.pageTabs[0].id;
 

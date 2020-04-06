@@ -7,6 +7,10 @@
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen>
+  <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)"
+  [ngClass]="{'refresher-active refresher-refreshing': isLoading}">
+  <ion-refresher-content></ion-refresher-content>
+</ion-refresher>
   <ion-item-divider sticky class="ion-no-padding">
     <ion-segment [(ngModel)]="selectedTab">
       <ion-segment-button *ngFor="let item of pageTabs" [value]="item.id" (click)="currentSegment(item.id)">
