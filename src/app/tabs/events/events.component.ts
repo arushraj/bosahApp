@@ -16,7 +16,7 @@ export class EventsComponent implements OnInit {
 
   private currentUser: CurrentUser;
   private locations: UserLocation[];
-  private isLoading:boolean=false;
+  public  isLoading:boolean=false;
   // public events: Event[];
   private cityId: number;
   public pageTabs: Array<{ id: number, tabName: string, events: Event[] }>;
@@ -118,6 +118,10 @@ export class EventsComponent implements OnInit {
       componentProps: { event, userId: this.currentUser.UserId }
     });
     return await modal.present();
+  }
+
+  public doRefresh(event: any) {
+   //This Event will be fired if refreshed
   }
 
 }
