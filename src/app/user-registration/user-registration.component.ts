@@ -237,7 +237,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     // this.toast.show(`${typeof (event.target.value)}`, `short`, `bottom`).subscribe(() => { });
     if (event.target.value.length === 4) {
       if (event.target.value !== this.otp) {
-        this.toast.show(`You have entered the wrong otp password.`, `short`, `bottom`).subscribe(() => { });
+        this.toast.show(`You have entered the wrong code.`, `short`, `bottom`).subscribe(() => { });
       } else {
         this.newUser.otp = this.otp;
         this.isValid = true;
@@ -470,7 +470,20 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   }
 
   public openLink(urlNumber:number) {
-   urlNumber==1?window.open('http://thebosahapp.com/privacy-policy/', '_system'):window.open('http://thebosahapp.com/information-about-broker-services/', '_system');
+    switch(urlNumber) { 
+      case 1: { 
+        window.open('http://thebosahapp.com/terms-conditions/', '_system');
+         break; 
+      } 
+      case 2: { 
+        window.open('http://thebosahapp.com/privacy-policy/', '_system');
+         break; 
+      } 
+      case 3: { 
+        window.open('http://thebosahapp.com/information-about-broker-services/', '_system');
+         break; 
+      } 
+   } 
   }
 
   public getmiStringDate(): string {

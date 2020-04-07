@@ -1,4 +1,4 @@
-<ion-content  class="app-background-img ion-padding">
+<!-- <ion-content  class="app-background-img ion-padding">
   <ion-card class="welcome-card ion-no-margin">
     <img class="slide-image" src="/assets/logo.png" alt="" />
     <p class="appText">Looking for a roommate? Bosah App will connect you with potential roommates in your city of
@@ -29,18 +29,60 @@
           <ion-icon name="mail"></ion-icon>
           &nbsp; Sign up with e-mail
         </ion-button>
-        <!-- <br />
-        <p class="ion-text-center">———————— OR ————————</p>
-        <br />
-        <ion-button class="ion-no-margin" expand="block" (click)="fbLogin()">
-          <ion-icon name="logo-facebook"></ion-icon>
-          &nbsp; Sign in with Facebook
-        </ion-button>
-        <ion-button class="ion-no-margin ion-margin-top-google" expand="block" color="danger" (click)="googleLogin()">
-          <ion-icon name="logo-googleplus"></ion-icon>
-          &nbsp; Sign in with Google
-        </ion-button> -->
+      
       </ion-item-group>
     </ion-card-content>
   </ion-card>
+</ion-content> -->
+
+<ion-content  class="app-background-img ion-padding" fullscreen>
+<form [formGroup]="loginForm"  class="login-form ion-padding-right" (ngSubmit)="userLogin()">
+  <div class="main_div ion-margin-horizontal welcome-card ion-no-margin">
+    <div class="logo_div">
+      <img src="/assets/logo.png">
+      <p class="appText">Looking for a roommate? Bosah will connect you with potential roommates in your city. Make a profile and find the perfect roommate</p>
+    </div>
+    <div class="data_div">
+   
+
+      <div class="info_div">
+        <!-- <h3 class="info_lbl">Email</h3> -->
+        <ion-item class="username-textbox">
+          <ion-input type="email" required formControlName="email" formcon placeholder="Email*"></ion-input>
+          <ion-icon color="primary" name="at" slot="start" class="auto-top-bottom-marging"></ion-icon>
+        </ion-item>
+      </div>
+    </div>
+    <div class="data_div">
+      
+      <div class="info_div">
+        
+        <ion-item class="password-textbox">
+          <ion-input type="password" required formControlName="password" placeholder="Password*">
+          </ion-input>
+          <ion-icon color="primary" name="lock-closed" slot="start" class="auto-top-bottom-marging"></ion-icon>
+        </ion-item>
+      </div>
+    </div>
+
+  
+
+    <ion-button type="submit" class="ion-no-margin ion-margin-top" expand="block"
+    [disabled]="loginForm.invalid">
+    <ion-icon name="log-in"></ion-icon>
+    &nbsp; Login
+  </ion-button>
+
+    <div class="link-group">
+      <ion-button fill="clear" routerLink="/forgetpassword" routerDirection="forward">Forgot password?
+      </ion-button>
+    </div>
+
+    <ion-button expand="block" color="tertiary" routerLink="/userregistration" routerDirection="forward">
+      <ion-icon name="mail"></ion-icon>
+      &nbsp; Create an account
+    </ion-button>
+
+  </div>
+</form>
 </ion-content>

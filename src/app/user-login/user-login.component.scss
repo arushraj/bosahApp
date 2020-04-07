@@ -3,10 +3,10 @@
     border-bottom: 0.1px solid;
 }
 
-.login-form .username-textbox {
-    border-radius: 5px 5px 0 0;
-    margin-bottom: 1px;
-}
+// .login-form .username-textbox {
+//     border-radius: 5px 5px 0 0;
+//     margin-bottom: 1px;
+// }
 
 .login-form .password-textbox {
     border-radius: 0 0 5px 5px;
@@ -18,21 +18,64 @@
 }
 
 
-.login-form{
-    display: block;
-}
+// .login-form{
+//     display: flex;
+// }
 
 .welcome-card {
-    margin-top: 20%;
+    margin-top: 10%;
     background-color: transparent;
 }
-
-
-ion-input {
-    --color: var(--black);
-    font-size: 14px;
-    font-family: "poppins_me";
-    --padding-start: 0px;
-    height: 30px;
-}
+ 
+ion-content {
+    // .logo_div {
+    //   text-align: center;
+    //   padding-top: 20px;
+    //   padding-bottom: 20px;
+    //   img {
+    //     width: 200px;
+    //   }
+    // }
+    .data_div {
+      width: 100%;
+      height: 70px;
+    //   background-color: var(--gray);
+      border-radius: 20px;
+      display: flex;
+    //   padding: 10px 16px;
+      margin-bottom: 1px;
+    //   .img_div {
+    //     width: 50px;
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    //     img {
+    //       height: 22px;
+    //     }
+    //   }
   
+      .info_div {
+        // margin-left: 20px;
+        // padding-left: 20px;
+        // border-left: solid;
+        border-left-color: var(--dark_gray);
+        // border-left-width: 1px;
+        padding-top: 2px;
+        width: 100%;
+        // .info_lbl {
+        //   color: var(--lht_black);
+        //   font-size: 12px;
+        //   font-family: "poppins_r";
+        //   margin: 0;
+        //   font-weight: bold;
+        // }
+      }
+      ion-input {
+        --color: var(--black);
+        font-size: 16px;
+        font-family: "poppins_me";
+        --padding-start: 0px;
+        height: 30px;  
+      }
+    }
+  }

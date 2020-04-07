@@ -42,8 +42,8 @@ export class MoreMenuPage implements OnInit {
   public async unFriend() {
     this.dismissPopover();
     const alert = await this.alertController.create({
-      header: 'Confirm!',
-      message: 'Are you sure, You want to <strong>Unfriend</strong>?',
+      header: 'Confirmation!',
+      message: 'Confirmation! Are you sure you’d like to <strong>Unfriend</strong>?',
       buttons: [
         {
           text: 'Cancel',
@@ -57,6 +57,7 @@ export class MoreMenuPage implements OnInit {
           handler: () => {
             console.log('Confirm Okay');
             this.actionOnFriendRequest(this.friend, FriendshipStatus.Unfriended);
+            this.navCtrl.navigateBack('/tabs/match');
           }
         }
       ]

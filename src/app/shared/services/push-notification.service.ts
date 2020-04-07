@@ -88,12 +88,12 @@ export class PushNotificationService {
             
             //On receiving Message
             case "1": { 
-              this.navCtrl.navigateForward('/tabs/match');           
+              this.navCtrl.navigateForward('/tabs/match');                         
               break; 
             } 
              //On receiving Events
             case "2": { 
-              this.navCtrl.navigateForward('/tabs/events'); 
+              this.navCtrl.navigateForward('/events'); 
               break; 
             } 
              //On receiving Friend Request
@@ -109,9 +109,7 @@ export class PushNotificationService {
             } 
          } 
       
-         // console.log('Received a notification in background', notification.additionalData);
         
-        // this.navCtrl.navigateForward('./messaging/messaging.module#MessagingPageModule');    
           
         });
      

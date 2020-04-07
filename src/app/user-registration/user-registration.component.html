@@ -34,7 +34,7 @@
             <h3 class="appText" *ngIf="otpsend">Please enter one time verification code sent to<br />
               {{newUser.email}}</h3>
             <ion-item class="otp-textbox" *ngIf="otpsend">
-              <ion-label position="floating" class="auto-right-left-marging">ENTER OTP</ion-label>
+              <ion-label position="floating" class="auto-right-left-marging">Enter Code</ion-label>
               <ion-input type="number" (keyup)="onKey($event)" maxlength="4"></ion-input>
             </ion-item>
             <h3 class="otp-resend" *ngIf="otpsend">Haven’t received your code? <br/>
@@ -87,7 +87,7 @@
 
             <ion-label color="danger" class="error-message"
               *ngIf="passwordForm.controls.password.errors && passwordForm.controls.password.errors.pattern">
-              Password must contain 8 characters with One Capital & Small Letter, one Number, one Special Character.
+              Password must contain 8 characters,One Capital & Small Letter, One Number, one Special Character.
             </ion-label>
 
             <ion-item class="password-textbox">
@@ -125,12 +125,12 @@
 
             <ion-item class="firstname-textbox">
               <ion-input type="text" [(ngModel)]="newUser.firstName" name="firstName" id="firstName"
-                placeholder="FirstName*" autocapitalize="on" autocorrect="on" autocomplete="on">
+                placeholder="First Name*" autocapitalize="on" autocorrect="on" autocomplete="on">
               </ion-input>
             </ion-item>
             <ion-item class="lastname-textbox">
               <ion-input type="text" [(ngModel)]="newUser.lastName" name="lastName" id="lastName"
-                placeholder="LastName*" autocapitalize="on" autocorrect="on" autocomplete="on">
+                placeholder="Last Name*" autocapitalize="on" autocorrect="on" autocomplete="on">
               </ion-input>
             </ion-item>
             <!-- <ion-item class="age-textbox">
@@ -152,7 +152,7 @@
             <ion-item class="gender-select">
               <ion-label>Gender <ion-text color="danger">*</ion-text>
               </ion-label>
-              <ion-select placeholder="Select One" [(ngModel)]="newUser.gender" name="gender" id="gender" interface="popover" mode="ios">
+              <ion-select placeholder="Select" [(ngModel)]="newUser.gender" name="gender" id="gender" interface="popover" mode="ios">
                 <ion-select-option value="1">Male</ion-select-option>
                 <ion-select-option value="2">Female</ion-select-option>
               </ion-select>
@@ -200,7 +200,7 @@
             <ion-item class="city-select">
               <ion-label>City <ion-text color="danger">*</ion-text>
               </ion-label>
-              <ion-select placeholder="Select One" [(ngModel)]="newUser.city" name="city" id="city" interface="popover" mode="ios">
+              <ion-select placeholder="Select" [(ngModel)]="newUser.city" name="city" id="city" interface="popover" mode="ios">
                 <ion-select-option *ngFor="let location of locations" [value]="location.CityId">{{location.City}}
                 </ion-select-option>
               </ion-select>
@@ -208,7 +208,7 @@
             <ion-item class="religion-select">
               <ion-label>Religion <ion-text color="danger">*</ion-text>
               </ion-label>
-              <ion-select placeholder="Select One" [(ngModel)]="newUser.religion" name="religion" id="religion" interface="popover" mode="ios">
+              <ion-select placeholder="Select" [(ngModel)]="newUser.religion" name="religion" id="religion" interface="popover" mode="ios">
                 <ion-select-option *ngFor="let religion of religions" [value]="religion.ReligionId">
                   {{religion.Religion}}</ion-select-option>
               </ion-select>
@@ -217,7 +217,7 @@
             <ion-item class="pet-select">
               <ion-label>Pet (Optional)
               </ion-label>
-              <ion-select placeholder="Select One" [(ngModel)]="newUser.UserPetId" name="Userpet" id="Userpet" interface="popover" mode="ios">
+              <ion-select placeholder="Select" [(ngModel)]="newUser.UserPetId" name="Userpet" id="Userpet" interface="popover" mode="ios">
                 <ion-select-option *ngFor="let pet of pets" [value]="pet.PetId">
                   {{pet.PetName}}</ion-select-option>
               </ion-select>
@@ -225,7 +225,7 @@
 
             <ion-item class="Drinking-select">
               <ion-label>Drinking (Optional)</ion-label>
-              <ion-select placeholder="Select One" [(ngModel)]="newUser.UserDrinkingID" name="UserDrinking"
+              <ion-select placeholder="Select" [(ngModel)]="newUser.UserDrinkingID" name="UserDrinking"
                 id="UserDrinking" interface="popover" mode="ios">
                 <ion-select-option *ngFor="let item of drinkingOptions" [value]="item.Id">
                   {{item.Details}}</ion-select-option>
@@ -234,7 +234,7 @@
 
             <ion-item class="Smoking-select">
               <ion-label>Smoking (Optional)</ion-label>
-              <ion-select placeholder="Select One" [(ngModel)]="newUser.UserSmokingId" name="Usersmoking"
+              <ion-select placeholder="Select" [(ngModel)]="newUser.UserSmokingId" name="Usersmoking"
                 id="Usersmoking" interface="popover" mode="ios">
                 <ion-select-option *ngFor="let item of smokingOptions" [value]="item.Id">
                   {{item.Details}}</ion-select-option>
@@ -257,33 +257,33 @@
       <ion-card>
         <img class="slide-image" src="/assets/logo.png" alt="" />
         <ion-card-content>
-          <h3 class="appTitle"> Roommate Preferences </h3>
+          <h3 class="appTitle"> <b>Roommate Preferences </b></h3>
           <p class="appText">
-            What are you looking for in a roommate? Select options below
+            What are you looking for in a <b>roommate?</b>> Select options below
           </p>
           <form padding-right class="user-form">
             <ion-item class="preferred-gender-select">
-              <ion-label>Roommate Gender <ion-text color="danger">*</ion-text>
+              <ion-label>Gender(s) <ion-text color="danger">*</ion-text>
               </ion-label>
-              <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredGender" name="preferredGender"
+              <ion-select placeholder="Select" [(ngModel)]="newUser.preferredGender" name="preferredGender"
                 id="preferredGender" multiple="true">
                 <ion-select-option value="1">Male</ion-select-option>
                 <ion-select-option value="2">Female</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-item class="preferred-religion-select">
-              <ion-label>Roommate Religion <ion-text color="danger">*</ion-text>
+              <ion-label>Religion(s)<ion-text color="danger">*</ion-text>
               </ion-label>
-              <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredReligion" name="preferredReligion"
+              <ion-select placeholder="Select" [(ngModel)]="newUser.preferredReligion" name="preferredReligion"
                 id="preferredReligion" multiple="true">
                 <ion-select-option *ngFor="let religion of religions" [value]="religion.ReligionId">
                   {{religion.Religion}}</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-item class="preferred-pets-select">
-              <ion-label>Preferred Pets <ion-text color="danger">*</ion-text>
+              <ion-label>Pet(s)<ion-text color="danger">*</ion-text>
               </ion-label>
-              <ion-select placeholder="Select One" [(ngModel)]="newUser.preferredPets" name="preferredPets"
+              <ion-select placeholder="Select" [(ngModel)]="newUser.preferredPets" name="preferredPets"
                 id="preferredPets" multiple="true">
                 <ion-select-option *ngFor="let pet of pets" [value]="pet.PetId">
                   {{pet.PetName}}</ion-select-option>
@@ -313,13 +313,16 @@
               <ion-label>
                 <ion-checkbox slot="start" [(ngModel)]="userAcceptTermsAndConditions"
                   name="userAcceptTermsAndConditions" id="userAcceptTermsAndConditions"></ion-checkbox>&nbsp;&nbsp;I
-                  accept Privacy Policy & IABS
+                  I accept Terms & Conditions, Privacy Policy and Information about Brokerage Services.
               </ion-label>
               <br /><br />
               <ion-button (click)="openLink(1)" fill="clear">
-                Privacy Policy
+               Term & Condition
               </ion-button>
               <ion-button (click)="openLink(2)" fill="clear">
+                Privacy Policy
+              </ion-button>
+              <ion-button (click)="openLink(3)" fill="clear">
               IABS
               </ion-button>
             </div>
