@@ -121,6 +121,7 @@ export class EventsComponent implements OnInit {
   }
 
   public doRefresh(event: any) {
+    this.isLoading=false;
    //This Event will be fired if refreshed
   }
 
