@@ -68,8 +68,9 @@ export class MoreMenuPage implements OnInit {
   public async blockUser() {
     this.dismissPopover();
     const alert = await this.alertController.create({
-      header: 'Confirm!',
-      message: 'Are you sure, You want to <strong>block</strong>?',
+      header: 'Confirmation!',
+      message: 'Are you sure, you’d like to <strong>Block</strong> this user?',
+     
       buttons: [
         {
           text: 'Cancel',
@@ -83,6 +84,7 @@ export class MoreMenuPage implements OnInit {
           handler: () => {
             console.log('Confirm Okay');
             this.actionOnFriendRequest(this.friend, FriendshipStatus.Blocked);
+            this.navCtrl.navigateBack('/tabs/match');
           }
         }
       ]

@@ -131,7 +131,7 @@ export class FlatSearchFormPage implements OnInit {
       this.cleanForm();
       const alert = await this.alertController.create({
         header: ``,
-        message: `Thanks for writting! We will write back to your registered email address:</strong><br/>` + this.email,
+        message: `Thanks for filling this form! We will send you a list of apartments to your registered email address:</strong><br/>` + this.email,
         buttons: ['Ok']
       });
       await alert.present();
