@@ -1,40 +1,3 @@
-<!-- <ion-content  class="app-background-img ion-padding">
-  <ion-card class="welcome-card ion-no-margin">
-    <img class="slide-image" src="/assets/logo.png" alt="" />
-    <p class="appText">Looking for a roommate? Bosah App will connect you with potential roommates in your city of
-      choice.Make a profile and find the perfect roommate</p>
-    <ion-card-content>
-      <form [formGroup]="loginForm"  class="login-form ion-padding-right" (ngSubmit)="userLogin()">
-        <ion-item class="username-textbox">
-          <ion-input type="email" required formControlName="email" formcon placeholder="Email*"></ion-input>
-          <ion-icon color="primary" name="at" slot="start" class="auto-top-bottom-marging"></ion-icon>
-        </ion-item>
-        <ion-item class="password-textbox">
-          <ion-input type="password" required formControlName="password" placeholder="Password*">
-          </ion-input>
-          <ion-icon color="primary" name="lock-closed" slot="start" class="auto-top-bottom-marging"></ion-icon>
-        </ion-item>
-        <ion-button type="submit" class="ion-no-margin ion-margin-top" expand="block"
-          [disabled]="loginForm.invalid">
-          <ion-icon name="log-in"></ion-icon>
-          &nbsp; Login
-        </ion-button>
-        <div class="link-group">
-          <ion-button fill="clear" routerLink="/forgetpassword" routerDirection="forward">Forget your password?
-          </ion-button>
-        </div>
-      </form>
-      <ion-item-group class="social-button">
-        <ion-button expand="block" color="tertiary" routerLink="/userregistration" routerDirection="forward">
-          <ion-icon name="mail"></ion-icon>
-          &nbsp; Sign up with e-mail
-        </ion-button>
-      
-      </ion-item-group>
-    </ion-card-content>
-  </ion-card>
-</ion-content> -->
-
 <ion-content  class="app-background-img ion-padding welcome-card" fullscreen>
 <form [formGroup]="loginForm"  class="login-form ion-padding-right" (ngSubmit)="userLogin()">
   <div class="main_div ion-margin-horizontal welcome-card ion-no-margin">
@@ -46,7 +9,6 @@
    
 
       <div class="info_div">
-        <!-- <h3 class="info_lbl">Email</h3> -->
         <ion-item class="username-textbox">
           <ion-input type="email" required formControlName="email" formcon placeholder="Email*"></ion-input>
           <ion-icon color="primary" name="at" slot="start" class="auto-top-bottom-marging"></ion-icon>

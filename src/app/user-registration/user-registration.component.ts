@@ -469,21 +469,21 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public openLink(urlNumber:number) {
-    switch(urlNumber) { 
-      case 1: { 
-        window.open('http://thebosahapp.com/terms-conditions/', '_system');
-         break; 
-      } 
-      case 2: { 
-        window.open('http://thebosahapp.com/privacy-policy/', '_system');
-         break; 
-      } 
-      case 3: { 
-        window.open('http://thebosahapp.com/information-about-broker-services/', '_system');
-         break; 
-      } 
-   } 
+  public openLink(urlNumber:number) { 
+   switch(urlNumber) { 
+    case 1: { 
+      window.location.assign('http://thebosahapp.com/terms-conditions/');
+       break; 
+    } 
+    case 2: { 
+      window.location.assign('http://thebosahapp.com/privacy-policy/');
+       break; 
+    } 
+    case 3: { 
+      window.location.assign('http://thebosahapp.com/information-about-broker-services/');
+       break; 
+    } 
+ } 
   }
 
   public getmiStringDate(): string {

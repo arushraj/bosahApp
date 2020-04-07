@@ -116,15 +116,15 @@ userState-3 suspended
 
     switch(urlNumber) { 
       case 1: { 
-        window.open('http://thebosahapp.com/terms-conditions/', '_system');
-         break; 
+        window.location.assign('http://thebosahapp.com/terms-conditions/');
+        break; 
       } 
       case 2: { 
-        window.open('http://thebosahapp.com/privacy-policy/', '_system');
-         break; 
+        window.location.assign('http://thebosahapp.com/privacy-policy/');
+        break; 
       } 
       case 3: { 
-        window.open('http://thebosahapp.com/information-about-broker-services/', '_system');
+        window.location.assign('http://thebosahapp.com/information-about-broker-services/');
          break; 
       } 
    } 
