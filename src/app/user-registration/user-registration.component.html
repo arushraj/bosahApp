@@ -31,7 +31,7 @@
                 <ion-icon slot="end" name="arrow-forward"></ion-icon>
               </ion-button>
             </ion-item>
-            <h3 class="appText" *ngIf="otpsend">Please enter one time verification code sent to<br />
+            <h3 class="appText" *ngIf="otpsend">Please enter one time verification code sent to <br/>
               {{newUser.email}}</h3>
             <ion-item class="otp-textbox" *ngIf="otpsend">
               <ion-label position="floating" class="auto-right-left-marging">Enter Code</ion-label>
@@ -41,15 +41,6 @@
               <ion-button fill="clear" (click)="reSendOTP()">Resend Code</ion-button>
             </h3>
           </form>
-          <!-- <div class="navigation-button">
-            <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back
-              <ion-icon slot="start" name="arrow-round-back"></ion-icon>
-            </ion-button>
-            <ion-button class="next-button" fill="clear" [disabled]="otpForm.controls.email.errors">
-              Continue
-              <ion-icon slot="end" name="arrow-round-forward"></ion-icon>
-            </ion-button>
-          </div> -->
         </ion-card-content>
       </ion-card>
     </ion-slide>
@@ -68,9 +59,6 @@
             </ion-item>
           </form>
           <div class="navigation-button">
-            <!-- <ion-button class="back-button" fill="clear" (click)="goToPrev()">Back
-              <ion-icon slot="start" name="arrow-round-back"></ion-icon>
-            </ion-button> -->
             <ion-button class="next-button" fill="clear" [disabled]="!isValid" (click)="checkReferralCode()">Continue
               <ion-icon slot="end" name="arrow-forward"></ion-icon>
             </ion-button>
@@ -119,8 +107,6 @@
 
         <ion-card-content>
           <form class="personal-form ion-padding-right">
-            <!-- <h3 class="appTitle">About You</h3> -->
-
             <p class="appText">Tell potential roommates about yourself</p>
 
             <ion-item class="firstname-textbox">
@@ -133,10 +119,6 @@
                 placeholder="Last Name*" autocapitalize="on" autocorrect="on" autocomplete="on">
               </ion-input>
             </ion-item>
-            <!-- <ion-item class="age-textbox">
-              <ion-input type="tel" [(ngModel)]="newUser.age" name="age" id="age" placeholder="Age">
-              </ion-input>
-            </ion-item> -->
             <ion-item class="phone-textbox">
               <ion-input type="tel" [(ngModel)]="newUser.phone" name="phone" id="phone" placeholder="Phone No*"
                 maxlength="10">
@@ -147,7 +129,6 @@
               </ion-label>
               <ion-datetime [(ngModel)]="newUser.dob" name="dob" id="dob" placeholder="MM-DD-YYYY"
                 displayFormat="MM-DD-YYYY" [min]="minDate" [max]="maxDate"></ion-datetime>
-              <!-- <ion-input [(ngModel)]="newUser.dob" type="date" name="dob" id="dob" placeholder="DD-MM-YYYY"></ion-input> -->
             </ion-item>
             <ion-item class="gender-select">
               <ion-label>Gender <ion-text color="danger">*</ion-text>
@@ -259,7 +240,7 @@
         <ion-card-content>
           <h3 class="appTitle"> <b>Roommate Preferences </b></h3>
           <p class="appText">
-            What are you looking for in a <b>roommate?</b>> Select options below
+            What are you looking for in a <b>roommate?</b> Select options below
           </p>
           <form padding-right class="user-form">
             <ion-item class="preferred-gender-select">
@@ -315,13 +296,16 @@
                   name="userAcceptTermsAndConditions" id="userAcceptTermsAndConditions"></ion-checkbox>&nbsp;&nbsp;I
                   I accept Terms & Conditions, Privacy Policy and Information about Brokerage Services.
               </ion-label>
-              <br /><br />
+              <br /><br/>
               <ion-button (click)="openLink(1)" fill="clear">
                Term & Condition
               </ion-button>
+              <br/>
+
               <ion-button (click)="openLink(2)" fill="clear">
                 Privacy Policy
               </ion-button>
+              <br/>
               <ion-button (click)="openLink(3)" fill="clear">
               IABS
               </ion-button>
