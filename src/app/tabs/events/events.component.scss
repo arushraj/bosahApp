@@ -6,14 +6,15 @@ ion-list-header {
 ion-slides {
     min-height: 100%;
 
-  
+
 }
-ion-segment-button{
-    button{
+
+ion-segment-button {
+    button {
         background-color: red;
 
     }
-   
+
 }
 
 ion-slides ion-slide {
@@ -32,27 +33,34 @@ ion-slides ion-slide .ion-empty-label {
 
 ion-segment {
     --background: none;
-     border-radius: 20px;
-     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
-     ion-segment-button {
-       margin: 0;
-       --indicator-color: var(--my_theme);
-       --color: var(--black);
-    //    --color-checked: white;
-       --border-radius: 20px;
-       --background-checked: var(--my_theme);
-         background-color: white;
-         font-weight: bold;
-         span{
-             font-weight: bold;
-             color:black;
-         }
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
 
-       ion-label {
-         font-family: "poppins_r";
-       }
-     }
-   }
-   ion-item-divider{
+    ion-segment-button {
+        margin: 0;
+        --indicator-color: var(--my_theme);
+        --color: var(--black);
+        //    --color-checked: white;
+        --border-radius: 20px;
+        --background-checked: var(--my_theme);
+        background-color: white;
+        font-weight: bold;
+
+        span {
+            font-weight: bold;
+            color: black;
+        }
+
+        ion-label {
+            font-family: "poppins_r";
+        }
+    }
+}
+
+ion-item-divider {
     --background: none;
-   }
+}
+
+ion-refresher {
+    top: 50px;
+}

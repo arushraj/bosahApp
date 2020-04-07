@@ -648,7 +648,7 @@ export class AppService {
         this.setUpcomingEvent([]);
         // loading.present();
         const url = this.appConstant.getURL(UrlKey.Upcoming_Event).replace('cityid', CtityId.toString()).replace('uid', UserId);
-        this.http.get(url, {}, this.header)
+        await this.http.get(url, {}, this.header)
             .then(res => {
                 const resdata = JSON.parse(res.data);
                 const events: Event[] = resdata.UpcomingEventList;

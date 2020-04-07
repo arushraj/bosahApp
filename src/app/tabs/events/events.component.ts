@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, ModalController } from '@ionic/angular';
+import { IonSlides, ModalController, IonRefresher } from '@ionic/angular';
 
 import { AppService } from '../../shared/services/app.service';
 import { Event } from '../../shared/model/event.model';
@@ -16,7 +16,7 @@ export class EventsComponent implements OnInit {
 
   private currentUser: CurrentUser;
   private locations: UserLocation[];
-  public  isLoading:boolean=false;
+  public isLoading = false;
   // public events: Event[];
   private cityId: number;
   public pageTabs: Array<{ id: number, tabName: string, events: Event[] }>;
@@ -38,7 +38,7 @@ export class EventsComponent implements OnInit {
   constructor(
     private appService: AppService,
     private modalController: ModalController) {
-   
+
     this.pageTabs = [
       { id: 0, tabName: 'Upcoming Events', events: [] },
       { id: 1, tabName: 'Registered Events', events: [] }
@@ -68,7 +68,6 @@ export class EventsComponent implements OnInit {
           value.isSubscribe = false;
         });
       }
-      // this.isLoading=false;
     });
 
     this.appService.getRegisteredEvent().subscribe(events => {
@@ -77,32 +76,50 @@ export class EventsComponent implements OnInit {
         this.pageTabs[1].events.forEach((value, key) => {
           value.isSubscribe = true;
         });
-       
       }
-      this.isLoading=false;
     });
-   
+
   }
 
   ngOnInit() { }
 
-  currentSegment(index) {
-    this.SwipedTabsEventsSlider.slideTo(index, 500);
+  currentSegment(index: number) {
+    this.SwipedTabsEventsSlider.slideTo(index, 500).then(() => {
+      this.getTabData().then(() => {
+        this.isLoading = false;
+      });
+    });
   }
 
   currentSlide() {
     this.SwipedTabsEventsSlider.getActiveIndex().then(index => {
       this.selectedTab = index;
+      this.getTabData().then(() => {
+        this.isLoading = false;
+      });
     });
   }
 
   ionViewDidEnter() {
-    this.isLoading=true;
+    this.isLoading = true;
     this.currentSegment(this.pageTabs[0].id);
     this.selectedTab = this.pageTabs[0].id;
+    this.getTabData(true).then(() => {
+      this.isLoading = false;
+    });
+  }
 
-    this.appService.getUpcomingEventListFromDB(this.cityId, this.currentUser.UserId);
-    this.appService.getRegisteredEventListFromDB(this.currentUser.UserId);
+  private getTabData(refreshData = false) {
+    if (this.selectedTab === 0) {
+      if (this.pageTabs[0].events.length === 0 || refreshData) {
+        return this.appService.getUpcomingEventListFromDB(this.cityId, this.currentUser.UserId);
+      }
+    } else if (this.selectedTab === 1) {
+      if (this.pageTabs[1].events.length === 0 || refreshData) {
+        return this.appService.getRegisteredEventListFromDB(this.currentUser.UserId);
+      }
+    }
+    return Promise.resolve();
   }
 
   public setdefultImage(event) {
@@ -121,8 +138,9 @@ export class EventsComponent implements OnInit {
   }
 
   public doRefresh(event: any) {
-    this.isLoading=false;
-   //This Event will be fired if refreshed
+    this.getTabData(true).then(() => {
+      event.target.complete();
+    });
   }
 
 }
