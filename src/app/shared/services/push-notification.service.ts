@@ -15,8 +15,8 @@ export class PushNotificationService {
   constructor(
     private push: Push,
     private platform: Platform,
-    private toast:Toast,
-    private alertCtrl: AlertController,private navCtrl: NavController) {
+    private toast: Toast,
+    private alertCtrl: AlertController, private navCtrl: NavController) {
     this.platform.ready().then(() => {
 
       this.initPushNotification();
@@ -48,7 +48,7 @@ export class PushNotificationService {
 
     const options: PushOptions = {
       android: {
-        senderID: '909966414988', 
+        senderID: '909966414988',
         sound: 'true',
         vibrate: 'true',
         icon: 'android_icon'
@@ -81,43 +81,34 @@ export class PushNotificationService {
 
     pushObject.on('notification').subscribe((notification: any) => {
       if (notification.additionalData.foreground) {
-       } 
-       else {
+      } else {
         this.platform.ready().then(() => {
-          switch(notification.additionalData.redirectAction) { 
-            
-            //On receiving Message
-            case "1": { 
-              this.navCtrl.navigateForward('/tabs/match');                         
-              break; 
-            } 
-             //On receiving Events
-            case "2": { 
-              this.navCtrl.navigateForward('/events'); 
-              break; 
-            } 
-             //On receiving Friend Request
-            case "3": { 
-              this.navCtrl.navigateForward('/tabs/match');  
-               break; 
-            } 
-             //On  Friend Request Accepted
+          switch (notification.additionalData.redirectAction) {
 
-            case "4": { 
-              this.navCtrl.navigateForward('/tabs/match');  
-              break; 
-            } 
-         } 
-      
-        
-          
+            // On receiving Message
+            case '1': {
+              this.navCtrl.navigateForward('/tabs/match');
+              break;
+            }
+            // On receiving Events
+            case '2': {
+              this.navCtrl.navigateForward('/events');
+              break;
+            }
+            // On receiving Friend Request
+            case '3': {
+              this.navCtrl.navigateForward('/tabs/match');
+              break;
+            }
+            // On  Friend Request Accepted
+            case '4': {
+              this.navCtrl.navigateForward('/tabs/match');
+              break;
+            }
+          }
         });
-     
-       }
-       
-      
-       
-     });
+      }
+    });
 
     pushObject.on('registration').subscribe((registration: any) => {
       console.log('Device registered', registration);

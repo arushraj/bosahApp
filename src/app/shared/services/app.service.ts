@@ -3,7 +3,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AppConstant, UrlKey, StorageKey } from '../constant/app.constant';
 import { AppHttpService } from './rest.service';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { LoadingController, AlertController, Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast/ngx';
 import { NavController } from '@ionic/angular';
@@ -37,7 +37,7 @@ import { async } from '@angular/core/testing';
 export class AppService {
 
     public currentUser = new BehaviorSubject<CurrentUser>(this.createUser());
-    private userLoactions = new BehaviorSubject<UserLocation[]>(this.createLocation());
+    private userLocation = new BehaviorSubject<UserLocation[]>(this.createLocation());
     private userReligions = new BehaviorSubject<UserReligion[]>(this.createReligion());
     private bathrooms = new BehaviorSubject<Bathroom[]>([]);
     private bedrooms = new BehaviorSubject<Bedroom[]>([]);
@@ -71,7 +71,8 @@ export class AppService {
     };
 
     constructor(
-        private http: HTTP, private appConstant: AppConstant,
+        private http: HTTP,
+        private appConstant: AppConstant,
         private appHttp: AppHttpService,
         private loadingController: LoadingController,
         private storage: Storage,
@@ -81,9 +82,14 @@ export class AppService {
         private router: Router,
         private firebasedb: FirebasedbService,
         private pushNotificationService: PushNotificationService,
-        private alertController: AlertController) {
+        private alertController: AlertController,
+        private platform: Platform) {
         this.pushNotificationService.getPushDevice().subscribe((value) => {
             this.pushDevice = value;
+        });
+
+        this.network.onConnect().subscribe(() => {
+            this.loadDataFromServer(false);
         });
     }
 
@@ -220,11 +226,11 @@ export class AppService {
     }
 
     public getLocation(): Observable<UserLocation[]> {
-        return this.userLoactions.asObservable();
+        return this.userLocation.asObservable();
     }
 
     private setLocation(location: UserLocation[]) {
-        this.userLoactions.next(location);
+        this.userLocation.next(location);
     }
 
     public getReligion(): Observable<UserReligion[]> {
@@ -512,6 +518,47 @@ export class AppService {
             .finally(() => { });
     }
 
+    public loadDataFromServer(refreshData: boolean) {
+
+        this.getCurrentuserFromDB();
+
+        if ((this.userLocation.value.length === 1 && this.userLocation.value[0].CityId === null) || refreshData) {
+            this.getUserLocationsFromDB();
+        }
+
+        if ((this.userReligions.value.length === 1 && this.userReligions.value[0].ReligionId === null) || refreshData) {
+            this.getUserReligionsFromDB();
+        }
+
+        if (this.bathrooms.value.length === 0 || refreshData) {
+            this.getBathroomsFromDB();
+        }
+
+        if (this.bedrooms.value.length === 0 || refreshData) {
+            this.getBedroomsFromDB();
+        }
+
+        if (this.rentBudget.value.length === 0 || refreshData) {
+            this.getRentBudgetFromDB();
+        }
+
+        if (this.pets.value.length === 0 || refreshData) {
+            this.getPetsFromDB();
+        }
+
+        if (this.smokingOptions.value.length === 0 || refreshData) {
+            this.getsmokingOptionsFromDB();
+        }
+
+        if (this.drinkingOptions.value.length === 0 || refreshData) {
+            this.getdrinkingOptionsFromDB();
+        }
+
+        if (this.preferredGiftcards.value.length === 0 || refreshData) {
+            this.getPreferredGiftcardsFromDB();
+        }
+    }
+
 
 
     public async getUserPreferredFromDB() {
@@ -715,7 +762,9 @@ export class AppService {
         loading.present();
         const url = this.appConstant.getURL(UrlKey.User_Login);
         const data = { EmailID: email, Password: password, deviceid: this.pushDevice.registrationId };
-        return await this.http.post(url, data, this.header)
+        const platform = this.platform.is('android') ? 'md' :
+            (this.platform.is('ios') || this.platform.is('ipad') || this.platform.is('iphone')) ? 'ios' : 'md';
+        return await this.http.post(url, data, { platform })
             .then(res => {
                 const resData = JSON.parse(res.data);
                 if (resData.UserId > 0) {

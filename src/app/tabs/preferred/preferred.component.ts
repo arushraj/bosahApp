@@ -28,9 +28,9 @@ export class PreferredComponent implements OnInit {
     private actionSheetController: ActionSheetController) {
     this.appService.getUserPreferred().subscribe((preferredUser) => {
       this.preferredUser = preferredUser;
-      if (this.preferredUser[0].UserId !== '') {
-        this.isLoading = false;
-      }
+      // if (this.preferredUser[0].UserId !== '') {
+      //   this.isLoading = false;
+      // }
     });
   }
 
@@ -41,7 +41,9 @@ export class PreferredComponent implements OnInit {
   ionViewDidEnter() {
     if (this.preferredUser.length === 1 && this.preferredUser[0].UserId === '') {
       this.isLoading = true;
-      this.appService.getUserPreferredFromDB();
+      this.appService.getUserPreferredFromDB().then(() => {
+        this.isLoading = false;
+      });
     }
   }
 
@@ -100,7 +102,7 @@ export class PreferredComponent implements OnInit {
                     this.preferredUserSlides.slideNext(1000, true).then(() => { });
                     const userIndex = this.preferredUser.indexOf(user);
                     this.preferredUser.splice(userIndex, 1);
-                   });
+                  });
                 }
               }, {
                 text: 'Yes',

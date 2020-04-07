@@ -110,15 +110,7 @@ export class AppComponent {
       this.backButtonEvent();
       // // call data from DB
       // this.appService.getCurrentuserFromDB();
-      this.appService.getUserLocationsFromDB();
-      this.appService.getUserReligionsFromDB();
-      this.appService.getBathroomsFromDB();
-      this.appService.getBedroomsFromDB();
-      this.appService.getRentBudgetFromDB();
-      this.appService.getPetsFromDB();
-      this.appService.getsmokingOptionsFromDB();
-      this.appService.getdrinkingOptionsFromDB();
-      this.appService.getPreferredGiftcardsFromDB();
+      this.appService.loadDataFromServer(true);
       this.appService.getCurrentUserIdfromLocalStorage()
         .then(userId => {
           if (userId !== null) {

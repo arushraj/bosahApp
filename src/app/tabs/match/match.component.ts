@@ -47,55 +47,58 @@ export class MatchComponent implements OnInit {
     ];
     this.selectedTab = 0;
     this.appService.getFriendList().subscribe((friends) => {
-      this.pageTabs[0].friends = this.friendFilter(friends, FriendshipStatus.Accepted);
-      this.pageTabs[1].friends = this.friendFilter(friends, FriendshipStatus.Pending);
+      if (friends.length > 0) {
+        this.isLoading = true;
+        this.pageTabs[0].friends = this.friendFilter(friends, FriendshipStatus.Accepted);
+        this.pageTabs[1].friends = this.friendFilter(friends, FriendshipStatus.Pending);
 
-      this.appService.getUsersValueByKey('UserId').subscribe((value) => {
-        this.currentUserId = value;
-      });
-      // bind the last message
-      this.pageTabs[0].friends.forEach((friend) => {
-        try {
-          this.firebasedb.subscribeLastMessageItem(friend.UserId, this.currentUserId).subscribe((value) => {
-            if (value[0]) {
-              value[0].message = this.firebasedb.aesDecrypt(value[0].message, value[0].userId);
-            }
-            friend.LastMessage = value[0] ? value[0] : null;
+        this.appService.getUsersValueByKey('UserId').subscribe((value) => {
+          this.currentUserId = value;
+        });
+        // bind the last message
+        this.pageTabs[0].friends.forEach((friend) => {
+          try {
+            this.firebasedb.subscribeLastMessageItem(friend.UserId, this.currentUserId).subscribe((value) => {
+              if (value[0]) {
+                value[0].message = this.firebasedb.aesDecrypt(value[0].message, value[0].userId);
+              }
+              friend.LastMessage = value[0] ? value[0] : null;
 
-            const lastMessageArray = this.pageTabs[0].friends.filter((i) => {
-              return i.LastMessage != null;
-            });
-            const nullMessageArray = this.pageTabs[0].friends.filter((i) => {
-              return i.LastMessage === null;
-            });
-            // sorting Array
-            const newArray = lastMessageArray
-              .sort((a, b) => {
-                if (a.LastMessage && b.LastMessage) {
-                  if (new Date(a.LastMessage.datetime) > new Date(b.LastMessage.datetime)) {
-                    return -1;
-                  } else if (new Date(a.LastMessage.datetime) < new Date(b.LastMessage.datetime)) {
-                    return 1;
+              const lastMessageArray = this.pageTabs[0].friends.filter((i) => {
+                return i.LastMessage != null;
+              });
+              const nullMessageArray = this.pageTabs[0].friends.filter((i) => {
+                return i.LastMessage === null;
+              });
+              // sorting Array
+              const newArray = lastMessageArray
+                .sort((a, b) => {
+                  if (a.LastMessage && b.LastMessage) {
+                    if (new Date(a.LastMessage.datetime) > new Date(b.LastMessage.datetime)) {
+                      return -1;
+                    } else if (new Date(a.LastMessage.datetime) < new Date(b.LastMessage.datetime)) {
+                      return 1;
+                    } else {
+                      return 0;
+                    }
                   } else {
                     return 0;
                   }
-                } else {
-                  return 0;
-                }
+                });
+              nullMessageArray.forEach((item) => {
+                newArray.push(item);
               });
-            nullMessageArray.forEach((item) => {
-              newArray.push(item);
+              if (newArray.length === this.pageTabs[0].friends.length) {
+                this.pageTabs[0].friends = newArray;
+                this.isLoading = false;
+              }
             });
-            if (newArray.length === this.pageTabs[0].friends.length) {
-              this.pageTabs[0].friends = newArray;
-              this.isLoading = false;
-            }
-          });
-        } catch (ex) {
-          console.log(ex);
-          this.isLoading = false;
-        }
-      });
+          } catch (ex) {
+            console.log(ex);
+            this.isLoading = false;
+          }
+        });
+      }
     });
     // No Needed as of Now.
     // this.appService.getRequestedFriendList().subscribe((friends) => {
@@ -122,7 +125,9 @@ export class MatchComponent implements OnInit {
 
     if (this.pageTabs[0].friends.length === 0) {
       this.isLoading = true;
-      this.appService.getUserFriendsFromDB();
+      this.appService.getUserFriendsFromDB().then(() => {
+        this.isLoading = false;
+      });
     }
   }
 
