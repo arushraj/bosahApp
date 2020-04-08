@@ -156,7 +156,7 @@ export class AppComponent {
       // close modal
       try {
         const element = await this.modalCtrl.getTop();
-        if (element) {
+        if (element && element.backdropDismiss) {
           element.dismiss();
           return;
         }

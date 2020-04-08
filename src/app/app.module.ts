@@ -22,6 +22,7 @@ import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
 
 // In App
 import { AppComponent } from './app.component';
+import { NoNetworkComponent } from './shared/services/network-modal/no-network.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppService } from './shared/services/app.service';
 import { AppConstant } from './shared/constant/app.constant';
@@ -37,8 +38,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, NoNetworkComponent],
+  entryComponents: [NoNetworkComponent],
   imports: [
     BrowserModule,
     FormsModule,

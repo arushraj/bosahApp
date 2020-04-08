@@ -1,0 +1,14 @@
+<ion-content>
+    <div>
+        <img src="/assets/logo.png">
+        <h1>
+            <ion-icon name="cloud-offline" color="warning"></ion-icon>
+        </h1>
+        <h2>No Network Connection</h2>
+        <p>It looks like your internet connection is off. Please turn it on and try again.</p>
+        <ion-button (click)="connect()">
+            <ion-icon slot="icon-only" name="cloud-done"></ion-icon>
+            &nbsp;&nbsp; Retry
+        </ion-button>
+    </div>
+</ion-content>

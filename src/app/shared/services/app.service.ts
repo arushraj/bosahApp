@@ -3,7 +3,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AppConstant, UrlKey, StorageKey } from '../constant/app.constant';
 import { AppHttpService } from './rest.service';
-import { LoadingController, AlertController, Platform } from '@ionic/angular';
+import { LoadingController, AlertController, Platform, ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast/ngx';
 import { NavController } from '@ionic/angular';
@@ -32,6 +32,7 @@ import { Drinking } from '../model/drinking.model';
 import { FirebasedbService } from './firebasedb.service';
 import { PreferredGiftCards } from '../model/preferredGiftCards.model';
 import { async } from '@angular/core/testing';
+import { NoNetworkComponent } from './network-modal/no-network.component';
 
 @Injectable()
 export class AppService {
@@ -83,13 +84,22 @@ export class AppService {
         private firebasedb: FirebasedbService,
         private pushNotificationService: PushNotificationService,
         private alertController: AlertController,
-        private platform: Platform) {
+        private platform: Platform,
+        private modalCtrl: ModalController) {
         this.pushNotificationService.getPushDevice().subscribe((value) => {
             this.pushDevice = value;
         });
 
         this.network.onConnect().subscribe(() => {
             this.loadDataFromServer(false);
+        });
+        this.network.onDisconnect().subscribe(async () => {
+            const networkAlert = await this.modalCtrl.create({
+                mode: 'ios',
+                backdropDismiss: false,
+                component: NoNetworkComponent
+            });
+            await networkAlert.present();
         });
     }
 
