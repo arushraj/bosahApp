@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>423137540298-2q0d7ud0rm011fub4kr25insvpjllsm8.apps.googleusercontent.com</string>
+	<string>909966414988-jjqcvrccvuskisn8usnu4hsjd88debve.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.423137540298-2q0d7ud0rm011fub4kr25insvpjllsm8</string>
+	<string>com.googleusercontent.apps.909966414988-jjqcvrccvuskisn8usnu4hsjd88debve</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDRfqx6Q7qjT735-NmicUFLmkq758X2-hM</string>
+	<string>AIzaSyA4jigWWA555ser-rjGp4CCFqMQw6vvh_0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>423137540298</string>
+	<string>909966414988</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.bosah.bosahapp</string>
 	<key>PROJECT_ID</key>
-	<string>demobosahapp-3304d</string>
+	<string>bosahgroupapp</string>
 	<key>STORAGE_BUCKET</key>
-	<string>demobosahapp-3304d.appspot.com</string>
+	<string>bosahgroupapp.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:423137540298:ios:dcce82a0bdcea48b85dc33</string>
+	<string>1:909966414988:ios:6f3be0b4ef1b5ed6ed57a9</string>
 	<key>DATABASE_URL</key>
-	<string>https://demobosahapp-3304d.firebaseio.com</string>
+	<string>https://bosahgroupapp.firebaseio.com</string>
 </dict>
 </plist>
