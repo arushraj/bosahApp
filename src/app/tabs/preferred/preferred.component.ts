@@ -28,9 +28,6 @@ export class PreferredComponent implements OnInit {
     private actionSheetController: ActionSheetController) {
     this.appService.getUserPreferred().subscribe((preferredUser) => {
       this.preferredUser = preferredUser;
-      // if (this.preferredUser[0].UserId !== '') {
-      //   this.isLoading = false;
-      // }
     });
   }
 

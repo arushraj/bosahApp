@@ -1,16 +1,18 @@
-ion-title {
-    padding-left: 10px;
-
-   
+ion-label {
+    font-size: 20px !important;
 
     .user-name {
         position: relative;
         top: 5px;
         font-weight: 400;
+
+        ion-icon {
+            font-size: 0.5em;
+        }
     }
 
     .user-status {
-        font-size: 12px;
+        font-size: 15px;
         font-weight: 400;
     }
 
@@ -18,7 +20,7 @@ ion-title {
         color: #39ef39;
     }
 
-    .moreOption{
+    .moreOption {
         color: white;
     }
 }
@@ -29,6 +31,7 @@ ion-title {
     .chat-box {
         .message-area {
             padding: 0px 10px;
+
             .message {
                 p {
                     margin: 0px;
@@ -106,23 +109,22 @@ ion-title {
     }
 }
 
-ion-header ion-toolbar ion-title{
-    color:black;
-}
-ion-item{
-    --background:none;
+ion-header ion-toolbar ion-title {
+    color: black;
 }
 
- ion-header 
- {
-   ion-toolbar {
-         ion-item { 
-             ion-button
-             {
-                 ion-icon{
-                     color: white;
-                 }
-             }
-         }
+ion-item {
+    --background: none;
+}
+
+ion-header {
+    ion-toolbar {
+        ion-item {
+            ion-button {
+                ion-icon {
+                    color: white;
+                }
+            }
         }
     }
+}

@@ -7,7 +7,7 @@
       <ion-avatar slot="start" class="ion-no-margin">
         <ion-img [src]="queryInfo?.toProfileImagePath" alt="" (ionError)="setdefultImage($event)"></ion-img>
       </ion-avatar>
-      <ion-title class="ion-no-padding">
+      <ion-label class="ion-margin-start">
         <span class="user-name">
           {{ (queryInfo && queryInfo.toUserName)? queryInfo.toUserName : 'Friend' }}
           <ion-icon name="radio-button-on" [ngClass]="{'online': friendUserStatus?.isOnline}"></ion-icon>
@@ -21,7 +21,7 @@
           *ngIf="friendUserStatus?.isOnline && friendUserStatus?.isTyping">
           typing...
         </span>
-      </ion-title>
+      </ion-label>
       <ion-button fill="clear" slot="end" (click)="openMoreOption($event)">
         <ion-icon slot="icon-only" name="ellipsis-horizontal" class="moreOption"></ion-icon>
       </ion-button>
@@ -49,7 +49,8 @@
       <div class="input-area">
         <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
           <ion-input (ionFocus)="checkFocus()" (keyup)="onKey($event)" (focusout)="stopTyping()" required
-            formControlName="message" type="text" placeholder="Type a message" autocapitalize="on" autocorrect="on" autocomplete="on"  #messageInput></ion-input>
+            formControlName="message" type="text" placeholder="Type a message" autocapitalize="on" autocorrect="on"
+            autocomplete="on" #messageInput></ion-input>
           <ion-button [disabled]="messageForm.invalid" type="submit" size="default" fill="clean">
             <ion-icon slot="icon-only" name="send" color="primary"></ion-icon>
           </ion-button>

@@ -577,7 +577,7 @@ export class AppService {
             cssClass: ''
         });
         // Setting Value null
-        this.setUserPreferred(this.createuserPreferred());
+        // this.setUserPreferred(this.createuserPreferred());
         // loading.present();
         await this.getCurrentUserIdfromLocalStorage()
             .then(async (userId) => {
@@ -622,7 +622,7 @@ export class AppService {
         //     translucent: true,
         //     cssClass: ''
         // });
-        this.setFriendList(this.createFriendList());
+        // this.setFriendList(this.createFriendList());
         // loading.present();
         await this.getCurrentUserIdfromLocalStorage()
             .then(async (userId) => {

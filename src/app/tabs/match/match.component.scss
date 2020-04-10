@@ -34,6 +34,15 @@ ion-slides ion-slide ion-list {
 ion-slides ion-slide .ion-empty-label {
   margin: auto;
   padding-top: 50%;
+
+  ion-icon {
+    font-size: 2em;
+    color: var(--my_theme);
+  }
+
+  p {
+    font-size: 25px;
+  }
 }
 
 .hidden {

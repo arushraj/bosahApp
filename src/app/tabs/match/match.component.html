@@ -50,13 +50,17 @@
                     </ion-fab>
                 </ion-item>
             </ion-list>
-            <ion-label class="ion-empty-label" *ngIf="item.id === 0 && item.friends.length === 0" color="dark">
-                <ion-icon name="clipboard" slot="start"></ion-icon>
-                You are yet to get any matches
+            <ion-label class="ion-empty-label" *ngIf="item.id === 0 && item.friends.length === 0 && !isLoading"
+                color="dark">
+                <ion-icon name="alert-circle" slot="start"></ion-icon>
+                <br />
+                <p>You are yet to get any matches</p>
             </ion-label>
-            <ion-label class="ion-empty-label" *ngIf="item.id === 1 && item.friends.length === 0" color="dark">
-                <ion-icon name="clipboard" slot="start"></ion-icon>
-                No pending Request
+            <ion-label class="ion-empty-label" *ngIf="item.id === 1 && item.friends.length === 0 && !isLoading"
+                color="dark">
+                <ion-icon name="alert-circle" slot="start"></ion-icon>
+                <br />
+                <p>No pending Request</p>
             </ion-label>
         </ion-slide>
     </ion-slides>
