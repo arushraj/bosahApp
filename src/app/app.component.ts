@@ -56,7 +56,7 @@ export class AppComponent {
   // },
   {
     title: 'Settings',
-    url: 'profilesetting',
+    url: '/profilesetting',
     icon: 'settings',
     routerDirection: 'forward'
   }, {

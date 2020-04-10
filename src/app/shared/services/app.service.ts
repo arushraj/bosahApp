@@ -93,6 +93,7 @@ export class AppService {
         this.network.onConnect().subscribe(() => {
             this.loadDataFromServer(false);
         });
+
         this.network.onDisconnect().subscribe(async () => {
             const networkAlert = await this.modalCtrl.create({
                 mode: 'ios',
@@ -529,8 +530,6 @@ export class AppService {
     }
 
     public loadDataFromServer(refreshData: boolean) {
-
-        this.getCurrentuserFromDB();
 
         if ((this.userLocation.value.length === 1 && this.userLocation.value[0].CityId === null) || refreshData) {
             this.getUserLocationsFromDB();
