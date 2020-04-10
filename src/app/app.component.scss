@@ -5,15 +5,17 @@
 ion-menu-toggle {
     ion-icon {
         font-size: 2em;
-        // color: #61afff;
-    }
-    ion-item{
-        --background:none;
+        color: var(--my_theme);
+        margin-right: 15px;
     }
 
-    ion-label {      
-      color: var(--balck); 
-      font-weight:bold;
-      font-family: "poppins_r";
+    ion-item {
+        --background: none;
+    }
+
+    ion-label {
+        color: var(--balck);
+        font-weight: bold;
+        font-family: "poppins_r";
     }
 }

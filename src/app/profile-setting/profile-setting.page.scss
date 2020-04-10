@@ -5,4 +5,12 @@ ion-item-group {
         font-size: 10px;
         font-style: italic;
     }
+
+    ion-item-divider {
+        .header-icon {
+            padding-right: 2%;
+            font-size: 30px;
+            color: var(--my_theme);
+        }
+    }
 }

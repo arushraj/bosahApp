@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar mode="md">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="home"  text="" mode="md"></ion-back-button>
+      <ion-back-button defaultHref="home" text="" mode="md"></ion-back-button>
     </ion-buttons>
     <ion-title>Profile Settings</ion-title>
   </ion-toolbar>
@@ -11,7 +11,8 @@
   <ion-list>
     <ion-item-group>
       <ion-item-divider>
-        <ion-label>In-App Notifications</ion-label>
+        <ion-icon class="header-icon" name="notifications-circle"></ion-icon>
+        <ion-label> In-App Notifications </ion-label>
       </ion-item-divider>
 
       <ion-item>
@@ -23,6 +24,7 @@
 
     <ion-item-group>
       <ion-item-divider>
+        <ion-icon class="header-icon" name="settings"></ion-icon>
         <ion-label>Account Setting</ion-label>
       </ion-item-divider>
       <ion-item>
@@ -35,13 +37,14 @@
       </ion-item>
       <ion-item>
         <ion-label color="danger">Deactivate My Account </ion-label>
-        <ion-toggle [(ngModel)]="IsUserDeactivated" (ionChange)="setUserDeactivate()" slot="end"
-          color="danger"></ion-toggle>
+        <ion-toggle [(ngModel)]="IsUserDeactivated" (ionChange)="setUserDeactivate()" slot="end" color="danger">
+        </ion-toggle>
       </ion-item>
     </ion-item-group>
 
     <ion-item-group>
       <ion-item-divider>
+        <ion-icon class="header-icon" name="shield-checkmark"></ion-icon>
         <ion-label>T&C, Privacy Policy and IABS</ion-label>
       </ion-item-divider>
       <ion-item>
@@ -51,7 +54,7 @@
       </ion-item>
       <ion-item>
         <ion-button (click)="openLink(2)" fill="clear">
-         Privacy Policy
+          Privacy Policy
         </ion-button>
       </ion-item>
       <ion-item>
