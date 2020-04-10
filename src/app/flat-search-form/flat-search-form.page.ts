@@ -88,14 +88,9 @@ export class FlatSearchFormPage implements OnInit {
 
   }
 
-  public selectBathRoom(selectedBathroom: any) {
-    // if(this.selectedBathroomId !-selectedBathroom)
-    // {
+  public selectBathRoom(selectedBathroom: any) { 
     this.userForm.value.BathroomTypeId = selectedBathroom;
     this.selectedBathroomId = selectedBathroom;
-
-    // }
-
 
   }
 
@@ -131,6 +126,7 @@ export class FlatSearchFormPage implements OnInit {
       this.cleanForm();
       const alert = await this.alertController.create({
         header: ``,
+        mode:'ios',
         message: `Thanks for filling this form! We will send you a list of apartments to your registered email address:</strong><br/>` + this.email,
         buttons: ['Ok']
       });
