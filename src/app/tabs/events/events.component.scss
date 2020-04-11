@@ -51,9 +51,9 @@ ion-segment {
             color: black;
         }
 
-        ion-label {
-            font-family: "poppins_r";
-        }
+        // ion-label {
+        //     font-family: "poppins_r";
+        // }
     }
 }
 
@@ -64,3 +64,8 @@ ion-item-divider {
 ion-refresher {
     top: 50px;
 }
+
+ion-icon {
+    font-size: 2em;
+    color: var(--my_theme);
+  }
