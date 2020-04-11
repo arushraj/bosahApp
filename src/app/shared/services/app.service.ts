@@ -581,7 +581,7 @@ export class AppService {
         // loading.present();
         await this.getCurrentUserIdfromLocalStorage()
             .then(async (userId) => {
-                if (userId) {
+                if (userId) {                 
                     const url = this.appConstant.getURL(UrlKey.User_Preferred).replace('uid', userId);
                     await this.http.get(url, {}, this.header)
                         .then(res => {
@@ -590,17 +590,25 @@ export class AppService {
                             const resdata = JSON.parse(res.data);
                             const resPreferred: PreferredUser[] = resdata.PreferredUserList;
                             this.userPreferredList.users = resPreferred;
-                            this.setUserPreferred(Object.assign({}, this.userPreferredList).users);
+                            if(resdata.PreferredUserList.length==0)
+                            {
+                                this.userPreferredList.users = [];
+                                this.setUserPreferred(this.createuserPreferred());
+
+                            }
+                            else{
+                                this.setUserPreferred(Object.assign({}, this.userPreferredList).users);
+                            }
+                           
                         })
                         .catch(error => {
-
                             console.log('error', error);
                             // loading.dismiss();
                             this.userPreferredList.users = [];
                             this.setUserPreferred(this.createuserPreferred());
-                            if (error.status === 401) {
-                                this.userLogout();
-                            }
+                            // if (error.status === 401) {
+                            //     this.userLogout();
+                            // }
                         })
                         .finally(() => {
                             // loading.dismiss();
