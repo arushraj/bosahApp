@@ -76,6 +76,7 @@ export class MessagingPage implements OnInit, OnDestroy {
           }
           this.ionContent.scrollToBottom(50);
         });
+      
       }
     });
     this.messageForm = this.fb.group({
@@ -84,6 +85,11 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+     this.messageService.updateNotification({
+      SenderId: this.queryInfo.to ,
+      MessageTypeId: 1
+    });
+   
   }
 
   ngOnDestroy() {
@@ -91,6 +97,7 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   ionViewDidEnter() {
+   
   }
 
   private setQueryinfo(queryInfo) {

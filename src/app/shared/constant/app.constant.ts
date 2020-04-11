@@ -29,6 +29,7 @@ export class AppConstant {
     readonly SMOKING_OPTIONS = '/api/getallsmokingOptions';
     readonly DRINKING_OPTIONS = '/api/getalldrinkingOptions';
     readonly SEND_NOTIFICATION = '/api/sendMessageNotification';
+    readonly UPDATE_NOTIFICATION = '/api/updateNotification';
 
     /**
      * getURL() funtion to get url
@@ -92,6 +93,8 @@ export class AppConstant {
                 return this.APP_BASE_URL + this.DRINKING_OPTIONS;
             case UrlKey.Send_Notification:
                 return this.APP_BASE_URL + this.SEND_NOTIFICATION;
+            case UrlKey.Update_Notification:
+                    return this.APP_BASE_URL + this.UPDATE_NOTIFICATION;
             default:
                 break;
         }
@@ -126,7 +129,8 @@ export enum UrlKey {
     Preferred_Giftcards,
     Smoking_Options,
     Drinking_Options,
-    Send_Notification
+    Send_Notification,
+    Update_Notification
 }
 
 export enum StorageKey {

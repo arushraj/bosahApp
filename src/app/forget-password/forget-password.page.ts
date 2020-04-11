@@ -90,7 +90,7 @@ export class ForgetPasswordPage implements OnInit {
   public onKey(event: any) {
     if (event.target.value.length === 4) {
       if (event.target.value !== this.otp) {
-        this.toast.showShortBottom(`You have entered the wrong otp password.`).subscribe(() => { });
+        this.toast.showShortBottom(`You have entered the wrong Verification code.`).subscribe(() => { });
       } else {
         event.target.blur();
         this.forgetPasswordslides.lockSwipes(false).then(() => {

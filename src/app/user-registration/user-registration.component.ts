@@ -320,7 +320,12 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
         } else if (!this.newUser.phone) {
           this.toast.showShortBottom('Please enter your contact number.').subscribe(() => { });
           return;
-        } else if (!this.newUser.dob) {
+        } else if (!this.newUser.gender) {
+          this.toast.showShortBottom('Please select your Gender.').subscribe(() => { });
+          return;
+        }
+        
+        else if (!this.newUser.dob) {
 
           this.toast.showShortBottom('Please enter your date of birth.').subscribe(() => { });
           return;
@@ -344,10 +349,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
         } else if (!this.newUser.city) {
           this.toast.showShortBottom('Please select your city.').subscribe(() => { });
           return;
-        } else if (!this.newUser.gender) {
-          this.toast.showShortBottom('Please select your Gender.').subscribe(() => { });
-          return;
-        } else if (!this.newUser.religion) {
+        }  else if (!this.newUser.religion) {
           this.toast.showShortBottom('Please select your Religion.').subscribe(() => { });
           return;
         }

@@ -4,6 +4,7 @@ import { Platform, AlertController, NavController } from '@ionic/angular';
 import { PushDevice } from '../model/push-notification.model';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Toast } from '@ionic-native/toast/ngx';
+import { reduce } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -49,9 +50,10 @@ export class PushNotificationService {
     const options: PushOptions = {
       android: {
         senderID: '909966414988',
-        sound: 'true',
-        vibrate: 'true',
-        icon: 'android_icon'
+        sound: true,
+        vibrate: true,
+        icon: 'icon',
+        iconColor:'black',
       },
       ios: {
         alert: 'true',
@@ -82,7 +84,7 @@ export class PushNotificationService {
     pushObject.on('notification').subscribe((notification: any) => {
       if (notification.additionalData.foreground) {
       } else {
-        this.platform.ready().then(() => {
+        this.platform.ready().then(() => {  
           switch (notification.additionalData.redirectAction) {
 
             // On receiving Message
