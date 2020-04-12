@@ -590,22 +590,22 @@ export class AppService {
                             const resdata = JSON.parse(res.data);
                             const resPreferred: PreferredUser[] = resdata.PreferredUserList;
                             this.userPreferredList.users = resPreferred;
-                            if(resdata.PreferredUserList.length==0)
-                            {
-                                this.userPreferredList.users = [];
-                                this.setUserPreferred(this.createuserPreferred());
+                            // if(resdata.PreferredUserList.length == 0)
+                            // {
+                            //     this.userPreferredList.users = [];
+                            //     this.setUserPreferred(this.createuserPreferred());
 
-                            }
-                            else{
+                            // }
+                            // else{
                                 this.setUserPreferred(Object.assign({}, this.userPreferredList).users);
-                            }
+                            // }
                            
                         })
                         .catch(error => {
                             console.log('error', error);
                             // loading.dismiss();
                             this.userPreferredList.users = [];
-                            this.setUserPreferred(this.createuserPreferred());
+                            // this.setUserPreferred(this.createuserPreferred());
                             // if (error.status === 401) {
                             //     this.userLogout();
                             // }
@@ -625,13 +625,6 @@ export class AppService {
     }
 
     public async getUserFriendsFromDB() {
-        // const loading = await this.loadingController.create({
-        //     message: 'Please wait...',
-        //     translucent: true,
-        //     cssClass: ''
-        // });
-        // this.setFriendList(this.createFriendList());
-        // loading.present();
         await this.getCurrentUserIdfromLocalStorage()
             .then(async (userId) => {
                 if (userId) {
@@ -647,15 +640,12 @@ export class AppService {
                         .catch(error => {
                             this.userFriendsList.friends = [];
                             this.setFriendList(this.createFriendList());
-                            // loading.dismiss();
                         })
                         .finally(() => {
-                            // loading.dismiss();
                         });
                 }
             })
             .catch((err) => {
-                //  loading.dismiss();
                 if (err.status === 401) {
                     this.userLogout();
                 }
@@ -704,13 +694,7 @@ export class AppService {
         if (!CtityId) {
             return;
         }
-        // const loading = await this.loadingController.create({
-        //     message: 'Please wait...',
-        //     translucent: true,
-        //     cssClass: ''
-        // });
         this.setUpcomingEvent([]);
-        // loading.present();
         const url = this.appConstant.getURL(UrlKey.Upcoming_Event).replace('cityid', CtityId.toString()).replace('uid', UserId);
         await this.http.get(url, {}, this.header)
             .then(res => {
@@ -718,18 +702,15 @@ export class AppService {
                 const events: Event[] = resdata.UpcomingEventList;
                 this.upcomingEventList.events = events;
                 this.setUpcomingEvent(Object.assign({}, this.upcomingEventList).events);
-                // loading.dismiss();
             })
             .catch(error => {
                 this.upcomingEventList.events = [];
                 this.setUpcomingEvent([]);
-                // loading.dismiss();
                 if (error.status === 401) {
                     this.userLogout();
                 }
             })
             .finally(() => {
-                // loading.dismiss();
             });
     }
 
@@ -737,13 +718,7 @@ export class AppService {
         if (!UserId) {
             return;
         }
-        // const loading = await this.loadingController.create({
-        //     message: 'Please wait...',
-        //     translucent: true,
-        //     cssClass: ''
-        // });
         this.setRegisteredEvent([]);
-        // loading.present();
         const url = this.appConstant.getURL(UrlKey.Registered_Event).replace('uid', UserId);
         this.http.get(url, {}, this.header)
             .then(res => {
@@ -751,18 +726,15 @@ export class AppService {
                 const events: Event[] = resdata;
                 this.registeredEventList.events = events;
                 this.setRegisteredEvent(Object.assign({}, this.registeredEventList).events);
-                //  loading.dismiss();
             })
             .catch(error => {
                 this.registeredEventList.events = [];
                 this.setRegisteredEvent([]);
-                // loading.dismiss();
                 if (error.status === 401) {
                     this.userLogout();
                 }
             })
             .finally(() => {
-                // loading.dismiss();
             });
     }
 
@@ -813,12 +785,6 @@ export class AppService {
             this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
             return;
         }
-        // const loading = await this.loadingController.create({
-        //     message: 'Please wait...',
-        //     translucent: true,
-        //     cssClass: ''
-        // });
-        // loading.present();
         const data = {
             UserId: currentUser.UserId,
             ProfileFileName: currentUser.ProfileImagePath ? currentUser.ProfileImagePath.split('/')[2].replace('thumbnail_', '') : ''
@@ -828,41 +794,25 @@ export class AppService {
             .then(res => {
 
                 const resdata = JSON.parse(res.data);
-                // loading.dismiss().then(() => {
                 this.toast.show(`${resdata.Message}`, `short`, 'bottom').subscribe(() => { });
-                // });
-                // if (data.ProfileFileName === '') {
-                //     this.storage.remove(StorageKey.LocalCurrentUserKey).then(value => {
-                //         this.getCurrentuserFromDB();
-                //     });
-                // } else {
-                //     // Update the Random number.
-                //     // currentUser.ProfileImagePath = '/' + currentUser.ProfileImagePath.split('/')[1] + data.ProfileFileName;
-                //     currentUser.ProfileImagePath = currentUser.ProfileImagePath
-                //         .replace(currentUser.ProfileImagePath.split('/')[2], data.ProfileFileName);
-                //     this.setCurrentUser(this.createUser(currentUser));
-                // }
                 this.storage.remove(StorageKey.LocalCurrentUserKey).then(value => {
                     this.getCurrentuserFromDB();
                 });
-                // loading.dismiss();
+            
             }).catch((err) => {
-                // loading.dismiss().then(() => {
                 if (err.status === 401) {
                     this.userLogout();
                 }
                 this.toast.show(`Upload catch Error: ${JSON.stringify(err)}`, `short`, 'bottom').subscribe(() => { });
-                // });
 
             })
             .finally(() => {
-                // loading.dismiss();
+               
             });
     }
 
     public userLogout() {
         this.storage.get(StorageKey.UserIdKey).then((value) => {
-            // Set User Ofline for message
             this.firebasedb.setUserOffline(value.toString());
 
             this.storage.get(StorageKey.LoginTokenkey).then(async (token) => {
@@ -882,8 +832,6 @@ export class AppService {
                                     .then(() => {
                                         this.setCurrentUser(this.createUser());
                                         this.setUserPreferred(this.createuserPreferred());
-
-                                        // Empty List of Users Friends.
                                         this.userFriendsList.friends = [];
                                         this.setFriendList(Object.assign({}, this.userFriendsList).friends);
                                     })
@@ -943,14 +891,10 @@ export class AppService {
                 if (userImagePath) {
                     this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
                     await this.uploadUserRegistrationImage(resData.UserId, userImagePath);
-                    // this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                 } else {
                     this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
-                    // this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                 }
                 this.storage.set(StorageKey.UserIdKey, resData.UserId).then(() => {
-                    // this.getCurrentuserFromDB();
-                    // this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                     this.userLogin(newUser.EmailId, newUser.Password)
                         .then((data) => {
                             this.toast.showShortBottom(
@@ -958,7 +902,6 @@ export class AppService {
                             ).subscribe(toast => { });
                             if (data.UserId > 0) {
                                 this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
-                                // this.router.navigate(['/tabs']);
                             }
                         });
                 });
@@ -990,12 +933,9 @@ export class AppService {
             data, {}, ImagePath, '')
             .then(uploadRes => {
                 loading.dismiss();
-                // this.router.navigate(['/userlogin']);
                 const resdata = JSON.parse(uploadRes.data);
-                // this.toast.show(`Reg Upload catch Error: ${resdata.Message}`, `short`, 'bottom').subscribe(() => { });
             }).catch((err) => {
                 loading.dismiss();
-                // this.router.navigate(['/userlogin']);
                 this.toast.show(`Reg Upload catch Error: ${JSON.stringify(err)}`, `short`, 'bottom').subscribe(() => { });
             })
             .finally(() => {
@@ -1013,7 +953,6 @@ export class AppService {
             translucent: true,
             cssClass: ''
         });
-        // loading.present();
         await this.getCurrentUserIdfromLocalStorage()
             .then(async (userId) => {
                 if (userId) {
@@ -1361,4 +1300,21 @@ export class AppService {
             .finally(() => {
             });
     }
+
+    public async updateNotification(form: any) {
+        if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
+            // this.toast.showShortBottom(`Please connect to internet.`).subscribe(() => { });
+            return;
+        }
+        const url = this.appConstant.getURL(UrlKey.Update_Notification);
+        const data = form;
+        return this.http.post(url, data, this.header)
+            .then(async () => {
+            })
+            .catch((err) => {
+            })
+            .finally(() => {
+            });
+    }
 }
+

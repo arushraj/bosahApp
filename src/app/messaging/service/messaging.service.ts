@@ -95,4 +95,8 @@ export class MessageService {
             return '';
         }
     }
+
+    public async updateNotification(form: any) {
+       await this.appService.updateNotification(form);
+    }
 }
