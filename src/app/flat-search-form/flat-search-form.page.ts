@@ -24,7 +24,7 @@ export class FlatSearchFormPage implements OnInit {
   public bathrooms: Bathroom[];
   public userId: string;
   public userForm: FormGroup;
-  public rangeValue = { lower: 800, upper: 2000 };
+  public rangeValue = { lower: 700, upper: 2000 };
   public selectedBedroomId: number;
   public selectedBathroomId: number;
   public minDate: string;

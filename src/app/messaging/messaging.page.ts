@@ -3,13 +3,14 @@ import { ActivatedRoute } from '@angular/router';
 import { MessageService } from './service/messaging.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserMessage } from './model/message';
-import { IonContent, IonInput, PopoverController } from '@ionic/angular';
+import { IonContent, IonInput, PopoverController, ModalController } from '@ionic/angular';
 import { AppConstant } from '../shared/constant/app.constant';
 import { OnlineUser } from './model/user';
 import { MoreMenuPage } from './more-menu/more-menu.page';
 import { AppService } from '../shared/services/app.service';
 import { UserFriends } from '../shared/model/user-friend.model';
 import { Observable, Subscription } from 'rxjs';
+import { MessagingUserDetailsComponent } from './user-details/user-details.component';
 
 @Component({
   selector: 'app-messaging',
@@ -35,7 +36,8 @@ export class MessagingPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private appConstant: AppConstant,
     private popoverCtrl: PopoverController,
-    private appService: AppService) {
+    private appService: AppService,
+    private modalController: ModalController) {
     this.route.queryParams.subscribe(params => {
       if (params && params.info) {
         this.setQueryinfo(params.info);
@@ -179,6 +181,18 @@ export class MessagingPage implements OnInit, OnDestroy {
       translucent: true
     });
     return popover.present();
+  }
+
+  public async profileView() {
+    if (this.friend.ProfileImagePath === undefined || this.friend.ProfileImagePath === null) {
+      this.friend.ProfileImagePath = '';
+    }
+    const modal = await this.modalController.create({
+      component: MessagingUserDetailsComponent,
+      componentProps: { user: this.friend, enableActionButton: false }
+    });
+    this.popoverCtrl.dismiss();
+    return await modal.present();
   }
 }
 

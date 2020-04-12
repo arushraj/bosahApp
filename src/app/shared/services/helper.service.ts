@@ -9,7 +9,6 @@ export class HelperService {
   constructor(private loadingController: LoadingController, private toastController: ToastController) { }
 
   public async presentToast(msg: any, duration: any, cssClass: any): Promise<any> {
-    // debugger;
     const toast = await this.toastController.create({
       message: msg,
       duration,
@@ -18,9 +17,6 @@ export class HelperService {
       color: 'dark'
     });
 
-    // toast.onDidDismiss(() => {
-    //   // Do something
-    // });
 
     return toast.present();
   }
@@ -32,13 +28,8 @@ export class HelperService {
       cssClass
     });
     loading.present();
-
-    // toast.onDidDismiss(() => {
-    //   // Do something
-    // });
     return loading.present();
   }
-
 
   public async dismissLoading(): Promise<any> {
 
