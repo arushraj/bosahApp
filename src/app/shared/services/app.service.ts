@@ -581,7 +581,7 @@ export class AppService {
         // loading.present();
         await this.getCurrentUserIdfromLocalStorage()
             .then(async (userId) => {
-                if (userId) {                 
+                if (userId) {
                     const url = this.appConstant.getURL(UrlKey.User_Preferred).replace('uid', userId);
                     await this.http.get(url, {}, this.header)
                         .then(res => {
@@ -597,9 +597,9 @@ export class AppService {
 
                             // }
                             // else{
-                                this.setUserPreferred(Object.assign({}, this.userPreferredList).users);
+                            this.setUserPreferred(Object.assign({}, this.userPreferredList).users);
                             // }
-                           
+
                         })
                         .catch(error => {
                             console.log('error', error);
@@ -798,7 +798,7 @@ export class AppService {
                 this.storage.remove(StorageKey.LocalCurrentUserKey).then(value => {
                     this.getCurrentuserFromDB();
                 });
-            
+
             }).catch((err) => {
                 if (err.status === 401) {
                     this.userLogout();
@@ -807,7 +807,7 @@ export class AppService {
 
             })
             .finally(() => {
-               
+
             });
     }
 
@@ -1038,6 +1038,9 @@ export class AppService {
                                     this.toast.showShortBottom(`${message}`).subscribe(() => { });
                                 } else if (FriendshipStatus.Blocked === friendshipStatus && resData.ResponseMessage === 'Success') {
                                     message = `You're all set. You've successfully blocked.`;
+                                    this.toast.showShortBottom(`${message}`).subscribe(() => { });
+                                } else if (FriendshipStatus.Rejected === friendshipStatus && resData.ResponseMessage === 'Success') {
+                                    message = `You're all set. You've successfully Rejected.`;
                                     this.toast.showShortBottom(`${message}`).subscribe(() => { });
                                 } else if (FriendshipStatus.Accepted === friendshipStatus && resData.ResponseMessage === 'Success') {
                                     message = `Success.`;

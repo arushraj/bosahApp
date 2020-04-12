@@ -150,7 +150,7 @@ export class MatchComponent implements OnInit {
   }
 
   public rejectFriendShip(friend: UserFriends) {
-    this.actionOnFriendRequest(friend, FriendshipStatus.Unfriended);
+    this.actionOnFriendRequest(friend, FriendshipStatus.Rejected);
   }
 
 
