@@ -48,11 +48,11 @@ export class PreferredComponent implements OnInit {
     event.target.src = '/assets/no-image.png';
   }
 
-  public notIntrested(userId:string) {
-    let index=this.preferredUser.findIndex(key=>key.UserId==userId)
+  public notIntrested(userId: string) {
+    const index = this.preferredUser.findIndex(key => key.UserId === userId);
     this.preferredUser.splice(index, 1);
-    console.log( this.preferredUser.length);
-   // this.preferredUserSlides.slideNext(1000, true).then(() => { });
+    console.log(this.preferredUser.length);
+    // this.preferredUserSlides.slideNext(1000, true).then(() => { });
   }
 
   public async sendFriendRequest(newFriend: PreferredUser) {
