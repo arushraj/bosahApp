@@ -27,9 +27,14 @@ export class MessageService {
         return this.db.collection('onlineUsers').doc<OnlineUser>(documentKey);
     }
 
-    public getMessages(): Observable<any> {
+    public messagesSnapshotChanges(): Observable<any> {
         return this.itemsCollection.snapshotChanges();
     }
+
+    public messagesValueChanges(): Observable<any> {
+        return this.itemsCollection.valueChanges();
+    }
+
     public sendNotification(form: any) {
         this.appService.sendNotification(form);
     }
@@ -97,6 +102,6 @@ export class MessageService {
     }
 
     public async updateNotification(form: any) {
-       await this.appService.updateNotification(form);
+        await this.appService.updateNotification(form);
     }
 }

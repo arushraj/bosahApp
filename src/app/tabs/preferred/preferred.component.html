@@ -10,7 +10,7 @@
     </ion-refresher>
     <ion-slides [options]="slideOpts" #preferredUserSlides>
         <ion-slide *ngFor="let user of preferredUser" class="animated zoomIn">
-            <ion-card *ngIf="user.UserId" horizontal="start">
+            <ion-card *ngIf="user?.UserId" horizontal="start">
                 <div class="img_div">
                     <ion-img [src]="user.ProfileImagePath | imageBinder:user.Gender" alt="" class="user-img"
                         (ionError)="setdefultImage($event)"> </ion-img>

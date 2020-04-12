@@ -33,12 +33,20 @@
   <div class="main">
     <div class="chat-box">
       <div class="message-area">
-        <div class="message animated fast" *ngFor="let message of messages"
+        <!-- <div class="message animated fast" *ngFor="let message of messages"
           [ngClass]="getClasses(message.payload.doc.data().userId)">
           <p>{{message.payload.doc.data().message | decryptTextBinder:message.payload.doc.data().userId}}
             <span>{{message.payload.doc.data().datetime | date:'MM/dd/y, h:mm a' | lowercase}}
               <ion-icon [name]="message.payload.doc.data().isRead? 'checkmark-done' : 'checkmark'"
                 [ngClass]="{'read-message': message.payload.doc.data().isRead}"></ion-icon>
+            </span>
+          </p>
+        </div> -->
+        <div class="message animated fast" *ngFor="let message of messages" [ngClass]="getClasses(message.userId)">
+          <p>{{message.message | decryptTextBinder:message.userId}}
+            <span>{{message?.datetime | date:'MM/dd/y, h:mm a' | lowercase}}
+              <ion-icon [name]="message.isRead? 'checkmark-done' : 'checkmark'"
+                [ngClass]="{'read-message': message.isRead}"></ion-icon>
             </span>
           </p>
         </div>
