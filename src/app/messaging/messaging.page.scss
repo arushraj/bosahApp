@@ -47,7 +47,13 @@ ion-label {
                     font-size: 10px;
                     position: relative;
                     top: 10px;
-                    margin: 3% 0 1% 0;
+                    margin: 1% 0 0.5% 0;
+
+                    ion-icon {
+                        font-size: 1.3em;
+                        position: relative;
+                        top: 3px;
+                    }
                 }
             }
 
@@ -60,6 +66,12 @@ ion-label {
                 p {
                     border-radius: 0 11px 11px 11px;
                     background: #f2f7f9;
+
+                    span {
+                        ion-icon {
+                            display: none;
+                        }
+                    }
                 }
             }
 
@@ -72,6 +84,12 @@ ion-label {
                 p {
                     border-radius: 11px 11px 0 11px;
                     background: #dcf4ff;
+
+                    span {
+                        .read-message {
+                            color: #46e0b9;
+                        }
+                    }
                 }
             }
         }

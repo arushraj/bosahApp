@@ -28,15 +28,23 @@
                             (ionError)="setdefultImage($event)"> </ion-img>
                     </ion-avatar>
                     <ion-label (click)="openDetails(friend, item.id)">
-                        <h3>{{friend?.FName}}
-                            <span *ngIf="friend.LastMessage" class="last-message-time ion-float-right"
-                                [ngClass]="{'message-unread': friend.LastMessage.isRead === false && friend.LastMessage.userId != currentUserId }">
-                                {{ friend.LastMessage?.datetime | date:'shortDate' }}
-                            </span> </h3>
+                        <h3>{{friend?.FName}}</h3>
                         <p *ngIf="friend.LastMessage" class="msg"
                             [ngClass]="{'message-unread': friend.LastMessage.isRead === false && friend.LastMessage.userId != currentUserId }">
-                            {{ friend.LastMessage?.message}}</p>
+                            <ion-icon [name]="friend.LastMessage.isRead? 'checkmark-done' : 'checkmark'"
+                                [ngClass]="{'read-message': friend.LastMessage.isRead}"
+                                *ngIf="friend.LastMessage.userId === currentUserId"></ion-icon>
+                            {{ friend.LastMessage?.message}}
+                        </p>
                     </ion-label>
+                    <ion-note (click)="openDetails(friend, item.id)" slot="end" mode="md" *ngIf="friend.LastMessage"
+                        class="last-message-time"
+                        [ngClass]="{'message-unread': friend.LastMessage.isRead === false && friend.LastMessage.userId != currentUserId }">
+                        {{ getLastMessageDateTime(friend.LastMessage?.datetime) }}
+                        <br />
+                        <ion-badge mode="ios" *ngIf="friend.UnreadMessagesCount">
+                            {{friend.UnreadMessagesCount}}</ion-badge>
+                    </ion-note>
 
                     <ion-fab vertical="center" horizontal="end" class="fab-button-group" *ngIf="item.id === 1">
                         <ion-fab-button class="match_btn ion-float-right" (click)="rejectFriendShip(friend)">
@@ -46,7 +54,6 @@
                         <ion-fab-button class="match_btn ion-float-right" (click)="acceptFriendShip(friend)">
                             <ion-icon src="/assets/heart.svg"></ion-icon>
                         </ion-fab-button>
-
                     </ion-fab>
                 </ion-item>
             </ion-list>

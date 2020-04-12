@@ -23,7 +23,7 @@
         </span>
       </ion-label>
       <ion-button fill="clear" slot="end" (click)="openMoreOption($event)">
-        <ion-icon slot="icon-only" name="ellipsis-horizontal" class="moreOption"></ion-icon>
+        <ion-icon slot="icon-only" name="ellipsis-vertical" class="moreOption"></ion-icon>
       </ion-button>
       <!-- <ion-icon button slot="end" name="more" (click)="openMoreOption($event)"></ion-icon> -->
     </ion-item>
@@ -36,7 +36,10 @@
         <div class="message animated fast" *ngFor="let message of messages"
           [ngClass]="getClasses(message.payload.doc.data().userId)">
           <p>{{message.payload.doc.data().message | decryptTextBinder:message.payload.doc.data().userId}}
-            <span>{{message.payload.doc.data().datetime | date:'MM/dd/y, h:mm a' | lowercase}}</span>
+            <span>{{message.payload.doc.data().datetime | date:'MM/dd/y, h:mm a' | lowercase}}
+              <ion-icon [name]="message.payload.doc.data().isRead? 'checkmark-done' : 'checkmark'"
+                [ngClass]="{'read-message': message.payload.doc.data().isRead}"></ion-icon>
+            </span>
           </p>
         </div>
       </div>
