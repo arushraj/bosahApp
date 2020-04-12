@@ -20,8 +20,8 @@ export class MessagingPage implements OnInit, OnDestroy {
 
   public messages: any = [];
   private friend: UserFriends;
-  public queryInfo;
-  private currentUserId: string;
+  public queryInfo: any;
+  public currentUserId: string;
   private messageSubscribe: any;
   // {to: string, toUserName: string, toProfileImagePath: string, from: string, fromUserName: string}
   public messageForm: FormGroup;
@@ -72,11 +72,13 @@ export class MessagingPage implements OnInit, OnDestroy {
                 this.messageService.updateMsg(data[this.messages.length].payload.doc.id);
               }
               this.messages.push(data[this.messages.length]);
+            } else {
+              this.messages.splice(this.messages.length - 1, 1, data[data.length - 1]);
             }
           }
           this.ionContent.scrollToBottom(50);
         });
-      
+
       }
     });
     this.messageForm = this.fb.group({
@@ -85,11 +87,11 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-     this.messageService.updateNotification({
-      SenderId: this.queryInfo.to ,
+    this.messageService.updateNotification({
+      SenderId: this.queryInfo.to,
       MessageTypeId: 1
     });
-   
+
   }
 
   ngOnDestroy() {
@@ -97,7 +99,7 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   ionViewDidEnter() {
-   
+
   }
 
   private setQueryinfo(queryInfo) {
@@ -138,8 +140,8 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
   public getClasses(messageOwner?: string) {
     return {
-      'incoming fadeInLeft': messageOwner !== this.queryInfo.from.toString(),
-      'outgoing fadeInRight': messageOwner === this.queryInfo.from.toString(),
+      'incoming ': messageOwner !== this.queryInfo.from.toString(),
+      'outgoing ': messageOwner === this.queryInfo.from.toString(),
     };
   }
 

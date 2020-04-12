@@ -213,6 +213,7 @@ export class MatchComponent implements OnInit {
   public getLastMessageDateTime(value: string) {
     if (value) {
       const date = new Date(value);
+      const currentDate = new Date();
       return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
     } else {
       return '';
