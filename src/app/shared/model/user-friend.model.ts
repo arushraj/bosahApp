@@ -8,6 +8,7 @@ export interface UserFriends {
     Status: number;
     AboutMe: string;
     LastMessage: any;
+    UnreadMessagesCount: number;
     UserPet: string;
     UserDrinking: string;
     UserSmoking: string;

@@ -62,6 +62,10 @@ export class MatchComponent implements OnInit {
               if (value[0]) {
                 value[0].message = this.firebasedb.aesDecrypt(value[0].message, value[0].userId);
               }
+              friend.UnreadMessagesCount = value.filter((item) => {
+                return !item.isRead && item.userId !== this.currentUserId;
+              }).length;
+
               friend.LastMessage = value[0] ? value[0] : null;
 
               const lastMessageArray = this.pageTabs[0].friends.filter((i) => {
@@ -197,12 +201,22 @@ export class MatchComponent implements OnInit {
     });
     return popover.present();
   }
+
   public doRefresh(event: any) {
     this.appService.getUserFriendsFromDB().then(() => {
       event.target.complete();
     });
     // No needed as of now.
     // this.appService.getRequestedFriendsFromDB();
+  }
+
+  public getLastMessageDateTime(value: string) {
+    if (value) {
+      const date = new Date(value);
+      return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
+    } else {
+      return '';
+    }
   }
 
 }

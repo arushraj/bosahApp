@@ -145,6 +145,7 @@ export class PreferredComponent implements OnInit {
       Status: 0,
       AboutMe: '',
       LastMessage: '',
+      UnreadMessagesCount: 0,
       UserPet: '',
       UserDrinking: '',
       UserSmoking: '',

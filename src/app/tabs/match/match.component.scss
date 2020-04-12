@@ -119,9 +119,24 @@ ion-content {
       }
 
       .msg {
-        font-size: 14px;
+        font-size: 15px;
         color: var(--dark_gray);
         font-family: "poppins_r";
+
+        ion-icon {
+          position: relative;
+          top: 3px;
+        }
+
+        .read-message {
+          color: #46e0b9;
+        }
+      }
+
+      ion-note {
+        ion-badge {
+          background: var(--my_theme);
+        }
       }
 
       .match_btn {
