@@ -4,7 +4,7 @@
       <ion-back-button defaultHref="/login" text=""></ion-back-button>
     </ion-buttons>
     <ion-item lines="none" class="ion-no-padding">
-      <ion-avatar slot="start" class="ion-no-margin">
+      <ion-avatar slot="start" class="ion-no-margin" (click)="profileView()">
         <ion-img [src]="queryInfo?.toProfileImagePath" alt="" (ionError)="setdefultImage($event)"></ion-img>
       </ion-avatar>
       <ion-label class="ion-margin-start">
