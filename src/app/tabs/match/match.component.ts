@@ -65,7 +65,7 @@ export class MatchComponent implements OnInit {
               friend.UnreadMessagesCount = value.filter((item) => {
                 return !item.isRead && item.userId !== this.currentUserId;
               }).length;
-              appService.getNotificationCountFromDB();
+
               friend.LastMessage = value[0] ? value[0] : null;
 
               const lastMessageArray = this.pageTabs[0].friends.filter((i) => {
@@ -213,7 +213,7 @@ export class MatchComponent implements OnInit {
   public getLastMessageDateTime(value: string) {
     if (value) {
       const date = new Date(value);
-      return `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
+      return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
     } else {
       return '';
     }

@@ -9,8 +9,8 @@ import { OnlineUser } from './model/user';
 import { MoreMenuPage } from './more-menu/more-menu.page';
 import { AppService } from '../shared/services/app.service';
 import { UserFriends } from '../shared/model/user-friend.model';
-import { Observable, Subscription } from 'rxjs';
 import { MessagingUserDetailsComponent } from './user-details/user-details.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-messaging',
@@ -21,9 +21,10 @@ export class MessagingPage implements OnInit, OnDestroy {
 
   public messages: any = [];
   private friend: UserFriends;
-  public queryInfo;
-  private currentUserId: string;
-  private messageSubscribe: any;
+  public queryInfo: any;
+  public currentUserId: string;
+  private messageSnapshotChangesSubscribe: any;
+  private messageValueChangesSubscribe: any;
   // {to: string, toUserName: string, toProfileImagePath: string, from: string, fromUserName: string}
   public messageForm: FormGroup;
   public friendUserStatus: OnlineUser;
@@ -57,41 +58,54 @@ export class MessagingPage implements OnInit, OnDestroy {
         });
         // Subscribe for Messages Data.
 
-        this.messageSubscribe = this.messageService.getMessages().subscribe((data: any) => {
+        this.messageSnapshotChangesSubscribe = this.messageService.messagesSnapshotChanges().subscribe((data: any) => {
+          // if (this.messages.length === 0) {
+          //   this.messages = data;
+          //   const unReadMessage = this.messages.filter((msg: any) => {
+          //     return msg.payload.doc.data().isRead === false && msg.payload.doc.data().userId !== this.currentUserId;
+          //   });
+          //   if (unReadMessage && unReadMessage.length > 0) {
+          //     unReadMessage.forEach((unreadmsg: any) => {
+          //       this.messageService.updateMsg(unreadmsg.payload.doc.id);
+          //     });
+          //   }
+          // } else {
+          //   if (this.messages.length < data.length) {
+          //     if (this.currentUserId && data[this.messages.length].payload.doc.data().userId !== this.currentUserId) {
+          //       this.messageService.updateMsg(data[this.messages.length].payload.doc.id);
+          //     }
+          //     this.messages.push(data[this.messages.length]);
+          //   }
+          //   // else {
+          //   //   this.messages.splice(this.messages.length - 1, 1, data[data.length - 1]);
+          //   // }
+          // }
+          const unReadMessage = data.filter((msg: any) => {
+            return msg.payload.doc.data().isRead === false && msg.payload.doc.data().userId !== this.currentUserId;
+          });
+          if (unReadMessage && unReadMessage.length > 0) {
+            unReadMessage.forEach((unreadmsg: any) => {
+              this.messageService.updateMsg(unreadmsg.payload.doc.id);
+            });
+          }
+        });
+
+        this.messageValueChangesSubscribe = this.messageService.messagesValueChanges().subscribe((data) => {
           if (this.messages.length === 0) {
             this.messages = data;
-            const unReadMessage = this.messages.filter((msg: any) => {
-              return msg.payload.doc.data().isRead === false && msg.payload.doc.data().userId !== this.currentUserId;
-            });
-            //Update read in firebase and count
-            if (unReadMessage && unReadMessage.length > 0) {
-            //  this.appService.setNotificationCount(this.notificationCount-1);
-              unReadMessage.forEach((unreadmsg: any) => {
-                this.messageService.updateMsg(unreadmsg.payload.doc.id);
-             
-              });
-             //Update Count in server
-              this.messageService.updateNotification({
-                SenderId: this.queryInfo.to ,
-                MessageTypeId: 1
-              });
-            }
           } else {
             if (this.messages.length < data.length) {
-              if (this.currentUserId && data[this.messages.length].payload.doc.data().userId !== this.currentUserId) {
-                this.messageService.updateMsg(data[this.messages.length].payload.doc.id);
-              }
-               //Update Count in server
-               this.messageService.updateNotification({
-                SenderId: this.queryInfo.to ,
-                MessageTypeId: 1
-              });
               this.messages.push(data[this.messages.length]);
+            } else {
+              if (data[data.length - 1].userId === this.currentUserId) {
+                this.messages[this.messages.length - 1].isRead = data[data.length - 1].isRead;
+                this.messages[this.messages.length - 1].readDateTime = data[data.length - 1].readDateTime;
+              }
             }
           }
           this.ionContent.scrollToBottom(50);
         });
-      
+
       }
     });
     this.messageForm = this.fb.group({
@@ -105,16 +119,20 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    //  this.appService.getNotificationCountFromDB();
-     
+    this.messageService.updateNotification({
+      SenderId: this.queryInfo.to,
+      MessageTypeId: 1
+    });
+
   }
 
   ngOnDestroy() {
-    this.messageSubscribe.unsubscribe();
+    this.messageSnapshotChangesSubscribe.unsubscribe();
+    this.messageValueChangesSubscribe.unsubscribe();
   }
 
   ionViewDidEnter() {
-   
+
   }
 
   private setQueryinfo(queryInfo) {
@@ -206,6 +224,25 @@ export class MessagingPage implements OnInit, OnDestroy {
     });
     this.popoverCtrl.dismiss();
     return await modal.present();
+  }
+
+  public getLastMessageDateTime(value: string) {
+    if (value) {
+      const date = moment(value);
+      const currentDate = moment();
+      const diffInDay = currentDate.diff(date, 'day');
+      if (diffInDay === 0) {
+        return `${date.format('LT')}`;
+      } else if (diffInDay === 1) {
+        return `yesterday`;
+      } else if (diffInDay > 1 && diffInDay <= 7) {
+        return `${date.format('dddd')}`;
+      } else if (diffInDay > 7) {
+        return `${date.format('l')}`;
+      }
+    } else {
+      return '';
+    }
   }
 }
 
