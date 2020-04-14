@@ -40,6 +40,7 @@
             <ion-note>
               <span>
                 {{getLastMessageDateTime(message?.datetime)}}
+                <!-- {{message?.datetime | date:'MM/dd/y, h:mm a' | lowercase}} -->
                 <ion-icon [name]="message.isRead? 'checkmark-done' : 'checkmark'"
                   [ngClass]="{'read-message': message.isRead}"></ion-icon>
               </span>

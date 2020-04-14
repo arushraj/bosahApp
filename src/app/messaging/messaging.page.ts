@@ -218,11 +218,11 @@ export class MessagingPage implements OnInit, OnDestroy {
         if (diffInDay === 0) {
           return `${date.format('LT')}`;
         } else if (diffInDay === 1) {
-          return `yesterday`;
+          return `yesterday ${date.format('LT')}`;
         } else if (diffInDay > 1 && diffInDay <= 7) {
-          return `${date.format('dddd')}`;
+          return `${date.format('dddd')} ${date.format('LT')}`;
         } else if (diffInDay > 7) {
-          return `${date.format('l')}`;
+          return `${date.format('l')} ${date.format('LT')}`;
         }
       } else {
         if (timeonly) {

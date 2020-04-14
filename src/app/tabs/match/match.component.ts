@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { IonSlides, IonContent, ModalController, NavController } from '@ionic/angular';
-
 import { UserFriends, FriendshipStatus } from '../../shared/model/user-friend.model';
 import { AppService } from '../../shared/services/app.service';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { UserMoreMenuPage } from './user-more-menu/user-more-menu.page';
 import { FirebasedbService } from 'src/app/shared/services/firebasedb.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-match',
@@ -210,13 +210,30 @@ export class MatchComponent implements OnInit {
     // this.appService.getRequestedFriendsFromDB();
   }
 
-  public getLastMessageDateTime(value: string) {
+  public getLastMessageDateTime(value: string, timeonly: false, dateonly: false) {
     if (value) {
-      const date = new Date(value);
-      return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
+      const date = moment(value);
+      if (!timeonly && !dateonly) {
+        const currentDate = moment();
+        const diffInDay = currentDate.diff(date, 'day');
+        if (diffInDay === 0) {
+          return `${date.format('LT')}`;
+        } else if (diffInDay === 1) {
+          return `yesterday`;
+        } else if (diffInDay > 1 && diffInDay <= 7) {
+          return `${date.format('dddd')}`;
+        } else if (diffInDay > 7) {
+          return `${date.format('l')}`;
+        }
+      } else {
+        if (timeonly) {
+          return `${date.format('LT')}`;
+        } else if (dateonly) {
+          return `${date.format('L')}`;
+        }
+      }
     } else {
       return '';
     }
   }
-
 }
