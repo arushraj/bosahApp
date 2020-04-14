@@ -84,7 +84,7 @@ export class MessagingPage implements OnInit, OnDestroy {
               }
             }
           }
-          this.ionContent.scrollToBottom();
+          this.ionContent.scrollToBottom(50);
         });
 
       }
@@ -114,7 +114,7 @@ export class MessagingPage implements OnInit, OnDestroy {
 
   ionViewDidEnter() {
     setTimeout(() => {
-      this.ionContent.scrollToBottom();
+      this.ionContent.scrollToBottom(50);
     }, 500);
   }
 
@@ -151,7 +151,7 @@ export class MessagingPage implements OnInit, OnDestroy {
       }).catch((error) => {
         console.log(error);
       });
-      this.ionContent.scrollToBottom();
+      this.ionContent.scrollToBottom(50);
     }
   }
   public getClasses(messageOwner?: string) {
@@ -178,8 +178,8 @@ export class MessagingPage implements OnInit, OnDestroy {
 
   public checkFocus() {
     setTimeout(() => {
-      this.ionContent.scrollToBottom();
-    }, 500);
+      this.ionContent.scrollToBottom(50);
+    }, 300);
   }
 
   public async openMoreOption(event: any) {
