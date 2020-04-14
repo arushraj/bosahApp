@@ -11,6 +11,8 @@ import { AppService } from '../shared/services/app.service';
 import { UserFriends } from '../shared/model/user-friend.model';
 import { MessagingUserDetailsComponent } from './user-details/user-details.component';
 import * as moment from 'moment';
+import { groupBy, mergeMap, toArray, map } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-messaging',
@@ -59,27 +61,6 @@ export class MessagingPage implements OnInit, OnDestroy {
         // Subscribe for Messages Data.
 
         this.messageSnapshotChangesSubscribe = this.messageService.messagesSnapshotChanges().subscribe((data: any) => {
-          // if (this.messages.length === 0) {
-          //   this.messages = data;
-          //   const unReadMessage = this.messages.filter((msg: any) => {
-          //     return msg.payload.doc.data().isRead === false && msg.payload.doc.data().userId !== this.currentUserId;
-          //   });
-          //   if (unReadMessage && unReadMessage.length > 0) {
-          //     unReadMessage.forEach((unreadmsg: any) => {
-          //       this.messageService.updateMsg(unreadmsg.payload.doc.id);
-          //     });
-          //   }
-          // } else {
-          //   if (this.messages.length < data.length) {
-          //     if (this.currentUserId && data[this.messages.length].payload.doc.data().userId !== this.currentUserId) {
-          //       this.messageService.updateMsg(data[this.messages.length].payload.doc.id);
-          //     }
-          //     this.messages.push(data[this.messages.length]);
-          //   }
-          //   // else {
-          //   //   this.messages.splice(this.messages.length - 1, 1, data[data.length - 1]);
-          //   // }
-          // }
           const unReadMessage = data.filter((msg: any) => {
             return msg.payload.doc.data().isRead === false && msg.payload.doc.data().userId !== this.currentUserId;
           });
@@ -103,7 +84,7 @@ export class MessagingPage implements OnInit, OnDestroy {
               }
             }
           }
-          this.ionContent.scrollToBottom(50);
+          this.ionContent.scrollToBottom();
         });
 
       }
@@ -127,7 +108,9 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   ionViewDidEnter() {
-
+    setTimeout(() => {
+      this.ionContent.scrollToBottom();
+    }, 500);
   }
 
   private setQueryinfo(queryInfo) {
@@ -163,7 +146,7 @@ export class MessagingPage implements OnInit, OnDestroy {
       }).catch((error) => {
         console.log(error);
       });
-      this.ionContent.scrollToBottom(50);
+      this.ionContent.scrollToBottom();
     }
   }
   public getClasses(messageOwner?: string) {
@@ -190,7 +173,7 @@ export class MessagingPage implements OnInit, OnDestroy {
 
   public checkFocus() {
     setTimeout(() => {
-      this.ionContent.scrollToBottom(50);
+      this.ionContent.scrollToBottom();
     }, 500);
   }
 
@@ -221,22 +204,42 @@ export class MessagingPage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
-  public getLastMessageDateTime(value: string) {
+  public getLastMessageDateTime(value: string, timeonly: false, dateonly: false) {
     if (value) {
       const date = moment(value);
-      const currentDate = moment();
-      const diffInDay = currentDate.diff(date, 'day');
-      if (diffInDay === 0) {
-        return `${date.format('LT')}`;
-      } else if (diffInDay === 1) {
-        return `yesterday`;
-      } else if (diffInDay > 1 && diffInDay <= 7) {
-        return `${date.format('dddd')}`;
-      } else if (diffInDay > 7) {
-        return `${date.format('l')}`;
+      if (!timeonly && !dateonly) {
+        const currentDate = moment();
+        const diffInDay = currentDate.diff(date, 'day');
+        if (diffInDay === 0) {
+          return `${date.format('LT')}`;
+        } else if (diffInDay === 1) {
+          return `yesterday`;
+        } else if (diffInDay > 1 && diffInDay <= 7) {
+          return `${date.format('dddd')}`;
+        } else if (diffInDay > 7) {
+          return `${date.format('l')}`;
+        }
+      } else {
+        if (timeonly) {
+          return `${date.format('LT')}`;
+        } else if (dateonly) {
+          return `${date.format('L')}`;
+        }
       }
     } else {
       return '';
+    }
+  }
+
+  public isNewGroup(index: number) {
+    if (index > 0) {
+      if (moment(this.messages[index - 1].datetime).format('L') === moment(this.messages[index].datetime).format('L')) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return true;
     }
   }
 }

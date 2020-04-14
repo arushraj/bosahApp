@@ -1,27 +1,36 @@
-ion-label {
-    font-size: 20px !important;
+ion-header {
+    z-index: 9999;
 
-    .user-name {
-        position: relative;
-        top: 5px;
-        font-weight: 400;
+    ion-toolbar {
+        ion-item {
+            ion-label {
+                font-size: 20px !important;
+                margin-left: 10px;
 
-        ion-icon {
-            font-size: 0.5em;
+                .user-name {
+                    position: relative;
+                    top: 5px;
+                    font-weight: 400;
+
+                    ion-icon {
+                        font-size: 0.5em;
+                    }
+                }
+
+                .user-status {
+                    font-size: 15px;
+                    font-weight: 400;
+                }
+
+                .online {
+                    color: #39ef39;
+                }
+
+                .moreOption {
+                    color: white;
+                }
+            }
         }
-    }
-
-    .user-status {
-        font-size: 15px;
-        font-weight: 400;
-    }
-
-    .online {
-        color: #39ef39;
-    }
-
-    .moreOption {
-        color: white;
     }
 }
 
@@ -33,41 +42,44 @@ ion-label {
             padding: 0px 10px;
 
             .message {
-                p {
+                ion-label {
                     margin: 0px;
-                    max-width: 95%;
+                    // max-width: 95%;
                     min-width: 55%;
                     box-shadow: 0 2px 0px 0 rgba(0, 0, 0, 0.1);
-                    padding: 10px 5px 10px 10px;
+                    padding: 5px 5px 10px 10px;
                     margin: 5px 0;
-                }
+                    white-space: normal !important;
 
-                span {
-                    float: right;
-                    font-size: 10px;
-                    position: relative;
-                    top: 10px;
-                    margin: 1% 0 0.5% 0;
-
-                    ion-icon {
-                        font-size: 1.3em;
+                    ion-note {
+                        float: right;
+                        font-size: 10px;
                         position: relative;
-                        top: 3px;
+                        top: 5px;
+                        // margin: 1% 0 0.5% 0;
+                        padding-left: 1%;
+
+                        ion-icon {
+                            font-size: 1.3em;
+                            position: relative;
+                            top: 3px;
+                        }
                     }
                 }
             }
 
             .message.incoming {
-                display: flex;
+                // display: flex;
+                display: grid;
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: flex-start;
 
-                p {
+                ion-label {
                     border-radius: 0 11px 11px 11px;
                     background: #f2f7f9;
 
-                    span {
+                    ion-note {
                         ion-icon {
                             display: none;
                         }
@@ -76,16 +88,17 @@ ion-label {
             }
 
             .message.outgoing {
-                display: flex;
+                // display: flex;
+                display: grid;
                 flex-direction: column;
                 justify-content: flex-end;
                 align-items: flex-end;
 
-                p {
+                ion-label {
                     border-radius: 11px 11px 0 11px;
                     background: #dcf4ff;
 
-                    span {
+                    ion-note {
                         .read-message {
                             color: #46e0b9;
                         }
