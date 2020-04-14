@@ -46,3 +46,9 @@ ion-tabs {
       --background-activated: var(--my_theme);
     }
   }
+ 
+ #match-badge {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+ }

@@ -30,6 +30,7 @@ export class AppConstant {
     readonly DRINKING_OPTIONS = '/api/getalldrinkingOptions';
     readonly SEND_NOTIFICATION = '/api/sendMessageNotification';
     readonly UPDATE_NOTIFICATION = '/api/updateNotification';
+    readonly NOTIFICATION_COUNT = '/api/User/getNotificationCount';
 
     /**
      * getURL() funtion to get url
@@ -37,6 +38,8 @@ export class AppConstant {
     public getURL(urlType) {
         // console.log(`Calling URL for ${UrlKey[urlType]}`);
         switch (urlType) {
+            case UrlKey.GetNotification_Count:
+                return this.APP_BASE_URL + this.NOTIFICATION_COUNT;
             case UrlKey.User_Login:
                 return this.APP_BASE_URL + this.USER_LOGIN;
             case UrlKey.User_Logout:
@@ -130,11 +133,13 @@ export enum UrlKey {
     Smoking_Options,
     Drinking_Options,
     Send_Notification,
-    Update_Notification
+    Update_Notification,
+    GetNotification_Count
 }
 
 export enum StorageKey {
     UserIdKey = 'userId',
     LocalCurrentUserKey = 'user',
-    LoginTokenkey = 'userToken'
+    LoginTokenkey = 'userToken',
+    NotificationCountKey="notificationCount"
 }

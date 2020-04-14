@@ -92,6 +92,11 @@ export class MessagingPage implements OnInit, OnDestroy {
     this.messageForm = this.fb.group({
       message: ['', Validators.compose([Validators.required])]
     });
+
+    // this.appService.getNotificationCount()
+    // .subscribe(count => {
+    //   this.notificationCount = count;
+    // });
   }
 
   ngOnInit() {

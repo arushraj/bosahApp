@@ -133,3 +133,16 @@
   --ion-color-shade: var(--ion-color-client-menu-shade);
   --ion-color-tint: var(--ion-color-client-menu-tint);
 }
+
+@font-face {
+  font-family: "poppins_me";
+  src: url("../assets/fonts/poppins/Poppins-Medium.ttf");
+}
+@font-face {
+  font-family: "poppins_r";
+  src: url("../assets/fonts/poppins/Poppins-Regular.ttf");
+}
+@font-face {
+  font-family: "poppins_sb";
+  src: url("../assets/fonts/poppins/Poppins-SemiBold.ttf");
+}

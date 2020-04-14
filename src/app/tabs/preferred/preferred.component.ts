@@ -48,11 +48,15 @@ export class PreferredComponent implements OnInit {
     event.target.src = '/assets/no-image.png';
   }
 
-  public notIntrested(userId: string) {
-    const index = this.preferredUser.findIndex(key => key.UserId === userId);
-    this.preferredUser.splice(index, 1);
-    console.log(this.preferredUser.length);
-    // this.preferredUserSlides.slideNext(1000, true).then(() => { });
+  public notIntrested() {
+    // const index = this.preferredUser.findIndex(key => key.UserId === userId);
+   // this.preferredUser.splice(index, 1);
+    //console.log(this.preferredUser.length);
+    // if(index >=this.preferredUser.length-1){
+    //   this.preferredUserSlides.slidePrev(1000, true).then(() => { });
+
+    //  }
+     this.preferredUserSlides.slideNext(1000, true).then(() => { });
   }
 
   public async sendFriendRequest(newFriend: PreferredUser) {

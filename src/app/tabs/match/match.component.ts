@@ -7,7 +7,6 @@ import { AppService } from '../../shared/services/app.service';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { UserMoreMenuPage } from './user-more-menu/user-more-menu.page';
 import { FirebasedbService } from 'src/app/shared/services/firebasedb.service';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-match',
@@ -213,18 +212,8 @@ export class MatchComponent implements OnInit {
 
   public getLastMessageDateTime(value: string) {
     if (value) {
-      const date = moment(value);
-      const currentDate = moment();
-      const diffInDay = currentDate.diff(date, 'day');
-      if (diffInDay === 0) {
-        return `${date.format('LT')}`;
-      } else if (diffInDay === 1) {
-        return `yesterday`;
-      } else if (diffInDay > 1 && diffInDay <= 7) {
-        return `${date.format('dddd')}`;
-      } else if (diffInDay > 7) {
-        return `${date.format('l')}`;
-      }
+      const date = new Date(value);
+      return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
     } else {
       return '';
     }
