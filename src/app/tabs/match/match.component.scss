@@ -84,9 +84,9 @@ ion-header {
         background-color: white;
         font-weight: bold;
 
-        // ion-label {
-        //   font-family: "poppins_r";
-        // }
+        ion-label {
+          font-family: "poppins_r";
+        }
       }
     }
   }
@@ -108,12 +108,12 @@ ion-content {
       .name {
         font-size: 16px;
         color: var(--black);
-        // font-family: "poppins_sb";
+        font-family: "poppins_sb";
 
         span {
           font-size: 12px;
           color: var(--black);
-          // font-family: "poppins_r";
+          font-family: "poppins_r";
           padding-top: 5px;
         }
       }

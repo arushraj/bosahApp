@@ -28,23 +28,24 @@
 @import "~animate.css/animate.min.css";
 
 body {
- // font-family: "poppins_r" !important;
-  --ion-default-font:sans-serif;
+  font-family: "poppins_r" !important;
+    --ion-default-font:poppins_r;
 
 }
 
-// h1,
-// h2,
-// h3,
-// h4,
-// h5,
-// h6,
-// ion-label {
-//   font-family: "poppins_r";
-// }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ion-label {
+  font-family: "poppins_r";
+}
 
 
 .menu-button {
+  font-family: "poppins_r";
   background-color: var(--my_theme);
   --background-activated: transparent;
   border-radius: 3px;
@@ -107,7 +108,7 @@ ion-header {
 
     ion-title {
       font-size: 18px;
-      // font-family: "poppins_r";
+      font-family: "poppins_r";
       color: var(--white);
       position: absolute;
       top: 0;

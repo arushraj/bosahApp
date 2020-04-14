@@ -34,6 +34,7 @@ export class TabsComponent implements OnInit {
     index:  3
   }
 ];
+public badgeCount:number;
   // {
   //   name: 'Events',
   //   icon: 'calendar',
@@ -42,11 +43,23 @@ export class TabsComponent implements OnInit {
 
 
   @ViewChild('apptabs', { read: IonTabs, static: true }) apptabs: IonTabs;
-  constructor(private appService: AppService, private toast: Toast) { }
+  constructor(private appService: AppService, private toast: Toast) { 
+ 
+    this.appService.getNotificationCount()
+    .subscribe(count => {
+      this.badgeCount = count;
+    });
+    
+  }
 
-  ngOnInit() { }
+  ngOnInit() {
+   //this.appService.getNotificationCountFromDB();
+   }
 
   tabsDidChange() {
     console.log(this.apptabs.getSelected());
   }
+
+
+
 }

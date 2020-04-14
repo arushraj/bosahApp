@@ -23,7 +23,10 @@
             <ion-range id="dual-range" min="700" max="2000" mode="md" dualKnobs="true" pin="true" [value]="rangeValue"
               (ionChange)="rangeChange($event)" #roomrentRange class="rentRange">
               <ion-label slot="start">${{rangeValue.lower}}</ion-label>
-              <ion-label slot="end">${{rangeValue.upper}}+</ion-label>
+             
+              <!-- <ion-label slot="end">${{rangeValue.upper}}</ion-label> -->
+              <ion-label  *ngIf="rangeValue.upper<2000" slot="end">${{rangeValue.upper}}</ion-label>
+              <ion-label  *ngIf="rangeValue.upper===2000" slot="end">${{rangeValue.upper}}+</ion-label>
             </ion-range>
           </ion-label>
 

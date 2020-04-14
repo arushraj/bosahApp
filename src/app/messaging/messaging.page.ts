@@ -63,9 +63,17 @@ export class MessagingPage implements OnInit, OnDestroy {
             const unReadMessage = this.messages.filter((msg: any) => {
               return msg.payload.doc.data().isRead === false && msg.payload.doc.data().userId !== this.currentUserId;
             });
+            //Update read in firebase and count
             if (unReadMessage && unReadMessage.length > 0) {
+            //  this.appService.setNotificationCount(this.notificationCount-1);
               unReadMessage.forEach((unreadmsg: any) => {
                 this.messageService.updateMsg(unreadmsg.payload.doc.id);
+             
+              });
+             //Update Count in server
+              this.messageService.updateNotification({
+                SenderId: this.queryInfo.to ,
+                MessageTypeId: 1
               });
             }
           } else {
@@ -73,6 +81,11 @@ export class MessagingPage implements OnInit, OnDestroy {
               if (this.currentUserId && data[this.messages.length].payload.doc.data().userId !== this.currentUserId) {
                 this.messageService.updateMsg(data[this.messages.length].payload.doc.id);
               }
+               //Update Count in server
+               this.messageService.updateNotification({
+                SenderId: this.queryInfo.to ,
+                MessageTypeId: 1
+              });
               this.messages.push(data[this.messages.length]);
             }
           }
@@ -84,14 +97,16 @@ export class MessagingPage implements OnInit, OnDestroy {
     this.messageForm = this.fb.group({
       message: ['', Validators.compose([Validators.required])]
     });
+
+    // this.appService.getNotificationCount()
+    // .subscribe(count => {
+    //   this.notificationCount = count;
+    // });
   }
 
   ngOnInit() {
-     this.messageService.updateNotification({
-      SenderId: this.queryInfo.to ,
-      MessageTypeId: 1
-    });
-   
+    //  this.appService.getNotificationCountFromDB();
+     
   }
 
   ngOnDestroy() {

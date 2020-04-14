@@ -90,6 +90,7 @@ export class AppComponent {
 
   initializeApp() {
     this.appService.getCurrentUser().subscribe((user: CurrentUser) => {
+      this.appService.getNotificationCountFromDB();
       this.currentUser = user;
       if (this.currentUser.ProfileImagePath === '...' || this.currentUser.ProfileImagePath === '') {
         if (this.currentUser.GenderName === 'Female') {
@@ -106,10 +107,7 @@ export class AppComponent {
 
     // Initialize BackButton Eevent.
     this.platform.ready().then(() => {
-      // this.statusBar.styleDefault();
       this.backButtonEvent();
-      // // call data from DB
-      // this.appService.getCurrentuserFromDB();
       this.appService.loadDataFromServer(true);
       this.appService.getCurrentUserIdfromLocalStorage()
         .then(userId => {

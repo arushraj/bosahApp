@@ -12,7 +12,7 @@
     .info_lbl {
       font-size: 13px;
       color: var(--balck);
-      // font-family: "poppins_r";
+      font-family: "poppins_r";
     }
     .gender_div {
       padding-bottom: 15px;
@@ -22,7 +22,7 @@
           --background: var(--white);
           --color: var(--balck);
           font-size: 16px;
-          // font-family: "poppins_me";
+           font-family: "poppins_me";
           --box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.16);
           --border-radius: 5px;
           height: 35px;
@@ -42,7 +42,7 @@
       margin-bottom: 10px;
       ion-select {
         max-width: 100%;
-        // font-family: "poppins_r";
+        font-family: "poppins_r";
         font-size: 16px;
         padding: 0;
       }

@@ -38,6 +38,7 @@ import { NoNetworkComponent } from './network-modal/no-network.component';
 export class AppService {
 
     public currentUser = new BehaviorSubject<CurrentUser>(this.createUser());
+    public notificationCount = new BehaviorSubject<number>(0);
     private userLocation = new BehaviorSubject<UserLocation[]>(this.createLocation());
     private userReligions = new BehaviorSubject<UserReligion[]>(this.createReligion());
     private bathrooms = new BehaviorSubject<Bathroom[]>([]);
@@ -187,6 +188,7 @@ export class AppService {
         };
     }
 
+
     private createuserPreferred(data?: PreferredUser) {
         return [{
             UserId: (data && data.UserId) ? data.UserId : '',
@@ -266,6 +268,14 @@ export class AppService {
 
     private setBedrooms(bedrooms: Bedroom[]) {
         this.bedrooms.next(bedrooms);
+    }
+
+    public getNotificationCount(): Observable<number> {
+        return this.notificationCount.asObservable();
+    }
+
+    public setNotificationCount(count: number) {
+        this.notificationCount.next(count);
     }
 
     public getRentBudget(): Observable<RentBudget[]> {
@@ -352,30 +362,20 @@ export class AppService {
     // functions for HTTP Calling
 
     public async getCurrentuserFromDB(updateOnline?: boolean) {
-        // const loading = await this.loadingController.create({
-        //     message: 'Please wait...',
-        //     translucent: true,
-        //     cssClass: ''
-        // });
-        // loading.present();
-        await this.storage.get(StorageKey.LocalCurrentUserKey)
+      
+          await this.storage.get(StorageKey.LocalCurrentUserKey)
             .then(async (user) => {
                 if ((user === null || user === undefined) || updateOnline) {
                     if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
                         this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
-                        // loading.dismiss().then(() => {
-                        //     this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
-                        // });
+                        
 
                     } else {
                         await this.getCurrentUserIdfromLocalStorage()
                             .then(async value => {
                                 if (value === null || value === undefined) {
                                     this.toast.show(`Session expired`, `short`, 'bottom').subscribe(() => { });
-                                    // loading.dismiss().then(() => {
-
-                                    //     this.toast.show(`Session expired`, `short`, 'bottom').subscribe(() => { });
-                                    // });
+                                 
 
                                     this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                                 } else {
@@ -387,7 +387,7 @@ export class AppService {
                                             const resUser: CurrentUser = JSON.parse(res.data);
                                             resUser.UserId = value.toString();
                                             this.setCurrentUser(this.createUser(resUser));
-                                            this.storage.set(StorageKey.LocalCurrentUserKey, resUser);
+                                            this.storage.set(StorageKey.LocalCurrentUserKey, resUser);                        
                                         })
                                         .catch(error => {
                                             // loading.dismiss();
@@ -576,9 +576,7 @@ export class AppService {
             translucent: true,
             cssClass: ''
         });
-        // Setting Value null
-        // this.setUserPreferred(this.createuserPreferred());
-        // loading.present();
+        
         await this.getCurrentUserIdfromLocalStorage()
             .then(async (userId) => {
                 if (userId) {
@@ -590,37 +588,28 @@ export class AppService {
                             const resdata = JSON.parse(res.data);
                             const resPreferred: PreferredUser[] = resdata.PreferredUserList;
                             this.userPreferredList.users = resPreferred;
-                            // if(resdata.PreferredUserList.length == 0)
-                            // {
-                            //     this.userPreferredList.users = [];
-                            //     this.setUserPreferred(this.createuserPreferred());
-
-                            // }
-                            // else{
+                          
                             this.setUserPreferred(Object.assign({}, this.userPreferredList).users);
-                            // }
+                        
 
                         })
                         .catch(error => {
                             console.log('error', error);
-                            // loading.dismiss();
+                        
                             this.userPreferredList.users = [];
-                            // this.setUserPreferred(this.createuserPreferred());
-                            // if (error.status === 401) {
-                            //     this.userLogout();
-                            // }
+                            
                         })
                         .finally(() => {
-                            // loading.dismiss();
+                            
                         });
                 }
             })
             .catch((err) => {
                 this.toast.showLongBottom(JSON.stringify(err)).subscribe(() => { });
-                // loading.dismiss();
+               
             })
             .finally(() => {
-                // loading.dismiss();
+               
             });
     }
 
@@ -1313,11 +1302,26 @@ export class AppService {
         const data = form;
         return this.http.post(url, data, this.header)
             .then(async () => {
+               await this.getNotificationCountFromDB();
             })
             .catch((err) => {
             })
             .finally(() => {
             });
     }
+
+    public async getNotificationCountFromDB() {
+        const url = this.appConstant.getURL(UrlKey.GetNotification_Count);
+        return this.http.get(url,{}, this.header)
+            .then((res )=> {            
+               this.setNotificationCount(res.data);              
+            })
+            .catch((err) => {
+            })
+            .finally(() => {
+            });
+    }
+
+  
 }
 
