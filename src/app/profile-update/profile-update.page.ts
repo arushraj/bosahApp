@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 // Service
@@ -29,6 +29,8 @@ export class ProfileUpdatePage implements OnInit {
   public petsOptions: Pet[];
   public currentUser: CurrentUser;
   public isActionCompleted: boolean;
+  @ViewChild('aboutMe',{static: true}) myInput: ElementRef;
+  //@ViewChild('aboutMe', { read: IonTextarea, static: true }) ionContent: IonTextarea;
 
 
   constructor(private fb: FormBuilder, private appService: AppService) {
@@ -54,6 +56,10 @@ export class ProfileUpdatePage implements OnInit {
 
   ngOnInit() {
   }
+
+  resize() {
+    this.myInput.nativeElement.style.height = this.myInput.nativeElement.scrollHeight + 'px';
+}
 
   private bindValues() {
     this.genders = [{

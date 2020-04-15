@@ -65,3 +65,16 @@ ion-header {
     }
   }
   
+  .aboutme {
+    ion-textarea {
+      width: calc(100% - 10px);
+      font-family: "poppins_r";
+      font-size: 12px;
+      --background: var(--gray);
+      padding: 5px 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+     // height: 130px;
+      --padding-top: 0;
+    }
+  }

@@ -132,15 +132,19 @@
         </ion-select>
       </div>       
      </div> 
-     <div class="data_div">
-      <div class="img_div">
+     <div>
+      <!-- <div class="img_div">
         <img src="/assets/job.png">
-      </div>
+      </div> -->
 
-      <div class="info_div">
-        <h3 class="info_lbl">About Me</h3>
-        <ion-input maxlength="150" formControlName="AboutMe" type="text" autocapitalize="on" autocorrect="on" Max></ion-input>
-      </div>
+      <div class="aboutme">
+        <!-- <h3 class="info_lbl">About Me</h3> -->
+        <ion-label class="info_lbl" position="stacked">About Me</ion-label>
+        <ion-textarea #aboutMe maxlength="150" formControlName="AboutMe" type="text"  rows="3" 
+           autocapitalize="on" autocorrect="on" maxLength="120" [(keyup)]="resize()">
+        </ion-textarea>
+      </div>       
+  
     </div>
   </div>
 </form>
