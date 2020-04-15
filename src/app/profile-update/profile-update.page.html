@@ -133,15 +133,11 @@
       </div>       
      </div> 
      <div>
-      <!-- <div class="img_div">
-        <img src="/assets/job.png">
-      </div> -->
-
       <div class="aboutme">
         <!-- <h3 class="info_lbl">About Me</h3> -->
         <ion-label class="info_lbl" position="stacked">About Me</ion-label>
-        <ion-textarea #aboutMe maxlength="150" formControlName="AboutMe" type="text"  rows="3" 
-           autocapitalize="on" autocorrect="on" maxLength="120" [(keyup)]="resize()">
+        <ion-textarea  maxlength="150" formControlName="AboutMe" type="text"  rows="3" 
+           autocapitalize="on" autocorrect="on" maxLength="120" (keyup)="resize()">
         </ion-textarea>
       </div>       
   

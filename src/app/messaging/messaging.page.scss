@@ -6,12 +6,10 @@ ion-header {
             ion-label {
                 font-size: 20px !important;
                 margin-left: 10px;
-
                 .user-name {
                     position: relative;
                     top: 5px;
                     font-weight: 400;
-
                     ion-icon {
                         font-size: 0.5em;
                     }
@@ -50,7 +48,6 @@ ion-header {
                     padding: 5px 5px 10px 10px;
                     margin: 5px 0;
                     white-space: normal !important;
-
                     ion-note {
                         float: right;
                         font-size: 10px;

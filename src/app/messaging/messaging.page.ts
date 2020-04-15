@@ -209,7 +209,7 @@ export class MessagingPage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
-  public getLastMessageDateTime(value: string, timeonly: false, dateonly: false) {
+  public getLastMessageDateTime(value: string, timeonly?: false, dateonly?: false) {
     if (value) {
       const date = moment(value);
       if (!timeonly && !dateonly) {

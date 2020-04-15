@@ -57,7 +57,7 @@ export class ProfileUpdatePage implements OnInit {
   ngOnInit() {
   }
 
-  resize() {
+  public resize() {
     this.myInput.nativeElement.style.height = this.myInput.nativeElement.scrollHeight + 'px';
 }
 

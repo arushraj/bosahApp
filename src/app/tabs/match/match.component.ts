@@ -210,7 +210,7 @@ export class MatchComponent implements OnInit {
     // this.appService.getRequestedFriendsFromDB();
   }
 
-  public getLastMessageDateTime(value: string, timeonly: false, dateonly: false) {
+  public getLastMessageDateTime(value: string, timeonly?: false, dateonly?: false) {
     if (value) {
       const date = moment(value);
       if (!timeonly && !dateonly) {
