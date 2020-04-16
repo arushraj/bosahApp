@@ -67,8 +67,6 @@ export class MatchComponent implements OnInit {
               friend.UnreadMessagesCount = value.filter((item) => {
                 return !item.isRead && item.userId !== this.currentUserId;
               }).length;
-              if(friend.UnreadMessagesCount>0)
-              this.appService.getNotificationCountFromDB();
 
               friend.LastMessage = value[0] ? value[0] : null;
 
@@ -114,7 +112,7 @@ export class MatchComponent implements OnInit {
     // });
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     // this.messageService.updateNotification({
     //   SenderId: 3,
     //   MessageTypeId: MessageTpe.Chat

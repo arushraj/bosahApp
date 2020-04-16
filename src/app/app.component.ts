@@ -90,7 +90,8 @@ export class AppComponent {
 
   initializeApp() {
     this.appService.getCurrentUser().subscribe((user: CurrentUser) => {
-      this.appService.getNotificationCountFromDB();
+      // this.appService.getNotificationCountFromDB();
+      this.appService.getUserFriendsFromDB();
       this.currentUser = user;
       if (this.currentUser.ProfileImagePath === '...' || this.currentUser.ProfileImagePath === '') {
         if (this.currentUser.GenderName === 'Female') {

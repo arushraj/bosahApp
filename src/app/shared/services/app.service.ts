@@ -362,20 +362,20 @@ export class AppService {
     // functions for HTTP Calling
 
     public async getCurrentuserFromDB(updateOnline?: boolean) {
-      
-          await this.storage.get(StorageKey.LocalCurrentUserKey)
+
+        await this.storage.get(StorageKey.LocalCurrentUserKey)
             .then(async (user) => {
                 if ((user === null || user === undefined) || updateOnline) {
                     if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
                         this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
-                        
+
 
                     } else {
                         await this.getCurrentUserIdfromLocalStorage()
                             .then(async value => {
                                 if (value === null || value === undefined) {
                                     this.toast.show(`Session expired`, `short`, 'bottom').subscribe(() => { });
-                                 
+
 
                                     this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
                                 } else {
@@ -387,7 +387,7 @@ export class AppService {
                                             const resUser: CurrentUser = JSON.parse(res.data);
                                             resUser.UserId = value.toString();
                                             this.setCurrentUser(this.createUser(resUser));
-                                            this.storage.set(StorageKey.LocalCurrentUserKey, resUser);                        
+                                            this.storage.set(StorageKey.LocalCurrentUserKey, resUser);
                                         })
                                         .catch(error => {
                                             // loading.dismiss();
@@ -531,6 +531,14 @@ export class AppService {
 
     public loadDataFromServer(refreshData: boolean) {
 
+        // if ((this.userPreferred.value.length === 1 && this.userPreferred.value[0].UserId === '') || refreshData) {
+        //     this.getUserPreferredFromDB();
+        // }
+
+        if ((this.userFriends.value.length === 0) || refreshData) {
+            this.getUserFriendsFromDB();
+        }
+
         if ((this.userLocation.value.length === 1 && this.userLocation.value[0].CityId === null) || refreshData) {
             this.getUserLocationsFromDB();
         }
@@ -576,7 +584,7 @@ export class AppService {
             translucent: true,
             cssClass: ''
         });
-        
+
         await this.getCurrentUserIdfromLocalStorage()
             .then(async (userId) => {
                 if (userId) {
@@ -588,28 +596,28 @@ export class AppService {
                             const resdata = JSON.parse(res.data);
                             const resPreferred: PreferredUser[] = resdata.PreferredUserList;
                             this.userPreferredList.users = resPreferred;
-                          
+
                             this.setUserPreferred(Object.assign({}, this.userPreferredList).users);
-                        
+
 
                         })
                         .catch(error => {
                             console.log('error', error);
-                        
+
                             this.userPreferredList.users = [];
-                            
+
                         })
                         .finally(() => {
-                            
+
                         });
                 }
             })
             .catch((err) => {
                 this.toast.showLongBottom(JSON.stringify(err)).subscribe(() => { });
-               
+
             })
             .finally(() => {
-               
+
             });
     }
 
@@ -1302,7 +1310,7 @@ export class AppService {
         const data = form;
         return this.http.post(url, data, this.header)
             .then(async () => {
-               await this.getNotificationCountFromDB();
+                await this.getNotificationCountFromDB();
             })
             .catch((err) => {
             })
@@ -1312,9 +1320,9 @@ export class AppService {
 
     public async getNotificationCountFromDB() {
         const url = this.appConstant.getURL(UrlKey.GetNotification_Count);
-        return this.http.get(url,{}, this.header)
-            .then((res )=> {            
-               this.setNotificationCount(res.data);              
+        return this.http.get(url, {}, this.header)
+            .then((res) => {
+                this.setNotificationCount(res.data);
             })
             .catch((err) => {
             })
@@ -1322,6 +1330,6 @@ export class AppService {
             });
     }
 
-  
+
 }
 

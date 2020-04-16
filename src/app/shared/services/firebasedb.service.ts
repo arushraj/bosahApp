@@ -14,6 +14,7 @@ export class FirebasedbService {
   private itemsCollection: AngularFirestoreCollection<UserMessage>;
   private currentOnlineUser: AngularFirestoreDocument<OnlineUser>;
   private friendOnlineUser: AngularFirestoreDocument<OnlineUser>;
+  public unReadMessagesArray = [];
 
   constructor(private db: AngularFirestore) { }
 

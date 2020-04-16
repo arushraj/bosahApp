@@ -11,9 +11,10 @@ import { AppService } from '../shared/services/app.service';
 import { UserFriends } from '../shared/model/user-friend.model';
 import { MessagingUserDetailsComponent } from './user-details/user-details.component';
 import * as moment from 'moment';
-import { groupBy, mergeMap, toArray, map } from 'rxjs/operators';
+import { groupBy, mergeMap, toArray, map, findIndex, every, tap } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
 import { MessageTpe } from '../shared/enum/MessageType';
+import { FirebasedbService } from '../shared/services/firebasedb.service';
 
 @Component({
   selector: 'app-messaging',
@@ -41,7 +42,8 @@ export class MessagingPage implements OnInit, OnDestroy {
     private appConstant: AppConstant,
     private popoverCtrl: PopoverController,
     private appService: AppService,
-    private modalController: ModalController) {
+    private modalController: ModalController,
+    private firebasedb: FirebasedbService) {
     this.route.queryParams.subscribe(params => {
       if (params && params.info) {
         this.setQueryinfo(params.info);
@@ -66,10 +68,14 @@ export class MessagingPage implements OnInit, OnDestroy {
             return msg.payload.doc.data().isRead === false && msg.payload.doc.data().userId !== this.currentUserId;
           });
           if (unReadMessage && unReadMessage.length > 0) {
-            this.messageService.updateNotification({
-              SenderId: this.queryInfo.to,
-              MessageTypeId: MessageTpe.Chat
+            from(this.firebasedb.unReadMessagesArray).pipe(
+              findIndex((item: UserMessage[]) => item[0].userId === this.queryInfo.to.toString())
+            ).subscribe((index) => {
+              console.log(index);
+              this.firebasedb.unReadMessagesArray.splice(index, 1);
+              this.appService.setNotificationCount(this.firebasedb.unReadMessagesArray.length);
             });
+
             unReadMessage.forEach((unreadmsg: any) => {
               this.messageService.updateMsg(unreadmsg.payload.doc.id);
             });
@@ -105,7 +111,6 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-  
   }
 
   ngOnDestroy() {
