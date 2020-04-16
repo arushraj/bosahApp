@@ -13,6 +13,7 @@ import { MessagingUserDetailsComponent } from './user-details/user-details.compo
 import * as moment from 'moment';
 import { groupBy, mergeMap, toArray, map } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
+import { MessageTpe } from '../shared/enum/MessageType';
 
 @Component({
   selector: 'app-messaging',
@@ -65,6 +66,10 @@ export class MessagingPage implements OnInit, OnDestroy {
             return msg.payload.doc.data().isRead === false && msg.payload.doc.data().userId !== this.currentUserId;
           });
           if (unReadMessage && unReadMessage.length > 0) {
+            this.messageService.updateNotification({
+              SenderId: this.queryInfo.to,
+              MessageTypeId: MessageTpe.Chat
+            });
             unReadMessage.forEach((unreadmsg: any) => {
               this.messageService.updateMsg(unreadmsg.payload.doc.id);
             });
@@ -100,11 +105,7 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.messageService.updateNotification({
-      SenderId: this.queryInfo.to,
-      MessageTypeId: 1
-    });
-
+  
   }
 
   ngOnDestroy() {

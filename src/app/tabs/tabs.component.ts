@@ -57,6 +57,7 @@ public badgeCount:number;
    }
 
   tabsDidChange() {
+    //this.appService.getNotificationCountFromDB();
     console.log(this.apptabs.getSelected());
   }
 

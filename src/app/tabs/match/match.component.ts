@@ -7,6 +7,8 @@ import { UserDetailsComponent } from './user-details/user-details.component';
 import { UserMoreMenuPage } from './user-more-menu/user-more-menu.page';
 import { FirebasedbService } from 'src/app/shared/services/firebasedb.service';
 import * as moment from 'moment';
+import { MessageService } from 'src/app/messaging/service/messaging.service';
+import { MessageTpe } from 'src/app/shared/enum/MessageType';
 
 @Component({
   selector: 'app-match',
@@ -65,6 +67,8 @@ export class MatchComponent implements OnInit {
               friend.UnreadMessagesCount = value.filter((item) => {
                 return !item.isRead && item.userId !== this.currentUserId;
               }).length;
+              if(friend.UnreadMessagesCount>0)
+              this.appService.getNotificationCountFromDB();
 
               friend.LastMessage = value[0] ? value[0] : null;
 
@@ -110,7 +114,12 @@ export class MatchComponent implements OnInit {
     // });
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    // this.messageService.updateNotification({
+    //   SenderId: 3,
+    //   MessageTypeId: MessageTpe.Chat
+    // });
+  }
 
   currentSegment(index: number) {
     this.SwipedTabsSlider.slideTo(index, 500);
