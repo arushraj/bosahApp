@@ -31,31 +31,6 @@ ion-slides ion-slide .ion-empty-label {
     padding-top: 50%;
 }
 
-ion-segment {
-    --background: none;
-    border-radius: 20px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
-
-    ion-segment-button {
-        margin: 0;
-        --indicator-color: var(--my_theme);
-        --color: var(--black);
-        //    --color-checked: white;
-        --border-radius: 20px;
-        --background-checked: var(--my_theme);
-        background-color: white;
-        font-weight: bold;
-
-        span {
-            font-weight: bold;
-            color: black;
-        }
-
-        ion-label {
-            font-family: "poppins_r";
-        }
-    }
-}
 
 ion-item-divider {
     --background: none;
@@ -68,4 +43,61 @@ ion-refresher {
 ion-icon {
     font-size: 2em;
     color: var(--my_theme);
-  }
+}
+
+.segment_div_toolbar {
+    --background: white;
+
+    .segment_div {
+        width: 100%;
+
+        // ion-segment {
+        //     --background: none;
+        //     // border-radius: 10px;
+        //     // box-shadow: 0px 0px 10px 0px #00000033;
+
+        //     ion-segment-button {
+        //         margin: 0;
+        //         // --indicator-color: var(--my_theme);
+        //         --color: var(--sfont);
+        //         // --color-checked: var(--my_theme);
+        //         --border-radius: 20px;
+        //         --background-checked: var(--my_theme);
+        //         --background-activated: none;
+        //         background-color: white;
+        //         font-weight: bold;
+
+        //         ion-label {
+        //             font-family: "poppins_r";
+        //         }
+        //     }
+        // }
+        ion-segment {
+            --background: none;
+            border-radius: 20px;
+            box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1%;
+            margin-top: 1%;
+
+            ion-segment-button {
+                margin: 0;
+                --indicator-color: var(--my_theme);
+                --color: var(--sfont);
+                --color-checked: white;
+                --border-radius: 20px;
+                --background-checked: var(--my_theme);
+                background-color: white;
+                font-weight: bold;
+
+                span {
+                    font-weight: bold;
+                    color: black;
+                }
+
+                ion-label {
+                    font-family: "poppins_r";
+                }
+            }
+        }
+    }
+}

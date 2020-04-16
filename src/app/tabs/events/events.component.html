@@ -1,9 +1,20 @@
 <ion-header translucent class="ion-no-border">
-  <ion-toolbar mode="md">
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs" text="" mode="md"></ion-back-button>
     </ion-buttons>
     <ion-title>Events</ion-title>
+  </ion-toolbar>
+  <ion-toolbar mode="ios" class="segment_div_toolbar">
+    <div class="ion-margin-horizontal segment_div">
+      <ion-item-divider class="ion-no-padding">
+        <ion-segment [(ngModel)]="selectedTab">
+          <ion-segment-button *ngFor="let item of pageTabs" [value]="item.id" (click)="currentSegment(item.id)">
+            {{item.tabName}}
+          </ion-segment-button>
+        </ion-segment>
+      </ion-item-divider>
+    </div>
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen>
@@ -11,13 +22,6 @@
     [ngClass]="{'refresher-active refresher-refreshing': isLoading}">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-item-divider sticky class="ion-no-padding">
-    <ion-segment [(ngModel)]="selectedTab">
-      <ion-segment-button *ngFor="let item of pageTabs" [value]="item.id" (click)="currentSegment(item.id)">
-        {{item.tabName}}
-      </ion-segment-button>
-    </ion-segment>
-  </ion-item-divider>
   <ion-slides [options]="slideOpts" #SwipedTabsEventsSlider (ionSlideDidChange)="currentSlide()">
     <ion-slide *ngFor="let item of pageTabs">
       <ion-list *ngIf="item.events.length>0">
@@ -35,14 +39,14 @@
         </ion-item>
       </ion-list>
 
-      <ion-label class="ion-empty-label" *ngIf="!item.events.length && !selectedTab" color="dark">
+      <ion-label class="ion-empty-label" *ngIf="!item.events.length && !selectedTab && !isLoading" color="dark">
         <ion-icon name="alert-circle" slot="center"></ion-icon>
-        <br/>
+        <br />
         There are currently no events in your city. Check back soon!
       </ion-label>
       <ion-label class="ion-empty-label" *ngIf="!item.events.length && selectedTab" color="dark">
         <ion-icon name="alert-circle" slot="center"></ion-icon>
-        <br/>
+        <br />
         You Aren’t Registered For Any Events Yet!
       </ion-label>
     </ion-slide>

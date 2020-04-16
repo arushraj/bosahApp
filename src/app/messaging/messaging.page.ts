@@ -11,7 +11,7 @@ import { AppService } from '../shared/services/app.service';
 import { UserFriends } from '../shared/model/user-friend.model';
 import { MessagingUserDetailsComponent } from './user-details/user-details.component';
 import * as moment from 'moment';
-import { groupBy, mergeMap, toArray, map, findIndex, every, tap } from 'rxjs/operators';
+import { groupBy, mergeMap, toArray, map, findIndex, every, tap, filter } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
 import { MessageTpe } from '../shared/enum/MessageType';
 import { FirebasedbService } from '../shared/services/firebasedb.service';
@@ -64,22 +64,21 @@ export class MessagingPage implements OnInit, OnDestroy {
         // Subscribe for Messages Data.
 
         this.messageSnapshotChangesSubscribe = this.messageService.messagesSnapshotChanges().subscribe((data: any) => {
-          const unReadMessage = data.filter((msg: any) => {
-            return msg.payload.doc.data().isRead === false && msg.payload.doc.data().userId !== this.currentUserId;
-          });
-          if (unReadMessage && unReadMessage.length > 0) {
+
+          from(data).pipe(
+            filter((msg: any) => msg.payload.doc.data().isRead === false && msg.payload.doc.data().userId !== this.currentUserId)
+          ).subscribe((unReadMsg: any) => {
+            this.messageService.updateMsg(unReadMsg.payload.doc.id);
+            // Update The Badge Count
             from(this.firebasedb.unReadMessagesArray).pipe(
               findIndex((item: UserMessage[]) => item[0].userId === this.queryInfo.to.toString())
             ).subscribe((index) => {
-              console.log(index);
-              this.firebasedb.unReadMessagesArray.splice(index, 1);
-              this.appService.setNotificationCount(this.firebasedb.unReadMessagesArray.length);
+              if (index > 0) {
+                this.firebasedb.unReadMessagesArray.splice(index, 1);
+                this.appService.setNotificationCount(this.firebasedb.unReadMessagesArray.length);
+              }
             });
-
-            unReadMessage.forEach((unreadmsg: any) => {
-              this.messageService.updateMsg(unreadmsg.payload.doc.id);
-            });
-          }
+          });
         });
 
         this.messageValueChangesSubscribe = this.messageService.messagesValueChanges().subscribe((data) => {
