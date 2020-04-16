@@ -691,7 +691,7 @@ export class AppService {
         if (!CtityId) {
             return;
         }
-        this.setUpcomingEvent([]);
+        // this.setUpcomingEvent([]);
         const url = this.appConstant.getURL(UrlKey.Upcoming_Event).replace('cityid', CtityId.toString()).replace('uid', UserId);
         await this.http.get(url, {}, this.header)
             .then(res => {
@@ -715,7 +715,7 @@ export class AppService {
         if (!UserId) {
             return;
         }
-        this.setRegisteredEvent([]);
+        // this.setRegisteredEvent([]);
         const url = this.appConstant.getURL(UrlKey.Registered_Event).replace('uid', UserId);
         this.http.get(url, {}, this.header)
             .then(res => {

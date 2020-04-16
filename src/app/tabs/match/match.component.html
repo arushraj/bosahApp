@@ -1,6 +1,6 @@
 <ion-header class="ion-no-border">
     <div class="ion-margin-horizontal segment_div">
-        <ion-toolbar>
+        <ion-toolbar mode="ios">
             <ion-item-divider class="ion-no-padding">
                 <ion-segment [(ngModel)]="selectedTab">
                     <ion-segment-button *ngFor="let item of pageTabs" [value]="item.id"
@@ -11,6 +11,7 @@
             </ion-item-divider>
         </ion-toolbar>
     </div>
+
 </ion-header>
 
 <ion-content fullscreen class="animated fadeIn fast" #ionContent mode="ios">
