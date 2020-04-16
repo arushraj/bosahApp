@@ -29,7 +29,7 @@ export class MessagingPage implements OnInit, OnDestroy {
   public currentUserId: string;
   private messageSnapshotChangesSubscribe: any;
   private messageValueChangesSubscribe: any;
-  private isTypingEnabled:boolean=false;
+  private isTypingEnabled = false;
   // {to: string, toUserName: string, toProfileImagePath: string, from: string, fromUserName: string}
   public messageForm: FormGroup;
   public friendUserStatus: OnlineUser;
@@ -49,7 +49,7 @@ export class MessagingPage implements OnInit, OnDestroy {
       if (params && params.info) {
         this.setQueryinfo(params.info);
         // set user online
-         this.messageService.setUserOnline(this.queryInfo.from);
+        this.messageService.setUserOnline(this.queryInfo.from);
         // get friend user status
         this.friendUserStatus = { isOnline: false, isTyping: false };
         this.messageService.getFriendUserStatus(this.queryInfo.to).subscribe((data: OnlineUser) => {
@@ -136,7 +136,7 @@ export class MessagingPage implements OnInit, OnDestroy {
     this.queryInfo.toProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.queryInfo.toProfileImagePath + `?random=${Math.random()}`;
   }
 
-   public async onSubmit() {
+  public async onSubmit() {
     if (this.messageForm.value.message.length > 0) {
       const message: UserMessage = {
         userId: this.queryInfo.from,
@@ -150,7 +150,7 @@ export class MessagingPage implements OnInit, OnDestroy {
         Message: message.message,
         ReceiverUserId: this.queryInfo.to
       });
-       message.message = this.messageService.aesEncrypt(message.message, message.userId);
+      message.message = this.messageService.aesEncrypt(message.message, message.userId);
       this.messageForm.reset();
       this.messageInput.setFocus();
       this.messageService.pushNewMsg(message).then(() => {
@@ -158,7 +158,7 @@ export class MessagingPage implements OnInit, OnDestroy {
         console.log(error);
       });
       this.ionContent.scrollToBottom(50);
-      
+
     }
   }
   public getClasses(messageOwner?: string) {
@@ -172,13 +172,13 @@ export class MessagingPage implements OnInit, OnDestroy {
     event.target.src = '/assets/no-image.png';
   }
 
-   public async onKey(event: any) {
+  public async onKey(event: any) {
     if (event.target.value.length > 0 && !this.isTypingEnabled) {
       await this.messageService.userTypingMessage(true);
-      this.isTypingEnabled =true;
-    } else if(event.target.value.length==0 || event.target.value ==null){
+      this.isTypingEnabled = true;
+    } else if (event.target.value.length === 0 || event.target.value == null) {
       await this.messageService.userTypingMessage(false);
-      this.isTypingEnabled =false;
+      this.isTypingEnabled = false;
     }
   }
   public stopTyping() {
