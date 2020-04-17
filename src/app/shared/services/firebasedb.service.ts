@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { UserMessage, OnlineUser } from '../model/firebase.model';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import * as CryptoJS from 'crypto-js';
 import { AppService } from './app.service';
 import { map, tap } from 'rxjs/operators';
+import { UserFriends } from '../model/user-friend.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,19 @@ export class FirebasedbService {
   private itemsCollection: AngularFirestoreCollection<UserMessage>;
   private currentOnlineUser: AngularFirestoreDocument<OnlineUser>;
   private friendOnlineUser: AngularFirestoreDocument<OnlineUser>;
+  private friendList = new BehaviorSubject<UserFriends[]>(null);
+
   public unReadMessagesArray = [];
 
   constructor(private db: AngularFirestore) { }
+
+  public getFirebaseFriends(): Observable<UserFriends[]> {
+    return this.friendList.asObservable();
+  }
+
+  public setFirebaseFriends(data: any) {
+    return this.friendList.next(data);
+  }
 
   public md5Encrypt(value: string) {
     return CryptoJS.MD5(value).toString();

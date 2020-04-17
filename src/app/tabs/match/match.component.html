@@ -14,8 +14,8 @@
 
 </ion-header>
 
-<ion-content fullscreen class="animated fadeIn fast" #ionContent mode="ios">
-    <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)" #ionRefresher
+<ion-content fullscreen class="animated fadeIn fast" #ionContent>
+    <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)"
         [ngClass]="{'refresher-active refresher-refreshing': isLoading}">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>

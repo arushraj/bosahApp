@@ -49,7 +49,7 @@ export class MessagingPage implements OnInit, OnDestroy {
       if (params && params.info) {
         this.setQueryinfo(params.info);
         // set user online
-        this.messageService.setUserOnline(this.queryInfo.from);
+        this.messageService.setUserOnline(this.queryInfo.fromUser);
         // get friend user status
         this.friendUserStatus = { isOnline: false, isTyping: false };
         this.messageService.getFriendUserStatus(this.queryInfo.to).subscribe((data: OnlineUser) => {
@@ -63,7 +63,6 @@ export class MessagingPage implements OnInit, OnDestroy {
           this.currentUserId = value;
         });
         // Subscribe for Messages Data.
-
         this.messageSnapshotChangesSubscribe = this.messageService.messagesSnapshotChanges().subscribe((data: any) => {
 
           from(data).pipe(
@@ -129,9 +128,9 @@ export class MessagingPage implements OnInit, OnDestroy {
       ...JSON.parse(queryInfo)
     };
     // this.currentUserId = Object.assign({}, this.queryInfo).from.toString();
-    this.queryInfo.firebaseCollection = (this.queryInfo.to > this.queryInfo.from) ?
-      (this.queryInfo.from.toString() + '—' + this.queryInfo.to.toString())
-      : (this.queryInfo.to.toString() + '—' + this.queryInfo.from.toString());
+    this.queryInfo.firebaseCollection = (this.queryInfo.to > this.queryInfo.fromUser) ?
+      (this.queryInfo.fromUser.toString() + '—' + this.queryInfo.to.toString())
+      : (this.queryInfo.to.toString() + '—' + this.queryInfo.fromUser.toString());
 
     this.queryInfo.toProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.queryInfo.toProfileImagePath + `?random=${Math.random()}`;
   }
@@ -139,7 +138,7 @@ export class MessagingPage implements OnInit, OnDestroy {
   public async onSubmit() {
     if (this.messageForm.value.message.length > 0) {
       const message: UserMessage = {
-        userId: this.queryInfo.from,
+        userId: this.queryInfo.fromUser,
         message: this.messageForm.value.message,
         datetime: new Date().toISOString(),
         isRead: false,
@@ -163,8 +162,8 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
   public getClasses(messageOwner?: string) {
     return {
-      'incoming fadeInLeft': messageOwner !== this.queryInfo.from.toString(),
-      'outgoing fadeInRight': messageOwner === this.queryInfo.from.toString(),
+      'incoming fadeInLeft': messageOwner !== this.queryInfo.fromUser.toString(),
+      'outgoing fadeInRight': messageOwner === this.queryInfo.fromUser.toString(),
     };
   }
 

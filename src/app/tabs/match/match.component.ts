@@ -9,6 +9,8 @@ import { FirebasedbService } from 'src/app/shared/services/firebasedb.service';
 import * as moment from 'moment';
 import { MessageService } from 'src/app/messaging/service/messaging.service';
 import { MessageTpe } from 'src/app/shared/enum/MessageType';
+import { from } from 'rxjs';
+import { mergeMap, toArray, map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-match',
@@ -48,75 +50,45 @@ export class MatchComponent implements OnInit {
       // ,{ id: 2, tabName: 'Sent', friends: [] }
     ];
     this.selectedTab = 0;
-    this.appService.getFriendList().subscribe((friends) => {
-      if (friends.length > 0) {
-        this.isLoading = true;
-        this.pageTabs[0].friends = this.friendFilter(friends, FriendshipStatus.Accepted);
-        this.pageTabs[1].friends = this.friendFilter(friends, FriendshipStatus.Pending);
-
-        this.appService.getUsersValueByKey('UserId').subscribe((value) => {
-          this.currentUserId = value;
+    this.appService.getUsersValueByKey('UserId').subscribe((value) => {
+      this.currentUserId = value;
+    });
+    this.firebasedb.getFirebaseFriends().subscribe((friends) => {
+      if (friends && friends.length > 0) {
+        from(friends).pipe(
+          filter(filterFriend => filterFriend.Status === FriendshipStatus.Accepted && filterFriend.LastMessage !== null),
+          toArray(),
+          map(friend => friend.sort((a, b) => {
+            if (moment(a.LastMessage.datetime).isAfter(moment(b.LastMessage.datetime))) {
+              return -1;
+            } else if (moment(a.LastMessage.datetime).isBefore(moment(b.LastMessage.datetime))) {
+              return 1;
+            } else {
+              return 0;
+            }
+          }))
+        ).subscribe((myFriends) => {
+          console.log(myFriends);
+          this.pageTabs[0].friends = myFriends;
+          from(friends).pipe(
+            filter(filterFriend => filterFriend.Status === FriendshipStatus.Accepted && filterFriend.LastMessage === null),
+            toArray()
+          ).subscribe(list => {
+            this.pageTabs[0].friends.push(...list);
+          });
         });
-        // bind the last message
-        this.pageTabs[0].friends.forEach((friend) => {
-          try {
-            this.firebasedb.subscribeLastMessageItem(friend.UserId, this.currentUserId).subscribe((value) => {
-              if (value[0]) {
-                value[0].message = this.firebasedb.aesDecrypt(value[0].message, value[0].userId);
-              }
-              friend.UnreadMessagesCount = value.filter((item) => {
-                return !item.isRead && item.userId !== this.currentUserId;
-              }).length;
 
-              friend.LastMessage = value[0] ? value[0] : null;
-
-              const lastMessageArray = this.pageTabs[0].friends.filter((i) => {
-                return i.LastMessage != null;
-              });
-              const nullMessageArray = this.pageTabs[0].friends.filter((i) => {
-                return i.LastMessage === null;
-              });
-              // sorting Array
-              const newArray = lastMessageArray
-                .sort((a, b) => {
-                  if (a.LastMessage && b.LastMessage) {
-                    if (new Date(a.LastMessage.datetime) > new Date(b.LastMessage.datetime)) {
-                      return -1;
-                    } else if (new Date(a.LastMessage.datetime) < new Date(b.LastMessage.datetime)) {
-                      return 1;
-                    } else {
-                      return 0;
-                    }
-                  } else {
-                    return 0;
-                  }
-                });
-              nullMessageArray.forEach((item) => {
-                newArray.push(item);
-              });
-              if (newArray.length === this.pageTabs[0].friends.length) {
-                this.pageTabs[0].friends = newArray;
-                this.isLoading = false;
-              }
-            });
-          } catch (ex) {
-            console.log(ex);
-            this.isLoading = false;
-          }
+        from(friends).pipe(
+          filter(filterFriend => filterFriend.Status === FriendshipStatus.Pending),
+          toArray(),
+        ).subscribe((pendingFriendList) => {
+          this.pageTabs[1].friends = pendingFriendList;
         });
       }
     });
-    // No Needed as of Now.
-    // this.appService.getRequestedFriendList().subscribe((friends) => {
-    //   this.pageTabs[2].friends = this.friendFilter(friends, FriendshipStatus.Pending);
-    // });
   }
 
   ngOnInit() {
-    // this.messageService.updateNotification({
-    //   SenderId: 3,
-    //   MessageTypeId: MessageTpe.Chat
-    // });
   }
 
   currentSegment(index: number) {
@@ -176,9 +148,9 @@ export class MatchComponent implements OnInit {
       });
       return await modal.present();
     } else {
-      let from: string, fromUserName: string;
+      let fromUser: string, fromUserName: string;
       await this.appService.getUsersValueByKey('UserId').subscribe((value) => {
-        from = value;
+        fromUser = value;
       });
       await this.appService.getUsersValueByKey('FName').subscribe((value) => {
         fromUserName = value;
@@ -187,7 +159,7 @@ export class MatchComponent implements OnInit {
         to: user.UserId,
         toUserName: user.FName,
         toProfileImagePath: user.ProfileImagePath,
-        from,
+        fromUser,
         fromUserName
       };
       this.navCtrl.navigateForward(`/messaging?info=${JSON.stringify(info)}`, { animated: true, animationDirection: 'forward' });
