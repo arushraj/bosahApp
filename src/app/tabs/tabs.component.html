@@ -4,7 +4,8 @@
       <ion-icon [src]="tab.icon" class="tab-icon" *ngIf="tab.name == 'Match'"></ion-icon>
       <ion-icon [name]="tab.icon" class="tab-icon" style="font-size:30px" *ngIf="tab.name != 'Match'">
       </ion-icon>
-      <ion-badge id="match-badge" *ngIf="tab.name == 'Match' && badgeCount !=0">{{badgeCount}}</ion-badge>
+      <ion-badge id="match-badge" *ngIf="tab.name == 'Match' && badgeCount !=0 && badgeCount <=9">{{badgeCount}}</ion-badge>
+      <ion-badge id="match-badge" *ngIf="tab.name == 'Match' && badgeCount >9">9+</ion-badge>
       <ion-label>{{tab.name}}</ion-label>
     </ion-tab-button>
     <ion-tab-button>

@@ -61,7 +61,7 @@ export class MessageService {
         this.currentOnlineUser.set(user);
     }
 
-    public setUserOnline(userId: string) {
+    public async setUserOnline(userId: string) {
         const user: OnlineUser = {
             isOnline: true,
             isTyping: false,
@@ -71,7 +71,7 @@ export class MessageService {
         this.currentOnlineUser.set(user);
     }
 
-    public userTypingMessage(isTyping: boolean) {
+    public async userTypingMessage(isTyping: boolean) {
         if (this.currentOnlineUser) {
             this.currentOnlineUser.update({ isTyping });
         }
