@@ -53,42 +53,42 @@ export class MatchComponent implements OnInit {
       this.currentUserId = value;
     });
     this.firebasedb.getFirebaseFriends().subscribe((friends) => {
-      if (friends && friends.length > 0) {
-        from(friends).pipe(
-          filter(filterFriend => filterFriend.Status === FriendshipStatus.Accepted),
-          toArray(),
-          map(friend => friend.sort((a, b) => {
-            if (moment(a.LastMessage.datetime).isAfter(moment(b.LastMessage.datetime))) {
-              return -1;
-            } else if (moment(a.LastMessage.datetime).isBefore(moment(b.LastMessage.datetime))) {
-              return 1;
-            } else {
-              if (a.LastMessage.datetime === '') {
-                return 1;
-              } else if (b.LastMessage.datetime === '') {
-                return -1;
-              } else {
-                return 0;
-              }
-            }
-          }))
-        ).subscribe((myFriends) => {
-          this.pageTabs[0].friends = myFriends;
-          // from(friends).pipe(
-          //   filter(filterFriend => filterFriend.Status === FriendshipStatus.Accepted && filterFriend.LastMessage === null),
-          //   toArray()
-          // ).subscribe(list => {
-          //   this.pageTabs[0].friends.push(...list);
-          // });
-        });
 
-        from(friends).pipe(
-          filter(filterFriend => filterFriend.Status === FriendshipStatus.Pending),
-          toArray(),
-        ).subscribe((pendingFriendList) => {
-          this.pageTabs[1].friends = pendingFriendList;
-        });
-      }
+      from(friends).pipe(
+        filter(filterFriend => filterFriend.Status === FriendshipStatus.Accepted),
+        toArray(),
+        map(friend => friend.sort((a, b) => {
+          if (moment(a.LastMessage.datetime).isAfter(moment(b.LastMessage.datetime))) {
+            return -1;
+          } else if (moment(a.LastMessage.datetime).isBefore(moment(b.LastMessage.datetime))) {
+            return 1;
+          } else {
+            if (a.LastMessage.datetime === '') {
+              return 1;
+            } else if (b.LastMessage.datetime === '') {
+              return -1;
+            } else {
+              return 0;
+            }
+          }
+        }))
+      ).subscribe((myFriends) => {
+        this.pageTabs[0].friends = myFriends;
+        // from(friends).pipe(
+        //   filter(filterFriend => filterFriend.Status === FriendshipStatus.Accepted && filterFriend.LastMessage === null),
+        //   toArray()
+        // ).subscribe(list => {
+        //   this.pageTabs[0].friends.push(...list);
+        // });
+      });
+
+      from(friends).pipe(
+        filter(filterFriend => filterFriend.Status === FriendshipStatus.Pending),
+        toArray(),
+      ).subscribe((pendingFriendList) => {
+        this.pageTabs[1].friends = pendingFriendList;
+      });
+
     });
   }
 
