@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MessageService } from './service/messaging.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserMessage } from './model/message';
-import { IonContent, IonInput, PopoverController, ModalController } from '@ionic/angular';
+import { IonContent, IonInput, PopoverController, ModalController, IonRefresher } from '@ionic/angular';
 import { AppConstant } from '../shared/constant/app.constant';
 import { OnlineUser } from './model/user';
 import { MoreMenuPage } from './more-menu/more-menu.page';
@@ -23,7 +23,7 @@ import { FirebasedbService } from '../shared/services/firebasedb.service';
 })
 export class MessagingPage implements OnInit, OnDestroy {
 
-  public messages: any = [];
+  public messages: UserMessage[] = [];
   private friend: UserFriends;
   public queryInfo: any;
   public currentUserId: string;
@@ -63,17 +63,27 @@ export class MessagingPage implements OnInit, OnDestroy {
           this.currentUserId = value;
         });
         // Subscribe for Messages Data.
-        this.messageSnapshotChangesSubscribe = this.messageService.messagesSnapshotChanges().subscribe((data: any) => {
+        this.messageSnapshotChangesSubscribe = this.messageService.getFriendMessages().subscribe((data: UserMessage[]) => {
 
-          from(data).pipe(
-            filter((msg: any) => msg.payload.doc.data().isRead === false && msg.payload.doc.data().userId !== this.currentUserId)
-          ).subscribe((unReadMsg: any) => {
-            this.messageService.updateMsg(unReadMsg.payload.doc.id);
+          if (data[0].type === 'added') {
+            this.messages.push(...data);
+          } else if (data[0].type === 'modified') {
+            this.messages[data[0].index.newIndex].isRead = data[0].isRead;
+            this.messages[data[0].index.newIndex].readDateTime = data[0].readDateTime;
+          }
+          this.ionContent.scrollToBottom(50);
+
+          from(this.messages).pipe(
+            filter((msg: UserMessage) => msg.isRead === false && msg.userId !== this.currentUserId)
+          ).subscribe((unReadMsg: UserMessage) => {
+            if (unReadMsg && unReadMsg.id !== null) {
+              this.messageService.updateMsg(unReadMsg.id);
+            }
             // Update The Badge Count
             from(this.firebasedb.unReadMessagesArray).pipe(
               findIndex((item: UserMessage[]) => item[0].userId === this.queryInfo.to.toString())
             ).subscribe((index) => {
-              if (index > 0) {
+              if (index >= 0) {
                 this.firebasedb.unReadMessagesArray.splice(index, 1);
                 this.appService.setNotificationCount(this.firebasedb.unReadMessagesArray.length);
               }
@@ -81,32 +91,11 @@ export class MessagingPage implements OnInit, OnDestroy {
           });
         });
 
-        this.messageValueChangesSubscribe = this.messageService.messagesValueChanges().subscribe((data) => {
-          if (this.messages.length === 0) {
-            this.messages = data;
-          } else {
-            if (this.messages.length < data.length) {
-              this.messages.push(data[this.messages.length]);
-            } else {
-              if (data[data.length - 1].userId === this.currentUserId) {
-                this.messages[this.messages.length - 1].isRead = data[data.length - 1].isRead;
-                this.messages[this.messages.length - 1].readDateTime = data[data.length - 1].readDateTime;
-              }
-            }
-          }
-          this.ionContent.scrollToBottom(50);
-        });
-
       }
     });
     this.messageForm = this.fb.group({
       message: ['', Validators.compose([Validators.required])]
     });
-
-    // this.appService.getNotificationCount()
-    // .subscribe(count => {
-    //   this.notificationCount = count;
-    // });
   }
 
   ngOnInit() {
@@ -114,7 +103,11 @@ export class MessagingPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.messageSnapshotChangesSubscribe.unsubscribe();
-    this.messageValueChangesSubscribe.unsubscribe();
+    // this.messageValueChangesSubscribe.unsubscribe();
+  }
+
+  public doRefresh(event: any) {
+    event.target.complete();
   }
 
   ionViewDidEnter() {

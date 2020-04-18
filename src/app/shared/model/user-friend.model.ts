@@ -1,3 +1,5 @@
+import { UserMessage } from './firebase.model';
+
 export interface UserFriends {
     UserId: string;
     FName: string;
@@ -7,7 +9,7 @@ export interface UserFriends {
     Gender: string;
     Status: number;
     AboutMe: string;
-    LastMessage: any;
+    LastMessage: UserMessage;
     UnreadMessagesCount: number;
     UserPet: string;
     UserDrinking: string;

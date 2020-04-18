@@ -6,6 +6,7 @@ import * as CryptoJS from 'crypto-js';
 import { UserMessage } from '../model/message';
 import { OnlineUser } from '../model/user';
 import { AppService } from 'src/app/shared/services/app.service';
+import { map } from 'rxjs/operators';
 
 
 @Injectable()
@@ -33,6 +34,18 @@ export class MessageService {
 
     public messagesValueChanges(): Observable<any> {
         return this.itemsCollection.valueChanges();
+    }
+
+    public getFriendMessages(): Observable<UserMessage[]> {
+        return this.itemsCollection.stateChanges(['added', 'modified']).pipe(
+            map(actions => actions.map(a => {
+                const data = a.payload.doc.data() as UserMessage;
+                const type = a.type;
+                const index = { oldIndex: a.payload.oldIndex, newIndex: a.payload.newIndex };
+                const id = a.payload.doc.id;
+                return { id, type, ...data, index };
+            }))
+        );
     }
 
     public sendNotification(form: any) {

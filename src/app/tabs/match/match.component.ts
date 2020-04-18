@@ -47,7 +47,6 @@ export class MatchComponent implements OnInit {
     this.pageTabs = [
       { id: 0, tabName: 'Matches', friends: [] },
       { id: 1, tabName: 'Pending Matches', friends: [] }
-      // ,{ id: 2, tabName: 'Sent', friends: [] }
     ];
     this.selectedTab = 0;
     this.appService.getUsersValueByKey('UserId').subscribe((value) => {
@@ -56,7 +55,7 @@ export class MatchComponent implements OnInit {
     this.firebasedb.getFirebaseFriends().subscribe((friends) => {
       if (friends && friends.length > 0) {
         from(friends).pipe(
-          filter(filterFriend => filterFriend.Status === FriendshipStatus.Accepted && filterFriend.LastMessage !== null),
+          filter(filterFriend => filterFriend.Status === FriendshipStatus.Accepted),
           toArray(),
           map(friend => friend.sort((a, b) => {
             if (moment(a.LastMessage.datetime).isAfter(moment(b.LastMessage.datetime))) {
@@ -64,18 +63,23 @@ export class MatchComponent implements OnInit {
             } else if (moment(a.LastMessage.datetime).isBefore(moment(b.LastMessage.datetime))) {
               return 1;
             } else {
-              return 0;
+              if (a.LastMessage.datetime === '') {
+                return 1;
+              } else if (b.LastMessage.datetime === '') {
+                return -1;
+              } else {
+                return 0;
+              }
             }
           }))
         ).subscribe((myFriends) => {
-          console.log(myFriends);
           this.pageTabs[0].friends = myFriends;
-          from(friends).pipe(
-            filter(filterFriend => filterFriend.Status === FriendshipStatus.Accepted && filterFriend.LastMessage === null),
-            toArray()
-          ).subscribe(list => {
-            this.pageTabs[0].friends.push(...list);
-          });
+          // from(friends).pipe(
+          //   filter(filterFriend => filterFriend.Status === FriendshipStatus.Accepted && filterFriend.LastMessage === null),
+          //   toArray()
+          // ).subscribe(list => {
+          //   this.pageTabs[0].friends.push(...list);
+          // });
         });
 
         from(friends).pipe(

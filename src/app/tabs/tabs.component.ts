@@ -41,6 +41,7 @@ export class TabsComponent implements OnInit {
   ];
   public badgeCount: number;
   private currentUserId: string;
+  private nullMessage: UserMessage = { userId: null, isRead: false, message: '', datetime: '', readDateTime: '' };
   // {
   //   name: 'Events',
   //   icon: 'calendar',
@@ -67,13 +68,13 @@ export class TabsComponent implements OnInit {
         filter(friend => friend.Status === FriendshipStatus.Accepted),
       ).subscribe((myFriends: UserFriends) => {
         try {
-          myFriends.LastMessage = null;
+          myFriends.LastMessage = this.nullMessage;
           this.firebasedb.subscribeLastMessageItem(myFriends.UserId, this.currentUserId).subscribe((messages) => {
             if (messages[0]) {
               messages[0].message = this.firebasedb.aesDecrypt(messages[0].message, messages[0].userId);
             }
 
-            myFriends.LastMessage = messages.length > 0 ? messages[0] : null;
+            myFriends.LastMessage = messages.length > 0 ? messages[0] : this.nullMessage;
             this.firebasedb.setFirebaseFriends(friends);
 
             // Set default count for UnRead Message.
@@ -111,7 +112,7 @@ export class TabsComponent implements OnInit {
   }
 
   tabsDidChange() {
-    console.log(this.apptabs.getSelected());
+    // console.log(this.apptabs.getSelected());
   }
 
 

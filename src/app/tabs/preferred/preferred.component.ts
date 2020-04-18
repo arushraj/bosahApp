@@ -50,13 +50,13 @@ export class PreferredComponent implements OnInit {
 
   public notIntrested() {
     // const index = this.preferredUser.findIndex(key => key.UserId === userId);
-   // this.preferredUser.splice(index, 1);
-    //console.log(this.preferredUser.length);
+    // this.preferredUser.splice(index, 1);
+    // console.log(this.preferredUser.length);
     // if(index >=this.preferredUser.length-1){
     //   this.preferredUserSlides.slidePrev(1000, true).then(() => { });
 
     //  }
-     this.preferredUserSlides.slideNext(1000, true).then(() => { });
+    this.preferredUserSlides.slideNext(1000, true).then(() => { });
   }
 
   public async sendFriendRequest(newFriend: PreferredUser) {
@@ -151,7 +151,7 @@ export class PreferredComponent implements OnInit {
       Gender: '',
       Status: 0,
       AboutMe: '',
-      LastMessage: '',
+      LastMessage: null,
       UnreadMessagesCount: 0,
       UserPet: '',
       UserDrinking: '',

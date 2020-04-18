@@ -30,24 +30,22 @@
   </ion-toolbar>
 </ion-header>
 <ion-content #ionContent fullscreen>
+  <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)"
+    [ngClass]="{'refresher-active refresher-refreshing': messages.length === 0}">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div class="main">
     <div class="chat-box">
-      <ion-list class="message-area">
-        <ion-item lines="none" class="message animated fast" *ngFor="let message of messages; let i=index"
-          [ngClass]="getClasses(message.userId)">
-          <ion-label>
-            {{message.message | decryptTextBinder:message.userId}}
-            <ion-note>
-              <span>
-                {{getLastMessageDateTime(message?.datetime)}}
-                <!-- {{message?.datetime | date:'MM/dd/y, h:mm a' | lowercase}} -->
-                <ion-icon [name]="message.isRead? 'checkmark-done' : 'checkmark'"
-                  [ngClass]="{'read-message': message.isRead}"></ion-icon>
-              </span>
-            </ion-note>
-          </ion-label>
-        </ion-item>
-      </ion-list>
+      <div class="message-area">
+        <div class="message animated fast" *ngFor="let message of messages" [ngClass]="getClasses(message.userId)">
+          <p>{{message.message | decryptTextBinder:message.userId}}
+            <span>{{message?.datetime | date:'MM/dd/y, h:mm a' | lowercase}}
+              <ion-icon [name]="message.isRead? 'checkmark-done' : 'checkmark'"
+                [ngClass]="{'read-message': message.isRead}"></ion-icon>
+            </span>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>

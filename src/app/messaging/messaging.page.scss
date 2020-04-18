@@ -6,10 +6,12 @@ ion-header {
             ion-label {
                 font-size: 20px !important;
                 margin-left: 10px;
+
                 .user-name {
                     position: relative;
                     top: 5px;
                     font-weight: 400;
+
                     ion-icon {
                         font-size: 0.5em;
                     }
@@ -40,21 +42,21 @@ ion-header {
             padding: 0px 10px;
 
             .message {
-                ion-label {
+                p {
                     margin: 0px;
-                    // max-width: 95%;
+                    max-width: 95%;
                     min-width: 55%;
                     box-shadow: 0 2px 0px 0 rgba(0, 0, 0, 0.1);
                     padding: 5px 5px 10px 10px;
                     margin: 5px 0;
                     white-space: normal !important;
-                    ion-note {
+
+                    span {
                         float: right;
                         font-size: 10px;
                         position: relative;
-                        top: 5px;
-                        // margin: 1% 0 0.5% 0;
-                        padding-left: 1%;
+                        top: 10px;
+                        margin: 1% 0 0.5% 0;
 
                         ion-icon {
                             font-size: 1.3em;
@@ -66,17 +68,16 @@ ion-header {
             }
 
             .message.incoming {
-                // display: flex;
-                display: grid;
+                display: flex;
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: flex-start;
 
-                ion-label {
+                p {
                     border-radius: 0 11px 11px 11px;
                     background: #f2f7f9;
 
-                    ion-note {
+                    span {
                         ion-icon {
                             display: none;
                         }
@@ -85,17 +86,16 @@ ion-header {
             }
 
             .message.outgoing {
-                // display: flex;
-                display: grid;
+                display: flex;
                 flex-direction: column;
                 justify-content: flex-end;
                 align-items: flex-end;
 
-                ion-label {
+                p {
                     border-radius: 11px 11px 0 11px;
                     background: #dcf4ff;
 
-                    ion-note {
+                    span {
                         .read-message {
                             color: #46e0b9;
                         }
