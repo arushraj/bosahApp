@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class MessageService {
-    private itemsCollection: AngularFirestoreCollection<UserMessage>;
+    private itemsCollection: AngularFirestoreDocument<UserMessage>;
     private currentOnlineUser: AngularFirestoreDocument<OnlineUser>;
     private friendOnlineUser: AngularFirestoreDocument<OnlineUser>;
     constructor(private db: AngularFirestore, private appService: AppService) { }
@@ -20,8 +20,8 @@ export class MessageService {
         // encrypt to MD5
         documentKey = this.md5Encrypt(documentKey);
         this.itemsCollection = this.db.collection('allMessages')
-            .doc(documentKey)
-            .collection<UserMessage>('messages', ref => ref.orderBy('datetime', 'asc'));
+            .doc(documentKey);
+        // .collection<UserMessage>('messages', ref => ref.orderBy('datetime', 'asc'));
     }
 
     public subscribeUserDocument(documentKey: string) {
@@ -37,26 +37,27 @@ export class MessageService {
     }
 
     public getFriendMessages(): Observable<UserMessage[]> {
-        return this.itemsCollection.stateChanges(['added', 'modified']).pipe(
-            map(actions => actions.map(a => {
-                const data = a.payload.doc.data() as UserMessage;
-                const type = a.type;
-                const index = { oldIndex: a.payload.oldIndex, newIndex: a.payload.newIndex };
-                const id = a.payload.doc.id;
-                return { id, type, ...data, index };
-            }))
-        );
+        return this.itemsCollection.collection<UserMessage>('messages', ref => ref.orderBy('datetime', 'asc'))
+            .stateChanges(['added', 'modified']).pipe(
+                map(actions => actions.map(a => {
+                    const data = a.payload.doc.data() as UserMessage;
+                    const type = a.type;
+                    const index = { oldIndex: a.payload.oldIndex, newIndex: a.payload.newIndex };
+                    const id = a.payload.doc.id;
+                    return { id, type, ...data, index };
+                }))
+            );
     }
 
     public sendNotification(form: any) {
         this.appService.sendNotification(form);
     }
     public pushNewMsg(message: UserMessage) {
-        return this.itemsCollection.add(message);
+        return this.itemsCollection.collection<UserMessage>('messages').add(message);
     }
 
     public updateMsg(unReadMsgId: any) {
-        this.itemsCollection.doc(unReadMsgId).update({
+        this.itemsCollection.collection<UserMessage>('messages').doc(unReadMsgId).update({
             isRead: true,
             readDateTime: new Date().toISOString()
         });

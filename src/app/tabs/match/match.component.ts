@@ -74,12 +74,6 @@ export class MatchComponent implements OnInit {
         }))
       ).subscribe((myFriends) => {
         this.pageTabs[0].friends = myFriends;
-        // from(friends).pipe(
-        //   filter(filterFriend => filterFriend.Status === FriendshipStatus.Accepted && filterFriend.LastMessage === null),
-        //   toArray()
-        // ).subscribe(list => {
-        //   this.pageTabs[0].friends.push(...list);
-        // });
       });
 
       from(friends).pipe(
