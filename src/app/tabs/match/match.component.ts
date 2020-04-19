@@ -11,6 +11,7 @@ import { MessageService } from 'src/app/messaging/service/messaging.service';
 import { MessageTpe } from 'src/app/shared/enum/MessageType';
 import { from } from 'rxjs';
 import { mergeMap, toArray, map, filter } from 'rxjs/operators';
+import { PushNotificationService } from 'src/app/shared/services/push-notification.service';
 
 @Component({
   selector: 'app-match',
@@ -43,12 +44,14 @@ export class MatchComponent implements OnInit {
     private modalController: ModalController,
     private navCtrl: NavController,
     private popoverCtrl: PopoverController,
-    private firebasedb: FirebasedbService) {
+    private firebasedb: FirebasedbService,
+    private pushService:PushNotificationService) {
     this.pageTabs = [
       { id: 0, tabName: 'Matches', friends: [] },
       { id: 1, tabName: 'Pending Matches', friends: [] }
     ];
     this.selectedTab = 0;
+
     this.appService.getUsersValueByKey('UserId').subscribe((value) => {
       this.currentUserId = value;
     });
@@ -84,6 +87,11 @@ export class MatchComponent implements OnInit {
       });
 
     });
+    this.pushService.getIsUserFriendUpdated().subscribe((IsUserFriendUpdated: boolean) => {
+      if (IsUserFriendUpdated) {
+       this.appService.getUserFriendsFromDB();
+      }
+    });
   }
 
   ngOnInit() {
@@ -104,7 +112,7 @@ export class MatchComponent implements OnInit {
     this.currentSegment(this.pageTabs[0].id);
     this.selectedTab = this.pageTabs[0].id;
 
-    if (this.pageTabs[0].friends.length === 0) {
+    if (this.pageTabs[0].friends.length === 0 ) {
       this.isLoading = true;
       this.appService.getUserFriendsFromDB().then(() => {
         this.isLoading = false;

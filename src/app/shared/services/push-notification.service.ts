@@ -13,6 +13,26 @@ export class PushNotificationService {
 
   private pushDevice = new BehaviorSubject<PushDevice>(null);
 
+  public isUserFriendUpdated = new BehaviorSubject<boolean>(null);
+
+  public isEventUpdated = new BehaviorSubject<boolean>(null);
+
+  public getIsUserFriendUpdated(): Observable<boolean> {
+    return this.isUserFriendUpdated.asObservable();
+}
+
+public setIsUserFriendUpdated(updateStatus: boolean) {
+    this.isUserFriendUpdated.next(updateStatus);
+}
+
+public getIsEventUpdated(): Observable<boolean> {
+  return this.isEventUpdated.asObservable();
+}
+
+public setIsEventUpdated(updateStatus: boolean) {
+  this.isEventUpdated.next(updateStatus);
+}
+
   constructor(
     private push: Push,
     private platform: Platform,
@@ -83,6 +103,29 @@ export class PushNotificationService {
 
     pushObject.on('notification').subscribe((notification: any) => {
       if (notification.additionalData.foreground) {
+
+        switch (notification.additionalData.redirectAction) {
+
+          // On receiving Events
+          case '2': {
+            this.setIsEventUpdated(true);
+           // Update Events
+            break;
+          }
+          // On receiving Friend Request
+          case '3': {
+            this.setIsUserFriendUpdated(true);
+           // this.navCtrl.navigateForward('/tabs/match');
+            break;
+          }
+          // On  Friend Request Accepted
+          case '4': {
+            this.setIsUserFriendUpdated(true);
+            break;
+          }
+        }
+
+
       } else {
         this.platform.ready().then(() => {  
           switch (notification.additionalData.redirectAction) {
@@ -94,16 +137,19 @@ export class PushNotificationService {
             }
             // On receiving Events
             case '2': {
+              this.setIsEventUpdated(true);
               this.navCtrl.navigateForward('/events');
               break;
             }
             // On receiving Friend Request
             case '3': {
+              this.setIsUserFriendUpdated(true);
               this.navCtrl.navigateForward('/tabs/match');
               break;
             }
             // On  Friend Request Accepted
             case '4': {
+              this.setIsUserFriendUpdated(true);
               this.navCtrl.navigateForward('/tabs/match');
               break;
             }

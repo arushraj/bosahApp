@@ -207,7 +207,7 @@ export class MessagingPage implements OnInit, OnDestroy {
 
   public async onKey(event: any) {
     if (event.target.value.length > 0 && !this.isTypingEnabled) {
-      this.messageInput.nativeElement.style.height = this.messageInput.nativeElement.scrollHeight + 'px';
+     // this.messageInput.nativeElement.style.height = this.messageInput.nativeElement.scrollHeight + 'px';
       await this.messageService.userTypingMessage(true);
       this.isTypingEnabled = true;
     } else if (event.target.value.length === 0 || event.target.value == null) {

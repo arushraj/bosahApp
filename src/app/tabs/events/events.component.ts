@@ -6,6 +6,7 @@ import { Event } from '../../shared/model/event.model';
 import { CurrentUser } from '../../shared/model/current-user.model';
 import { UserLocation } from '../../shared/model/location.model';
 import { EventDetailsComponent } from './event-details/event-details.component';
+import { PushNotificationService } from 'src/app/shared/services/push-notification.service';
 
 @Component({
   selector: 'app-events',
@@ -37,7 +38,8 @@ export class EventsComponent implements OnInit {
 
   constructor(
     private appService: AppService,
-    private modalController: ModalController) {
+    private modalController: ModalController,
+    private pushService:PushNotificationService) {
 
     this.pageTabs = [
       { id: 0, tabName: 'Upcoming Events', events: [] },
@@ -77,6 +79,14 @@ export class EventsComponent implements OnInit {
           value.isSubscribe = true;
         });
       }
+    });
+
+    pushService.getIsEventUpdated().subscribe(isEventUpdated=>{
+      if(isEventUpdated)
+      {
+        this.appService.getUpcomingEventListFromDB(this.cityId,this.currentUser.UserId);
+      }
+
     });
 
   }
