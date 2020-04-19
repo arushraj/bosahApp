@@ -39,6 +39,7 @@ export class AppService {
 
     public currentUser = new BehaviorSubject<CurrentUser>(this.createUser());
     public notificationCount = new BehaviorSubject<number>(0);
+    public isUserPreferenceUpdated = new BehaviorSubject<boolean>(false);
     private userLocation = new BehaviorSubject<UserLocation[]>(this.createLocation());
     private userReligions = new BehaviorSubject<UserReligion[]>(this.createReligion());
     private bathrooms = new BehaviorSubject<Bathroom[]>([]);
@@ -276,6 +277,14 @@ export class AppService {
 
     public setNotificationCount(count: number) {
         this.notificationCount.next(count);
+    }
+
+    public getIsUserPreferredUpdated(): Observable<boolean> {
+        return this.isUserPreferenceUpdated.asObservable();
+    }
+
+    public setIsUserPreferredUpdated(updateStatus: boolean) {
+        this.isUserPreferenceUpdated.next(updateStatus);
     }
 
     public getRentBudget(): Observable<RentBudget[]> {
@@ -598,6 +607,7 @@ export class AppService {
                             this.userPreferredList.users = resPreferred;
 
                             this.setUserPreferred(Object.assign({}, this.userPreferredList).users);
+                            this.setIsUserPreferredUpdated(false);
 
 
                         })
@@ -610,6 +620,9 @@ export class AppService {
                         .finally(() => {
 
                         });
+                }
+                else{
+                    this.userLogout();
                 }
             })
             .catch((err) => {
@@ -1185,6 +1198,7 @@ export class AppService {
                 loading.dismiss();
                 const resData = JSON.parse(res.data);
                 this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
+                this.setIsUserPreferredUpdated(true);
                 this.getCurrentuserFromDB(true);
             })
             .catch((err) => {
