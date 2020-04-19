@@ -16,8 +16,7 @@
           <ion-button class="upload_btn" (click)="selectImage()">
             <ion-icon src="/assets/plus.svg"></ion-icon>
           </ion-button>
-          <h3 class="name">{{currentUser.FName | blankValue}} </h3>
-          <ion-icon ios="ios-star" md="md-star" *ngIf="currentUser.RoleId==3"></ion-icon>
+          <h3 class="name">{{currentUser.FName | blankValue}}  <ion-icon name="star-outline" *ngIf="currentUser.RoleId===3"></ion-icon></h3>     
         </div>
 
         <div class="detail_div">
@@ -37,12 +36,9 @@
           <div class="detail_row">
             <div class="icon_div">
               <ion-icon src="/assets/job_white.svg" class="icn_change"></ion-icon>
-
             </div>
             <p class="detail_p">{{currentUser.Job| blankValue}}</p>
           </div>
-
-
         </div>
       </div>
       <div class="personal_info">
