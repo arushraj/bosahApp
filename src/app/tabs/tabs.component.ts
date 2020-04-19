@@ -4,7 +4,7 @@ import { IonTabs } from '@ionic/angular';
 import { AppService } from '../shared/services/app.service';
 import { Toast } from '@ionic-native/toast/ngx';
 import { FirebasedbService } from '../shared/services/firebasedb.service';
-import { from } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 import { filter, groupBy, mergeMap, toArray, find, first, every, findIndex, map } from 'rxjs/operators';
 import { FriendshipStatus, UserFriends } from '../shared/model/user-friend.model';
 import { UserMessage } from '../shared/model/firebase.model';
@@ -42,6 +42,7 @@ export class TabsComponent implements OnInit {
   public badgeCount: number;
   private currentUserId: string;
   private nullMessage: UserMessage = { userId: null, isRead: false, message: '', datetime: '', readDateTime: '' };
+  private LastMessageSubscription: Subscription[] = [];
   // {
   //   name: 'Events',
   //   icon: 'calendar',
@@ -58,6 +59,15 @@ export class TabsComponent implements OnInit {
       .subscribe(count => {
         this.badgeCount = count;
       });
+    this.appService.getUserLogoutStatus().subscribe((isUserLogout: boolean) => {
+      if (isUserLogout) {
+        console.log(`User Logout: ${isUserLogout}`);
+        this.firebasedb.unReadMessagesArray = [];
+        this.LastMessageSubscription.forEach(subscription => {
+          subscription.unsubscribe();
+        });
+      }
+    });
 
     this.appService.getUsersValueByKey('UserId').subscribe((value) => {
       this.currentUserId = value;
@@ -67,9 +77,9 @@ export class TabsComponent implements OnInit {
       from(friends).pipe(
         filter(friend => friend.Status === FriendshipStatus.Accepted),
       ).subscribe((myFriends: UserFriends) => {
-        try {
-          myFriends.LastMessage = this.nullMessage;
-          this.firebasedb.subscribeLastMessageItem(myFriends.UserId, this.currentUserId).subscribe((messages) => {
+        myFriends.LastMessage = this.nullMessage;
+        this.LastMessageSubscription.push(this.firebasedb.subscribeLastMessageItem(myFriends.UserId, this.currentUserId)
+          .subscribe((messages) => {
             if (messages[0]) {
               messages[0].message = this.firebasedb.aesDecrypt(messages[0].message, messages[0].userId);
             }
@@ -96,12 +106,9 @@ export class TabsComponent implements OnInit {
                   this.firebasedb.unReadMessagesArray.push(unReadMessagesGroup);
                   this.appService.setNotificationCount(this.firebasedb.unReadMessagesArray.length);
                 }
-              });
-            });
-          });
-        } catch (ex) {
-          console.log(ex);
-        }
+              }).unsubscribe();
+            }).unsubscribe();
+          }));
       });
       this.firebasedb.setFirebaseFriends(friends);
     });

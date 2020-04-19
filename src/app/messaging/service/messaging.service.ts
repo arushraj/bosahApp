@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, QueryFn } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import * as CryptoJS from 'crypto-js';
 
@@ -36,15 +36,23 @@ export class MessageService {
         return this.itemsCollection.valueChanges();
     }
 
-    public getFriendMessages(): Observable<UserMessage[]> {
-        return this.itemsCollection.collection<UserMessage>('messages', ref => ref.orderBy('datetime', 'asc'))
+    public getFriendMessages(doc: any, pageSize: number): Observable<UserMessage[]> {
+        let query: QueryFn;
+        if (doc !== '') {
+            query = ref => ref.orderBy('datetime', 'asc').endBefore(doc).limitToLast(pageSize);
+        } else {
+            query = ref => ref.orderBy('datetime', 'asc'); // .limitToLast(pageSize);
+        }
+
+        return this.itemsCollection.collection<UserMessage>('messages', query)
             .stateChanges(['added', 'modified']).pipe(
                 map(actions => actions.map(a => {
+                    const document = a.payload.doc;
                     const data = a.payload.doc.data() as UserMessage;
                     const type = a.type;
                     const index = { oldIndex: a.payload.oldIndex, newIndex: a.payload.newIndex };
                     const id = a.payload.doc.id;
-                    return { id, type, ...data, index };
+                    return { id, type, ...data, index, document };
                 }))
             );
     }

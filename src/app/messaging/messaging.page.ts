@@ -11,10 +11,11 @@ import { AppService } from '../shared/services/app.service';
 import { UserFriends } from '../shared/model/user-friend.model';
 import { MessagingUserDetailsComponent } from './user-details/user-details.component';
 import * as moment from 'moment';
-import { groupBy, mergeMap, toArray, map, findIndex, every, tap, filter } from 'rxjs/operators';
+import { groupBy, mergeMap, toArray, map, findIndex, every, tap, filter, take } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
 import { MessageTpe } from '../shared/enum/MessageType';
 import { FirebasedbService } from '../shared/services/firebasedb.service';
+import { Toast } from '@ionic-native/toast/ngx';
 
 @Component({
   selector: 'app-messaging',
@@ -30,6 +31,8 @@ export class MessagingPage implements OnInit, OnDestroy {
   private messageSnapshotChangesSubscribe: any;
   private messageValueChangesSubscribe: any;
   private isTypingEnabled = false;
+  private endBeforeDoc: any;
+  private pageSize: number;
   // {to: string, toUserName: string, toProfileImagePath: string, from: string, fromUserName: string}
   public messageForm: FormGroup;
   public friendUserStatus: OnlineUser;
@@ -44,7 +47,8 @@ export class MessagingPage implements OnInit, OnDestroy {
     private popoverCtrl: PopoverController,
     private appService: AppService,
     private modalController: ModalController,
-    private firebasedb: FirebasedbService) {
+    private firebasedb: FirebasedbService,
+    private toast: Toast) {
     this.route.queryParams.subscribe(params => {
       if (params && params.info) {
         this.setQueryinfo(params.info);
@@ -61,17 +65,53 @@ export class MessagingPage implements OnInit, OnDestroy {
 
         this.appService.getUsersValueByKey('UserId').subscribe((value) => {
           this.currentUserId = value;
+          this.getMessages().then(() => {
+            this.ionContent.scrollToBottom(500);
+          });
         });
-        // Subscribe for Messages Data.
-        this.messageSnapshotChangesSubscribe = this.messageService.getFriendMessages().subscribe((data: UserMessage[]) => {
 
-          if (data[0].type === 'added') {
-            this.messages.push(...data);
-          } else if (data[0].type === 'modified') {
-            this.messages[data[0].index.newIndex].isRead = data[0].isRead;
-            this.messages[data[0].index.newIndex].readDateTime = data[0].readDateTime;
-          }
-          this.ionContent.scrollToBottom(50);
+      }
+    });
+    this.messageForm = this.fb.group({
+      message: ['', Validators.compose([Validators.required])]
+    });
+  }
+
+  ngOnInit() {
+  }
+
+  private getMessages() {
+    return new Promise((resolve, reject) => {
+      this.endBeforeDoc = this.messages.length > 0 ? this.messages[0].document : '';
+      this.pageSize = 25;
+      this.messageSnapshotChangesSubscribe = this.messageService.getFriendMessages('', 0)
+        .subscribe((data: UserMessage[]) => {
+
+          from(data).pipe((
+            filter((item: UserMessage) => item.type === 'added')
+          )).subscribe((result) => {
+            this.messages.push(result);
+          }).unsubscribe();
+
+          from(data).pipe((
+            filter((item: UserMessage) => item.type === 'modified')
+          )).subscribe((result) => {
+            this.messages[result.index.newIndex].isRead = result.isRead;
+            this.messages[result.index.newIndex].readDateTime = result.readDateTime;
+            // this.messages.unshift(result);
+          }).unsubscribe();
+
+          // if (data[0].type === 'added') {
+          //   this.messages.push(...data);
+          //   // if (data.length === 1 && data[0].index.newIndex === this.messages.length) {
+          //   //   this.messages.push(...data);
+          //   // } else {
+          //   //   this.messages.unshift(...data);
+          //   // }
+          // } else if (data[0].type === 'modified') {
+          //   this.messages[data[0].index.newIndex].isRead = data[0].isRead;
+          //   this.messages[data[0].index.newIndex].readDateTime = data[0].readDateTime;
+          // }
 
           from(this.messages).pipe(
             filter((msg: UserMessage) => msg.isRead === false && msg.userId !== this.currentUserId)
@@ -87,18 +127,11 @@ export class MessagingPage implements OnInit, OnDestroy {
                 this.firebasedb.unReadMessagesArray.splice(index, 1);
                 this.appService.setNotificationCount(this.firebasedb.unReadMessagesArray.length);
               }
-            });
-          });
+            }).unsubscribe();
+          }).unsubscribe();
+          resolve(true);
         });
-
-      }
     });
-    this.messageForm = this.fb.group({
-      message: ['', Validators.compose([Validators.required])]
-    });
-  }
-
-  ngOnInit() {
   }
 
   ngOnDestroy() {
@@ -106,13 +139,15 @@ export class MessagingPage implements OnInit, OnDestroy {
     // this.messageValueChangesSubscribe.unsubscribe();
   }
 
-  public doRefresh(event: any) {
-    event.target.complete();
+  public loadData(event: any) {
+    this.getMessages().then(() => {
+      // event.target.complete();
+    }).finally(() => { event.target.complete(); });
   }
 
   ionViewDidEnter() {
     setTimeout(() => {
-      this.ionContent.scrollToBottom(50);
+      this.ionContent.scrollToBottom(500);
     }, 500);
   }
 
@@ -146,17 +181,18 @@ export class MessagingPage implements OnInit, OnDestroy {
       this.messageForm.reset();
       this.messageInput.setFocus();
       this.messageService.pushNewMsg(message).then(() => {
+        setTimeout(() => {
+          this.ionContent.scrollToBottom(500);
+        }, 500);
       }).catch((error) => {
         console.log(error);
       });
-      this.ionContent.scrollToBottom(50);
-
     }
   }
   public getClasses(messageOwner?: string) {
     return {
-      'incoming fadeInLeft': messageOwner !== this.queryInfo.fromUser.toString(),
-      'outgoing fadeInRight': messageOwner === this.queryInfo.fromUser.toString(),
+      'incoming ': messageOwner !== this.queryInfo.fromUser.toString(),
+      'outgoing ': messageOwner === this.queryInfo.fromUser.toString(),
     };
   }
 
@@ -179,7 +215,7 @@ export class MessagingPage implements OnInit, OnDestroy {
 
   public checkFocus() {
     setTimeout(() => {
-      this.ionContent.scrollToBottom(50);
+      this.ionContent.scrollToBottom(500);
     }, 300);
   }
 

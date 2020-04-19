@@ -30,14 +30,15 @@
   </ion-toolbar>
 </ion-header>
 <ion-content #ionContent fullscreen>
-  <!-- <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)"
-    [ngClass]="{'refresher-active refresher-refreshing': messages.length === 0}">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher> -->
+  <!-- <ion-infinite-scroll (ionInfinite)="loadData($event)" position="top" threshold="10px">
+    <ion-infinite-scroll-content>
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll> -->
   <div class="main">
     <div class="chat-box">
       <div class="message-area">
-        <div class="message animated fast" *ngFor="let message of messages" [ngClass]="getClasses(message.userId)">
+        <div class="message" *ngFor="let message of messages" [ngClass]="getClasses(message.userId)"
+          [id]="message.id">
           <p>{{message.message | decryptTextBinder:message.userId}}
             <span>{{message?.datetime | date:'MM/dd/y, h:mm a' | lowercase}}
               <ion-icon [name]="message.isRead? 'checkmark-done' : 'checkmark'"

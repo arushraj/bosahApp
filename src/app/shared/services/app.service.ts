@@ -67,6 +67,8 @@ export class AppService {
 
     private pushDevice: PushDevice;
 
+    private isUserLogout = new BehaviorSubject<boolean>(null);
+
     private header = {
         token: '',
         userid: ''
@@ -188,7 +190,6 @@ export class AppService {
         };
     }
 
-
     private createuserPreferred(data?: PreferredUser) {
         return [{
             UserId: (data && data.UserId) ? data.UserId : '',
@@ -210,6 +211,14 @@ export class AppService {
             UserSmoking: (data && data.UserSmoking) ? data.UserSmoking : ''
 
         }];
+    }
+
+    public getUserLogoutStatus(): Observable<boolean> {
+        return this.isUserLogout.asObservable();
+    }
+
+    private setUserLogoutStatus(status: boolean) {
+        this.isUserLogout.next(status);
     }
 
     private createFriendList() {
@@ -827,6 +836,8 @@ export class AppService {
                             .then(() => {
                                 this.storage.remove(StorageKey.LocalCurrentUserKey)
                                     .then(() => {
+                                        this.setUserLogoutStatus(true);
+                                        this.setNotificationCount(0);
                                         this.setCurrentUser(this.createUser());
                                         this.setUserPreferred(this.createuserPreferred());
                                         this.userFriendsList.friends = [];

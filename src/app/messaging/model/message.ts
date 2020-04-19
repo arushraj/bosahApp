@@ -5,6 +5,7 @@ export interface UserMessage {
         oldIndex?: number,
         newIndex?: number
     };
+    document?: any;
     userId: string;
     message: string;
     datetime: string;
