@@ -64,5 +64,12 @@
                 <p>There are no more potential matches left. Please expand your criteria!</p>
             </ion-label>
         </ion-slide>
+
+        <ion-label class="ion-empty-label secondEmpty" *ngIf="preferredUser.length === 0  && !isLoading"
+        color="dark">
+        <ion-icon name="alert-circle" slot="center"></ion-icon>
+        <br />
+        <p>There are no more potential matches left. Please expand your criteria!</p>
+    </ion-label>
     </ion-slides>
 </ion-content>

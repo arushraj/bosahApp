@@ -28,6 +28,9 @@ ion-slides ion-slide ion-list {
     }
 
   }
+  ion-item.hydrated{
+    visibility: initial;
+  }
 
 }
 

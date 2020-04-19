@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from './service/messaging.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserMessage } from './model/message';
-import { IonContent, IonInput, PopoverController, ModalController, IonRefresher } from '@ionic/angular';
+import { IonContent, IonInput, PopoverController, ModalController, IonRefresher, IonTextarea } from '@ionic/angular';
 import { AppConstant } from '../shared/constant/app.constant';
 import { OnlineUser } from './model/user';
 import { MoreMenuPage } from './more-menu/more-menu.page';
@@ -37,7 +37,7 @@ export class MessagingPage implements OnInit, OnDestroy {
   public messageForm: FormGroup;
   public friendUserStatus: OnlineUser;
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
-  @ViewChild('messageInput', { read: IonInput, static: false }) messageInput: IonInput;
+  @ViewChild('messageInput', { read: ElementRef, static: false }) messageInput: ElementRef;
 
   constructor(
     private messageService: MessageService,
@@ -139,11 +139,16 @@ export class MessagingPage implements OnInit, OnDestroy {
     // this.messageValueChangesSubscribe.unsubscribe();
   }
 
+
   public loadData(event: any) {
     this.getMessages().then(() => {
       // event.target.complete();
     }).finally(() => { event.target.complete(); });
   }
+  public resize() {
+    this.messageInput.nativeElement.style.height = this.messageInput.nativeElement.scrollHeight + 'px';
+  }
+
 
   ionViewDidEnter() {
     setTimeout(() => {
@@ -179,7 +184,7 @@ export class MessagingPage implements OnInit, OnDestroy {
       });
       message.message = this.messageService.aesEncrypt(message.message, message.userId);
       this.messageForm.reset();
-      this.messageInput.setFocus();
+      // this.messageInput.setFocus();
       this.messageService.pushNewMsg(message).then(() => {
         setTimeout(() => {
           this.ionContent.scrollToBottom(500);
@@ -202,6 +207,7 @@ export class MessagingPage implements OnInit, OnDestroy {
 
   public async onKey(event: any) {
     if (event.target.value.length > 0 && !this.isTypingEnabled) {
+      this.messageInput.nativeElement.style.height = this.messageInput.nativeElement.scrollHeight + 'px';
       await this.messageService.userTypingMessage(true);
       this.isTypingEnabled = true;
     } else if (event.target.value.length === 0 || event.target.value == null) {

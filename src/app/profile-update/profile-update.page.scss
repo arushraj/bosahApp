@@ -64,6 +64,15 @@ ion-header {
       }
     }
   }
+
+  textarea {
+    line-height: 4ch !important;
+    background-image: linear-gradient(transparent,
+        transparent calc(4ch - 1px),
+        var(--sfont) 0px) !important;
+        background-size: 100% 4ch !important;
+      --background: var(--gray);
+  }
   
   .aboutme {
     ion-textarea {

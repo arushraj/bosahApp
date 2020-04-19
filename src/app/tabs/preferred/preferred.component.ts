@@ -20,6 +20,7 @@ export class PreferredComponent implements OnInit {
   };
   public preferredUser: PreferredUser[];
   public isLoading = false;
+  public isUserPreferredUpdated=false;
   @ViewChild('preferredUserSlides', { read: IonSlides, static: true }) preferredUserSlides: IonSlides;
 
   constructor(
@@ -29,6 +30,10 @@ export class PreferredComponent implements OnInit {
     this.appService.getUserPreferred().subscribe((preferredUser) => {
       this.preferredUser = preferredUser;
     });
+    this.appService.getIsUserPreferredUpdated().subscribe((isUserPreferredUpdated)=>{
+      this.isUserPreferredUpdated=isUserPreferredUpdated;
+
+    });
   }
 
   ngOnInit() {
@@ -36,7 +41,7 @@ export class PreferredComponent implements OnInit {
   }
 
   ionViewDidEnter() {
-    if (this.preferredUser.length === 1 && this.preferredUser[0].UserId === '') {
+    if ((this.preferredUser.length === 1 && this.preferredUser[0].UserId === '') || this.isUserPreferredUpdated===true) {
       this.isLoading = true;
       this.appService.getUserPreferredFromDB().then(() => {
         this.isLoading = false;
