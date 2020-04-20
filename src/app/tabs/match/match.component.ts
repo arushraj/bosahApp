@@ -45,7 +45,7 @@ export class MatchComponent implements OnInit {
     private navCtrl: NavController,
     private popoverCtrl: PopoverController,
     private firebasedb: FirebasedbService,
-    private pushService:PushNotificationService) {
+    private pushService: PushNotificationService) {
     this.pageTabs = [
       { id: 0, tabName: 'Matches', friends: [] },
       { id: 1, tabName: 'Pending Matches', friends: [] }
@@ -89,7 +89,7 @@ export class MatchComponent implements OnInit {
     });
     this.pushService.getIsUserFriendUpdated().subscribe((IsUserFriendUpdated: boolean) => {
       if (IsUserFriendUpdated) {
-       this.appService.getUserFriendsFromDB();
+        this.appService.getUserFriendsFromDB();
       }
     });
   }
@@ -112,7 +112,7 @@ export class MatchComponent implements OnInit {
     this.currentSegment(this.pageTabs[0].id);
     this.selectedTab = this.pageTabs[0].id;
 
-    if (this.pageTabs[0].friends.length === 0 ) {
+    if (this.pageTabs[0].friends.length === 0) {
       this.isLoading = true;
       this.appService.getUserFriendsFromDB().then(() => {
         this.isLoading = false;

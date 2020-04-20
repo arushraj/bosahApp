@@ -29,11 +29,15 @@ export class MessageService {
     }
 
     public messagesSnapshotChanges(): Observable<any> {
-        return this.itemsCollection.snapshotChanges();
+        return this.itemsCollection
+            .collection<UserMessage>('messages', ref => ref.orderBy('datetime', 'asc'))
+            .snapshotChanges();
     }
 
     public messagesValueChanges(): Observable<any> {
-        return this.itemsCollection.valueChanges();
+        return this.itemsCollection
+            .collection<UserMessage>('messages', ref => ref.orderBy('datetime', 'asc'))
+            .valueChanges();
     }
 
     public getFriendMessages(doc: any, pageSize: number): Observable<UserMessage[]> {
@@ -41,7 +45,7 @@ export class MessageService {
         if (doc !== '') {
             query = ref => ref.orderBy('datetime', 'asc').endBefore(doc).limitToLast(pageSize);
         } else {
-            query = ref => ref.orderBy('datetime', 'asc'); // .limitToLast(pageSize);
+            query = ref => ref.orderBy('datetime', 'asc').limitToLast(pageSize);
         }
 
         return this.itemsCollection.collection<UserMessage>('messages', query)

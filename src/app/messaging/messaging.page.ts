@@ -3,7 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { MessageService } from './service/messaging.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserMessage } from './model/message';
-import { IonContent, IonInput, PopoverController, ModalController, IonRefresher, IonTextarea } from '@ionic/angular';
+import {
+  IonContent,
+  PopoverController,
+  ModalController,
+  IonTextarea,
+  IonInfiniteScroll
+} from '@ionic/angular';
 import { AppConstant } from '../shared/constant/app.constant';
 import { OnlineUser } from './model/user';
 import { MoreMenuPage } from './more-menu/more-menu.page';
@@ -11,8 +17,8 @@ import { AppService } from '../shared/services/app.service';
 import { UserFriends } from '../shared/model/user-friend.model';
 import { MessagingUserDetailsComponent } from './user-details/user-details.component';
 import * as moment from 'moment';
-import { groupBy, mergeMap, toArray, map, findIndex, every, tap, filter, take } from 'rxjs/operators';
-import { from, Observable } from 'rxjs';
+import { findIndex, every, tap, filter, take } from 'rxjs/operators';
+import { from, Subscription } from 'rxjs';
 import { MessageTpe } from '../shared/enum/MessageType';
 import { FirebasedbService } from '../shared/services/firebasedb.service';
 import { Toast } from '@ionic-native/toast/ngx';
@@ -28,16 +34,17 @@ export class MessagingPage implements OnInit, OnDestroy {
   private friend: UserFriends;
   public queryInfo: any;
   public currentUserId: string;
-  private messageSnapshotChangesSubscribe: any;
-  private messageValueChangesSubscribe: any;
+  private messagesSubscription: Subscription[] = [];
   private isTypingEnabled = false;
   private endBeforeDoc: any;
   private pageSize: number;
+  private totalCollection = null;
   // {to: string, toUserName: string, toProfileImagePath: string, from: string, fromUserName: string}
   public messageForm: FormGroup;
   public friendUserStatus: OnlineUser;
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
-  @ViewChild('messageInput', { read: ElementRef, static: false }) messageInput: ElementRef;
+  @ViewChild('messageInput', { read: IonTextarea, static: true }) messageInput: IonTextarea;
+  @ViewChild('ionInfiniteScroll', { read: IonInfiniteScroll, static: true }) ionInfiniteScroll: IonInfiniteScroll;
 
   constructor(
     private messageService: MessageService,
@@ -56,19 +63,30 @@ export class MessagingPage implements OnInit, OnDestroy {
         this.messageService.setUserOnline(this.queryInfo.fromUser);
         // get friend user status
         this.friendUserStatus = { isOnline: false, isTyping: false };
-        this.messageService.getFriendUserStatus(this.queryInfo.to).subscribe((data: OnlineUser) => {
+        this.messagesSubscription.push(this.messageService.getFriendUserStatus(this.queryInfo.to).subscribe((data: OnlineUser) => {
           if (data) {
             this.friendUserStatus = data;
           }
-        });
+        }));
         this.messageService.subscribeMessageCollection(this.queryInfo.firebaseCollection);
 
-        this.appService.getUsersValueByKey('UserId').subscribe((value) => {
+        this.messagesSubscription.push(this.messageService.messagesValueChanges()
+          .subscribe((totalMessages) => {
+            if (totalMessages) {
+              this.totalCollection = totalMessages.length;
+              this.ionInfiniteScroll.disabled = this.totalCollection <= 25 ? true : false;
+
+              if (this.messages.length === 0) {
+                this.getMessages().then(() => {
+                  this.ionContent.scrollToBottom(500);
+                });
+              }
+            }
+          }));
+
+        this.messagesSubscription.push(this.appService.getUsersValueByKey('UserId').subscribe((value) => {
           this.currentUserId = value;
-          this.getMessages().then(() => {
-            this.ionContent.scrollToBottom(500);
-          });
-        });
+        }));
 
       }
     });
@@ -82,72 +100,73 @@ export class MessagingPage implements OnInit, OnDestroy {
 
   private getMessages() {
     return new Promise((resolve, reject) => {
-      this.endBeforeDoc = this.messages.length > 0 ? this.messages[0].document : '';
-      this.pageSize = 25;
-      this.messageSnapshotChangesSubscribe = this.messageService.getFriendMessages('', 0)
-        .subscribe((data: UserMessage[]) => {
-
-          from(data).pipe((
-            filter((item: UserMessage) => item.type === 'added')
-          )).subscribe((result) => {
-            this.messages.push(result);
-          }).unsubscribe();
-
-          from(data).pipe((
-            filter((item: UserMessage) => item.type === 'modified')
-          )).subscribe((result) => {
-            this.messages[result.index.newIndex].isRead = result.isRead;
-            this.messages[result.index.newIndex].readDateTime = result.readDateTime;
-            // this.messages.unshift(result);
-          }).unsubscribe();
-
-          // if (data[0].type === 'added') {
-          //   this.messages.push(...data);
-          //   // if (data.length === 1 && data[0].index.newIndex === this.messages.length) {
-          //   //   this.messages.push(...data);
-          //   // } else {
-          //   //   this.messages.unshift(...data);
-          //   // }
-          // } else if (data[0].type === 'modified') {
-          //   this.messages[data[0].index.newIndex].isRead = data[0].isRead;
-          //   this.messages[data[0].index.newIndex].readDateTime = data[0].readDateTime;
-          // }
-
-          from(this.messages).pipe(
-            filter((msg: UserMessage) => msg.isRead === false && msg.userId !== this.currentUserId)
-          ).subscribe((unReadMsg: UserMessage) => {
-            if (unReadMsg && unReadMsg.id !== null) {
-              this.messageService.updateMsg(unReadMsg.id);
-            }
-            // Update The Badge Count
-            from(this.firebasedb.unReadMessagesArray).pipe(
-              findIndex((item: UserMessage[]) => item[0].userId === this.queryInfo.to.toString())
-            ).subscribe((index) => {
-              if (index >= 0) {
-                this.firebasedb.unReadMessagesArray.splice(index, 1);
-                this.appService.setNotificationCount(this.firebasedb.unReadMessagesArray.length);
+      if (this.messages.length < this.totalCollection) {
+        this.endBeforeDoc = this.messages.length > 0 ? this.messages[0].document : '';
+        this.pageSize = 25;
+        this.messagesSubscription.push(this.messageService.getFriendMessages(this.endBeforeDoc, this.pageSize)
+          .subscribe((data: UserMessage[]) => {
+            if (data.length === 1 && data[0].type === 'added') {
+              this.messages.push(...data);
+              if (data[0].userId !== this.currentUserId) {
+                setTimeout(() => {
+                  this.ionContent.scrollToBottom(500);
+                }, 500);
               }
+            } else if (data.length === 1 && data[0].type === 'modified') {
+              from(this.messages).pipe(
+                findIndex(item => item.id === data[0].id)
+              ).subscribe((index) => {
+                this.messages[index].isRead = data[0].isRead;
+                this.messages[index].readDateTime = data[0].readDateTime;
+              }).unsubscribe();
+            } else if (data.length > 1) {
+              this.messages.unshift(...data);
+            }
+
+            from(this.messages).pipe(
+              filter((msg: UserMessage) => msg.isRead === false && msg.userId !== this.currentUserId)
+            ).subscribe((unReadMsg: UserMessage) => {
+              if (unReadMsg && unReadMsg.id !== null) {
+                this.messageService.updateMsg(unReadMsg.id);
+              }
+              // Update The Badge Count
+              from(this.firebasedb.unReadMessagesArray).pipe(
+                findIndex((item: UserMessage[]) => item[0].userId === this.queryInfo.to.toString())
+              ).subscribe((index) => {
+                if (index >= 0) {
+                  this.firebasedb.unReadMessagesArray.splice(index, 1);
+                  this.appService.setNotificationCount(this.firebasedb.unReadMessagesArray.length);
+                }
+              }).unsubscribe();
             }).unsubscribe();
-          }).unsubscribe();
-          resolve(true);
-        });
+            resolve(true);
+          }));
+      } else {
+        resolve(false);
+      }
     });
   }
 
   ngOnDestroy() {
-    this.messageSnapshotChangesSubscribe.unsubscribe();
-    // this.messageValueChangesSubscribe.unsubscribe();
+    this.messagesSubscription.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
   }
 
 
   public loadData(event: any) {
-    this.getMessages().then(() => {
-      // event.target.complete();
-    }).finally(() => { event.target.complete(); });
+    this.getMessages().then((status: boolean) => {
+      if (!status) {
+        event.target.disabled = true;
+      } else {
+        event.target.disabled = false;
+      }
+      event.target.complete();
+    });
   }
-  public resize() {
-    this.messageInput.nativeElement.style.height = this.messageInput.nativeElement.scrollHeight + 'px';
-  }
+  // public resize() {
+  //   this.messageInput.nativeElement.style.height = this.messageInput.nativeElement.scrollHeight + 'px';
+  // }
 
 
   ionViewDidEnter() {
@@ -184,7 +203,7 @@ export class MessagingPage implements OnInit, OnDestroy {
       });
       message.message = this.messageService.aesEncrypt(message.message, message.userId);
       this.messageForm.reset();
-      // this.messageInput.setFocus();
+      this.messageInput.setFocus();
       this.messageService.pushNewMsg(message).then(() => {
         setTimeout(() => {
           this.ionContent.scrollToBottom(500);
@@ -196,8 +215,8 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
   public getClasses(messageOwner?: string) {
     return {
-      'incoming ': messageOwner !== this.queryInfo.fromUser.toString(),
-      'outgoing ': messageOwner === this.queryInfo.fromUser.toString(),
+      'incoming fadeInLeft': messageOwner !== this.queryInfo.fromUser.toString(),
+      'outgoing fadeInRight': messageOwner === this.queryInfo.fromUser.toString(),
     };
   }
 
@@ -207,7 +226,7 @@ export class MessagingPage implements OnInit, OnDestroy {
 
   public async onKey(event: any) {
     if (event.target.value.length > 0 && !this.isTypingEnabled) {
-     // this.messageInput.nativeElement.style.height = this.messageInput.nativeElement.scrollHeight + 'px';
+      // this.messageInput.nativeElement.style.height = this.messageInput.nativeElement.scrollHeight + 'px';
       await this.messageService.userTypingMessage(true);
       this.isTypingEnabled = true;
     } else if (event.target.value.length === 0 || event.target.value == null) {

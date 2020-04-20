@@ -19,19 +19,19 @@ export class PushNotificationService {
 
   public getIsUserFriendUpdated(): Observable<boolean> {
     return this.isUserFriendUpdated.asObservable();
-}
+  }
 
-public setIsUserFriendUpdated(updateStatus: boolean) {
+  public setIsUserFriendUpdated(updateStatus: boolean) {
     this.isUserFriendUpdated.next(updateStatus);
-}
+  }
 
-public getIsEventUpdated(): Observable<boolean> {
-  return this.isEventUpdated.asObservable();
-}
+  public getIsEventUpdated(): Observable<boolean> {
+    return this.isEventUpdated.asObservable();
+  }
 
-public setIsEventUpdated(updateStatus: boolean) {
-  this.isEventUpdated.next(updateStatus);
-}
+  public setIsEventUpdated(updateStatus: boolean) {
+    this.isEventUpdated.next(updateStatus);
+  }
 
   constructor(
     private push: Push,
@@ -73,7 +73,7 @@ public setIsEventUpdated(updateStatus: boolean) {
         sound: true,
         vibrate: true,
         icon: 'icon',
-        iconColor:'black',
+        iconColor: 'black',
       },
       ios: {
         alert: 'true',
@@ -109,13 +109,13 @@ public setIsEventUpdated(updateStatus: boolean) {
           // On receiving Events
           case '2': {
             this.setIsEventUpdated(true);
-           // Update Events
+            // Update Events
             break;
           }
           // On receiving Friend Request
           case '3': {
             this.setIsUserFriendUpdated(true);
-           // this.navCtrl.navigateForward('/tabs/match');
+            // this.navCtrl.navigateForward('/tabs/match');
             break;
           }
           // On  Friend Request Accepted
@@ -127,7 +127,7 @@ public setIsEventUpdated(updateStatus: boolean) {
 
 
       } else {
-        this.platform.ready().then(() => {  
+        this.platform.ready().then(() => {
           switch (notification.additionalData.redirectAction) {
 
             // On receiving Message

@@ -609,7 +609,6 @@ export class AppService {
                     const url = this.appConstant.getURL(UrlKey.User_Preferred).replace('uid', userId);
                     await this.http.get(url, {}, this.header)
                         .then(res => {
-                            console.log('response', res);
                             // loading.dismiss();
                             const resdata = JSON.parse(res.data);
                             const resPreferred: PreferredUser[] = resdata.PreferredUserList;
@@ -629,8 +628,7 @@ export class AppService {
                         .finally(() => {
 
                         });
-                }
-                else{
+                } else {
                     this.userLogout();
                 }
             })
@@ -760,6 +758,9 @@ export class AppService {
     public async userLogin(email?: string, password?: string) {
         if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
             this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
+            return;
+        } else if (this.pushDevice === null || this.pushDevice.registrationId === '') {
+            this.toast.show(`Please connect to the internet and restart your application.`, `short`, 'bottom').subscribe(() => { });
             return;
         }
         const loading = await this.loadingController.create({

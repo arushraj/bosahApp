@@ -30,15 +30,14 @@
   </ion-toolbar>
 </ion-header>
 <ion-content #ionContent fullscreen>
-  <!-- <ion-infinite-scroll (ionInfinite)="loadData($event)" position="top" threshold="10px">
-    <ion-infinite-scroll-content>
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll> -->
+  <ion-infinite-scroll (ionInfinite)="loadData($event)" position="top" threshold="5%" #ionInfiniteScroll>
+    <ion-infinite-scroll-content loadingSpinner="dots"> </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
   <div class="main">
     <div class="chat-box">
       <div class="message-area">
-        <div class="message" *ngFor="let message of messages" [ngClass]="getClasses(message.userId)"
-          [id]="message.id">
+        <div class="message animated fast" *ngFor="let message of messages; let i = index;"
+          [ngClass]="getClasses(message.userId)" [id]="message.id">
           <p>{{message.message | decryptTextBinder:message.userId}}
             <span>{{message?.datetime | date:'MM/dd/y, h:mm a' | lowercase}}
               <ion-icon [name]="message.isRead? 'checkmark-done' : 'checkmark'"
@@ -58,11 +57,11 @@
           <!-- <ion-input (ionFocus)="checkFocus()" (keyup)="onKey($event)" (focusout)="stopTyping()" required
             formControlName="message" type="text" placeholder="Type a message" autocapitalize="on" autocorrect="on"
             autocomplete="on" #messageInput></ion-input> -->
-            <ion-textarea #messageInput (ionFocus)="checkFocus()" (keyup)="onKey($event)" (focusout)="stopTyping()" 
-            required formControlName="message" placeholder="Type a message"
-            autocapitalize="on" autocorrect="on" maxLength="120" (keyup)="resize()" rows="1"
-            autocomplete="on">
-         </ion-textarea>
+          <ion-textarea #messageInput (ionFocus)="checkFocus()" (keyup)="onKey($event)" (focusout)="stopTyping()"
+            required formControlName="message" placeholder="Type a message" autocapitalize="on" autocorrect="on"
+            maxLength="120" rows="1" autocomplete="on">
+          </ion-textarea>
+          <!-- (keyup)="resize()" -->
           <ion-button [disabled]="messageForm.invalid" type="submit" size="default" fill="clean">
             <ion-icon slot="icon-only" name="send" color="primary"></ion-icon>
           </ion-button>
