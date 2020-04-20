@@ -22,7 +22,7 @@
                             <h3 class="name">{{user.FName | blankValue}}, {{user.Age}}</h3>
                             <div class="btn_div" *ngIf="user.UserId">
 
-                                <ion-button (click)='notIntrested()'>
+                                <ion-button (click)='notIntrested(user.UserId)'>
                                     <ion-icon src="/assets/cancel.svg"></ion-icon>
                                 </ion-button>
                                 <ion-button (click)="sendFriendRequest(user)">

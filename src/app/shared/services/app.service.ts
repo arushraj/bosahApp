@@ -614,8 +614,8 @@ export class AppService {
                             const resPreferred: PreferredUser[] = resdata.PreferredUserList;
                             this.userPreferredList.users = resPreferred;
 
-                            this.setUserPreferred(Object.assign({}, this.userPreferredList).users);
-                            this.setIsUserPreferredUpdated(false);
+                            this.setUserPreferred(Object.assign({}, this.userPreferredList).users);                           
+                            //this.setIsUserPreferredUpdated(false);
 
 
                         })
@@ -1210,6 +1210,7 @@ export class AppService {
                 loading.dismiss();
                 const resData = JSON.parse(res.data);
                 this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
+                this.getUserPreferredFromDB();
                 this.setIsUserPreferredUpdated(true);
                 this.getCurrentuserFromDB(true);
             })
