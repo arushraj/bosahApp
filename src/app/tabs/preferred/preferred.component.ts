@@ -26,14 +26,15 @@ export class PreferredComponent implements OnInit {
   constructor(
     private appService: AppService,
     private alertController: AlertController,
-    private actionSheetController: ActionSheetController) {
+    private actionSheetController: ActionSheetController,
+    private toast:Toast) {
     this.appService.getUserPreferred().subscribe((preferredUser) => {
       this.preferredUser = preferredUser;
     });
-    this.appService.getIsUserPreferredUpdated().subscribe((isUserPreferredUpdated)=>{
-      this.isUserPreferredUpdated=isUserPreferredUpdated;
+    //   this.appService.getIsUserPreferredUpdated().subscribe((isUserPreferredUpdated)=>{
+    //   this.isUserPreferredUpdated=isUserPreferredUpdated;
 
-    });
+    // });
   }
 
   ngOnInit() {
@@ -41,7 +42,7 @@ export class PreferredComponent implements OnInit {
   }
 
   ionViewDidEnter() {
-    if ((this.preferredUser.length === 1 && this.preferredUser[0].UserId === '') || this.isUserPreferredUpdated===true) {
+    if ((this.preferredUser.length === 1 && this.preferredUser[0].UserId === '')) {
       this.isLoading = true;
       this.appService.getUserPreferredFromDB().then(() => {
         this.isLoading = false;
@@ -53,15 +54,21 @@ export class PreferredComponent implements OnInit {
     event.target.src = '/assets/no-image.png';
   }
 
-  public notIntrested() {
-    // const index = this.preferredUser.findIndex(key => key.UserId === userId);
-    // this.preferredUser.splice(index, 1);
-    // console.log(this.preferredUser.length);
-    // if(index >=this.preferredUser.length-1){
-    //   this.preferredUserSlides.slidePrev(1000, true).then(() => { });
+  public notIntrested(userId:any) {
+    const index = this.preferredUser.findIndex(key => key.UserId === userId);
+    if(index >=this.preferredUser.length-1){
+      this.toast.showLongBottom('You’ve Run Out of Suggested Profiles. Please Expand Your Criteria or Check Back Again Soon!').subscribe(() => { });   
+      //this.preferredUser.splice(index, 1);
+     }
+    
+     else
+     {
+        this.preferredUserSlides.slideNext(1000, true).then(() => { });
 
-    //  }
-    this.preferredUserSlides.slideNext(1000, true).then(() => { });
+     }
+  
+
+    
   }
 
   public async sendFriendRequest(newFriend: PreferredUser) {
