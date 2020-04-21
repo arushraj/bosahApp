@@ -34,7 +34,7 @@ export class FlatSearchFormPage implements OnInit {
 
   constructor(private appService: AppService, private toast: Toast, private fb: FormBuilder, private alertController: AlertController) {
 
-    this.minDate = this.getmiStringDate();
+    this.minDate = this.getminStringDate();
     this.maxDate = this.getmaxStringDate();
     this.userForm = this.fb.group({
       // RentBudgetId: ['', Validators.compose([Validators.required])],
@@ -97,7 +97,7 @@ export class FlatSearchFormPage implements OnInit {
     this.rangeValue.upper = event.detail.value.upper;
   }
 
-  public getmiStringDate(): string {
+  public getminStringDate(): string {
     const today = new Date();
     const dd = String(today.getDate() + 1).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
@@ -134,5 +134,9 @@ export class FlatSearchFormPage implements OnInit {
 
   }
 
+
+  public clearDate(){
+    this.userForm.value.DesiredMoveInDate = null;
+  }
 
 }

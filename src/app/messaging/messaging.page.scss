@@ -126,20 +126,6 @@ ion-content {
         form {
             display: flex;
             position: relative;
-            // bottom: 5px;
-
-            // ion-input {
-            //     border-radius: 25px;
-            //     border: solid 1px #f1f1f1;
-            //     background-color: #fbfbfb;
-            //     padding-left: 5px !important;
-
-            //     &:focus {
-            //         outline: none;
-            //     }
-            // }
-
-
             ion-textarea {
                 border-radius: 25px;
                 margin-top: 0;
@@ -173,18 +159,6 @@ ion-item {
     --background: none;
 }
 
-// ion-header {
-//     ion-toolbar {
-//         ion-item {
-//             ion-button {
-//                 ion-icon {
-//                     color: white;
-//                 }
-//             }
-//         }
-//     }
-// }
-
 
 textarea {
     line-height: 2ch !important;
@@ -192,4 +166,11 @@ textarea {
     background-size: 100% 4ch !important;
     --background: none !important;
     --padding-top: 10%;
+}
+
+.selectableDiv{
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: auto;
 }
