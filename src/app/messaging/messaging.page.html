@@ -14,11 +14,11 @@
         </span>
         <br />
         <span class="user-status" [ngClass]="{'online': friendUserStatus?.isOnline}"
-          *ngIf="!friendTypingStatus?.isTyping">
+          *ngIf="!friendUserStatus?.isTyping">
           {{ (friendUserStatus?.isOnline)? 'online': 'offline' }}
         </span>
         <span class="user-status" [ngClass]="{'online': friendUserStatus?.isOnline}"
-          *ngIf="friendUserStatus?.isOnline && friendTypingStatus?.isTyping">
+          *ngIf="friendUserStatus?.isOnline && friendUserStatus?.isTyping">
           typing...
         </span>
       </ion-label>

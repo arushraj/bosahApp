@@ -73,6 +73,7 @@ export class FirebasedbService {
   public setUserOffline(userId: string) {
     const user: OnlineUser = {
       isOnline: false,
+      isTyping: false,
       lastOnlineDateTime: new Date().toISOString()
     };
     if (!this.currentOnlineUser) {
@@ -84,6 +85,7 @@ export class FirebasedbService {
   public setUserOnline(userId: string) {
     const user: OnlineUser = {
       isOnline: true,
+      isTyping: false,
       lastOnlineDateTime: new Date().toISOString()
     };
     this.currentOnlineUser = this.subscribeUserDocument(userId.toString());

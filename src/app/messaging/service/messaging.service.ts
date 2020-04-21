@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import * as CryptoJS from 'crypto-js';
 
 import { UserMessage } from '../model/message';
-import { OnlineUser, UserTypingStatus } from '../model/user';
+import { OnlineUser } from '../model/user';
 import { AppService } from 'src/app/shared/services/app.service';
 import { map } from 'rxjs/operators';
 
@@ -26,10 +26,6 @@ export class MessageService {
 
     public subscribeUserDocument(documentKey: string) {
         return this.db.collection('onlineUsers').doc<OnlineUser>(documentKey);
-    }
-
-    public subscribeUserTypingStatus(userId: string) {
-        return this.itemsCollection.collection<{ isTyping: boolean }>('users').doc(userId);
     }
 
     public messagesSnapshotChanges(): Observable<any> {
@@ -82,54 +78,34 @@ export class MessageService {
     public setUserOffline(userId: string) {
         const user: OnlineUser = {
             isOnline: false,
+            isTyping: false,
             lastOnlineDateTime: new Date().toISOString()
         };
         if (!this.currentOnlineUser) {
             this.currentOnlineUser = this.subscribeUserDocument(userId.toString());
         }
         this.currentOnlineUser.set(user);
-
-        const typingStatus: UserTypingStatus = {
-            isTyping: false
-        };
-        const userTypeStatus = this.subscribeUserTypingStatus(userId.toString());
-        userTypeStatus.set(typingStatus);
     }
 
     public async setUserOnline(userId: string) {
         const user: OnlineUser = {
             isOnline: true,
+            isTyping: false,
             lastOnlineDateTime: new Date().toISOString()
         };
         this.currentOnlineUser = this.subscribeUserDocument(userId.toString());
         this.currentOnlineUser.set(user);
-
-        const typingStatus: UserTypingStatus = {
-            isTyping: false
-        };
-        const userTypeStatus = this.subscribeUserTypingStatus(userId.toString());
-        userTypeStatus.set(typingStatus);
     }
 
-    public async setUserTypingMessageStatus(isTyping: boolean, userId?: string) {
-        // if (this.currentOnlineUser) {
-        //     this.currentOnlineUser.update({ isTyping });
-        // }
-        const typingStatus: UserTypingStatus = {
-            isTyping
-        };
-        const userTypeStatus = this.subscribeUserTypingStatus(userId.toString());
-        userTypeStatus.update(typingStatus);
+    public async userTypingMessage(isTyping: boolean) {
+        if (this.currentOnlineUser) {
+            this.currentOnlineUser.update({ isTyping });
+        }
     }
 
-    public getFriendOnlineStatus(userId: string) {
+    public getFriendUserStatus(userId: string) {
         this.friendOnlineUser = this.subscribeUserDocument(userId.toString());
         return this.friendOnlineUser.valueChanges();
-    }
-
-    public getFriendTypingStatus(userId: string) {
-        const friendTypingUser = this.subscribeUserTypingStatus(userId.toString());
-        return friendTypingUser.valueChanges();
     }
 
     public md5Encrypt(value: string) {
