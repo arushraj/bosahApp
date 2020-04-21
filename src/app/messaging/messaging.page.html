@@ -53,7 +53,7 @@
     <div class="typing">
       <div class="input-area">
         <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
-          <ion-textarea #messageInput (keyup.enter)="onSubmit()" (ionFocus)="checkFocus()" (ionChange)="onKey($event)" (focusout)="stopTyping()" 
+          <ion-textarea #messageInput  (ionFocus)="checkFocus()" (ionChange)="onKey($event)" (focusout)="stopTyping()" 
           placeholder="Type a message"
           required formControlName="message" 
           autocapitalize="on" autocorrect="on"  rows="1"
