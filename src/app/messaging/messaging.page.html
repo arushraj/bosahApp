@@ -14,11 +14,11 @@
         </span>
         <br />
         <span class="user-status" [ngClass]="{'online': friendUserStatus?.isOnline}"
-          *ngIf="!friendUserStatus?.isTyping">
+          *ngIf="!friendTypingStatus?.isTyping">
           {{ (friendUserStatus?.isOnline)? 'online': 'offline' }}
         </span>
         <span class="user-status" [ngClass]="{'online': friendUserStatus?.isOnline}"
-          *ngIf="friendUserStatus?.isOnline && friendUserStatus?.isTyping">
+          *ngIf="friendUserStatus?.isOnline && friendTypingStatus?.isTyping">
           typing...
         </span>
       </ion-label>
@@ -53,11 +53,9 @@
     <div class="typing">
       <div class="input-area">
         <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
-          <ion-textarea #messageInput (keyup.enter)="onSubmit()" (ionFocus)="checkFocus()" (ionChange)="onKey($event)" (focusout)="stopTyping()" 
-          placeholder="Type a message"
-          required formControlName="message" 
-          autocapitalize="on" autocorrect="on"  rows="1"
-          autocomplete="on" autofocus="true" spellcheck="true">
+          <ion-textarea #messageInput (keyup.enter)="onSubmit()" (ionFocus)="checkFocus()" (ionChange)="onKey($event)"
+            (focusout)="stopTyping()" placeholder="Type a message" required formControlName="message"
+            autocapitalize="on" autocorrect="on" rows="1" autocomplete="on" autofocus="true" spellcheck="true">
           </ion-textarea>
           <ion-button [disabled]="messageForm.invalid" type="submit" size="default" fill="clean">
             <ion-icon slot="icon-only" name="send" color="primary"></ion-icon>
