@@ -1,5 +1,8 @@
 export interface OnlineUser {
     isOnline?: boolean;
-    isTyping?: boolean;
     lastOnlineDateTime?: string;
+}
+
+export interface UserTypingStatus {
+    isTyping: boolean;
 }

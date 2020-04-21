@@ -11,7 +11,7 @@ import {
   IonInfiniteScroll
 } from '@ionic/angular';
 import { AppConstant } from '../shared/constant/app.constant';
-import { OnlineUser } from './model/user';
+import { OnlineUser, UserTypingStatus } from './model/user';
 import { MoreMenuPage } from './more-menu/more-menu.page';
 import { AppService } from '../shared/services/app.service';
 import { UserFriends } from '../shared/model/user-friend.model';
@@ -35,13 +35,13 @@ export class MessagingPage implements OnInit, OnDestroy {
   public queryInfo: any;
   public currentUserId: string;
   private messagesSubscription: Subscription[] = [];
-  private isTypingEnabled = false;
   private endBeforeDoc: any;
   private pageSize: number;
   private totalCollection = null;
   // {to: string, toUserName: string, toProfileImagePath: string, from: string, fromUserName: string}
   public messageForm: FormGroup;
   public friendUserStatus: OnlineUser;
+  public friendTypingStatus: UserTypingStatus;
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
   @ViewChild('messageInput', { read: IonTextarea, static: true }) messageInput: IonTextarea;
   @ViewChild('ionInfiniteScroll', { read: IonInfiniteScroll, static: true }) ionInfiniteScroll: IonInfiniteScroll;
@@ -59,16 +59,22 @@ export class MessagingPage implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(params => {
       if (params && params.info) {
         this.setQueryinfo(params.info);
+        this.messageService.subscribeMessageCollection(this.queryInfo.firebaseCollection);
         // set user online
         this.messageService.setUserOnline(this.queryInfo.fromUser);
         // get friend user status
-        this.friendUserStatus = { isOnline: false, isTyping: false };
-        this.messagesSubscription.push(this.messageService.getFriendUserStatus(this.queryInfo.to).subscribe((data: OnlineUser) => {
+        this.friendUserStatus = { isOnline: false, lastOnlineDateTime: null };
+        this.friendTypingStatus = { isTyping: false };
+        this.messagesSubscription.push(this.messageService.getFriendOnlineStatus(this.queryInfo.to).subscribe((data: OnlineUser) => {
           if (data) {
             this.friendUserStatus = data;
           }
         }));
-        this.messageService.subscribeMessageCollection(this.queryInfo.firebaseCollection);
+        this.messagesSubscription.push(this.messageService.getFriendTypingStatus(this.queryInfo.to).subscribe((data: UserTypingStatus) => {
+          if (data) {
+            this.friendTypingStatus = data;
+          }
+        }));
 
         this.messagesSubscription.push(this.messageService.messagesValueChanges()
           .subscribe((totalMessages) => {
@@ -148,6 +154,7 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.messageService.setUserTypingMessageStatus(false, this.currentUserId);
     this.messagesSubscription.forEach((subscription) => {
       subscription.unsubscribe();
     });
@@ -225,17 +232,15 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   public async onKey(event: any) {
-    if (event.target.value.length > 0 && !this.isTypingEnabled) {
+    if (event.target.value.length > 0) {
       // this.messageInput.nativeElement.style.height = this.messageInput.nativeElement.scrollHeight + 'px';
-      await this.messageService.userTypingMessage(true);
-      this.isTypingEnabled = true;
+      await this.messageService.setUserTypingMessageStatus(true, this.currentUserId);
     } else if (event.target.value.length === 0 || event.target.value == null) {
-      await this.messageService.userTypingMessage(false);
-      this.isTypingEnabled = false;
+      await this.messageService.setUserTypingMessageStatus(false, this.currentUserId);
     }
   }
   public stopTyping() {
-    this.messageService.userTypingMessage(false);
+    this.messageService.setUserTypingMessageStatus(false, this.currentUserId);
   }
 
   public checkFocus() {

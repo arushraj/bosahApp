@@ -61,7 +61,6 @@ export class TabsComponent implements OnInit {
       });
     this.appService.getUserLogoutStatus().subscribe((isUserLogout: boolean) => {
       if (isUserLogout) {
-        console.log(`User Logout: ${isUserLogout}`);
         this.firebasedb.unReadMessagesArray = [];
         this.LastMessageSubscription.forEach(subscription => {
           subscription.unsubscribe();
