@@ -80,18 +80,33 @@ export class EventsComponent implements OnInit {
         });
       }
     });
+  }
 
-    pushService.getIsEventUpdated().subscribe(isEventUpdated=>{
+  ngOnInit() { 
+    this.pushService.getIsEventUpdated().subscribe(isEventUpdated=>{
       if(isEventUpdated)
       {
-        this.appService.getUpcomingEventListFromDB(this.cityId,this.currentUser.UserId);
+        this.appService.getRegisteredEvent().subscribe(events => {
+          this.pageTabs[1].events = events;
+          if (events.length > 0) {
+            this.pageTabs[1].events.forEach((value, key) => {
+              value.isSubscribe = true;
+            });
+          }
+        });
+
+        this.appService.getUpcomingEvent().subscribe(events => {
+          this.pageTabs[0].events = events;
+          if (events.length > 0) {
+            this.pageTabs[0].events.forEach((value, key) => {
+              value.isSubscribe = false;
+            });
+          }
+        });
       }
 
     });
-
   }
-
-  ngOnInit() { }
 
   currentSegment(index: number) {
     this.SwipedTabsEventsSlider.slideTo(index, 500).then(() => {

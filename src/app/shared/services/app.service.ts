@@ -40,6 +40,7 @@ export class AppService {
     public currentUser = new BehaviorSubject<CurrentUser>(this.createUser());
     public notificationCount = new BehaviorSubject<number>(0);
     public isUserPreferenceUpdated = new BehaviorSubject<boolean>(false);
+    public isResumedfromBackground = new BehaviorSubject<boolean>(false);
     private userLocation = new BehaviorSubject<UserLocation[]>(this.createLocation());
     private userReligions = new BehaviorSubject<UserReligion[]>(this.createReligion());
     private bathrooms = new BehaviorSubject<Bathroom[]>([]);
@@ -220,6 +221,14 @@ export class AppService {
 
     private setUserLogoutStatus(status: boolean) {
         this.isUserLogout.next(status);
+    }
+
+    public getIsResumed(): Observable<boolean> {
+        return this.isResumedfromBackground.asObservable();
+    }
+
+    public setIsResumed(status: boolean) {
+        this.isResumedfromBackground.next(status);
     }
 
     private createFriendList() {

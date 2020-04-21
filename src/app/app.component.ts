@@ -86,6 +86,7 @@ export class AppComponent {
     private appConstant: AppConstant,
     private pushNotificationService: PushNotificationService) {
     this.initializeApp();
+
   }
 
   initializeApp() {
@@ -108,6 +109,17 @@ export class AppComponent {
 
     // Initialize BackButton Eevent.
     this.platform.ready().then(() => {
+
+      this.platform.resume.subscribe ( (e) => {
+        this.appService.setIsResumed(true);
+        //this.navCtrl.navigateForward('/tabs/match');
+       
+      });
+      
+        this.platform.pause.subscribe ( (e) => {
+        console.log("pause called"); 
+      });
+ 
       this.backButtonEvent();
       this.appService.loadDataFromServer(true);
       this.appService.getCurrentUserIdfromLocalStorage()
