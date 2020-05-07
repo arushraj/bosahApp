@@ -169,7 +169,7 @@
             <p class="appText">Tell potential roommates about yourself</p>
 
             <ion-item class="college-textbox">
-              <ion-input type="text" [(ngModel)]="newUser.college" name="college" id="college" placeholder="Education*"
+              <ion-input type="text" [(ngModel)]="newUser.college" name="college" id="college" placeholder="College*"
               autocapitalize="on" autocorrect="on" autocomplete="on">
               </ion-input>
             </ion-item>
@@ -187,8 +187,7 @@
               </ion-select>
             </ion-item>       
             <ion-item class="religion-select">
-              <ion-label>Religion <ion-text color="danger">*</ion-text>
-              </ion-label>
+              <ion-label>Religion</ion-label>
               <ion-select placeholder="Select" [(ngModel)]="newUser.religion" name="religion" id="religion" interface="popover" mode="ios">
                 <ion-select-option *ngFor="let religion of religions" [value]="religion.ReligionId">
                   {{religion.Religion}}</ion-select-option>
@@ -253,7 +252,7 @@
               </ion-select>
             </ion-item>
             <ion-item class="preferred-religion-select">
-              <ion-label>Religion(s)<ion-text color="danger">*</ion-text>
+              <ion-label>Religion(s)<ion-text color="danger"></ion-text>
               </ion-label>
               <ion-select placeholder="Select" [(ngModel)]="newUser.preferredReligion" name="preferredReligion"
                 id="preferredReligion" multiple="true">

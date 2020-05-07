@@ -193,10 +193,12 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     if (this.newUser.preferredGender.length === 0) {
       this.toast.showShortBottom('Please select preferred genders for your roommate.').subscribe(() => { });
       return;
-    } else if (this.newUser.preferredReligion.length === 0) {
-      this.toast.showShortBottom('Please select preferred religions for your roommate.').subscribe(() => { });
-      return;
-    } else if (this.newUser.preferredPets.length === 0) {
+    }
+    //  else if (this.newUser.preferredReligion.length === 0) {
+    //   this.toast.showShortBottom('Please select preferred religions for your roommate.').subscribe(() => { });
+    //   return;
+    // } 
+    else if (this.newUser.preferredPets.length === 0) {
       this.toast.showShortBottom('Please select preferred pets for your roommate.').subscribe(() => { });
       return;
     } else if (!this.userAcceptTermsAndConditions) {
@@ -326,7 +328,6 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
         }
         
         else if (!this.newUser.dob) {
-
           this.toast.showShortBottom('Please enter your date of birth.').subscribe(() => { });
           return;
         } else if (this.newUser.dob) {
@@ -334,7 +335,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
           const timeDiff = Math.abs(Date.now() - bdate.getTime());
           const age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
           if (age < 21) {
-            this.toast.showShortBottom('Minimum Age to use this platform is 21').subscribe(() => { });
+            this.toast.showShortBottom('You must be 21 and older to use Bosah').subscribe(() => { });
             return;
           }
 
@@ -349,10 +350,11 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
         } else if (!this.newUser.city) {
           this.toast.showShortBottom('Please select your city.').subscribe(() => { });
           return;
-        }  else if (!this.newUser.religion) {
-          this.toast.showShortBottom('Please select your Religion.').subscribe(() => { });
-          return;
-        }
+        }  
+        // else if (!this.newUser.religion) {
+        //   this.toast.showShortBottom('Please select your Religion.').subscribe(() => { });
+        //   return;
+        // }
       }
       this.registrationslides.lockSwipes(false).then(() => {
         this.registrationslides.slideNext(1000, true).then(() => {
@@ -500,7 +502,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-    const yyyy = today.getFullYear() - 21;
+    const yyyy = today.getFullYear();
     return yyyy + '-' + mm + '-' + dd;
   }
 

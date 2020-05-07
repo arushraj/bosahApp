@@ -23,10 +23,12 @@
                             <div class="btn_div" *ngIf="user.UserId">
 
                                 <ion-button (click)='notIntrested(user.UserId)'>
-                                    <ion-icon src="/assets/cancel.svg"></ion-icon>
+                                    <!-- <ion-icon src="/assets/cancel.svg"></ion-icon> -->
+                                    <ion-icon name="close-outline" class="closeIcon"></ion-icon>
                                 </ion-button>
                                 <ion-button (click)="sendFriendRequest(user)">
-                                    <ion-icon src="/assets/gree_heart.svg"></ion-icon>
+                                    <!-- <ion-icon src="/assets/gree_heart.svg"></ion-icon> -->
+                                    <ion-icon name="checkmark-outline"></ion-icon>
                                 </ion-button>
                             </div>
                             <p class="job">
