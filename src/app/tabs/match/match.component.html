@@ -49,11 +49,13 @@
 
                     <ion-fab vertical="center" horizontal="end" class="fab-button-group" *ngIf="item.id === 1">
                         <ion-fab-button class="match_btn ion-float-right" (click)="rejectFriendShip(friend)">
-                            <ion-icon src="/assets/close.svg"></ion-icon>
+                            <!-- <ion-icon src="/assets/close.svg"></ion-icon> -->
+                            <ion-icon name="close-outline" class="closeIcon"></ion-icon>
                         </ion-fab-button>
 
                         <ion-fab-button class="match_btn ion-float-right" (click)="acceptFriendShip(friend)">
-                            <ion-icon src="/assets/heart.svg"></ion-icon>
+                            <ion-icon name="checkmark-outline"></ion-icon>
+                            <!-- <ion-icon src="/assets/heart.svg"></ion-icon> -->
                         </ion-fab-button>
                     </ion-fab>
                 </ion-item>

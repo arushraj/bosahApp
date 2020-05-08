@@ -9,11 +9,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="app-background-img" fullscreen padding>
+<ion-content class="app-background-img" fullscreen padding>  
   <ion-slides #registrationslides>
     <ion-slide class="otp-slide">
       <ion-card>
-        <img class="slide-image" src="/assets/logo.png" alt="" />
+       <img class="slide-image" src="/assets/logo.png" alt="" />
         <ion-card-content>
           <form [formGroup]="otpForm" class="otp-form">
             <!-- <form  [formGroup]="" class="otp-form"> -->
@@ -107,7 +107,7 @@
 
         <ion-card-content>
           <form class="personal-form ion-padding-right">
-            <p class="appText">Tell potential roommates about yourself</p>
+            <!-- <p class="appText">Tell potential roommates about yourself</p> -->
 
             <ion-item class="firstname-textbox">
               <ion-input type="text" [(ngModel)]="newUser.firstName" name="firstName" id="firstName"
@@ -186,13 +186,7 @@
                 </ion-select-option>
               </ion-select>
             </ion-item>       
-            <ion-item class="religion-select">
-              <ion-label>Religion</ion-label>
-              <ion-select placeholder="Select" [(ngModel)]="newUser.religion" name="religion" id="religion" interface="popover" mode="ios">
-                <ion-select-option *ngFor="let religion of religions" [value]="religion.ReligionId">
-                  {{religion.Religion}}</ion-select-option>
-              </ion-select>
-            </ion-item>
+            
 
             <ion-item class="pet-select">
               <ion-label>Pet (Optional)
@@ -218,6 +212,13 @@
                 id="Usersmoking" interface="popover" mode="ios">
                 <ion-select-option *ngFor="let item of smokingOptions" [value]="item.Id">
                   {{item.Details}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item class="religion-select">
+              <ion-label>Religion</ion-label>
+              <ion-select placeholder="Select" [(ngModel)]="newUser.religion" name="religion" id="religion" interface="popover" mode="ios">
+                <ion-select-option *ngFor="let religion of religions" [value]="religion.ReligionId">
+                  {{religion.Religion}}</ion-select-option>
               </ion-select>
             </ion-item>
           </form>

@@ -190,7 +190,8 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   }
 
   public registeredNewUser() {
-    if (this.newUser.preferredGender.length === 0) {
+     
+     if (this.newUser.preferredGender.length === 0) {
       this.toast.showShortBottom('Please select preferred genders for your roommate.').subscribe(() => { });
       return;
     }
@@ -201,10 +202,12 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     else if (this.newUser.preferredPets.length === 0) {
       this.toast.showShortBottom('Please select preferred pets for your roommate.').subscribe(() => { });
       return;
-    } else if (!this.userAcceptTermsAndConditions) {
+    } 
+    else if (!this.userAcceptTermsAndConditions) {
       this.toast.showShortBottom('Please accept the terms and conditions.').subscribe(() => { });
       return;
     }
+   
     const user: NewUser = {
       FirstName: this.newUser.firstName,
       LastName: this.newUser.lastName,
@@ -341,7 +344,11 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
 
         }
       } else if (index === 4) {
-        if (!this.newUser.college) {
+        if (!this.newUser.userImage) {
+          this.toast.showShortBottom('Please upload a profile Picture').subscribe(() => { });
+          return;
+        }
+        else if (!this.newUser.college) {
           this.toast.showShortBottom('Please enter your Education Details').subscribe(() => { });
           return;
         } else if (!this.newUser.job) {
@@ -355,6 +362,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
         //   this.toast.showShortBottom('Please select your Religion.').subscribe(() => { });
         //   return;
         // }
+
       }
       this.registrationslides.lockSwipes(false).then(() => {
         this.registrationslides.slideNext(1000, true).then(() => {

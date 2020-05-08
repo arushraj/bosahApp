@@ -115,16 +115,7 @@ export class UserProfileComponent implements OnInit {
             this.toast.show(`Fileerror: ${err}`, `long`, 'bottom').subscribe(() => { });
           });
       } else {
-
-        // let fileImagePath=imagePath;
-        // fileImagePath=this.webView.convertFileSrc(fileImagePath);
-        // currentName = fileImagePath.substr(fileImagePath.lastIndexOf('/') + 1);
-        // console.log(currentName);
-        // correctPath = fileImagePath.substr(0, fileImagePath.lastIndexOf('/') + 1);
-        // console.log(correctPath);
-        // fileExtension = fileImagePath.substring(fileImagePath.lastIndexOf('.'), fileImagePath.lastIndexOf('?'));
-        // console.log(fileExtension);
-        // this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+        //for ios
         currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
         correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
         this.copyFileToLocalDirIOS(correctPath, currentName, this.createFileName());
@@ -153,17 +144,18 @@ export class UserProfileComponent implements OnInit {
     return newFileName;
   }
 
+  //For Android
   private copyFileToLocalDir(namePath, currentName, fileExtension) {
     const newFileName = this.currentUser.FName.replace(' ', '_') + `_${new Date().getTime()}` + fileExtension;
     this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
-      const currentImagefilePath = this.webView.convertFileSrc(this.file.dataDirectory + newFileName);
+     // const currentImagefilePath = this.webView.convertFileSrc(this.file.dataDirectory + newFileName);
       this.startUpload(this.file.dataDirectory + newFileName);
     }, error => {
       this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
     });
   }
 
-
+//Service call to upload image via API
   private startUpload(imagePath) {
     this.appService.uploadProfileImage(imagePath, this.currentUser);
   }
