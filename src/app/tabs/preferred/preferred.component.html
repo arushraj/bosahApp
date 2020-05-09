@@ -1,6 +1,6 @@
 <ion-header class="ion-no-border">
     <ion-toolbar mode="md">
-        <ion-title>Suggested</ion-title>
+        <ion-title>Suggested<br/>Connect With Your Next Potential Roommate</ion-title>
     </ion-toolbar>
 </ion-header>
 <ion-content fullscreen class="animated fadeInUp fast" horizontal="start">
@@ -46,7 +46,8 @@
                                 <ion-label class="chip_lbl"> {{user.UserDrinking | blankValue}}</ion-label>
                             </ion-chip>
                             <ion-chip *ngIf="user.UserPet">
-                                <ion-icon src="/assets/men_flit.svg"></ion-icon>
+                                <!-- <ion-icon src="/assets/men_flit.svg"></ion-icon> -->
+                                <ion-icon name="paw-sharp"></ion-icon>
                                 <ion-label class="chip_lbl"> {{user.UserPet | blankValue}}</ion-label>
                             </ion-chip>
                             <p class="test_p"> {{user.AboutMe}}</p>
