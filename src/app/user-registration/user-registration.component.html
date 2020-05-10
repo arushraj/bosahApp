@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="app-background-img" fullscreen padding>  
+<ion-content class="app-background-img" #ionContent>  
   <ion-slides #registrationslides>
     <ion-slide class="otp-slide">
       <ion-card>
@@ -21,10 +21,9 @@
               Invalid Email ID
             </ion-label>
             <ion-item class="email-textbox">
-
               <ion-icon slot="start" name="at" class="auto-top-bottom-marging" color="primary"></ion-icon>
               <ion-input type="email" placeholder="E-mail" formControlName="email" [(ngModel)]="newUser.email"
-                name="email" [disabled]="otpsend" id="email">
+                name="email" [disabled]="otpsend" id="email" (keyup)="scrollIonContent()">
               </ion-input>
               <ion-button slot="end" expand="block" fill="clean" shape="round" (click)="sendOTP()"
                 [disabled]="otpsend || otpForm.controls.email.errors">
@@ -54,7 +53,7 @@
               and you’ll each receive gift cards after lease is signed.</h3>
             <ion-item class="refer-textbox">
               <ion-input type="text" [(ngModel)]="newUser.referCode" name="referCode" id="referCode"
-                placeholder="Referral Code (Optional)">
+                placeholder="Referral Code (Optional)" (keyup)="scrollIonContent()">
               </ion-input>
             </ion-item>
           </form>
@@ -80,12 +79,12 @@
 
             <ion-item class="password-textbox">
               <ion-input type="password" formControlName="password" [(ngModel)]="newUser.password" name="password"
-                id="password" placeholder="Password*">
+                id="password" placeholder="Password*" (keyup)="scrollIonContent()">
               </ion-input>
             </ion-item>
             <ion-item class="confirmPassword-textbox">
               <ion-input type="password" formControlName="confirmPassword" name="confirmPassword"
-                [(ngModel)]="newUser.confirmPassword" id="confirmPassword" placeholder="Confirm Password*">
+                [(ngModel)]="newUser.confirmPassword" id="confirmPassword" placeholder="Confirm Password*" (keyup)="scrollIonContent()">
               </ion-input>
             </ion-item>
           </form>
@@ -110,28 +109,28 @@
             <!-- <p class="appText">Tell potential roommates about yourself</p> -->
 
             <ion-item class="firstname-textbox">
-              <ion-input type="text" [(ngModel)]="newUser.firstName" name="firstName" id="firstName"
-                placeholder="First Name*" autocapitalize="on" autocorrect="on" autocomplete="on">
+              <ion-input type="text"  [(ngModel)]="newUser.firstName" name="firstName" id="firstName"
+                placeholder="First Name*" autocapitalize="on" autocorrect="on" autocomplete="on" (keyup)="scrollIonContent()">
               </ion-input>
             </ion-item>
             <ion-item class="lastname-textbox">
               <ion-input type="text" [(ngModel)]="newUser.lastName" name="lastName" id="lastName"
-                placeholder="Last Name*" autocapitalize="on" autocorrect="on" autocomplete="on">
+                placeholder="Last Name*" autocapitalize="on" autocorrect="on" autocomplete="on" (keyup)="scrollIonContent()">
               </ion-input>
             </ion-item>
             <ion-item class="phone-textbox">
               <ion-input type="tel" [(ngModel)]="newUser.phone" name="phone" id="phone" placeholder="Phone No*"
-                maxlength="10">
+                maxlength="10" (keyup)="scrollIonContent()">
               </ion-input>
             </ion-item>
             <ion-item class="dob-textbox">
-              <ion-label>Date Of Birth <ion-text color="danger">*</ion-text>
+              <ion-label>Date Of Birth*
               </ion-label>
               <ion-datetime [(ngModel)]="newUser.dob" name="dob" id="dob" placeholder="MM-DD-YYYY"
                 displayFormat="MM-DD-YYYY" [min]="minDate" [max]="maxDate"></ion-datetime>
             </ion-item>
             <ion-item class="gender-select">
-              <ion-label>Gender <ion-text color="danger">*</ion-text>
+              <ion-label>Gender*
               </ion-label>
               <ion-select placeholder="Select" [(ngModel)]="newUser.gender" name="gender" id="gender" interface="popover" mode="ios">
                 <ion-select-option value="1">Male</ion-select-option>
@@ -170,12 +169,12 @@
 
             <ion-item class="college-textbox">
               <ion-input type="text" [(ngModel)]="newUser.college" name="college" id="college" placeholder="College*"
-              autocapitalize="on" autocorrect="on" autocomplete="on">
+              autocapitalize="on" autocorrect="on" autocomplete="on" (keyup)="scrollIonContent()">
               </ion-input>
             </ion-item>
             <ion-item class="job-textbox">
               <ion-input type="text" [(ngModel)]="newUser.job" name="job" id="job" placeholder="Job*"
-              autocapitalize="on" autocorrect="on" autocomplete="on">
+              autocapitalize="on" autocorrect="on" autocomplete="on" (keyup)="scrollIonContent()">
               </ion-input>
             </ion-item>
             <ion-item class="city-select">
@@ -215,7 +214,7 @@
               </ion-select>
             </ion-item>
             <ion-item class="religion-select">
-              <ion-label>Religion</ion-label>
+              <ion-label>Religion(optional)</ion-label>
               <ion-select placeholder="Select" [(ngModel)]="newUser.religion" name="religion" id="religion" interface="popover" mode="ios">
                 <ion-select-option *ngFor="let religion of religions" [value]="religion.ReligionId">
                   {{religion.Religion}}</ion-select-option>
@@ -253,7 +252,7 @@
               </ion-select>
             </ion-item>
             <ion-item class="preferred-religion-select">
-              <ion-label>Religion(s)<ion-text color="danger"></ion-text>
+              <ion-label>Religion(Optional)<ion-text color="danger"></ion-text>
               </ion-label>
               <ion-select placeholder="Select" [(ngModel)]="newUser.preferredReligion" name="preferredReligion"
                 id="preferredReligion" multiple="true">

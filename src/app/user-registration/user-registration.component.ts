@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AppService } from '../shared/services/app.service';
 import { NewUser } from '../shared/model/current-user.model';
-import { ActionSheetController, Platform, LoadingController } from '@ionic/angular';
+import { ActionSheetController, Platform, LoadingController, IonContent, Config } from '@ionic/angular';
 import { Toast } from '@ionic-native/toast/ngx';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
@@ -47,7 +47,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     city: null,
     gender: null,
     preferredGender: [],
-    religion: null,
+    religion: 11,
     preferredReligion: [],
     userImage: '',
     minAge: 21,
@@ -79,6 +79,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   public passwordForm: FormGroup;
   @ViewChild('agerange', { read: IonRange, static: true }) agerange: IonRange;
   @ViewChild('registrationslides', { read: IonSlides, static: true }) registrationslides: IonSlides;
+  @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
 
 
   constructor(
@@ -91,7 +92,8 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     private file: File,
     private webView: WebView,
     private loadingController: LoadingController,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private config:Config) {
     this.minDate = this.getmiStringDate();
     this.maxDate = this.getmaxStringDate();
 
@@ -109,6 +111,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.registrationslides.lockSwipes(true).then(() => { });
+    
 
     this.appService.getLocation().subscribe((locations: UserLocation[]) => {
       this.locations = locations;
@@ -127,6 +130,11 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     this.appService.getsmokingOptions().subscribe((smokingOptions: Smoking[]) => {
       this.smokingOptions = smokingOptions;
     });
+
+    //this.ionContent.scrollToTop(400);
+    //this.ionContent.scrollY=false;
+    
+ 
   }
 
 
@@ -240,6 +248,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   public onKey(event: any) {
     // KeyboardEvent
     // this.toast.show(`${typeof (event.target.value)}`, `short`, `bottom`).subscribe(() => { });
+    this.ionContent.scrollToTop(300);
     if (event.target.value.length === 4) {
       if (event.target.value !== this.otp) {
         this.toast.show(`You have entered the wrong code.`, `short`, `bottom`).subscribe(() => { });
@@ -251,6 +260,10 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
         this.goToNext();
       }
     }
+  }
+
+  public scrollIonContent(){
+    this.ionContent.scrollToPoint(0,100)
   }
 
   public async checkReferralCode() {
@@ -365,6 +378,12 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
 
       }
       this.registrationslides.lockSwipes(false).then(() => {
+        // if(index===3)
+        // {
+        //   this.config.set("scrollPadding",true);
+        //   this.config.set("scrollAssist",true);
+
+        // }
         this.registrationslides.slideNext(1000, true).then(() => {
           this.registrationslides.lockSwipes(true).then(() => { });
         });

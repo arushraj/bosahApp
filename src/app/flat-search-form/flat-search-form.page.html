@@ -20,13 +20,13 @@
         <ion-item mode="md" lines="none" class="rent_item ion-margin-start">
           <ion-label>
             <h3 class="info_lbl rent_lbl">Rent Budget Per Person</h3>
-            <ion-range id="dual-range" min="700" max="2000" mode="md" dualKnobs="true" pin="true" [value]="rangeValue"
+            <ion-range id="dual-range" min="700" max="2400" mode="md" dualKnobs="true" pin="true" [value]="rangeValue"
               (ionChange)="rangeChange($event)" #roomrentRange class="rentRange">
               <ion-label slot="start">${{rangeValue.lower}}</ion-label>
              
               <!-- <ion-label slot="end">${{rangeValue.upper}}</ion-label> -->
-              <ion-label  *ngIf="rangeValue.upper<2000" slot="end">${{rangeValue.upper}}</ion-label>
-              <ion-label  *ngIf="rangeValue.upper===2000" slot="end">${{rangeValue.upper}}+</ion-label>
+              <ion-label  *ngIf="rangeValue.upper<2400" slot="end">${{rangeValue.upper}}</ion-label>
+              <ion-label  *ngIf="rangeValue.upper===2400" slot="end">${{rangeValue.upper}}+</ion-label>
             </ion-range>
           </ion-label>
 

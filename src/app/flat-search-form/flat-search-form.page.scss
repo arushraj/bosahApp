@@ -142,3 +142,8 @@ ion-content {
       --background: var(--gray);
   }
 }
+
+ion-select{
+    --placeholder-color:black;
+    --placeholder-opacity: 2;
+}
