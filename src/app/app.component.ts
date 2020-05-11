@@ -60,7 +60,7 @@ export class AppComponent {
     icon: 'settings',
     routerDirection: 'forward'
   }, {
-    title: 'Referrals',
+    title: 'Refer a Friend',
     url: '/referrals',
     icon: 'people',
     routerDirection: 'forward'

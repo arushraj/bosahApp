@@ -35,6 +35,8 @@ import { environment } from '../environments/environment';
 // Firebase
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { MessagingUserDetailsComponent } from './messaging/user-details/user-details.component';
+import { MessagingPageModule } from './messaging/messaging.module';
 
 
 @NgModule({
@@ -51,6 +53,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     // MessagingPageModule
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
+    MessagingPageModule
   ],
   providers: [
     AppService,

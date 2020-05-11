@@ -114,5 +114,5 @@
     </feature>
     <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
     <preference name="WKWebViewOnly" value="true" />
-    <allow-navigation href="http://localhost:8101" sessionid="b1310fcc" />
+    <allow-navigation href="http://localhost:8101" sessionid="4b52c699" />
 </widget>

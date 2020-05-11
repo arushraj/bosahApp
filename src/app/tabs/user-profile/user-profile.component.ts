@@ -1,13 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../../shared/services/app.service';
 import { CurrentUser } from '../../shared/model/current-user.model';
-import { ActionSheetController, Platform, IonContent } from '@ionic/angular';
+import { ActionSheetController, Platform, IonContent, ModalController } from '@ionic/angular';
 import { Toast } from '@ionic-native/toast/ngx';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { AppConstant } from 'src/app/shared/constant/app.constant';
+import { MessagingUserDetailsComponent } from 'src/app/messaging/user-details/user-details.component';
+import { UserFriends } from 'src/app/shared/model/user-friend.model';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,6 +21,7 @@ export class UserProfileComponent implements OnInit {
   public currentUser: CurrentUser;
   public ProfileImagePath: string;
   public lastImage: string;
+  public userFriends:UserFriends;
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
 
   constructor(
@@ -30,6 +33,7 @@ export class UserProfileComponent implements OnInit {
     private filePath: FilePath,
     private file: File,
     private webView: WebView,
+    private modalController: ModalController,
     private appConstant: AppConstant) {
     this.appService.getCurrentUser()
       .subscribe(user => {
@@ -158,6 +162,32 @@ export class UserProfileComponent implements OnInit {
 //Service call to upload image via API
   private startUpload(imagePath) {
     this.appService.uploadProfileImage(imagePath, this.currentUser);
+  }
+
+  public async profileView() {
+    const user: UserFriends = {
+      FName: this.currentUser.FName,
+      Age: this.currentUser.Age,
+      College: this.currentUser.College,
+      Job: this.currentUser.Job,
+      ProfileImagePath: this.currentUser.ProfileImagePath,
+      UserDrinking:'',
+      UserId:this.currentUser.UserId,
+      UserPet:"",
+      UserSmoking:"",
+      City:null,
+      Gender:null,
+      AboutMe:this.currentUser.AboutMe,
+      Status:null,
+      LastMessage:null,
+      UnreadMessagesCount:null     
+    };
+
+    const modal = await this.modalController.create({
+      component: MessagingUserDetailsComponent,
+      componentProps: { user: user, enableActionButton: false }
+    });
+    return await modal.present();
   }
 
 }

@@ -16,7 +16,7 @@
       <div class="data_div">
         <div class="gender_div">
           <p class="info_lbl">
-            Roommate Gender
+            Roommate Gender(select 1 or more)
           </p>
           <div class="btn_div">
             <ion-button [ngClass]="female ? 'active':''" (click)="checkMe('F')">
@@ -30,15 +30,19 @@
             </ion-button> -->
           </div>
         </div>
-        <ion-item mode="md">
-          <ion-label class="info_lbl" position="stacked" mode="ios">
-            Roommate Religion
+        <ion-item mode="md" lines="none">
+          <ion-label>
+            <h3 class="info_lbl">Age Range</h3>
+            <ion-range id="dual-range" min="21" max="60" mode="md" dualKnobs="true" pin="true" [value]="rangeValue" color="primary"
+            (ionChange)="rangeChange($event)" #agerange>
+            <ion-label slot="start">{{rangeValue.lower}}</ion-label>          
+            <!-- <ion-label slot="end">${{rangeValue.upper}}</ion-label> -->
+            <ion-label  *ngIf="rangeValue.upper<59" slot="end">{{rangeValue.upper}}</ion-label>
+            <ion-label  *ngIf="rangeValue.upper===60" slot="end">{{rangeValue.upper}}+</ion-label>
+          </ion-range>
           </ion-label>
-          <ion-select placeholder="Select One" required multiple="true" formControlName="preferredReligion">
-            <ion-select-option *ngFor="let item of religions" [value]="item.ReligionId">{{item.Religion}}
-            </ion-select-option>
-          </ion-select>
         </ion-item>
+     
         <ion-item mode="md">
           <ion-label class="info_lbl" position="stacked" mode="ios">
             Preferred Pets
@@ -49,25 +53,16 @@
           </ion-select>
 
         </ion-item>
-        <ion-item mode="md" lines="none">
-          <ion-label>
-            <h3 class="info_lbl">Select Age</h3>
-            <!-- <ion-range id="dual-range" dual-knobs pin>
-          </ion-range> -->
-            <!-- <ion-range min="21" max="60" dualKnobs="true" pin="true" pin [value]="rangeValue" color="primary"
-              (ionChange)="rangeChange($event)" #agerange>
-              <ion-label slot="start">{{rangeValue.lower}}</ion-label>
-              <ion-label slot="end">{{rangeValue.upper}}</ion-label>
-            </ion-range> -->
-            <ion-range id="dual-range" min="21" max="60" mode="md" dualKnobs="true" pin="true" [value]="rangeValue" color="primary"
-            (ionChange)="rangeChange($event)" #agerange>
-            <ion-label slot="start">{{rangeValue.lower}}</ion-label>          
-            <!-- <ion-label slot="end">${{rangeValue.upper}}</ion-label> -->
-            <ion-label  *ngIf="rangeValue.upper<59" slot="end">{{rangeValue.upper}}</ion-label>
-            <ion-label  *ngIf="rangeValue.upper===60" slot="end">{{rangeValue.upper}}+</ion-label>
-          </ion-range>
+        <ion-item mode="md">
+          <ion-label class="info_lbl" position="stacked" mode="ios">
+            Roommate Religion
           </ion-label>
+          <ion-select placeholder="Select One" required multiple="true" formControlName="preferredReligion">
+            <ion-select-option *ngFor="let item of religions" [value]="item.ReligionId">{{item.Religion}}
+            </ion-select-option>
+          </ion-select>
         </ion-item>
+      
         <ion-button  type="submit" name="checkmark-circle-outline" expand="block" class="main_btn register_btn ion-no-margin" [disabled]="userForm.invalid || userForm.pristine">
           Submit
         </ion-button>
