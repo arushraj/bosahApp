@@ -21,7 +21,10 @@ export class UserProfileComponent implements OnInit {
   public currentUser: CurrentUser;
   public ProfileImagePath: string;
   public lastImage: string;
-  public userFriends:UserFriends;
+  public userFriends: UserFriends;
+  public selectedSmokingOptions:string;
+  public selectedDrinkingOptions:string;
+  public selectedPetsOptions:string;
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
 
   constructor(
@@ -49,7 +52,7 @@ export class UserProfileComponent implements OnInit {
         } else {
           this.ProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.currentUser.ProfileImagePath + `?random=${Math.random()}`;
         }
-      });
+      });  
   }
 
   ngOnInit() { }
@@ -152,35 +155,48 @@ export class UserProfileComponent implements OnInit {
   private copyFileToLocalDir(namePath, currentName, fileExtension) {
     const newFileName = this.currentUser.FName.replace(' ', '_') + `_${new Date().getTime()}` + fileExtension;
     this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
-     // const currentImagefilePath = this.webView.convertFileSrc(this.file.dataDirectory + newFileName);
+      // const currentImagefilePath = this.webView.convertFileSrc(this.file.dataDirectory + newFileName);
       this.startUpload(this.file.dataDirectory + newFileName);
     }, error => {
       this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
     });
   }
 
-//Service call to upload image via API
+  //Service call to upload image via API
   private startUpload(imagePath) {
     this.appService.uploadProfileImage(imagePath, this.currentUser);
   }
 
   public async profileView() {
+    this.appService.getsmokingOptions().subscribe(smoking => {
+      this.selectedSmokingOptions=smoking.find(x=>x.Id===this.currentUser.SelectedSmokingId).Details;
+    });
+
+    this.appService.getdrinkingOptions().subscribe(drinking => {
+      this.selectedDrinkingOptions=drinking.find(x=>x.Id===this.currentUser.SelectedDrinkingId).Details;
+
+    });
+
+    this.appService.getPets().subscribe(pets => {
+      this.selectedPetsOptions=pets.find(x=>x.PetId === this.currentUser.SelectedPetId).PetName;
+    });
+    debugger;
     const user: UserFriends = {
       FName: this.currentUser.FName,
       Age: this.currentUser.Age,
       College: this.currentUser.College,
       Job: this.currentUser.Job,
       ProfileImagePath: this.currentUser.ProfileImagePath,
-      UserDrinking:'',
-      UserId:this.currentUser.UserId,
-      UserPet:"",
-      UserSmoking:"",
-      City:null,
-      Gender:null,
-      AboutMe:this.currentUser.AboutMe,
-      Status:null,
-      LastMessage:null,
-      UnreadMessagesCount:null     
+      UserDrinking: this.selectedDrinkingOptions.trim().length ===2?'':this.selectedDrinkingOptions,
+      UserId: this.currentUser.UserId,
+      UserPet: this.selectedPetsOptions.trim().length ===2?'':this.selectedPetsOptions,
+      UserSmoking: this.selectedSmokingOptions.trim().length ==2 ?'':this.selectedSmokingOptions,
+      City: null,
+      Gender: null,
+      AboutMe: this.currentUser.AboutMe,
+      Status: null,
+      LastMessage: null,
+      UnreadMessagesCount: null
     };
 
     const modal = await this.modalController.create({
