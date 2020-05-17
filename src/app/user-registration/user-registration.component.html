@@ -65,18 +65,15 @@
         </ion-card-content>
       </ion-card>
     </ion-slide>
-
     <ion-slide class="password-slide">
       <ion-card>
-        <img class="slide-image" src="/assets/logo.png" alt="" />
+        <img class="password-slide-image" src="/assets/logo.png" alt="" />
         <ion-card-content>
           <form padding-right class="password-form" [formGroup]="passwordForm">
-
             <ion-label color="danger" class="error-message"
               *ngIf="passwordForm.controls.password.errors && passwordForm.controls.password.errors.pattern">
-              Password must contain 8 characters,One Capital & Small Letter, One Number, one Special Character.
+              Password must have 8 characters which contain: 1 upper-case letter, 1 lower case letter, 1 numerical and 1 special character.
             </ion-label>
-
             <ion-item class="password-textbox">
               <ion-input type="password" formControlName="password" [(ngModel)]="newUser.password" name="password"
                 id="password" placeholder="Password*" (keyup)="scrollIonContent()">
@@ -107,7 +104,6 @@
         <ion-card-content>
           <form class="personal-form ion-padding-right">
             <!-- <p class="appText">Tell potential roommates about yourself</p> -->
-
             <ion-item class="firstname-textbox">
               <ion-input type="text"  [(ngModel)]="newUser.firstName" name="firstName" id="firstName"
                 placeholder="First Name*" autocapitalize="on" autocorrect="on" autocomplete="on" (keyup)="scrollIonContent()">
@@ -166,7 +162,6 @@
         <ion-card-content>
           <form padding-right class="profession-form">
             <p class="appText">Tell potential roommates about yourself</p>
-
             <ion-item class="college-textbox">
               <ion-input type="text" [(ngModel)]="newUser.college" name="college" id="college" placeholder="College*"
               autocapitalize="on" autocorrect="on" autocomplete="on" (keyup)="scrollIonContent()">
@@ -251,15 +246,26 @@
                 <ion-select-option value="2">Female</ion-select-option>
               </ion-select>
             </ion-item>
-            <ion-item class="preferred-religion-select">
-              <ion-label>Religion(Optional)<ion-text color="danger"></ion-text>
-              </ion-label>
-              <ion-select placeholder="Select" [(ngModel)]="newUser.preferredReligion" name="preferredReligion"
-                id="preferredReligion" multiple="true">
-                <ion-select-option *ngFor="let religion of religions" [value]="religion.ReligionId">
-                  {{religion.Religion}}</ion-select-option>
-              </ion-select>
-            </ion-item>
+            <ion-item class="age-range">
+              <ion-grid fixed>
+                <ion-row>
+                  <ion-col size="6" class="ion-text-left">
+                    <ion-label>Min Age ({{newUser.minAge}})</ion-label>
+                  </ion-col>
+                  <ion-col size="6" class="ion-text-right">
+                    <ion-label *ngIf="newUser.maxAge<70">Max Age ({{newUser.maxAge}})</ion-label>
+                    <ion-label *ngIf="newUser.maxAge === 70">Max Age ({{newUser.maxAge}}+)</ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-range no-padding min="21" max="70" dualKnobs="true" pin="true" pin value="70" color="primary"
+                      (ionChange)="rangeChange($event)" #agerange>
+                    </ion-range>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>          
             <ion-item class="preferred-pets-select">
               <ion-label>Pet(s)<ion-text color="danger">*</ion-text>
               </ion-label>
@@ -269,35 +275,24 @@
                   {{pet.PetName}}</ion-select-option>
               </ion-select>
             </ion-item>
-            <ion-item class="age-range">
-              <ion-grid fixed>
-                <ion-row>
-                  <ion-col size="6" class="ion-text-left">
-                    <ion-label>Min Age ({{newUser.minAge}})</ion-label>
-                  </ion-col>
-                  <ion-col size="6" class="ion-text-right">
-                    <ion-label>Max Age ({{newUser.maxAge}}+)</ion-label>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="12">
-                    <ion-range no-padding min="21" max="60" dualKnobs="true" pin="true" pin value="60" color="primary"
-                      (ionChange)="rangeChange($event)" #agerange>
-                    </ion-range>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>
-
+            <ion-item class="preferred-religion-select">
+              <ion-label>Religion(Optional)<ion-text color="danger"></ion-text>
+              </ion-label>
+              <ion-select placeholder="Select" [(ngModel)]="newUser.preferredReligion" name="preferredReligion"
+                id="preferredReligion" multiple="true">
+                <ion-select-option *ngFor="let religion of religions" [value]="religion.ReligionId">
+                  {{religion.Religion}}</ion-select-option>
+              </ion-select>
+            </ion-item>         
             <div class="term-condition">
               <ion-label>
                 <ion-checkbox slot="start" [(ngModel)]="userAcceptTermsAndConditions"
                   name="userAcceptTermsAndConditions" id="userAcceptTermsAndConditions"></ion-checkbox>&nbsp;&nbsp;
                   I accept Terms & Conditions, Privacy Policy and Information about Brokerage Services.
               </ion-label>
-              <br /><br/>
+              <br/>
               <ion-button (click)="openLink(1)" fill="clear">
-               Term & Condition
+               Terms & Conditions
               </ion-button>
               <br/>
 

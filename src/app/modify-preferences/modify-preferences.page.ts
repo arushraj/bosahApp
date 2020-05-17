@@ -28,7 +28,8 @@ export class ModifyPreferencesPage implements OnInit {
   constructor(private appService: AppService, private fb: FormBuilder) {
     this.userForm = this.fb.group({
       preferredGender: ['', Validators.compose([Validators.required])],
-      preferredReligion: ['', Validators.compose([Validators.required])],
+      preferredReligion: [''],
+      // preferredReligion: ['', Validators.compose([Validators.required])],
       preferredPets: [''],
       ageRange: ['']
     });
@@ -95,7 +96,7 @@ export class ModifyPreferencesPage implements OnInit {
     const data = {
       UserId: this.currentUser.UserId,
       PreferredGenderIds: this.userForm.value.preferredGender.join(','),
-      PreferredReligionIds: this.userForm.value.preferredReligion.join(','),
+      PreferredReligionIds: this.userForm.value.preferredReligion.length===0?'11':this.userForm.value.preferredReligion.join(','),
       PreferredPetIds: this.userForm.value.preferredPets.join(','),
       minAge: this.rangeValue.lower,
       maxAge: this.rangeValue.upper

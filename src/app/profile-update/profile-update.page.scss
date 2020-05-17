@@ -82,8 +82,13 @@ ion-header {
       --background: var(--gray);
       padding: 5px 16px;
       border-radius: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 5px;
      // height: 130px;
       --padding-top: 0;
     }
+  }
+
+  .remainingText{
+    float:right;
+    padding-right: 15px;
   }

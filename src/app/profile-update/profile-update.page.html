@@ -23,7 +23,7 @@
       </div>
 
       <div class="info_div">
-        <h3 class="info_lbl">Education</h3>
+        <h3 class="info_lbl">College</h3>
         <ion-input required formControlName="College"  type="text" autocapitalize="on" autocorrect="on" autocomplete="on" autocomplete="on"></ion-input>
       </div>
     </div>
@@ -85,7 +85,7 @@
 
       <div class="info_div">
         <h3 class="info_lbl">Religion</h3>
-        <ion-select placeholder="Select One" required formControlName="ReligionId" interface="popover" mode="ios">
+        <ion-select placeholder="Select One"  formControlName="ReligionId" interface="popover" mode="ios">
           <ion-select-option *ngFor="let item of religions" [value]="item.ReligionId">{{item.Religion}}
           </ion-select-option>
         </ion-select>
@@ -137,9 +137,10 @@
       <div class="aboutme">
         <!-- <h3 class="info_lbl">About Me</h3> -->
         <ion-label class="info_lbl" position="stacked">About Me</ion-label>
-        <ion-textarea  maxlength="150" formControlName="AboutMe" type="text"  rows="3" 
-           autocapitalize="on" autocorrect="on" maxLength="120" (keyup)="resize()">
+        <ion-textarea  [maxlength]="aboutMeMaxLength" formControlName="AboutMe" type="text"  rows="3" 
+           autocapitalize="on" autocorrect="on" (keyup)="resize()">
         </ion-textarea>
+        <ion-text class="remainingText">{{remainingCount}}</ion-text>
       </div>       
   
     </div>

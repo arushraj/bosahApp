@@ -15,6 +15,7 @@ import { Pet } from '../shared/model/pet.model';
 import { FormBuilder, Form, FormGroup, Validators } from '@angular/forms';
 import { Smoking } from '../shared/model/smoking.model';
 import { Drinking } from '../shared/model/drinking.model';
+import { Crop } from '@ionic-native/crop/ngx';
 
 @Component({
   selector: 'app-user-registration',
@@ -51,7 +52,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     preferredReligion: [],
     userImage: '',
     minAge: 21,
-    maxAge: 60,
+    maxAge: 70,
     aboutMe: '',
     preferredPets: [],
     UserPetId: 4,
@@ -81,7 +82,6 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   @ViewChild('registrationslides', { read: IonSlides, static: true }) registrationslides: IonSlides;
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
 
-
   constructor(
     private appService: AppService,
     private toast: Toast,
@@ -93,6 +93,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     private webView: WebView,
     private loadingController: LoadingController,
     private fb: FormBuilder,
+    private crop:Crop,
     private config:Config) {
     this.minDate = this.getmiStringDate();
     this.maxDate = this.getmaxStringDate();
@@ -248,7 +249,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   public onKey(event: any) {
     // KeyboardEvent
     // this.toast.show(`${typeof (event.target.value)}`, `short`, `bottom`).subscribe(() => { });
-    this.ionContent.scrollToTop(300);
+    this.ionContent.scrollToPoint(0,100);
     if (event.target.value.length === 4) {
       if (event.target.value !== this.otp) {
         this.toast.show(`You have entered the wrong code.`, `short`, `bottom`).subscribe(() => { });
@@ -263,7 +264,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   }
 
   public scrollIonContent(){
-    this.ionContent.scrollToPoint(0,100)
+    this.ionContent.scrollToPoint(0,100);
   }
 
   public async checkReferralCode() {
@@ -403,29 +404,29 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     event.target.src = '/assets/no-image.png';
   }
 
-  public async  selectImage() {
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Select Image source',
-      buttons: [{
-        text: 'Load from Library',
-        handler: () => {
-          this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
-        }
-      },
-      // {
-      //   text: 'Use Camera',
-      //   handler: () => {
-      //     this.takePicture(this.camera.PictureSourceType.CAMERA);
-      //   }
-      // },
-      {
-        text: 'Cancel',
-        role: 'cancel'
-      }
-      ]
-    });
-    await actionSheet.present();
-  }
+  // public async  selectImage() {
+  //   const actionSheet = await this.actionSheetController.create({
+  //     header: 'Select Image source',
+  //     buttons: [{
+  //       text: 'Load from Library',
+  //       handler: () => {
+  //         this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+  //       }
+  //     },
+  //     // {
+  //     //   text: 'Use Camera',
+  //     //   handler: () => {
+  //     //     this.takePicture(this.camera.PictureSourceType.CAMERA);
+  //     //   }
+  //     // },
+  //     {
+  //       text: 'Cancel',
+  //       role: 'cancel'
+  //     }
+  //     ]
+  //   });
+  //   await actionSheet.present();
+  // }
 
   takePicture(sourceType: PictureSourceType) {
     const options: CameraOptions = {
@@ -474,7 +475,8 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
       // this.toast.show(`Image: ${JSON.stringify(success)}`, `long`, 'bottom').subscribe(() => { });
       this.displayImage = currentImagefilePath;
       this.lastImage = newFileName;
-      this.newUser.userImage = this.file.dataDirectory + newFileName;
+      //this.newUser.userImage = this.file.dataDirectory + newFileName;
+      this.newUser.userImage = success.nativeURL;
     }, error => {
       this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
     });
@@ -532,5 +534,66 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     const yyyy = today.getFullYear();
     return yyyy + '-' + mm + '-' + dd;
   }
+
+  cropImage(fileUrl) {
+    let correctPath;
+    let currentName;
+    let fileExtension;
+    this.crop.crop(fileUrl, { quality: 50 })
+    .then( 
+    newPath => { 
+    currentName = newPath.substr(newPath.lastIndexOf('/') + 1);
+    correctPath = newPath.substr(0, newPath.lastIndexOf('/') + 1);
+    this.copyFileToLocalDirIOS(correctPath, currentName, this.createFileName());
+
+    },
+    error => {
+        alert('Profile Picture was not selected');
+    }
+    );
+    }
+
+    pickImage(sourceType) {
+      const options: CameraOptions = {
+        quality: 100,
+        sourceType: sourceType,
+        destinationType: this.camera.DestinationType.FILE_URI,
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE
+      }
+      this.camera.getPicture(options).then((imageData) => {
+        //console.log(this.file.dataDirectory);
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64 (DATA_URL):
+        // let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.cropImage(imageData)
+      }, (err) => {
+        // Handle error
+      });
+    }
+  
+    async selectImage() {
+      const actionSheet = await this.actionSheetController.create({
+        header: "Select Image source",
+        buttons: [{
+          text: 'Load from Library',
+          handler: () => {
+            this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+          }
+        },
+        // {
+        //   text: 'Use Camera',
+        //   handler: () => {
+        //     this.pickImage(this.camera.PictureSourceType.CAMERA);
+        //   }
+        // },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+        ]
+      });
+      await actionSheet.present();
+    }
 
 }

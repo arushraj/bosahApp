@@ -5,11 +5,11 @@ import { ActionSheetController, Platform, IonContent, ModalController } from '@i
 import { Toast } from '@ionic-native/toast/ngx';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { AppConstant } from 'src/app/shared/constant/app.constant';
 import { MessagingUserDetailsComponent } from 'src/app/messaging/user-details/user-details.component';
 import { UserFriends } from 'src/app/shared/model/user-friend.model';
+import { Crop } from '@ionic-native/crop/ngx';
 
 @Component({
   selector: 'app-user-profile',
@@ -35,10 +35,10 @@ export class UserProfileComponent implements OnInit {
     private platform: Platform,
     private filePath: FilePath,
     private file: File,
-    private webView: WebView,
+    private crop: Crop,
     private modalController: ModalController,
     private appConstant: AppConstant) {
-    this.appService.getCurrentUser()
+      this.appService.getCurrentUser() 
       .subscribe(user => {
         this.currentUser = user;
         if (this.currentUser.ProfileImagePath === '...' || this.currentUser.ProfileImagePath === '') {
@@ -50,19 +50,28 @@ export class UserProfileComponent implements OnInit {
             this.ProfileImagePath = './assets/no-image.png';
           }
         } else {
-          this.ProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.currentUser.ProfileImagePath + `?random=${Math.random()}`;
+          this.ProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.currentUser.ProfileImagePath ;
         }
       });  
+   
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    
+   }
 
   ionViewDidEnter() {
     this.ionContent.scrollToTop(500);
-    if (!this.currentUser.UserId) {
-      this.appService.getCurrentuserFromDB();
-    }
-  }
+    if (!this.currentUser.UserId)
+    this.appService.getCurrentuserFromDB();
+    //Added This to make sure User loaded from DB
+  //   if (!this.currentUser.UserId || this.currentUser.ProfileImagePath === '') {
+  //     //this.appService.currentUser.next();
+  //     this.appService.getCurrentuserFromDB(true).then(user => {
+  //    // this.ProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.currentUser.ProfileImagePath ;
+  //     });   
+  // }
+}
 
   public userLogout() {
     this.appService.userLogout();
@@ -77,25 +86,25 @@ export class UserProfileComponent implements OnInit {
   public setdefultImage(event) {
     event.target.src = './assets/no-image.png';
   }
+//vinay
+  // public async  selectImage() {
+  //   const actionSheet = await this.actionSheetController.create({
+  //     header: 'Select Image source',
+  //     buttons: [{
+  //       text: 'Load from Library',
+  //       handler: () => {
+  //         this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+  //       }
+  //     },
 
-  public async  selectImage() {
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Select Image source',
-      buttons: [{
-        text: 'Load from Library',
-        handler: () => {
-          this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
-        }
-      },
-
-      {
-        text: 'Cancel',
-        role: 'cancel'
-      }
-      ]
-    });
-    await actionSheet.present();
-  }
+  //     {
+  //       text: 'Cancel',
+  //       role: 'cancel'
+  //     }
+  //     ]
+  //   });
+  //   await actionSheet.present();
+  // }
 
   takePicture(sourceType: PictureSourceType) {
     const options: CameraOptions = {
@@ -135,12 +144,14 @@ export class UserProfileComponent implements OnInit {
 
   // Copy the image to a local folder
   private copyFileToLocalDirIOS(namePath, currentName, newFileName) {
-    this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
-      this.startUpload(this.file.dataDirectory + newFileName);
-      this.lastImage = newFileName;
+    this.file.copyFile(namePath, currentName, namePath, newFileName).then(copiedFile => {
+      this.startUpload(copiedFile.nativeURL);
+      this.ProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.currentUser.ProfileImagePath + `?random=${Math.random()}`;
+      //this.lastImage = currentName;
     }, error => {
       this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
     });
+    
   }
 
   // Create a new name for the image
@@ -155,7 +166,6 @@ export class UserProfileComponent implements OnInit {
   private copyFileToLocalDir(namePath, currentName, fileExtension) {
     const newFileName = this.currentUser.FName.replace(' ', '_') + `_${new Date().getTime()}` + fileExtension;
     this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
-      // const currentImagefilePath = this.webView.convertFileSrc(this.file.dataDirectory + newFileName);
       this.startUpload(this.file.dataDirectory + newFileName);
     }, error => {
       this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
@@ -165,11 +175,13 @@ export class UserProfileComponent implements OnInit {
   //Service call to upload image via API
   private startUpload(imagePath) {
     this.appService.uploadProfileImage(imagePath, this.currentUser);
+   // this.ProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.currentUser.ProfileImagePath + `?random=${Math.random()}`;
+  
   }
 
   public async profileView() {
     this.appService.getsmokingOptions().subscribe(smoking => {
-      this.selectedSmokingOptions=smoking.find(x=>x.Id===this.currentUser.SelectedSmokingId).Details;
+      this.selectedSmokingOptions=smoking.find(x=>x.Id === this.currentUser.SelectedSmokingId).Details;
     });
 
     this.appService.getdrinkingOptions().subscribe(drinking => {
@@ -180,30 +192,90 @@ export class UserProfileComponent implements OnInit {
     this.appService.getPets().subscribe(pets => {
       this.selectedPetsOptions=pets.find(x=>x.PetId === this.currentUser.SelectedPetId).PetName;
     });
-    debugger;
     const user: UserFriends = {
       FName: this.currentUser.FName,
       Age: this.currentUser.Age,
       College: this.currentUser.College,
       Job: this.currentUser.Job,
-      ProfileImagePath: this.currentUser.ProfileImagePath,
-      UserDrinking: this.selectedDrinkingOptions.trim().length ===2?'':this.selectedDrinkingOptions,
+      ProfileImagePath: this.currentUser.ProfileImagePath + `?random=${Math.random()}`,
+      UserDrinking: this.selectedDrinkingOptions.trim().length === 2?'': this.selectedDrinkingOptions,
       UserId: this.currentUser.UserId,
-      UserPet: this.selectedPetsOptions.trim().length ===2?'':this.selectedPetsOptions,
-      UserSmoking: this.selectedSmokingOptions.trim().length ==2 ?'':this.selectedSmokingOptions,
-      City: null,
-      Gender: null,
+      UserPet: this.selectedPetsOptions.trim().length === 2?'':this.selectedPetsOptions,
+      UserSmoking: this.selectedSmokingOptions.trim().length === 2 ?'': this.selectedSmokingOptions,
+      // City: null,
+      // Gender: null,
       AboutMe: this.currentUser.AboutMe,
-      Status: null,
-      LastMessage: null,
-      UnreadMessagesCount: null
+      // Status: null,
+      // LastMessage: null,
+      // UnreadMessagesCount: null
     };
-
     const modal = await this.modalController.create({
       component: MessagingUserDetailsComponent,
       componentProps: { user: user, enableActionButton: false }
     });
     return await modal.present();
   }
+
+  cropImage(fileUrl) {
+    let correctPath;
+    let currentName;
+    let fileExtension;
+    this.crop.crop(fileUrl, { quality: 50 })
+    .then(
+      
+    newPath => {  
+    currentName = newPath.substr(newPath.lastIndexOf('/') + 1);
+    correctPath = newPath.substr(0, newPath.lastIndexOf('/') + 1);
+    this.copyFileToLocalDirIOS(correctPath, currentName, this.createFileName());
+
+    },
+    error => {
+    alert('Profile Picture not uploaded');
+    }
+    );
+    }
+
+    pickImage(sourceType) {
+      const options: CameraOptions = {
+        quality: 100,
+        sourceType: sourceType,
+        destinationType: this.camera.DestinationType.FILE_URI,
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE
+      }
+      this.camera.getPicture(options).then((imageData) => {
+        
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64 (DATA_URL):
+        // let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.cropImage(imageData)
+      }, (err) => {
+        // Handle error
+      });
+    }
+  
+    async selectImage() {
+      const actionSheet = await this.actionSheetController.create({
+        header: "Select Image source",
+        buttons: [{
+          text: 'Load from Library',
+          handler: () => {
+            this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+          }
+        },
+        // {
+        //   text: 'Use Camera',
+        //   handler: () => {
+        //     this.pickImage(this.camera.PictureSourceType.CAMERA);
+        //   }
+        // },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+        ]
+      });
+      await actionSheet.present();
+    }
 
 }

@@ -29,22 +29,23 @@ export class ProfileUpdatePage implements OnInit {
   public petsOptions: Pet[];
   public currentUser: CurrentUser;
   public isActionCompleted: boolean;
+  public aboutMeMaxLength:number= 150;
+  public remainingCount:number;
   @ViewChild('aboutMe',{static: true}) myInput: ElementRef;
   //@ViewChild('aboutMe', { read: IonTextarea, static: true }) ionContent: IonTextarea;
 
 
   constructor(private fb: FormBuilder, private appService: AppService) {
     this.userForm = fb.group({
-      // FirstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      // LastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      EmailId: ['', Validators.compose([Validators.email])],
-      PhoneNumber: ['', Validators.compose([Validators.maxLength(10), Validators.required])],
+     // EmailId: ['', Validators.compose([Validators.email])],
+     // PhoneNumber: ['', Validators.compose([Validators.maxLength(10), Validators.required])],
       College: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
       Job: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
-      AboutMe: ['', Validators.compose([Validators.maxLength(100)])],
+      AboutMe: ['', Validators.compose([Validators.maxLength(this.aboutMeMaxLength)])],
       // dateofBirth: ['', Validators.compose([Validators.required])],
       GenderId: ['', Validators.compose([Validators.required])],
-      ReligionId: ['', Validators.compose([Validators.required])],
+      //ReligionId: ['', Validators.compose([Validators.required])],
+      ReligionId: [''],
       CityId: ['', Validators.compose([Validators.required])],
       SelectedGiftCardTypeID: [''],
       UserSelectedSmokingId: ['', Validators.compose([Validators.required])],
@@ -52,13 +53,15 @@ export class ProfileUpdatePage implements OnInit {
       UserSelectedPetId: ['', Validators.compose([Validators.required])]
     });
     this.bindValues();
+    this.remainingCount=this.aboutMeMaxLength-this.userForm.value.AboutMe.length;
   }
 
   ngOnInit() {
   }
 
   public resize() {
-    this.myInput.nativeElement.style.height = this.myInput.nativeElement.scrollHeight + 'px';
+    //this.myInput.nativeElement.style.height = this.myInput.nativeElement.scrollHeight + 'px';
+    this.remainingCount=this.aboutMeMaxLength-this.userForm.value.AboutMe.length;
 }
 
   private bindValues() {
