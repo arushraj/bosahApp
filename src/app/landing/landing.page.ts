@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../shared/services/app.service';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-landing',
@@ -9,23 +9,27 @@ import { NavController } from '@ionic/angular';
 })
 export class LandingPage implements OnInit {
 
-  constructor(private appService: AppService, private navCtrl: NavController) { }
+  constructor(private appService: AppService, private navCtrl: NavController,public platform :Platform) { }
 
   async ngOnInit() {
-   // await this.appService.getNotificationCountFromDB();
-    await this.appService.getCurrentUserIdfromLocalStorage()
+      // Initialize BackButton Eevent.
+      this.platform.ready().then(() => {
+        // await this.appService.getNotificationCountFromDB();
+     this.appService.getCurrentUserIdfromLocalStorage()
       .then(value => {
-        if (value !== null) {
-          this.appService.getCurrentuserFromDB();
-        
-          this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
-        } else {
-          this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
-        }
-      })
-      .catch((err) => {
+      if (value !== null) {
+        this.appService.getCurrentuserFromDB();        
+        this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
+      } else {
         this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
-      });
+      }
+    })
+    .catch((err) => {
+      this.navCtrl.navigateRoot('/userlogin', { animated: true, animationDirection: 'forward' });
+    });
+         
+    });
+  
   }
 
   async ionViewWillEnter() {

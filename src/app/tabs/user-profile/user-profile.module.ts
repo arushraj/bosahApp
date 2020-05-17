@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 
 import { UserProfileComponent } from './user-profile.component';
 import { CustomPipesModule } from '../../shared/pipe/custom-pipe.module';
+import { MessagingUserDetailsComponent } from 'src/app/messaging/user-details/user-details.component';
+import { MessagingPageModule } from 'src/app/messaging/messaging.module';
 
 @NgModule({
   imports: [
@@ -20,6 +22,6 @@ import { CustomPipesModule } from '../../shared/pipe/custom-pipe.module';
     ]),
     CustomPipesModule.forRoot()
   ],
-  declarations: [UserProfileComponent]
+  declarations: [UserProfileComponent],
 })
 export class UserProfileModule { }

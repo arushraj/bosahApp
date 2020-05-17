@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AppService } from '../shared/services/app.service';
 import { NewUser } from '../shared/model/current-user.model';
-import { ActionSheetController, Platform, LoadingController } from '@ionic/angular';
+import { ActionSheetController, Platform, LoadingController, IonContent, Config } from '@ionic/angular';
 import { Toast } from '@ionic-native/toast/ngx';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
@@ -15,6 +15,7 @@ import { Pet } from '../shared/model/pet.model';
 import { FormBuilder, Form, FormGroup, Validators } from '@angular/forms';
 import { Smoking } from '../shared/model/smoking.model';
 import { Drinking } from '../shared/model/drinking.model';
+import { Crop } from '@ionic-native/crop/ngx';
 
 @Component({
   selector: 'app-user-registration',
@@ -47,11 +48,11 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     city: null,
     gender: null,
     preferredGender: [],
-    religion: null,
+    religion: 11,
     preferredReligion: [],
     userImage: '',
     minAge: 21,
-    maxAge: 60,
+    maxAge: 70,
     aboutMe: '',
     preferredPets: [],
     UserPetId: 4,
@@ -79,7 +80,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   public passwordForm: FormGroup;
   @ViewChild('agerange', { read: IonRange, static: true }) agerange: IonRange;
   @ViewChild('registrationslides', { read: IonSlides, static: true }) registrationslides: IonSlides;
-
+  @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
 
   constructor(
     private appService: AppService,
@@ -91,7 +92,9 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     private file: File,
     private webView: WebView,
     private loadingController: LoadingController,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private crop:Crop,
+    private config:Config) {
     this.minDate = this.getmiStringDate();
     this.maxDate = this.getmaxStringDate();
 
@@ -109,6 +112,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.registrationslides.lockSwipes(true).then(() => { });
+    
 
     this.appService.getLocation().subscribe((locations: UserLocation[]) => {
       this.locations = locations;
@@ -127,6 +131,11 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     this.appService.getsmokingOptions().subscribe((smokingOptions: Smoking[]) => {
       this.smokingOptions = smokingOptions;
     });
+
+    //this.ionContent.scrollToTop(400);
+    //this.ionContent.scrollY=false;
+    
+ 
   }
 
 
@@ -190,19 +199,24 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   }
 
   public registeredNewUser() {
-    if (this.newUser.preferredGender.length === 0) {
+     
+     if (this.newUser.preferredGender.length === 0) {
       this.toast.showShortBottom('Please select preferred genders for your roommate.').subscribe(() => { });
       return;
-    } else if (this.newUser.preferredReligion.length === 0) {
-      this.toast.showShortBottom('Please select preferred religions for your roommate.').subscribe(() => { });
-      return;
-    } else if (this.newUser.preferredPets.length === 0) {
+    }
+    //  else if (this.newUser.preferredReligion.length === 0) {
+    //   this.toast.showShortBottom('Please select preferred religions for your roommate.').subscribe(() => { });
+    //   return;
+    // } 
+    else if (this.newUser.preferredPets.length === 0) {
       this.toast.showShortBottom('Please select preferred pets for your roommate.').subscribe(() => { });
       return;
-    } else if (!this.userAcceptTermsAndConditions) {
+    } 
+    else if (!this.userAcceptTermsAndConditions) {
       this.toast.showShortBottom('Please accept the terms and conditions.').subscribe(() => { });
       return;
     }
+   
     const user: NewUser = {
       FirstName: this.newUser.firstName,
       LastName: this.newUser.lastName,
@@ -235,6 +249,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
   public onKey(event: any) {
     // KeyboardEvent
     // this.toast.show(`${typeof (event.target.value)}`, `short`, `bottom`).subscribe(() => { });
+    this.ionContent.scrollToPoint(0,100);
     if (event.target.value.length === 4) {
       if (event.target.value !== this.otp) {
         this.toast.show(`You have entered the wrong code.`, `short`, `bottom`).subscribe(() => { });
@@ -246,6 +261,10 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
         this.goToNext();
       }
     }
+  }
+
+  public scrollIonContent(){
+    this.ionContent.scrollToPoint(0,100);
   }
 
   public async checkReferralCode() {
@@ -326,7 +345,6 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
         }
         
         else if (!this.newUser.dob) {
-
           this.toast.showShortBottom('Please enter your date of birth.').subscribe(() => { });
           return;
         } else if (this.newUser.dob) {
@@ -334,13 +352,17 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
           const timeDiff = Math.abs(Date.now() - bdate.getTime());
           const age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
           if (age < 21) {
-            this.toast.showShortBottom('Minimum Age to use this platform is 21').subscribe(() => { });
+            this.toast.showShortBottom('You must be 21 and older to use Bosah').subscribe(() => { });
             return;
           }
 
         }
       } else if (index === 4) {
-        if (!this.newUser.college) {
+        if (!this.newUser.userImage) {
+          this.toast.showShortBottom('Please upload a profile Picture').subscribe(() => { });
+          return;
+        }
+        else if (!this.newUser.college) {
           this.toast.showShortBottom('Please enter your Education Details').subscribe(() => { });
           return;
         } else if (!this.newUser.job) {
@@ -349,12 +371,20 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
         } else if (!this.newUser.city) {
           this.toast.showShortBottom('Please select your city.').subscribe(() => { });
           return;
-        }  else if (!this.newUser.religion) {
-          this.toast.showShortBottom('Please select your Religion.').subscribe(() => { });
-          return;
-        }
+        }  
+        // else if (!this.newUser.religion) {
+        //   this.toast.showShortBottom('Please select your Religion.').subscribe(() => { });
+        //   return;
+        // }
+
       }
       this.registrationslides.lockSwipes(false).then(() => {
+        // if(index===3)
+        // {
+        //   this.config.set("scrollPadding",true);
+        //   this.config.set("scrollAssist",true);
+
+        // }
         this.registrationslides.slideNext(1000, true).then(() => {
           this.registrationslides.lockSwipes(true).then(() => { });
         });
@@ -374,29 +404,29 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     event.target.src = '/assets/no-image.png';
   }
 
-  public async  selectImage() {
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Select Image source',
-      buttons: [{
-        text: 'Load from Library',
-        handler: () => {
-          this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
-        }
-      },
-      // {
-      //   text: 'Use Camera',
-      //   handler: () => {
-      //     this.takePicture(this.camera.PictureSourceType.CAMERA);
-      //   }
-      // },
-      {
-        text: 'Cancel',
-        role: 'cancel'
-      }
-      ]
-    });
-    await actionSheet.present();
-  }
+  // public async  selectImage() {
+  //   const actionSheet = await this.actionSheetController.create({
+  //     header: 'Select Image source',
+  //     buttons: [{
+  //       text: 'Load from Library',
+  //       handler: () => {
+  //         this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+  //       }
+  //     },
+  //     // {
+  //     //   text: 'Use Camera',
+  //     //   handler: () => {
+  //     //     this.takePicture(this.camera.PictureSourceType.CAMERA);
+  //     //   }
+  //     // },
+  //     {
+  //       text: 'Cancel',
+  //       role: 'cancel'
+  //     }
+  //     ]
+  //   });
+  //   await actionSheet.present();
+  // }
 
   takePicture(sourceType: PictureSourceType) {
     const options: CameraOptions = {
@@ -445,7 +475,8 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
       // this.toast.show(`Image: ${JSON.stringify(success)}`, `long`, 'bottom').subscribe(() => { });
       this.displayImage = currentImagefilePath;
       this.lastImage = newFileName;
-      this.newUser.userImage = this.file.dataDirectory + newFileName;
+      //this.newUser.userImage = this.file.dataDirectory + newFileName;
+      this.newUser.userImage = success.nativeURL;
     }, error => {
       this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
     });
@@ -500,8 +531,69 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-    const yyyy = today.getFullYear() - 21;
+    const yyyy = today.getFullYear();
     return yyyy + '-' + mm + '-' + dd;
   }
+
+  cropImage(fileUrl) {
+    let correctPath;
+    let currentName;
+    let fileExtension;
+    this.crop.crop(fileUrl, { quality: 50 })
+    .then( 
+    newPath => { 
+    currentName = newPath.substr(newPath.lastIndexOf('/') + 1);
+    correctPath = newPath.substr(0, newPath.lastIndexOf('/') + 1);
+    this.copyFileToLocalDirIOS(correctPath, currentName, this.createFileName());
+
+    },
+    error => {
+        alert('Profile Picture was not selected');
+    }
+    );
+    }
+
+    pickImage(sourceType) {
+      const options: CameraOptions = {
+        quality: 100,
+        sourceType: sourceType,
+        destinationType: this.camera.DestinationType.FILE_URI,
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE
+      }
+      this.camera.getPicture(options).then((imageData) => {
+        //console.log(this.file.dataDirectory);
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64 (DATA_URL):
+        // let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.cropImage(imageData)
+      }, (err) => {
+        // Handle error
+      });
+    }
+  
+    async selectImage() {
+      const actionSheet = await this.actionSheetController.create({
+        header: "Select Image source",
+        buttons: [{
+          text: 'Load from Library',
+          handler: () => {
+            this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+          }
+        },
+        // {
+        //   text: 'Use Camera',
+        //   handler: () => {
+        //     this.pickImage(this.camera.PictureSourceType.CAMERA);
+        //   }
+        // },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+        ]
+      });
+      await actionSheet.present();
+    }
 
 }

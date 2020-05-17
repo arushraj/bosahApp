@@ -794,7 +794,7 @@ export class AppService {
                         this.firebasedb.setUserOnline(resData.UserId);
 
                         // Get User Details from DB
-                        this.getCurrentuserFromDB();
+                        this.getCurrentuserFromDB(true);
                     });
                 }
                 loading.dismiss();
@@ -921,21 +921,28 @@ export class AppService {
                 loading.dismiss();
                 if (userImagePath) {
                     this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
-                    await this.uploadUserRegistrationImage(resData.UserId, userImagePath);
+                     this.uploadUserRegistrationImage(resData.UserId, userImagePath) .then(res => { 
+                        
+                       this.storage.set(StorageKey.UserIdKey, resData.UserId).then(() => {
+                            this.userLogin(newUser.EmailId, newUser.Password)
+                                .then((data) => {
+                                    this.toast.showShortBottom(
+                                        `${data.ResponseMessage}`
+                                    ).subscribe(toast => { });
+                                    if (data.UserId > 0) {
+                                        this.getCurrentuserFromDB(true).then(res => { 
+                                            debugger;
+                                            this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
+                                        });
+                                         }
+                                });
+                        });
+
+                      });
                 } else {
                     this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
                 }
-                this.storage.set(StorageKey.UserIdKey, resData.UserId).then(() => {
-                    this.userLogin(newUser.EmailId, newUser.Password)
-                        .then((data) => {
-                            this.toast.showShortBottom(
-                                `${data.ResponseMessage}`
-                            ).subscribe(toast => { });
-                            if (data.UserId > 0) {
-                                this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
-                            }
-                        });
-                });
+              
             })
             .catch(err => {
                 this.toast.show(`${JSON.stringify(err)}`, `short`, `bottom`).subscribe(() => { });
@@ -947,10 +954,10 @@ export class AppService {
     }
 
     public async uploadUserRegistrationImage(userId, ImagePath) {
-        if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
-            this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
-            return;
-        }
+        // if (this.network.type === this.network.Connection.NONE || this.network.type === this.network.Connection.UNKNOWN) {
+        //     this.toast.show(`Please connect to internet.`, `short`, 'bottom').subscribe(() => { });
+        //     return;
+        // }
         const loading = await this.loadingController.create({
             message: 'Please wait...',
             translucent: true,

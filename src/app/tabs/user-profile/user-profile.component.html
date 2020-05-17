@@ -1,5 +1,4 @@
-<ion-content fullscreen class="animated fadeInUp fast" #ionContent no-bounce has-bouncing="false"
-  forceOverscroll="false">
+<ion-content fullscreen class="animated fadeInUp fast" #ionContent>
   <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -16,9 +15,10 @@
           <ion-button class="upload_btn" (click)="selectImage()">
             <ion-icon src="/assets/plus.svg"></ion-icon>
           </ion-button>
-          <h3 class="name">{{currentUser.FName | blankValue}}  <ion-icon name="star-outline" *ngIf="currentUser.RoleId===3"></ion-icon></h3>     
+          <h3 class="name">{{currentUser.FName | blankValue}}  <ion-icon name="star-outline" *ngIf="currentUser.RoleId===3"></ion-icon> 
+          </h3>  
         </div>
-
+      
         <div class="detail_div">
           <div class="detail_row">
             <div class="icon_div">
@@ -41,7 +41,12 @@
           </div>
         </div>
       </div>
-      <div class="personal_info">
+      <div class="personal_info suggestedView">
+        <ion-button  (click)="profileView()">
+          View my Profile
+       </ion-button> 
+      </div>
+      <div class="personal_info">        
         <div class="picon_div">
           <ion-icon src="/assets/email_green.svg"></ion-icon>
         </div>
@@ -50,7 +55,10 @@
           <p class="pdata_p">{{currentUser.EmailId | blankValue}}</p>
         </div>
       </div>
+
+   
       <div class="personal_info">
+
         <div class="picon_div">
           <ion-icon src="/assets/call_green.svg"></ion-icon>
         </div>
@@ -58,6 +66,7 @@
           <h3 class="info_lbl">Mobile</h3>
           <p class="pdata_p">{{currentUser.PhoneNumber | blankValue}}</p>
         </div>
+      
       </div>
       <div class="personal_info">
         <div class="picon_div">
@@ -73,7 +82,7 @@
           <ion-icon src="/assets/degree_icon.svg"></ion-icon>
         </div>
         <div class="personal_detail_row">
-          <h3 class="info_lbl">Education</h3>
+          <h3 class="info_lbl">College</h3>
           <p class="pdata_p">{{currentUser.College | blankValue}}</p>
         </div>
       </div>
