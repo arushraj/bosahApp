@@ -73,7 +73,6 @@ export class PushNotificationService {
         sound: true,
         vibrate: true,
         icon: 'icon',
-        iconColor: 'black',
       },
       ios: {
         alert: 'true',
