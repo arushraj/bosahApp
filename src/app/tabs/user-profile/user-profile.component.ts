@@ -25,6 +25,7 @@ export class UserProfileComponent implements OnInit {
   public selectedSmokingOptions:string;
   public selectedDrinkingOptions:string;
   public selectedPetsOptions:string;
+  //profilePicsUploaded:boolean=false;
   @ViewChild('ionContent', { read: IonContent, static: true }) ionContent: IonContent;
 
   constructor(
@@ -57,6 +58,13 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    //Added This to make sure User loaded from DB
+    if (this.currentUser.ProfileImagePath === '' && this.currentUser.UserId) {
+      //this.appService.currentUser.next();
+      this.appService.getCurrentuserFromDB(true).then(user => {
+      this.ProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.currentUser.ProfileImagePath +`?random=${Math.random()}`;
+      });   
+  }
     
    }
 
@@ -64,13 +72,7 @@ export class UserProfileComponent implements OnInit {
     this.ionContent.scrollToTop(500);
     if (!this.currentUser.UserId)
     this.appService.getCurrentuserFromDB();
-    //Added This to make sure User loaded from DB
-  //   if (!this.currentUser.UserId || this.currentUser.ProfileImagePath === '') {
-  //     //this.appService.currentUser.next();
-  //     this.appService.getCurrentuserFromDB(true).then(user => {
-  //    // this.ProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.currentUser.ProfileImagePath ;
-  //     });   
-  // }
+
 }
 
   public userLogout() {
@@ -147,6 +149,7 @@ export class UserProfileComponent implements OnInit {
     this.file.copyFile(namePath, currentName, namePath, newFileName).then(copiedFile => {
       this.startUpload(copiedFile.nativeURL);
       this.ProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.currentUser.ProfileImagePath + `?random=${Math.random()}`;
+      
       //this.lastImage = currentName;
     }, error => {
       this.toast.show(`File Copy Error: ${JSON.stringify(error)}`, `short`, 'bottom').subscribe(() => { });
@@ -175,7 +178,8 @@ export class UserProfileComponent implements OnInit {
   //Service call to upload image via API
   private startUpload(imagePath) {
     this.appService.uploadProfileImage(imagePath, this.currentUser);
-   // this.ProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.currentUser.ProfileImagePath + `?random=${Math.random()}`;
+    //this.profilePicsUploaded= true;
+    this.ProfileImagePath = this.appConstant.APP_IMG_BASE_URL + this.currentUser.ProfileImagePath + `?random=${Math.random()}`;
   
   }
 
@@ -202,17 +206,13 @@ export class UserProfileComponent implements OnInit {
       UserId: this.currentUser.UserId,
       UserPet: this.selectedPetsOptions.trim().length === 2?'':this.selectedPetsOptions,
       UserSmoking: this.selectedSmokingOptions.trim().length === 2 ?'': this.selectedSmokingOptions,
-      // City: null,
-      // Gender: null,
       AboutMe: this.currentUser.AboutMe,
-      // Status: null,
-      // LastMessage: null,
-      // UnreadMessagesCount: null
     };
     const modal = await this.modalController.create({
       component: MessagingUserDetailsComponent,
       componentProps: { user: user, enableActionButton: false }
     });
+    //this.profilePicsUploaded=false;
     return await modal.present();
   }
 

@@ -916,28 +916,27 @@ export class AppService {
         const url = this.appConstant.getURL(UrlKey.User_Registration);
         const userImagePath = newUser.ProfileImagePath;
         this.http.post(url, newUser, {})
-            .then(async res => {
+            .then(res => {
                 const resData = JSON.parse(res.data);
                 loading.dismiss();
                 if (userImagePath) {
                     this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });
-                     this.uploadUserRegistrationImage(resData.UserId, userImagePath) .then(res => { 
-                        
-                       this.storage.set(StorageKey.UserIdKey, resData.UserId).then(() => {
-                            this.userLogin(newUser.EmailId, newUser.Password)
-                                .then((data) => {
-                                    this.toast.showShortBottom(
-                                        `${data.ResponseMessage}`
-                                    ).subscribe(toast => { });
-                                    if (data.UserId > 0) {
-                                        this.getCurrentuserFromDB(true).then(res => { 
-                                            debugger;
-                                            this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
-                                        });
-                                         }
-                                });
-                        });
-
+                     this.uploadUserRegistrationImage(resData.UserId, userImagePath).then(res => {  
+                       
+                            this.storage.set(StorageKey.UserIdKey, resData.UserId).then(() => {
+                                this.userLogin(newUser.EmailId, newUser.Password)
+                                    .then((data) => {
+                                        this.toast.showShortBottom(
+                                            `${data.ResponseMessage}`
+                                        ).subscribe(toast => { });
+                                        if (data.UserId) {                                          
+                                                this.getCurrentuserFromDB(true).then(res => { 
+                                                    console.log('Registered User Info');
+                                                    this.navCtrl.navigateRoot('/tabs', { animated: true, animationDirection: 'forward' });
+                                                });                                          
+                                             }
+                                    });
+                            });                                                              
                       });
                 } else {
                     this.toast.showShortBottom(`${resData.ResponseMessage}`).subscribe(() => { });

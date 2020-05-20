@@ -15,8 +15,10 @@ import { Toast } from '@ionic-native/toast/ngx';
 import { Router } from '@angular/router';
 import { AppService } from './shared/services/app.service';
 import { CurrentUser } from './shared/model/current-user.model';
-import { AppConstant } from './shared/constant/app.constant';
+import { AppConstant, StorageKey } from './shared/constant/app.constant';
 import { PushNotificationService } from './shared/services/push-notification.service';
+import { FirebasedbService } from './shared/services/firebasedb.service';
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -48,12 +50,7 @@ export class AppComponent {
     icon: 'create',
     routerDirection: 'forward'
   },
-  // {
-  //   title: 'Apartment Search',
-  //   url: '/flatsearchform',
-  //   icon: 'search',
-  //   routerDirection: 'forward'
-  // },
+
   {
     title: 'Settings',
     url: '/profilesetting',
@@ -84,6 +81,8 @@ export class AppComponent {
     private navCtrl: NavController,
     private appService: AppService,
     private appConstant: AppConstant,
+    private firebasedb: FirebasedbService,
+    private storage: Storage,
     private pushNotificationService: PushNotificationService) {
     this.initializeApp();
 
@@ -109,15 +108,19 @@ export class AppComponent {
 
     // Initialize BackButton Eevent.
     this.platform.ready().then(() => {
-
       this.platform.resume.subscribe ( (e) => {
-        this.appService.setIsResumed(true);
-        //this.navCtrl.navigateForward('/tabs/match');
-       
+        this.storage.get(StorageKey.UserIdKey).then((value) => {
+          if(value)
+          this.firebasedb.setUserOnline(value.toString());
+        });              
       });
       
         this.platform.pause.subscribe ( (e) => {
-        console.log("pause called"); 
+          this.storage.get(StorageKey.UserIdKey).then((value) => {
+            if(value)
+            this.firebasedb.setUserOffline(value.toString());
+          });
+          
       });
  
       this.backButtonEvent();
